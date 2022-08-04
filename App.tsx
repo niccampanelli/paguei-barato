@@ -1,11 +1,15 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import StackExterna from "./src/StackExterna";
 
+/**
+ * # PagueiBarato
+ * Aplicativo para facilitar comparações de preços em varejos.
+ * 
+ * Made with ❤ in 🇧🇷
+ * @author Nicholas Campanelli, Lucas Campanelli
+ */
 export default function App() {
+
 	return (
-		<View style={styles.container}>
-			<Text>Open up App.tsx to start working on your app!</Text>
-			<StatusBar style="auto" />
-		</View>
+		<StackExterna/>
 	);
 }
