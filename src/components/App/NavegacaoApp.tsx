@@ -1,7 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Constants from "expo-constants";
-import { paddingVertical } from "../../variaveisEstilo";
 import Inicio from "./Inicio";
 import Busca from "./Busca";
 import Lista from "./Lista";
