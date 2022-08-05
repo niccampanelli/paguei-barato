@@ -32,6 +32,11 @@ export default StyleSheet.create({
         paddingHorizontal: variaveisEstilo.botoesGrandes.paddingHorizontal
     },
 
+    inputIcone: {
+        fontSize: variaveisEstilo.botoesGrandes.texto,
+        color: variaveisEstilo.cores.secundaria
+    },
+
     inputCampo: {
         fontSize: variaveisEstilo.botoesGrandes.texto,
         marginLeft: variaveisEstilo.botoesGrandes.espacamento,

@@ -3,7 +3,7 @@ import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navig
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import { GestureResponderEvent, Image, KeyboardAvoidingView, Text, TouchableOpacity, View, } from "react-native";
-import IcoArroba from "../../../assets/Icones/IcoArroba";
+import { Feather } from "@expo/vector-icons";
 import estiloGlobal from "../../../estiloGlobal";
 import variaveisEstilo from "../../../variaveisEstilo";
 import Input from "../../Input";
@@ -36,7 +36,7 @@ export default function Cadastro() {
                     <View style={estilos.form}>
                         <View style={estilos.grupoForm}>
                             <Text style={[estiloGlobal.label, estilos.label]}>Para começar, nos diga seu primeiro nome:</Text>
-                            <Input icone={<IcoArroba />} returnKeyType="next" textContentType="name" autoCapitalize="words" autoCorrect={false} placeholder="Informe seu primeiro nome" />
+                            <Input icone={<Feather name="user" style={estiloGlobal.inputIcone}/>} returnKeyType="next" textContentType="name" autoCapitalize="words" autoCorrect={false} placeholder="Informe seu primeiro nome" />
                         </View>
                     </View>
                 </View>
@@ -64,7 +64,7 @@ export default function Cadastro() {
                     <View style={estilos.form}>
                         <View style={estilos.grupoForm}>
                             <Text style={[estiloGlobal.label, estilos.label]}>Agora nos diga seu sobrenome:</Text>
-                            <Input icone={<IcoArroba />} returnKeyType="next" textContentType="familyName" autoCapitalize="words" autoCorrect={false} placeholder="Informe seu sobrenome" />
+                            <Input icone={<Feather name="user" style={estiloGlobal.inputIcone}/>} returnKeyType="next" textContentType="familyName" autoCapitalize="words" autoCorrect={false} placeholder="Informe seu sobrenome" />
                         </View>
                     </View>
                 </View>
@@ -92,7 +92,7 @@ export default function Cadastro() {
                     <View style={estilos.form}>
                         <View style={estilos.grupoForm}>
                             <Text style={[estiloGlobal.label, estilos.label]}>Informe seu endereço de e-mail:</Text>
-                            <Input icone={<IcoArroba />} keyboardType="email-address" textContentType="emailAddress" returnKeyType="next" autoCapitalize="none" autoCorrect={false} placeholder="Endereço de e-mail" />
+                            <Input icone={<Feather name="at-sign" style={estiloGlobal.inputIcone}/>} keyboardType="email-address" textContentType="emailAddress" returnKeyType="next" autoCapitalize="none" autoCorrect={false} placeholder="Endereço de e-mail" />
                         </View>
                     </View>
                 </View>
@@ -121,11 +121,11 @@ export default function Cadastro() {
                         <View style={estilos.grupoForm}>
                             <Text style={[estiloGlobal.label, estilos.label]}>Crie uma senha para fazer login no app:</Text>
                             <Text style={[estiloGlobal.label, estilos.label]}>A senha deve possuir no mínimo 8 dígitos, letras maíusculas e minúsculas, números e simbolos.</Text>
-                            <Input icone={<IcoArroba />} returnKeyType="next" textContentType="newPassword" secureTextEntry autoCorrect={false} placeholder="Crie uma senha" />
+                            <Input icone={<Feather name="lock" style={estiloGlobal.inputIcone}/>} returnKeyType="next" textContentType="newPassword" secureTextEntry autoCorrect={false} placeholder="Crie uma senha" />
                         </View>
                         <View style={estilos.grupoForm}>
                             <Text style={[estiloGlobal.label, estilos.label]}>Digite novamente sua senha:</Text>
-                            <Input icone={<IcoArroba />} returnKeyType="next" textContentType="password" secureTextEntry autoCorrect={false} placeholder="Confirme sua senha" />
+                            <Input icone={<Feather name="lock" style={estiloGlobal.inputIcone}/>} returnKeyType="next" textContentType="password" secureTextEntry autoCorrect={false} placeholder="Confirme sua senha" />
                         </View>
                     </View>
                 </View>
@@ -154,7 +154,7 @@ export default function Cadastro() {
                         <View style={estilos.grupoForm}>
                             <Text style={[estiloGlobal.label, estilos.label]}>Preencha nos campos a seguir o seu endereço para recomendarmos os melhores preços e ofertas nas lojas próximas de você.</Text>
                             <Text style={[estiloGlobal.label, estilos.label]}>Nos informe seu CEP:</Text>
-                            <Input icone={<IcoArroba />} returnKeyType="next" keyboardType="numeric" textContentType="postalCode" placeholder="CEP" />
+                            <Input icone={<Feather name="map-pin" style={estiloGlobal.inputIcone}/>} returnKeyType="next" keyboardType="numeric" textContentType="postalCode" placeholder="CEP" />
                         </View>
                     </View>
                 </View>
@@ -182,23 +182,23 @@ export default function Cadastro() {
                     <View style={estilos.form}>
                         <View style={estilos.grupoForm}>
                             <Text style={[estiloGlobal.label, estilos.label]}>Logradouro</Text>
-                            <Input icone={<IcoArroba />} returnKeyType="next" textContentType="streetAddressLine1" autoCapitalize="words" autoCorrect={true} placeholder="Nome da rua ou avenida" />
+                            <Input icone={<Feather name="map-pin" style={estiloGlobal.inputIcone}/>} returnKeyType="next" textContentType="streetAddressLine1" autoCapitalize="words" autoCorrect={true} placeholder="Nome da rua ou avenida" />
                         </View>
                         <View style={estilos.grupoForm}>
                             <Text style={[estiloGlobal.label, estilos.label]}>Número</Text>
-                            <Input icone={<IcoArroba />} returnKeyType="next" textContentType="streetAddressLine2" keyboardType="numeric" placeholder="Número" />
+                            <Input icone={<Feather name="map-pin" style={estiloGlobal.inputIcone}/>} returnKeyType="next" textContentType="streetAddressLine2" keyboardType="numeric" placeholder="Número" />
                         </View>
                         <View style={estilos.grupoForm}>
                             <Text style={[estiloGlobal.label, estilos.label]}>Bairro</Text>
-                            <Input icone={<IcoArroba />} returnKeyType="next" textContentType="sublocality" autoCapitalize="words" autoCorrect={true} placeholder="Bairro" />
+                            <Input icone={<Feather name="map-pin" style={estiloGlobal.inputIcone}/>} returnKeyType="next" textContentType="sublocality" autoCapitalize="words" autoCorrect={true} placeholder="Bairro" />
                         </View>
                         <View style={estilos.grupoForm}>
                             <Text style={[estiloGlobal.label, estilos.label]}>Cidade</Text>
-                            <Input icone={<IcoArroba />} returnKeyType="next" textContentType="addressCity" autoCapitalize="words" autoCorrect={true} placeholder="Cidade ou município" />
+                            <Input icone={<Feather name="map-pin" style={estiloGlobal.inputIcone}/>} returnKeyType="next" textContentType="addressCity" autoCapitalize="words" autoCorrect={true} placeholder="Cidade ou município" />
                         </View>
                         <View style={estilos.grupoForm}>
                             <Text style={[estiloGlobal.label, estilos.label]}>Estado</Text>
-                            <Input icone={<IcoArroba />} returnKeyType="done" textContentType="addressState" autoCapitalize="characters" placeholder="UF" />
+                            <Input icone={<Feather name="map-pin" style={estiloGlobal.inputIcone}/>} returnKeyType="done" textContentType="addressState" autoCapitalize="characters" placeholder="UF" />
                         </View>
                     </View>
                 </View>

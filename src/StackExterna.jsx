@@ -14,9 +14,9 @@ export default function StackExterna() {
 			<Stack.Navigator initialRouteName="login" screenOptions={{ headerShown: false, contentStyle: { backgroundColor: variaveisEstilo.cores.fundoPrincipal } }}>
 				<Stack.Group>
 					<Stack.Screen name="login" component={Login} />
-					<Stack.Screen name="cadastro" component={Cadastro} />
+					<Stack.Screen options={{animation: "fade_from_bottom"}} name="cadastro" component={Cadastro} />
 				</Stack.Group>
-				<Stack.Screen name="app" component={NavegacaoApp} />
+				<Stack.Screen name="app" options={{animation: "slide_from_right"}} component={NavegacaoApp} />
 			</Stack.Navigator>
 		</NavigationContainer>
 	);

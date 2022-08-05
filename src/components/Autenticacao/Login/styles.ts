@@ -14,7 +14,6 @@ export default StyleSheet.create({
     },
 
     container: {
-        justifyContent: "flex-end",
         paddingVertical: variaveisEstilo.layout.paddingVertical,
         paddingHorizontal: variaveisEstilo.layout.paddingHorizontal
     },
@@ -30,7 +29,7 @@ export default StyleSheet.create({
     },
 
     form: {
-        marginBottom: 24
+        marginBottom: 60
     },
 
     grupoForm: {
