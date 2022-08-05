@@ -1,11 +1,26 @@
+import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
-import { Image, KeyboardAvoidingView, Text, TextInput, TouchableOpacity, View, } from "react-native";
+import { GestureResponderEvent, Image, KeyboardAvoidingView, Text, TextInput, TouchableOpacity, View, } from "react-native";
 import IcoArroba from "../../../assets/Icones/IcoArroba";
 import estiloGlobal from "../../../estiloGlobal";
 import Input from "../../Input";
 import estilos from "./styles";
 
 export default function Login() {
+
+    const navigation = useNavigation();
+
+    const cadastrar = (e: GestureResponderEvent) => {
+        e.preventDefault();
+        navigation.navigate("cadastro" as never);
+    };
+    
+    const fazerLogin = () => {};
+
+    const continuarSemLogin = (e: GestureResponderEvent) => {
+        e.preventDefault();
+        navigation.navigate("app" as never);
+    };
 
     return (
         <View style={estilos.main}>
@@ -26,7 +41,7 @@ export default function Login() {
                 </View>
                 <View>
                     <View style={estilos.opcoesLoginCima}>
-                        <TouchableOpacity style={estiloGlobal.botaoSecundarioGrande}>
+                        <TouchableOpacity style={estiloGlobal.botaoSecundarioGrande} onPress={e => cadastrar(e)}>
                             <Text style={estiloGlobal.botaoSecundarioGrandeTexto}>Cadastre-se</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={[estiloGlobal.botaoPrincipalGrande, estilos.opcoesLoginPrincipal]}>
@@ -34,7 +49,7 @@ export default function Login() {
                         </TouchableOpacity>
                     </View>
                     <Text style={estilos.opcoesLoginLabel}>ou</Text>
-                    <TouchableOpacity style={estiloGlobal.botaoSecundarioGrande}>
+                    <TouchableOpacity style={estiloGlobal.botaoSecundarioGrande} onPress={e => continuarSemLogin(e)}>
                         <Text style={estiloGlobal.botaoSecundarioGrandeTexto}>Continuar sem login</Text>
                     </TouchableOpacity>
                 </View>

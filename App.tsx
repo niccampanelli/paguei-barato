@@ -1,4 +1,5 @@
 import StackExterna from "./src/StackExterna";
+import 'react-native-gesture-handler';
 
 /**
  * # PagueiBarato

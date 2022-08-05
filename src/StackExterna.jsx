@@ -3,7 +3,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Login from "./components/Autenticacao/Login";
 import Cadastro from "./components/Autenticacao/Cadastro";
 import NavegacaoApp from "./components/App/NavegacaoApp";
-import Constants from "expo-constants";
 import variaveisEstilo from "./variaveisEstilo";
 
 export default function StackExterna() {
