@@ -17,7 +17,7 @@ export default function Menu() {
             <View style={estilos.cabecalho}>
                 <Text style={estiloGlobal.titulo}>Menu</Text>
                 <View style={estilos.usuario}>
-                    <Text style={estilos.usuarioIcone}>NC</Text>
+                    <Text style={[estiloGlobal.subtitulo, estilos.usuarioIcone]}>NC</Text>
                     <View style={estilos.usuarioInfo}>
                         <Text style={estiloGlobal.subtitulo}>Nicholas Campanelli</Text>
                         <Text style={estiloGlobal.observacao}>nicholasoucampanelli@hotmail.com</Text>

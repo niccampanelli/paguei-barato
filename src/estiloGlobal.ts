@@ -100,5 +100,37 @@ export default StyleSheet.create({
         fontSize: variaveisEstilo.botoesGrandes.texto,
         fontWeight: "700",
         color: variaveisEstilo.cores.textoEscuro
-    }
+    },
+
+    tagPequenaNormal: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: variaveisEstilo.cores.fundoSecundario,
+        borderRadius: variaveisEstilo.layout.raioBorda,
+        paddingVertical: variaveisEstilo.botoes.paddingVertical,
+        paddingHorizontal: variaveisEstilo.botoes.paddingHorizontal
+    },
+
+    tagPequenaNormalTexto: {
+        fontSize: variaveisEstilo.botoes.texto,
+        fontWeight: "400",
+        color: variaveisEstilo.cores.textoEscuro
+    },
+
+    tagPequenaSecundaria: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: variaveisEstilo.cores.secundaria,
+        borderRadius: variaveisEstilo.layout.raioBorda,
+        paddingVertical: variaveisEstilo.botoes.paddingVertical,
+        paddingHorizontal: variaveisEstilo.botoes.paddingHorizontal
+    },
+
+    tagPequenaSecundariaTexto: {
+        fontSize: variaveisEstilo.botoes.texto,
+        fontWeight: "400",
+        color: "#ffffff"
+    },
 });
