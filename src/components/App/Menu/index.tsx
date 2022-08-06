@@ -9,7 +9,7 @@ export default function Menu() {
     const navigation = useNavigation();
 
     const sair = () => {
-        navigation.getParent()?.getParent()?.navigate("login");
+        navigation.getParent()?.navigate("login");
     };
 
     return (

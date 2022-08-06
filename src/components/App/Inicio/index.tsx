@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { EventArg, useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import { Text, View } from "react-native";
@@ -9,9 +9,7 @@ export default function Inicio() {
     const navigation = useNavigation();
 
     useEffect(() => {
-        navigation.addListener('beforeRemove', e => {
-            e.preventDefault();
-        });
+        navigation.getParent()?.navigate("login");
     }, []);
 
     return (
