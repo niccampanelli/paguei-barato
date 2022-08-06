@@ -6,14 +6,15 @@ import Menu from "./Menu";
 import BarraNavegacao from "./BarraNavegacao";
 import estiloBarraNavegacao from "./BarraNavegacao/styles";
 import { Feather } from "@expo/vector-icons";
+import variaveisEstilo from "../../variaveisEstilo";
 
 export default function NavegacaoApp() {
 
 	const Tabs = createBottomTabNavigator();
 
 	return (
-		<Tabs.Navigator initialRouteName="inicio" screenOptions={{ headerShown: false }} tabBar={(props: BottomTabBarProps) => <BarraNavegacao {...props} />}>
-			<Tabs.Screen name="inicio" options={{ 
+		<Tabs.Navigator sceneContainerStyle={{ backgroundColor: variaveisEstilo.cores.fundoPrincipal }} initialRouteName="inicio" screenOptions={{ headerShown: false }} tabBar={(props: BottomTabBarProps) => <BarraNavegacao {...props} />}>
+			<Tabs.Screen name="inicio" options={{
 					tabBarLabel: "Início", 
 					tabBarIcon: ({ focused }) => 
 						<Feather 
@@ -52,7 +53,7 @@ export default function NavegacaoApp() {
 				}} 
 				component={Lista}
 			/>
-			<Tabs.Screen name="menu" options={{ 
+			<Tabs.Screen name="menu" options={{
 					tabBarLabel: "Menu", 
 					tabBarIcon: ({ focused }) => 
 						<Feather 

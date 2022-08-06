@@ -13,7 +13,7 @@ const variaveisEstilo = {
     },
     tamanhoTextos: {
         titulo: 30,
-        subtitulo: 24,
+        subtitulo: 20,
         texto: 14,
         observacao: 12
     },

@@ -21,6 +21,12 @@ export default StyleSheet.create({
         fontWeight: "700",
     },
 
+    observacao: {
+        color: variaveisEstilo.cores.textoClaro,
+        fontSize: variaveisEstilo.tamanhoTextos.observacao,
+        fontWeight: "400"
+    },
+
     input: {
         height: 40,
         width: "100%",
