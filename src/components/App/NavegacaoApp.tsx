@@ -27,8 +27,8 @@ export default function NavegacaoApp() {
 				}} 
 				component={Inicio}
 			/>
-			<Tabs.Screen name="busca" options={{ 
-					tabBarLabel: "Busca", 
+			<Tabs.Screen name="buscar" options={{ 
+					tabBarLabel: "Buscar", 
 					tabBarIcon: ({ focused }) => 
 						<Feather 
 							name="search" 

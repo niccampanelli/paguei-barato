@@ -118,6 +118,22 @@ export default StyleSheet.create({
         color: variaveisEstilo.cores.textoEscuro
     },
 
+    tagPequenaDestaque: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: variaveisEstilo.cores.destaque,
+        borderRadius: variaveisEstilo.layout.raioBorda,
+        paddingVertical: variaveisEstilo.botoes.paddingVertical,
+        paddingHorizontal: variaveisEstilo.botoes.paddingHorizontal
+    },
+
+    tagPequenaDestaqueTexto: {
+        fontSize: variaveisEstilo.botoes.texto,
+        fontWeight: "400",
+        color: "#000000"
+    },
+
     tagPequenaSecundaria: {
         display: "flex",
         flexDirection: "row",

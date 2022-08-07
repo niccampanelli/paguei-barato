@@ -6,12 +6,11 @@ export default StyleSheet.create({
 
     container: {
         flex: 1,
-        paddingVertical: Constants.statusBarHeight + variaveisEstilo.layout.paddingVertical,
+        paddingTop: Constants.statusBarHeight + variaveisEstilo.layout.paddingVertical,
         paddingHorizontal: variaveisEstilo.layout.paddingHorizontal
     },
 
     cabecalho: {
-        marginBottom: 30
     },
     
     barraBusca: {
@@ -41,11 +40,15 @@ export default StyleSheet.create({
     
     listaFiltros: {
         display: "flex",
-        marginTop: 16
+        paddingVertical: 16
     },
 
     filtro: {
         marginRight: 10
+    },
+
+    filtroContador: {
+        marginLeft: variaveisEstilo.botoes.espacamento
     },
 
     listaCabecalho: {
@@ -53,6 +56,29 @@ export default StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        marginTop: 16
-    }
+        marginBottom: 16
+    },
+
+    lista: {
+        flex: 1
+    },
+
+    listaItem: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        paddingBottom: 16
+    },
+
+    listaItemImagem: {
+        marginRight: 20,
+        height: 30,
+        width: 30
+    },
+
+    listaItemTexto: {
+        flex: 1,
+        fontSize: variaveisEstilo.tamanhoTextos.texto,
+        color: variaveisEstilo.cores.textoEscuro
+    },
 });
