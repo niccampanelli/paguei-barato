@@ -18,7 +18,7 @@ export default StyleSheet.create({
         alignItems: "center",
         paddingHorizontal: 20,
         backgroundColor: variaveisEstilo.cores.fundoPrincipal,
-        borderRadius: variaveisEstilo.layout.raioBorda
+        borderRadius: variaveisEstilo.layout.raioBorda,
     },
 
     botaoNormalTexto: {
@@ -26,7 +26,8 @@ export default StyleSheet.create({
     },
 
     botaoNormalIcone: {
-        fontSize: variaveisEstilo.botoesGrandes.texto
+        fontSize: variaveisEstilo.botoesGrandes.texto,
+        color: variaveisEstilo.cores.textoEscuro
     },
 
     botaoSelecionado: {
@@ -41,7 +42,7 @@ export default StyleSheet.create({
     botaoSelecionadoTexto: {
         fontSize: variaveisEstilo.botoesGrandes.texto,
         fontWeight: "800",
-        color: variaveisEstilo.cores.textoEscuro
+        color: "#000000"
     },
 
     botaoSelecionadoIcone: {

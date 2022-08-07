@@ -3,17 +3,11 @@ import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { FlatList, Image, ListRenderItemInfo, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { Gesture, GestureDetector, GestureHandlerRootView, GestureStateChangeEvent, PanGestureHandlerEventPayload } from "react-native-gesture-handler";
-import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
+import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
 import estiloGlobal from "../../../estiloGlobal";
 import estilos from "./styles";
 
 export default function Lista() {
-
-    const navigation = useNavigation();
-
-    const sair = () => {
-        navigation.getParent()?.navigate("login");
-    };
 
     const dummydata = [
         {
@@ -40,6 +34,54 @@ export default function Lista() {
             mercado: "Kawahara",
             preco: 2.50
         },
+        {
+            imagem: require("../../../../assets/favicon.png"),
+            nome: "Sabão Em Pó Lavanda ÉBomMesmo 250g",
+            mercado: "Kawahara",
+            preco: 2.50
+        },
+        {
+            imagem: require("../../../../assets/favicon.png"),
+            nome: "Sabão Em Pó Lavanda ÉBomMesmo 250g",
+            mercado: "Kawahara",
+            preco: 2.50
+        },
+        {
+            imagem: require("../../../../assets/favicon.png"),
+            nome: "Sabão Em Pó Lavanda ÉBomMesmo 250g",
+            mercado: "Kawahara",
+            preco: 2.50
+        },
+        {
+            imagem: require("../../../../assets/favicon.png"),
+            nome: "Sabão Em Pó Lavanda ÉBomMesmo 250g",
+            mercado: "Kawahara",
+            preco: 2.50
+        },
+        {
+            imagem: require("../../../../assets/favicon.png"),
+            nome: "Sabão Em Pó Lavanda ÉBomMesmo 250g",
+            mercado: "Kawahara",
+            preco: 2.50
+        },
+        {
+            imagem: require("../../../../assets/favicon.png"),
+            nome: "Sabão Em Pó Lavanda ÉBomMesmo 250g",
+            mercado: "Kawahara",
+            preco: 2.50
+        },
+        {
+            imagem: require("../../../../assets/favicon.png"),
+            nome: "Sabão Em Pó Lavanda ÉBomMesmo 250g",
+            mercado: "Kawahara",
+            preco: 2.50
+        },
+        {
+            imagem: require("../../../../assets/favicon.png"),
+            nome: "Sabão Em Pó Lavanda ÉBomMesmo 250g",
+            mercado: "Kawaharaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            preco: 2.50
+        },
     ];
 
     const ItemLista = ({item}: ListRenderItemInfo<any>) => {
@@ -49,7 +91,7 @@ export default function Lista() {
         const offset = useSharedValue(0);
         const opacidade = useSharedValue(1);
         
-        const gestoArrastarEsquerda = Gesture.Pan()
+        const gestoArrastar = Gesture.Pan()
             .onBegin(() => {
                 pressionado.value = true;
             })
@@ -60,7 +102,7 @@ export default function Lista() {
             .onEnd(() => {
                 if(offset.value > 50){
                     if(desativado.value == true){
-                        opacidade.value = 0;
+                        opacidade.value = 1;
                         desativado.value = false;
                     }
                     else{
@@ -80,7 +122,20 @@ export default function Lista() {
                 }
                 offset.value = 0;
                 pressionado.value = false;
+            });
+
+        const gestoPressionar = Gesture.Tap()
+            .onBegin(() => {
+                opacidade.value = 0.1;
             })
+            .onFinalize(() => {
+                if(desativado.value === true)
+                    opacidade.value = withTiming(0.3, { duration: 200 });
+                else
+                    opacidade.value = withTiming(1, { duration: 200 });
+            });
+
+        const gestoComposto = Gesture.Exclusive(gestoArrastar, gestoPressionar);
 
         const estiloAnimado = useAnimatedStyle(() => {
 
@@ -92,7 +147,7 @@ export default function Lista() {
 
         return (
             <GestureHandlerRootView>
-            <GestureDetector gesture={gestoArrastarEsquerda}>
+            <GestureDetector gesture={gestoComposto}>
             <Animated.View style={[estilos.listaItem, estiloAnimado]}>
                 <Image style={estilos.listaItemImagem} source={item.imagem}/>
                 <View>
@@ -141,8 +196,11 @@ export default function Lista() {
                     </View>
                 </ScrollView>
             </View>
-            <FlatList style={estilos.lista} data={dummydata} renderItem={(props: ListRenderItemInfo<any>) => <ItemLista {...props}/>}/>
+            <FlatList style={estilos.lista} contentContainerStyle={{ paddingBottom: 60 }} data={dummydata} renderItem={(props: ListRenderItemInfo<any>) => <ItemLista {...props}/>}/>
             <View style={estilos.listaFooter}>
+                <TouchableOpacity style={estilos.adicionarFlutuante}>
+                    <Feather name="plus" style={estilos.adicionarFlutuanteIcone}/>
+                </TouchableOpacity>
                 <Text style={estilos.listaObservacao}>Arraste o item para a direita para marcá-lo como comprado.</Text>
                 <Text style={estilos.listaObservacao}>Arraste o item para a esquerda para removê-lo.</Text>
             </View>

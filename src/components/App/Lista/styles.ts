@@ -72,7 +72,23 @@ export default StyleSheet.create({
     },
 
     listaFooter: {
+        position: "relative",
         paddingVertical: 10
+    },
+
+    adicionarFlutuante: {
+        position: "absolute",
+        backgroundColor: variaveisEstilo.cores.secundaria,
+        padding: 10,
+        borderRadius: variaveisEstilo.layout.raioBorda,
+        zIndex: 1,
+        right: 10,
+        top: "-220%"
+    },
+
+    adicionarFlutuanteIcone: {
+        fontSize: 34,
+        color: "#ffffff"
     },
 
     listaObservacao: {

@@ -30,6 +30,7 @@ export default StyleSheet.create({
         flex: 1,
         fontSize: variaveisEstilo.botoesGrandes.texto,
         marginRight: variaveisEstilo.botoesGrandes.espacamento,
+        color: variaveisEstilo.cores.textoEscuro,
         height: "100%",
     },
     
