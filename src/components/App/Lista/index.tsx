@@ -1,8 +1,8 @@
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
-import { FlatList, Image, ListRenderItemInfo, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import { Gesture, GestureDetector, GestureHandlerRootView, GestureStateChangeEvent, PanGestureHandlerEventPayload } from "react-native-gesture-handler";
+import { Image, ListRenderItemInfo, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Gesture, GestureDetector, GestureHandlerRootView, GestureStateChangeEvent, PanGestureHandlerEventPayload } from "react-native-gesture-handler";
 import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
 import estiloGlobal from "../../../estiloGlobal";
 import estilos from "./styles";
