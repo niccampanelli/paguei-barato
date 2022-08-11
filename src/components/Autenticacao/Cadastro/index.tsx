@@ -240,7 +240,7 @@ export default function Cadastro() {
     return (
         <View style={estilos.main}>
             <StatusBar hidden />
-            <Image style={estilos.banner} source={require("../../../../assets/fundo_autenticacao.png")} />
+            <Image style={estilos.banner} source={require("../../../../assets/fundo_cadastro.jpg")} />
             <FluxoCadastro.Navigator screenOptions={{ headerShown: false, contentStyle: { backgroundColor: variaveisEstilo.cores.fundoPrincipal }, animation: "slide_from_right" }}>
                 <FluxoCadastro.Screen name="fluxoCadastro1" component={CadastroTela1} />
                 <FluxoCadastro.Screen name="fluxoCadastro2" component={CadastroTela2} />

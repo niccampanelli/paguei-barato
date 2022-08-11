@@ -85,21 +85,18 @@ export default function Lista() {
     ];
 
     const ItemLista = ({item}: ListRenderItemInfo<any>) => {
-        
-        const pressionado = useSharedValue(false);
+
         const desativado = useSharedValue(false);
         const offset = useSharedValue(0);
         const opacidade = useSharedValue(1);
         
         const gestoArrastar = Gesture.Pan()
-            .onBegin(() => {
-                pressionado.value = true;
-            })
+            .shouldCancelWhenOutside(false)
             .onUpdate((e) => {
                 if(e.translationX < 100 && e.translationX > -100)
                     offset.value = e.translationX;
             })
-            .onEnd(() => {
+            .onTouchesUp(() => {
                 if(offset.value > 50){
                     if(desativado.value == true){
                         opacidade.value = 1;
@@ -121,7 +118,8 @@ export default function Lista() {
                     }
                 }
                 offset.value = 0;
-                pressionado.value = false;
+                console.log("leaved");
+                
             });
 
         const gestoPressionar = Gesture.Tap()
