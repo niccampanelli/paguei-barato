@@ -13,14 +13,22 @@ export default function Menu() {
     const modalRef = useRef<RBSheet>(null);
 
     const sair = () => {
-        modalRef.current?.open();
-        //navigation.getParent()?.navigate("login");
+        modalRef.current?.close();
+        navigation.getParent()?.navigate("login");
     };
 
     return (
         <View style={estilos.container}>
-            <Modal refSheet={modalRef} titulo="Bom dia!">
-                <Text>Olá mundo</Text>
+            <Modal 
+                titulo="Tem certeza?"
+                possuiBotoes 
+                refSheet={modalRef} 
+                labelBotaoPrincipal="Sim, sair." 
+                labelBotaoSecundario="Não, permanecer conectado."
+                aoPressionarBotaoPrincipal={sair}
+                aoPressionarBotaoSecundario={() => modalRef.current?.close()}
+            >
+                <Text style={estiloGlobal.texto}>Deseja mesmo sair da sua conta?</Text>
             </Modal>
             <View style={estilos.cabecalho}>
                 <Text style={estiloGlobal.titulo}>Menu</Text>
@@ -34,19 +42,19 @@ export default function Menu() {
             </View>
             <View style={estilos.opcoes}>
                 <TouchableOpacity style={estilos.opcao}>
-                    <Feather name="user" style={estilos.opcaoIcone}/>
+                    <Feather name="user" style={estilos.opcaoIcone} />
                     <Text style={estilos.opcaoTexto}>Conta</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={estilos.opcao}>
-                    <Feather name="bell" style={estilos.opcaoIcone}/>
+                    <Feather name="bell" style={estilos.opcaoIcone} />
                     <Text style={estilos.opcaoTexto}>Notificações</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={estilos.opcao}>
-                    <Feather name="info" style={estilos.opcaoIcone}/>
+                    <Feather name="info" style={estilos.opcaoIcone} />
                     <Text style={estilos.opcaoTexto}>Sobre</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={estilos.opcao} onPress={sair}>
-                    <Feather name="log-out" style={estilos.opcaoIconeVermelho}/>
+                <TouchableOpacity style={estilos.opcao} onPress={() => modalRef.current?.open()}>
+                    <Feather name="log-out" style={estilos.opcaoIconeVermelho} />
                     <Text style={estilos.opcaoTextoVermelho}>Sair</Text>
                 </TouchableOpacity>
             </View>

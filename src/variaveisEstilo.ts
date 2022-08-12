@@ -20,7 +20,15 @@ const variaveisEstilo = {
     layout: {
         raioBorda: 16,
         paddingVertical: 34,
-        paddingHorizontal: 24
+        paddingHorizontal: 24,
+    },
+    modal: {
+        paddingVerticalHandle: 20,
+        larguraHandle: "30%",
+        alturaHandle: 5,
+        paddingTop: 10,
+        paddingBottom: 40,
+        paddingHorizontal: 32
     },
     botoesGrandes: {
         texto: 18,

@@ -3,6 +3,7 @@ import { LegacyRef, ReactNode } from "react";
 import { GestureResponderEvent, Text, TouchableOpacity, View } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import estiloGlobal from "../../estiloGlobal";
+import variaveisEstilo from "../../variaveisEstilo";
 
 interface ModalProps {
     titulo: string,
@@ -27,19 +28,19 @@ export default function Modal({
 }: ModalProps) {
 
     return (
-        <RBSheet animationType="fade" closeOnDragDown dragFromTopOnly ref={refSheet} customStyles={{ draggableIcon: { backgroundColor: "#000000", height: 10 } }}>
-            <View>
-                <Text style={estiloGlobal.titulo}>{titulo}</Text>
+        <RBSheet animationType="fade" closeOnDragDown dragFromTopOnly ref={refSheet} height={240} customStyles={{ draggableIcon: estiloGlobal.modalHandle, container: { borderRadius: variaveisEstilo.layout.raioBorda } }}>
+            <View style={estiloGlobal.modalCard}>
+                <Text style={[estiloGlobal.titulo, estiloGlobal.modalTitulo]}>{titulo}</Text>
                 <>
-                    {children}
+                    {children || null}
                 </>
                 {possuiBotoes ?
-                    <View>
-                        <TouchableOpacity onPress={aoPressionarBotaoPrincipal}>
-                            <Text>{labelBotaoPrincipal}</Text>
+                    <View style={estiloGlobal.modalOpcoes}>
+                        <TouchableOpacity style={estiloGlobal.tagPequenaNormal} onPress={aoPressionarBotaoPrincipal}>
+                            <Text style={estiloGlobal.tagPequenaNormalTexto}>{labelBotaoPrincipal}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={aoPressionarBotaoSecundario}>
-                            <Text>{labelBotaoSecundario}</Text>
+                        <TouchableOpacity style={[estiloGlobal.tagPequenaDestaque, estiloGlobal.modalOpcaoSecundaria]} onPress={aoPressionarBotaoSecundario}>
+                            <Text style={estiloGlobal.tagPequenaDestaqueTexto}>{labelBotaoSecundario}</Text>
                         </TouchableOpacity>
                     </View>
                     :

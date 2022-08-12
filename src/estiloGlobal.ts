@@ -16,6 +16,12 @@ export default StyleSheet.create({
         fontWeight: "bold",
     },
 
+    texto: {
+        color: variaveisEstilo.cores.textoEscuro,
+        fontSize: variaveisEstilo.tamanhoTextos.texto,
+        fontWeight: "400",
+    },
+
     label: {
         color: variaveisEstilo.cores.textoEscuro,
         fontSize: variaveisEstilo.tamanhoTextos.texto,
@@ -151,23 +157,32 @@ export default StyleSheet.create({
         color: "#ffffff"
     },
 
-    modalBase: {
-        position: "absolute",
-        top: Constants.statusBarHeight,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        zIndex: 100
-    },
-
-    modalBackdrop: {
-        backgroundColor: "#000000",
-        width: "100%",
-        height: "100%"
-    },
-
     modalCard: {
-        position: "absolute",
-        width: "100%"
+        paddingTop: variaveisEstilo.modal.paddingTop,
+        paddingBottom: variaveisEstilo.modal.paddingBottom,
+        paddingHorizontal: variaveisEstilo.modal.paddingHorizontal
     },
+
+    modalHandle: {
+        backgroundColor: variaveisEstilo.cores.fundoTerciario,
+        marginVertical: variaveisEstilo.modal.paddingVerticalHandle,
+        width: variaveisEstilo.modal.larguraHandle,
+        height: variaveisEstilo.modal.alturaHandle
+    },
+
+    modalTitulo: {
+        marginBottom: 16
+    },
+
+    modalOpcoes: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        marginTop: 16
+    },
+
+    modalOpcaoSecundaria: {
+        flex: 1,
+        marginLeft: 16
+    }
 });
