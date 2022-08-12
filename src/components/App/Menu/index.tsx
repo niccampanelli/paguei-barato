@@ -1,19 +1,27 @@
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { useRef } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+import RBSheet from "react-native-raw-bottom-sheet";
 import estiloGlobal from "../../../estiloGlobal";
+import Modal from "../../Modal";
 import estilos from "./styles";
 
 export default function Menu() {
 
     const navigation = useNavigation();
+    const modalRef = useRef<RBSheet>(null);
 
     const sair = () => {
-        navigation.getParent()?.navigate("login");
+        modalRef.current?.open();
+        //navigation.getParent()?.navigate("login");
     };
 
     return (
         <View style={estilos.container}>
+            <Modal refSheet={modalRef} titulo="Bom dia!">
+                <Text>Olá mundo</Text>
+            </Modal>
             <View style={estilos.cabecalho}>
                 <Text style={estiloGlobal.titulo}>Menu</Text>
                 <View style={estilos.usuario}>

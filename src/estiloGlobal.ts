@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native";
 import variaveisEstilo from "./variaveisEstilo";
+import Constants from "expo-constants";
 
 export default StyleSheet.create({
 
@@ -148,5 +149,25 @@ export default StyleSheet.create({
         fontSize: variaveisEstilo.botoes.texto,
         fontWeight: "400",
         color: "#ffffff"
+    },
+
+    modalBase: {
+        position: "absolute",
+        top: Constants.statusBarHeight,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 100
+    },
+
+    modalBackdrop: {
+        backgroundColor: "#000000",
+        width: "100%",
+        height: "100%"
+    },
+
+    modalCard: {
+        position: "absolute",
+        width: "100%"
     },
 });
