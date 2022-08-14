@@ -6,14 +6,15 @@ import estiloGlobal from "../../estiloGlobal";
 import variaveisEstilo from "../../variaveisEstilo";
 
 interface ModalProps {
-    titulo: string,
-    children?: ReactNode,
-    possuiBotoes?: boolean,
-    labelBotaoPrincipal?: string,
-    labelBotaoSecundario?: string,
-    aoPressionarBotaoPrincipal?: (evento: GestureResponderEvent) => void,
-    aoPressionarBotaoSecundario?: (evento: GestureResponderEvent) => void
-    refSheet?: Ref<RBSheet>
+    titulo: string;
+    children?: ReactNode;
+    possuiBotoes?: boolean;
+    labelBotaoPrincipal?: string;
+    labelBotaoSecundario?: string;
+    aoPressionarBotaoPrincipal?: (evento: GestureResponderEvent) => void;
+    aoPressionarBotaoSecundario?: (evento: GestureResponderEvent) => void;
+    refSheet?: Ref<RBSheet>;
+    height?: number;
 }
 
 export default function Modal({
@@ -24,11 +25,12 @@ export default function Modal({
     labelBotaoSecundario = "Cancelar",
     aoPressionarBotaoPrincipal,
     aoPressionarBotaoSecundario,
-    refSheet
+    refSheet,
+    height = 240
 }: ModalProps) {
 
     return (
-        <RBSheet animationType="fade" closeOnDragDown dragFromTopOnly ref={refSheet} height={240} customStyles={{ draggableIcon: estiloGlobal.modalHandle, container: { borderRadius: variaveisEstilo.layout.raioBorda } }}>
+        <RBSheet animationType="fade" closeOnDragDown dragFromTopOnly ref={refSheet} height={height} customStyles={{ draggableIcon: estiloGlobal.modalHandle, container: { borderRadius: variaveisEstilo.layout.raioBorda } }}>
             <View style={estiloGlobal.modalCard}>
                 <Text style={[estiloGlobal.titulo, estiloGlobal.modalTitulo]}>{titulo}</Text>
                 <>

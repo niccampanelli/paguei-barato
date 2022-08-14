@@ -82,4 +82,31 @@ export default StyleSheet.create({
         fontSize: variaveisEstilo.tamanhoTextos.texto,
         color: variaveisEstilo.cores.textoEscuro
     },
+
+    modalScrollview: {
+        flex: 1,
+    },
+
+    modalScrollContent: {
+    },
+
+    modalSubtitulo: {
+        marginBottom: 10
+    },
+    
+    modalSecao: {
+        marginTop: 6,
+    },
+
+    modalOpcoes: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start",
+        flex: 1
+    },
+
+    modalOpcao: {
+        alignSelf: "flex-start",
+        marginBottom: 10,
+    }
 });

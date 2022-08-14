@@ -158,6 +158,9 @@ export default StyleSheet.create({
     },
 
     modalCard: {
+        display: "flex",
+        flexDirection: "column",
+        flex: 1,
         paddingTop: variaveisEstilo.modal.paddingTop,
         paddingBottom: variaveisEstilo.modal.paddingBottom,
         paddingHorizontal: variaveisEstilo.modal.paddingHorizontal
