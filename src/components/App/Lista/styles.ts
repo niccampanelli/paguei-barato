@@ -95,5 +95,48 @@ export default StyleSheet.create({
         fontSize: variaveisEstilo.tamanhoTextos.observacao,
         color: variaveisEstilo.cores.textoClaro,
         textAlign: "center"
+    },
+
+    modalScrollview: {
+        flex: 1,
+    },
+
+    modalScrollContent: {
+    },
+    
+    modalSecao: {
+        marginBottom: 16
+    },
+
+    modalBusca: {
+        display: "flex",
+        width: "100%",
+        flexDirection: "row",
+        alignItems: "center",
+        marginTop: 10,
+        borderRadius: variaveisEstilo.layout.raioBorda,
+        backgroundColor: variaveisEstilo.cores.fundoSecundario,
+        paddingVertical: variaveisEstilo.botoesGrandes.paddingVertical,
+        paddingHorizontal: variaveisEstilo.botoesGrandes.paddingHorizontal
+    },
+    
+    modalBuscaCampo: {
+        flex: 1,
+        fontSize: variaveisEstilo.botoesGrandes.texto,
+        marginRight: variaveisEstilo.botoesGrandes.espacamento,
+        color: variaveisEstilo.cores.textoEscuro,
+        height: "100%",
+    },
+    
+    modalBuscaIcone: {
+        fontSize: variaveisEstilo.botoesGrandes.texto,
+        color: variaveisEstilo.cores.textoClaro
+    },
+
+    modalMapa: {
+        marginTop: 10,
+        width: "100%",
+        height: 200,
+        borderRadius: variaveisEstilo.layout.raioBorda
     }
 });

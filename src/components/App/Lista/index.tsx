@@ -1,13 +1,24 @@
-import { Feather } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
-import { useState } from "react";
-import { Image, ListRenderItemInfo, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import { FlatList, Gesture, GestureDetector, GestureHandlerRootView, GestureStateChangeEvent, PanGestureHandlerEventPayload } from "react-native-gesture-handler";
+import { Feather } from "@expo/vector-icons"
+import { useEffect, useRef, useState } from "react";
+import { Image, ListRenderItemInfo, ScrollView, Text, TextInput, TouchableOpacity, useWindowDimensions, View } from "react-native";
+import { FlatList, Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler";
 import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
+import RBSheet from "react-native-raw-bottom-sheet";
 import estiloGlobal from "../../../estiloGlobal";
+import Modal from "../../Modal";
 import estilos from "./styles";
+import Input from "../../Input";
 
 export default function Lista() {
+
+    const modalRef = useRef<RBSheet>(null);
+
+    const dimensoesTela = useWindowDimensions();
+    const [alturaModal, setAlturaModal] = useState(0);
+
+    useEffect(() => {
+        setAlturaModal(dimensoesTela.height*0.9);
+    }, [dimensoesTela]);
 
     const dummydata = [
         {
@@ -160,6 +171,52 @@ export default function Lista() {
     
     return (
         <View style={estilos.container}>
+            <Modal titulo="Adicionar item à lista" refSheet={modalRef} height={alturaModal}>
+                <ScrollView showsVerticalScrollIndicator={false} overScrollMode={"never"} style={estilos.modalScrollview} contentContainerStyle={estilos.modalScrollContent}>
+                    <View style={estilos.modalSecao}>
+                        <Text style={estiloGlobal.subtitulo}>Selecione o produto</Text>
+                        <View style={estilos.modalBusca}>
+                            <TextInput style={estilos.modalBuscaCampo} placeholder="Pesquise um produto..."/>
+                            <Feather style={estilos.modalBuscaIcone} name="shopping-bag"/>
+                        </View>
+                    </View>
+                    <View style={estilos.modalSecao}>
+                        <Text style={estiloGlobal.subtitulo}>Escolha onde quer comprar</Text>
+                        <Image source={require("../../../../assets/mapa.png")} style={estilos.modalMapa}/>
+                    </View>
+                    <ScrollView showsHorizontalScrollIndicator={false} horizontal style={estilos.listaFiltros}>
+                        <TouchableOpacity onPress={() => {}} style={[estiloGlobal.tagPequenaDestaque, estilos.filtro]}>
+                            <Text style={estiloGlobal.tagPequenaDestaqueTexto}>Filtros</Text>
+                            <Text style={estilos.filtroContador}>2</Text>
+                        </TouchableOpacity>
+                        <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
+                            <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Text>
+                        </View>
+                        <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
+                            <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Text>
+                        </View>
+                        <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
+                            <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Text>
+                        </View>
+                        <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
+                            <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Text>
+                        </View>
+                        <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
+                            <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Text>
+                        </View>
+                        <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
+                            <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Text>
+                        </View>
+                        <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
+                            <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Text>
+                        </View>
+                    </ScrollView>
+                    <FlatList style={estilos.lista} contentContainerStyle={{ paddingBottom: 60 }} data={dummydata} renderItem={(props: ListRenderItemInfo<any>) => <ItemLista {...props}/>}/>
+                    <TouchableOpacity style={estiloGlobal.tagPequenaDestaque}>
+                        <Text style={estiloGlobal.tagPequenaDestaqueTexto}>Adicionar</Text>
+                    </TouchableOpacity>
+                </ScrollView>
+            </Modal>
             <View style={estilos.cabecalho}>
                 <Text style={estiloGlobal.titulo}>Lista de compras</Text>
                 <View style={estilos.resumo}>
@@ -196,7 +253,7 @@ export default function Lista() {
             </View>
             <FlatList style={estilos.lista} contentContainerStyle={{ paddingBottom: 60 }} data={dummydata} renderItem={(props: ListRenderItemInfo<any>) => <ItemLista {...props}/>}/>
             <View style={estilos.listaFooter}>
-                <TouchableOpacity style={estilos.adicionarFlutuante}>
+                <TouchableOpacity onPress={() => modalRef.current?.open()} style={estilos.adicionarFlutuante}>
                     <Feather name="plus" style={estilos.adicionarFlutuanteIcone}/>
                 </TouchableOpacity>
                 <Text style={estilos.listaObservacao}>Arraste o item para a direita para marcá-lo como comprado.</Text>
