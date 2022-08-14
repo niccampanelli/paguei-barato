@@ -1,6 +1,5 @@
 import { StyleSheet } from "react-native";
 import variaveisEstilo from "./variaveisEstilo";
-import Constants from "expo-constants";
 
 export default StyleSheet.create({
 
@@ -35,8 +34,6 @@ export default StyleSheet.create({
     },
 
     input: {
-        height: 40,
-        width: "100%",
         flexDirection: "row",
         alignItems: "center",
         borderRadius: variaveisEstilo.layout.raioBorda,

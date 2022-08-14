@@ -15,7 +15,6 @@ export default StyleSheet.create({
     
     barraBusca: {
         display: "flex",
-        height: 40,
         width: "100%",
         flexDirection: "row",
         alignItems: "center",
