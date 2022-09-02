@@ -4,14 +4,14 @@
     "slug": "PagueiBarato",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/adaptive-icon.png",
     "userInterfaceStyle": "light",
     "androidNavigationBar": {
       "barStyle": "dark-content",
       "backgroundColor": "#FFFFFF"
     },
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splashscreen.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

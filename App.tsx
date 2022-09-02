@@ -1,5 +1,7 @@
 import StackExterna from "./src/StackExterna";
 import 'react-native-gesture-handler';
+import 'intl';
+import 'intl/locale-data/jsonp/en';
 
 /**
  * # PagueiBarato

@@ -154,6 +154,22 @@ export default StyleSheet.create({
         color: "#ffffff"
     },
 
+    tagPequenaEscura: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: variaveisEstilo.cores.fundoTerciario,
+        borderRadius: variaveisEstilo.layout.raioBorda,
+        paddingVertical: variaveisEstilo.botoes.paddingVertical,
+        paddingHorizontal: variaveisEstilo.botoes.paddingHorizontal
+    },
+
+    tagPequenaEscuraTexto: {
+        fontSize: variaveisEstilo.botoes.texto,
+        fontWeight: "400",
+        color: variaveisEstilo.cores.textoEscuro
+    },
+
     modalCard: {
         display: "flex",
         flexDirection: "column",

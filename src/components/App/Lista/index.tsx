@@ -7,9 +7,11 @@ import RBSheet from "react-native-raw-bottom-sheet";
 import estiloGlobal from "../../../estiloGlobal";
 import Modal from "../../Modal";
 import estilos from "./styles";
-import Input from "../../Input";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Lista() {
+
+    const navigation = useNavigation();
 
     const modalRef = useRef<RBSheet>(null);
 
@@ -19,6 +21,10 @@ export default function Lista() {
     useEffect(() => {
         setAlturaModal(dimensoesTela.height*0.9);
     }, [dimensoesTela]);
+
+    const irParaDetalhes = () => {
+        navigation.navigate("detalhesItem" as never);
+    }
 
     const dummydata = [
         {
@@ -129,8 +135,6 @@ export default function Lista() {
                     }
                 }
                 offset.value = 0;
-                console.log("leaved");
-                
             });
 
         const gestoPressionar = Gesture.Tap()
@@ -157,7 +161,7 @@ export default function Lista() {
         return (
             <GestureHandlerRootView>
             <GestureDetector gesture={gestoComposto}>
-            <Animated.View style={[estilos.listaItem, estiloAnimado]}>
+            <Animated.View onTouchEnd={irParaDetalhes} style={[estilos.listaItem, estiloAnimado]}>
                 <Image style={estilos.listaItemImagem} source={item.imagem}/>
                 <View>
                     <Text style={estilos.listaItemTexto} numberOfLines={1}>{item.nome}</Text>
