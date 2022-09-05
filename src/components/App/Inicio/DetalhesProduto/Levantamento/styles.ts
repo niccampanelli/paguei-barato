@@ -9,9 +9,16 @@ export default StyleSheet.create({
         height: 400,
         flexDirection: "row",
         justifyContent: "space-between",
+        paddingTop: 60,
         padding: 20,
         backgroundColor: variaveisEstilo.cores.fundoSecundario,
         borderRadius: variaveisEstilo.layout.raioBorda,
+    },
+
+    quantidade: {
+        position: "absolute",
+        top: 20,
+        left: 20
     },
 
     coluna: {

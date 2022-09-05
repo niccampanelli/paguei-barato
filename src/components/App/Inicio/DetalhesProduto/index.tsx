@@ -5,7 +5,9 @@ import { Image, ListRenderItemInfo, Text, TouchableOpacity, View } from "react-n
 import { FlatList, ScrollView } from "react-native-gesture-handler";
 import RBSheet from "react-native-raw-bottom-sheet";
 import estiloGlobal from "../../../../estiloGlobal";
+import Formatador from "../../../../util/Formatador";
 import Modal from "../../../Modal";
+import Toast from "../../../Toast";
 import Levantamento, { DadoLevantamento } from "./Levantamento";
 import estilos from "./styles";
 
@@ -20,9 +22,10 @@ export default function DetalhesProduto() {
     };
 
     const dummyLevantamento: DadoLevantamento = {
-        menor: 0.50,
-        medio: 1.99,
-        maior: 3.60
+        quantidade: 36,
+        menor: 2,
+        medio: 5,
+        maior: 8.60
     }
 
     const dummydata = [
@@ -40,57 +43,69 @@ export default function DetalhesProduto() {
         },
         {
             imagem: require("../../../../../assets/favicon.png"),
-            nome: "Supermercado Kawahara",
-            endereco: "Av. Dr. Pereira Vergueiro, 204",
+            nome: "Dovale LTDA",
+            endereco: "Av. Aldeia Manuel Antônio, 385",
             preco: 2.52
         },
         {
             imagem: require("../../../../../assets/favicon.png"),
-            nome: "Minimercado Extra Artur Alvim",
-            endereco: "Rua Doutro Campos Moura, 2341111111111111111111111111111111111111111111111111",
+            nome: "Dovale LTDA",
+            endereco: "Av. Aldeia Manuel Antônio, 385",
             preco: 2.52
         },
         {
             imagem: require("../../../../../assets/favicon.png"),
-            nome: "Minimercado Extra Artur Alvim",
-            endereco: "Rua Doutro Campos Moura, 234",
+            nome: "Dovale LTDA",
+            endereco: "Av. Aldeia Manuel Antônio, 385",
             preco: 2.52
         },
         {
             imagem: require("../../../../../assets/favicon.png"),
-            nome: "Minimercado Extra Artur Alvim",
-            endereco: "Rua Doutro Campos Moura, 234",
+            nome: "Dovale LTDA",
+            endereco: "Av. Aldeia Manuel Antônio, 385",
             preco: 2.52
         },
         {
             imagem: require("../../../../../assets/favicon.png"),
-            nome: "Minimercado Extra Artur Alvim",
-            endereco: "Rua Doutro Campos Moura, 234",
+            nome: "Dovale LTDA",
+            endereco: "Av. Aldeia Manuel Antônio, 385",
             preco: 2.52
         },
         {
             imagem: require("../../../../../assets/favicon.png"),
-            nome: "Minimercado Extra Artur Alvim",
-            endereco: "Rua Doutro Campos Moura, 234",
+            nome: "Dovale LTDA",
+            endereco: "Av. Aldeia Manuel Antônio, 385",
             preco: 2.52
         },
         {
             imagem: require("../../../../../assets/favicon.png"),
-            nome: "Supermercado Kawahara",
-            endereco: "Av. Dr. Pereira Vergueiro, 204",
+            nome: "Dovale LTDA",
+            endereco: "Av. Aldeia Manuel Antônio, 385",
             preco: 2.52
         },
         {
             imagem: require("../../../../../assets/favicon.png"),
-            nome: "Supermercado Kawahara",
-            endereco: "Av. Dr. Pereira Vergueiro, 204",
+            nome: "Dovale LTDA",
+            endereco: "Av. Aldeia Manuel Antônio, 385",
             preco: 2.52
         },
         {
             imagem: require("../../../../../assets/favicon.png"),
-            nome: "Supermercado Kawahara",
-            endereco: "Av. Dr. Pereira Vergueiro, 204",
+            nome: "Dovale LTDA",
+            endereco: "Av. Aldeia Manuel Antônio, 385",
             preco: 2.52
+        },
+        {
+            imagem: require("../../../../../assets/favicon.png"),
+            nome: "Dovale LTDA",
+            endereco: "Av. Aldeia Manuel Antônio, 385",
+            preco: 2.52
+        },
+        {
+            imagem: require("../../../../../assets/favicon.png"),
+            nome: "Dovale LTDA",
+            endereco: "Av. Aldeia Manuel Antônio, 385",
+            preco: 20505
         },
     ];
 
@@ -103,14 +118,14 @@ export default function DetalhesProduto() {
                     <Text style={estilos.listaItemTexto} numberOfLines={1}>{item.nome}</Text>
                     <Text style={estilos.listaItemMercado} numberOfLines={1}>{item.endereco}</Text>
                 </View>
-                <Text style={estilos.listaItemPreco} numberOfLines={1}>{Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(item.preco)}</Text>
+                <Text style={estilos.listaItemPreco} numberOfLines={1}>{Formatador.formatarMoeda(item.preco)}</Text>
             </TouchableOpacity>
         );
     };
 
     return (
         <View style={estilos.main}>
-            <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.voltar]}>
+            <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.voltar]} onPress={() => navigation.goBack()}>
                 <Feather name="arrow-left" />
                 <Text style={estiloGlobal.tagPequenaNormalTexto}>Voltar</Text>
             </TouchableOpacity>
@@ -148,6 +163,7 @@ export default function DetalhesProduto() {
                         <Text style={[estiloGlobal.subtitulo, estilos.titulo]}>Levantamento de preços</Text>
                         <Text style={[estilos.informacaoTexto, estilos.informacao]}>Cálculo de preços com base nas sugestões de preço desde sua data de cadastro</Text>
                         <Levantamento dados={dummyLevantamento} />
+                        <Toast icone="calendar" texto="Data da última sugestão de preço: 23/07" style={{ marginTop: 20 }} estilo="secundario" />
                     </View>
                     <View style={estilos.secao}>
                         <Text style={[estiloGlobal.subtitulo, estilos.titulo]}>Onde encontrar esse produto</Text>

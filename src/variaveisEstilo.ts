@@ -2,10 +2,14 @@
 const variaveisEstilo = {
     cores: {
         destaque: "#27fb6b",
-        destaqueClaro: "#75ffa1",
+        destaqueClaro: "#d4ffe1",
+        destaqueEscuro: "#187a36",
         secundaria: "#3772ff",
-        secundariaClaro: "#8fb0ff",
+        secundariaClaro: "#d1deff",
+        secundariaEscuro: "#002e99",
         vermelho: "#ff6a85",
+        vermelhoClaro: "#ffdbe2",
+        vermelhoEscuro: "#8c0000",
         fundoPrincipal: "#ffffff",
         fundoSecundario: "#f5f5f5",
         fundoTerciario: "#dfdfdf",

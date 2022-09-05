@@ -16,14 +16,14 @@ export default StyleSheet.create({
 
     voltar: {
         position: "absolute",
-        top: variaveisEstilo.layout.paddingVertical,
+        top: Constants.statusBarHeight + variaveisEstilo.layout.paddingVertical,
         left: variaveisEstilo.layout.paddingHorizontal,
         zIndex: 2
     },
 
     cabecalho: {
         position: "relative",
-        paddingTop: Constants.statusBarHeight
+        paddingTop: Constants.statusBarHeight + variaveisEstilo.layout.paddingVertical
     },
 
     container: {
@@ -68,7 +68,7 @@ export default StyleSheet.create({
     },
 
     lista: {
-        height: 400
+        maxHeight: 400
     },
 
     listaItem: {
