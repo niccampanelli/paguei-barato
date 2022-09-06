@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import variaveisEstilo from "../../../../variaveisEstilo";
+import variaveisEstilo from "../../variaveisEstilo";
 
 export default StyleSheet.create({
     

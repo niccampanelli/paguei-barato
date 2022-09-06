@@ -5,9 +5,11 @@ import { Image, ScrollView, Text, View } from "react-native";
 import variaveisEstilo from "../../../variaveisEstilo";
 import estiloGlobal from "../../../estiloGlobal";
 import estilos from "./styles";
-import Carrossel from "./Carrossel";
+import Carrossel from "../../Carrossel";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import DetalhesProduto from "./DetalhesProduto";
+import DetalhesMercado from "./DetalhesMercado";
+import DetalhesEstoque from "./DetalhesEstoque";
 
 export default function Inicio() {
 
@@ -125,7 +127,9 @@ export default function Inicio() {
         <Stack.Navigator initialRouteName="principal" screenOptions={{ headerShown: false, contentStyle: { backgroundColor: variaveisEstilo.cores.fundoPrincipal } }}>
             <Stack.Screen name="principal" component={Principal} />
             <Stack.Group>
-                <Stack.Screen name="detalhesItem" options={{animation: "slide_from_right"}} component={DetalhesProduto} />
+                <Stack.Screen name="detalhesProduto" component={DetalhesProduto} />
+                <Stack.Screen name="detalhesMercado" component={DetalhesMercado} />
+                <Stack.Screen name="detalhesEstoque" component={DetalhesEstoque} />
             </Stack.Group>
         </Stack.Navigator>
 	);

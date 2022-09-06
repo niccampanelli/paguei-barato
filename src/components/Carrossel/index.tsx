@@ -1,6 +1,6 @@
 import { Image, ListRenderItemInfo, Text, TouchableOpacity, View, ViewProps } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import estiloGlobal from "../../../../estiloGlobal";
+import estiloGlobal from "../../estiloGlobal";
 import estilos from "./styles";
 
 interface CarrosselProps extends ViewProps {

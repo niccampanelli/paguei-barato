@@ -9,6 +9,7 @@ import Formatador from "../../../../util/Formatador";
 import Modal from "../../../Modal";
 import Toast from "../../../Toast";
 import Levantamento, { DadoLevantamento } from "./Levantamento";
+import dummyimagem from "./dummyimagem.json";
 import estilos from "./styles";
 
 export default function DetalhesProduto() {
@@ -30,79 +31,79 @@ export default function DetalhesProduto() {
 
     const dummydata = [
         {
-            imagem: require("../../../../../assets/favicon.png"),
+            imagem: { uri: dummyimagem.imagem },
             nome: "Minimercado Extra Artur Alvim",
             endereco: "Rua Doutor Campos Moura, 234",
             preco: 2.52
         },
         {
-            imagem: require("../../../../../assets/favicon.png"),
+            imagem: { uri: dummyimagem.imagem },
             nome: "Dovale LTDA",
             endereco: "Av. Aldeia Manuel Antônio, 385",
             preco: 2.52
         },
         {
-            imagem: require("../../../../../assets/favicon.png"),
+            imagem: { uri: dummyimagem.imagem },
             nome: "Dovale LTDA",
             endereco: "Av. Aldeia Manuel Antônio, 385",
             preco: 2.52
         },
         {
-            imagem: require("../../../../../assets/favicon.png"),
+            imagem: { uri: dummyimagem.imagem },
             nome: "Dovale LTDA",
             endereco: "Av. Aldeia Manuel Antônio, 385",
             preco: 2.52
         },
         {
-            imagem: require("../../../../../assets/favicon.png"),
+            imagem: { uri: dummyimagem.imagem },
             nome: "Dovale LTDA",
             endereco: "Av. Aldeia Manuel Antônio, 385",
             preco: 2.52
         },
         {
-            imagem: require("../../../../../assets/favicon.png"),
+            imagem: { uri: dummyimagem.imagem },
             nome: "Dovale LTDA",
             endereco: "Av. Aldeia Manuel Antônio, 385",
             preco: 2.52
         },
         {
-            imagem: require("../../../../../assets/favicon.png"),
+            imagem: { uri: dummyimagem.imagem },
             nome: "Dovale LTDA",
             endereco: "Av. Aldeia Manuel Antônio, 385",
             preco: 2.52
         },
         {
-            imagem: require("../../../../../assets/favicon.png"),
+            imagem: { uri: dummyimagem.imagem },
             nome: "Dovale LTDA",
             endereco: "Av. Aldeia Manuel Antônio, 385",
             preco: 2.52
         },
         {
-            imagem: require("../../../../../assets/favicon.png"),
+            imagem: { uri: dummyimagem.imagem },
             nome: "Dovale LTDA",
             endereco: "Av. Aldeia Manuel Antônio, 385",
             preco: 2.52
         },
         {
-            imagem: require("../../../../../assets/favicon.png"),
+            imagem: { uri: dummyimagem.imagem },
             nome: "Dovale LTDA",
             endereco: "Av. Aldeia Manuel Antônio, 385",
             preco: 2.52
         },
         {
-            imagem: require("../../../../../assets/favicon.png"),
+            imagem: { uri: dummyimagem.imagem },
             nome: "Dovale LTDA",
             endereco: "Av. Aldeia Manuel Antônio, 385",
             preco: 2.52
         },
         {
-            imagem: require("../../../../../assets/favicon.png"),
+            imagem: { uri: dummyimagem.imagem },
             nome: "Dovale LTDA",
             endereco: "Av. Aldeia Manuel Antônio, 385",
             preco: 2.52
         },
         {
-            imagem: require("../../../../../assets/favicon.png"),
+            imagem: { uri: dummyimagem.imagem },
             nome: "Dovale LTDA",
             endereco: "Av. Aldeia Manuel Antônio, 385",
             preco: 20505
@@ -112,7 +113,7 @@ export default function DetalhesProduto() {
     const ItemLista = ({ item }: any) => {
 
         return (
-            <TouchableOpacity style={estilos.listaItem}>
+            <TouchableOpacity style={estilos.listaItem} onPress={() => navigation.navigate('detalhesEstoque' as never)}>
                 <Image style={estilos.listaItemImagem} source={item.imagem} />
                 <View style={estilos.listaItemInfos}>
                     <Text style={estilos.listaItemTexto} numberOfLines={1}>{item.nome}</Text>
@@ -138,6 +139,9 @@ export default function DetalhesProduto() {
                         <View style={estiloGlobal.tagPequenaDestaque}>
                             <Text style={estiloGlobal.tagPequenaDestaqueTexto}>Molhos e Condimentos</Text>
                         </View>
+                        <View style={[estiloGlobal.tagPequenaNormal, { marginLeft: 10 }]}>
+                            <Text style={estiloGlobal.tagPequenaNormalTexto}>Sugerido há 2h e 10min</Text>
+                        </View>
                     </View>
                     <Text style={[estiloGlobal.titulo, estilos.titulo]}>Molho De Tomate Tradicional 450g Melhore</Text>
                     <View style={estilos.secao}>
@@ -161,9 +165,9 @@ export default function DetalhesProduto() {
                     </View>
                     <View style={estilos.secao}>
                         <Text style={[estiloGlobal.subtitulo, estilos.titulo]}>Levantamento de preços</Text>
-                        <Text style={[estilos.informacaoTexto, estilos.informacao]}>Cálculo de preços com base nas sugestões de preço desde sua data de cadastro</Text>
+                        <Text style={[estilos.informacaoTexto, estilos.informacao]}>Informações sobre a variação de preços desse produto em todos os mercados.</Text>
                         <Levantamento dados={dummyLevantamento} />
-                        <Toast icone="calendar" texto="Data da última sugestão de preço: 23/07" style={{ marginTop: 20 }} estilo="secundario" />
+                        <Toast icone="clock" texto="Data da última sugestão de preço: 23/07/2022 às 17:53" style={{ marginTop: 20 }} estilo="secundario" />
                     </View>
                     <View style={estilos.secao}>
                         <Text style={[estiloGlobal.subtitulo, estilos.titulo]}>Onde encontrar esse produto</Text>

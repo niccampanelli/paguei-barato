@@ -23,7 +23,7 @@ export default function Lista() {
     }, [dimensoesTela]);
 
     const irParaDetalhes = () => {
-        navigation.navigate("detalhesItem" as never);
+        navigation.navigate("detalhesEstoque" as never);
     }
 
     const dummydata = [
