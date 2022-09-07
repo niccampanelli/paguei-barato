@@ -1,7 +1,7 @@
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useRef } from "react";
-import { Image, ListRenderItemInfo, Text, TouchableOpacity, View } from "react-native";
+import { Image, ListRenderItemInfo, Text, TouchableOpacity, View, ViewProps } from "react-native";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
 import RBSheet from "react-native-raw-bottom-sheet";
 import estiloGlobal from "../../../../estiloGlobal";
@@ -9,6 +9,16 @@ import Formatador from "../../../../util/Formatador";
 import Modal from "../../../Modal";
 import Toast from "../../../Toast";
 import estilos from "./styles";
+
+interface Estoque {
+    imagem: any,
+    nome: string,
+    preco: number
+}
+
+interface EstoqueProp extends ViewProps {
+    item: Estoque,
+}
 
 export default function DetalhesMercado() {
 
@@ -20,7 +30,7 @@ export default function DetalhesMercado() {
         navigation.getParent()?.navigate("login");
     };
 
-    const dummydata = [
+    const dummydata: Estoque[] = [
         {
             imagem: { uri: "https://a-static.mlcdn.com.br/800x560/molho-de-tomate-fugini-sache-300g-caixa-com-36-unidades/calcadosdmais/308d194e1d5211ecb8da4201ac185013/032bae61bf039c555f62d1ed00a2ecaa.jpeg" },
             nome: "Molho De Tomate Tradicional Melhore 450g",
@@ -88,15 +98,15 @@ export default function DetalhesMercado() {
         },
     ];
 
-    const ItemLista = ({ item }: any) => {
+    const ItemLista = ({item, ...props}: EstoqueProp) => {
 
         return (
-            <TouchableOpacity style={estilos.listaItem} onPress={() => navigation.navigate('detalhesEstoque' as never)}>
+            <TouchableOpacity {...props} style={[estilos.listaItem, props.style]} onPress={() => navigation.navigate('detalhesEstoque' as never)}>
                 <Image style={estilos.listaItemImagem} source={item.imagem} />
                 <View style={estilos.listaItemInfos}>
-                    <Text style={estilos.listaItemTexto} numberOfLines={1}>{item.nome}</Text>
+                    <Text style={estilos.listaItemPreco} numberOfLines={1}>{Formatador.formatarMoeda(item.preco)}</Text>
+                    <Text style={estilos.listaItemTexto}>{item.nome}</Text>
                 </View>
-                <Text style={estilos.listaItemPreco} numberOfLines={1}>{Formatador.formatarMoeda(item.preco)}</Text>
             </TouchableOpacity>
         );
     };
@@ -132,15 +142,15 @@ export default function DetalhesMercado() {
                         </View>
                         <ScrollView nestedScrollEnabled style={{ height: 400, width: "100%", flex: 1, borderRadius: 50 }}>
                             <ScrollView nestedScrollEnabled horizontal style={{ flex: 1, borderRadius: 20 }}>
-                                <Image source={require("../../../../../assets/mapa.png")}/>
+                                <Image source={require("../../../../../assets/mapa.png")} />
                             </ScrollView>
                         </ScrollView>
                     </View>
                     <View style={estilos.secao}>
                         <Text style={[estiloGlobal.subtitulo, estilos.titulo]}>Nas prateleiras desse mercado</Text>
-                        <ScrollView style={estilos.lista} nestedScrollEnabled={true}>
+                        <ScrollView style={estilos.lista} contentContainerStyle={estilos.listaConteudo} nestedScrollEnabled>
                             {dummydata.map((elem, i) => (
-                                <ItemLista key={i} item={elem} />
+                                <ItemLista key={i} item={elem} style={(i%2 === 0) ? {marginRight: "4%"} : {marginLeft: "4%"}} />
                             ))}
                         </ScrollView>
                     </View>

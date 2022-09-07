@@ -8,7 +8,7 @@ import estiloGlobal from "../../../../estiloGlobal";
 import Formatador from "../../../../util/Formatador";
 import Modal from "../../../Modal";
 import Toast from "../../../Toast";
-import Levantamento, { DadoLevantamento } from "./Levantamento";
+import LevantamentoPrecos, { DadoLevantamentoPrecos } from "./LevantamentoPrecos";
 import dummyimagem from "./dummyimagem.json";
 import estilos from "./styles";
 
@@ -22,7 +22,7 @@ export default function DetalhesProduto() {
         navigation.getParent()?.navigate("login");
     };
 
-    const dummyLevantamento: DadoLevantamento = {
+    const dummyLevantamento: DadoLevantamentoPrecos = {
         quantidade: 36,
         menor: 2,
         medio: 5,
@@ -166,7 +166,7 @@ export default function DetalhesProduto() {
                     <View style={estilos.secao}>
                         <Text style={[estiloGlobal.subtitulo, estilos.titulo]}>Levantamento de preços</Text>
                         <Text style={[estilos.informacaoTexto, estilos.informacao]}>Informações sobre a variação de preços desse produto em todos os mercados.</Text>
-                        <Levantamento dados={dummyLevantamento} />
+                        <LevantamentoPrecos dados={dummyLevantamento} />
                         <Toast icone="clock" texto="Data da última sugestão de preço: 23/07/2022 às 17:53" style={{ marginTop: 20 }} estilo="secundario" />
                     </View>
                     <View style={estilos.secao}>

@@ -4,21 +4,21 @@ import Formatador from "../../../../../util/Formatador";
 import variaveisEstilo from "../../../../../variaveisEstilo";
 import estilos from "./styles";
 
-export interface DadoLevantamento {
+export interface DadoLevantamentoPrecos {
     quantidade: number,
     menor: number,
     medio: number,
     maior: number
 }
 
-interface LevantamentoProps extends ViewProps {
-    dados: DadoLevantamento
+interface LevantamentoPrecosProps extends ViewProps {
+    dados: DadoLevantamentoPrecos
 }
 
-export default function Levantamento({
+export default function LevantamentoPrecos({
     dados,
     ...props
-}: LevantamentoProps) {
+}: LevantamentoPrecosProps) {
 
     return (
         <View style={estilos.main} {...props}>

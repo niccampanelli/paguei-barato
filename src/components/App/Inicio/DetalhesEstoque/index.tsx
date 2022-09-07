@@ -8,7 +8,7 @@ import estiloGlobal from "../../../../estiloGlobal";
 import Formatador from "../../../../util/Formatador";
 import Modal from "../../../Modal";
 import Toast from "../../../Toast";
-import HistoricoPrecos, { DadoHistoricoPrecos } from "./Levantamento";
+import HistoricoPrecos, { DadoHistoricoPrecos } from "./HistoricoPrecos";
 import estilos from "./styles";
 
 export default function DetalhesEstoque() {

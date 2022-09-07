@@ -68,20 +68,26 @@ export default StyleSheet.create({
     },
 
     lista: {
-        maxHeight: 400
+        maxHeight: 460
+    },
+
+    listaConteudo: {
+        display: "flex",
+        flexDirection: "row",
+        flexWrap: "wrap",
     },
 
     listaItem: {
+        width: "46%",
         display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        paddingBottom: 16
+        flexDirection: "column",
+        paddingBottom: 40
     },
 
     listaItemImagem: {
-        marginRight: 20,
-        height: 30,
-        width: 30
+        resizeMode: "contain", 
+        width: "100%",
+        height: 100
     },
 
     listaItemInfos: {
@@ -90,23 +96,15 @@ export default StyleSheet.create({
     },
 
     listaItemTexto: {
-        flex: 1,
+        fontWeight: "800",
         fontSize: variaveisEstilo.tamanhoTextos.texto,
         color: variaveisEstilo.cores.textoEscuro
     },
 
     listaItemPreco: {
-        alignSelf: "flex-start",
-        textAlign: "right",
-        fontWeight: "600",
-        fontSize: variaveisEstilo.tamanhoTextos.texto,
-        color: variaveisEstilo.cores.textoEscuro
-    },
-
-    listaItemMercado: {
-        flex: 1,
-        fontSize: variaveisEstilo.tamanhoTextos.texto,
-        color: variaveisEstilo.cores.textoClaro
+        fontWeight: "800",
+        fontSize: variaveisEstilo.tamanhoTextos.subtitulo,
+        color: variaveisEstilo.cores.secundaria
     },
 
     listaObservacao: {
