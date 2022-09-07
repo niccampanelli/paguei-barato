@@ -53,7 +53,6 @@ export default StyleSheet.create({
     },
 
     barra: {
-        flex: 1,
         width: "100%",
         borderTopLeftRadius: variaveisEstilo.layout.raioBorda,
         borderTopRightRadius: variaveisEstilo.layout.raioBorda

@@ -81,6 +81,9 @@ export default StyleSheet.create({
     },
 
     botaoPrincipalGrande: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
         backgroundColor: variaveisEstilo.cores.destaque,
         borderRadius: variaveisEstilo.layout.raioBorda,
         paddingVertical: variaveisEstilo.botoesGrandes.paddingVertical,
@@ -93,7 +96,15 @@ export default StyleSheet.create({
         color: "#000000"
     },
 
+    botaoPrincipalGrandeIcone: {
+        fontSize: variaveisEstilo.botoesGrandes.texto,
+        color: variaveisEstilo.cores.textoEscuro
+    },
+
     botaoSecundarioGrande: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
         backgroundColor: variaveisEstilo.cores.fundoSecundario,
         borderRadius: variaveisEstilo.layout.raioBorda,
         paddingVertical: variaveisEstilo.botoesGrandes.paddingVertical,
@@ -103,6 +114,11 @@ export default StyleSheet.create({
     botaoSecundarioGrandeTexto: {
         fontSize: variaveisEstilo.botoesGrandes.texto,
         fontWeight: "700",
+        color: variaveisEstilo.cores.textoEscuro
+    },
+
+    botaoSecundarioGrandeIcone: {
+        fontSize: variaveisEstilo.botoesGrandes.texto,
         color: variaveisEstilo.cores.textoEscuro
     },
 

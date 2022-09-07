@@ -28,12 +28,16 @@ export default StyleSheet.create({
 
     container: {
         flex: 1,
-        paddingTop: Constants.statusBarHeight + variaveisEstilo.layout.paddingVertical + 40,
+        paddingTop: Constants.statusBarHeight + variaveisEstilo.layout.paddingVertical + 50,
         paddingHorizontal: variaveisEstilo.layout.paddingHorizontal
     },
 
     secao: {
         paddingBottom: 16
+    },
+
+    secaoBotao: {
+        marginBottom: 40
     },
 
     tags: {
@@ -45,8 +49,23 @@ export default StyleSheet.create({
     tag: {
     },
 
+    preco: {
+        fontWeight: "800",
+        fontSize: variaveisEstilo.tamanhoTextos.titulo,
+        color: variaveisEstilo.cores.secundaria,
+    },
+
     titulo: {
-        paddingBottom: 16,
+        fontWeight: "800",
+        fontSize: variaveisEstilo.tamanhoTextos.titulo,
+        color: variaveisEstilo.cores.textoEscuro,
+        marginBottom: 16
+    },
+
+    tituloIcone: {
+        fontSize: variaveisEstilo.tamanhoTextos.titulo,
+        color: variaveisEstilo.cores.textoEscuro,
+        alignSelf: "baseline"
     },
 
     informacao: {

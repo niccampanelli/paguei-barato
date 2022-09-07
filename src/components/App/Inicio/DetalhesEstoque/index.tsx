@@ -23,48 +23,36 @@ export default function DetalhesEstoque() {
 
     const dummyLevantamento: DadoHistoricoPrecos[] = [
         {
-            preco: Math.random()*5,
-            data: new Date(Math.random()*1600000000000)
+            preco: Math.random() * 4,
+            data: new Date(Math.random() * 1600000000000)
         },
         {
-            preco: Math.random()*5,
-            data: new Date(Math.random()*1600000000000)
+            preco: Math.random() * 4,
+            data: new Date(Math.random() * 1600000000000)
         },
         {
-            preco: Math.random()*5,
-            data: new Date(Math.random()*1600000000000)
+            preco: Math.random() * 4,
+            data: new Date(Math.random() * 1600000000000)
         },
         {
-            preco: Math.random()*5,
-            data: new Date(Math.random()*1600000000000)
+            preco: Math.random() * 4,
+            data: new Date(Math.random() * 1600000000000)
         },
         {
-            preco: Math.random()*5,
-            data: new Date(Math.random()*1600000000000)
+            preco: Math.random() * 4,
+            data: new Date(Math.random() * 1600000000000)
         },
         {
-            preco: Math.random()*5,
-            data: new Date(Math.random()*1600000000000)
+            preco: Math.random() * 4,
+            data: new Date(Math.random() * 1600000000000)
         },
         {
-            preco: Math.random()*5,
-            data: new Date(Math.random()*1600000000000)
+            preco: Math.random() * 4,
+            data: new Date(Math.random() * 1600000000000)
         },
         {
-            preco: Math.random()*5,
-            data: new Date(Math.random()*1600000000000)
-        },
-        {
-            preco: Math.random()*5,
-            data: new Date(Math.random()*1600000000000)
-        },
-        {
-            preco: Math.random()*5,
-            data: new Date(Math.random()*1600000000000)
-        },
-        {
-            preco: Math.random()*5,
-            data: new Date(Math.random()*1600000000000)
+            preco: Math.random() * 4,
+            data: new Date(Math.random() * 1600000000000)
         },
     ]
 
@@ -90,20 +78,13 @@ export default function DetalhesEstoque() {
             </TouchableOpacity>
             <ScrollView>
                 <View style={estilos.container}>
-                    <Text style={[estiloGlobal.titulo, estilos.titulo]}>Molho De Tomate Tradicional 450g Melhore</Text>
+                    <Text style={estilos.preco}>R$ 2,38</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate('detalhesProduto' as never)}>
+                        <Text style={estilos.titulo}>Molho De Tomate Tradicional 450g Melhore <Feather name="arrow-right" style={estilos.tituloIcone} /></Text>
+                    </TouchableOpacity>
                     <View style={estilos.secao}>
-                        <Text style={[estiloGlobal.subtitulo, estilos.titulo]}>Detalhes do item</Text>
                         <View style={estilos.informacao}>
-                            <Text style={estilos.informacaoTitulo}>Produto: </Text>
-                        </View>
-                        <TouchableOpacity style={estilos.listaItem} onPress={() => navigation.navigate('detalhesProduto' as never)}>
-                            <Image style={estilos.listaItemImagem} source={{ uri: "https://a-static.mlcdn.com.br/800x560/molho-de-tomate-fugini-sache-300g-caixa-com-36-unidades/calcadosdmais/308d194e1d5211ecb8da4201ac185013/032bae61bf039c555f62d1ed00a2ecaa.jpeg" }} />
-                            <View style={estilos.listaItemInfos}>
-                                <Text style={estilos.listaItemTexto} numberOfLines={1}>Molho De Tomate Tradicional Melhore 450g</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <View style={estilos.informacao}>
-                            <Text style={estilos.informacaoTitulo}>Mercado: </Text>
+                            <Text style={estilos.informacaoTitulo}>Vendido por: </Text>
                         </View>
                         <TouchableOpacity style={estilos.listaItem} onPress={() => navigation.navigate('detalhesMercado' as never)}>
                             <Image style={estilos.listaItemImagem} source={{ uri: "https://a-static.mlcdn.com.br/800x560/molho-de-tomate-fugini-sache-300g-caixa-com-36-unidades/calcadosdmais/308d194e1d5211ecb8da4201ac185013/032bae61bf039c555f62d1ed00a2ecaa.jpeg" }} />
@@ -111,6 +92,12 @@ export default function DetalhesEstoque() {
                                 <Text style={estilos.listaItemTexto} numberOfLines={1}>Minimercado Extra Artur Alvim</Text>
                                 <Text style={estilos.listaItemMercado} numberOfLines={1}>Rua Doutor Campos Moura, 94</Text>
                             </View>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={estilos.secaoBotao}>
+                        <TouchableOpacity style={estiloGlobal.botaoPrincipalGrande} onPress={() => navigation.navigate('lista' as never)}>
+                            <Text style={estiloGlobal.botaoPrincipalGrandeTexto}>Adicionar à lista</Text>
+                            <Feather style={estiloGlobal.botaoPrincipalGrandeIcone} name="shopping-bag"/>
                         </TouchableOpacity>
                     </View>
                     <View style={estilos.secao}>
