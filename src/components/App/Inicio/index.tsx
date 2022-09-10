@@ -10,6 +10,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import DetalhesProduto from "./DetalhesProduto";
 import DetalhesMercado from "./DetalhesMercado";
 import DetalhesEstoque from "./DetalhesEstoque";
+import produtoServices from "../../../services/produtoServices";
 
 export default function Inicio() {
 
