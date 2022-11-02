@@ -94,12 +94,6 @@ export default function DetalhesEstoque() {
                             </View>
                         </TouchableOpacity>
                     </View>
-                    <View style={estilos.secaoBotao}>
-                        <TouchableOpacity style={estiloGlobal.botaoPrincipalGrande} onPress={() => navigation.navigate('lista' as never)}>
-                            <Text style={estiloGlobal.botaoPrincipalGrandeTexto}>Adicionar à lista</Text>
-                            <Feather style={estiloGlobal.botaoPrincipalGrandeIcone} name="shopping-bag"/>
-                        </TouchableOpacity>
-                    </View>
                     <View style={estilos.secao}>
                         <Text style={[estiloGlobal.subtitulo, estilos.titulo]}>Histórico de preços</Text>
                         <Text style={[estilos.informacaoTexto, estilos.informacao]}>Sugestões de preços desse produto desde seu cadastro.</Text>
@@ -107,6 +101,15 @@ export default function DetalhesEstoque() {
                     </View>
                 </View>
             </ScrollView>
+            <View style={estilos.secaoBotao}>
+                <TouchableOpacity style={estiloGlobal.botaoPrincipalGrande} onPress={() => navigation.navigate('lista' as never)}>
+                    <Text style={estiloGlobal.botaoPrincipalGrandeTexto}>Adicionar à lista</Text>
+                    <View style={estilos.botaoAdicionarPreco}>
+                        <Text style={estilos.botaoAdicionarPrecoTexto}>R$ 2,38</Text>
+                        <Feather style={estiloGlobal.botaoPrincipalGrandeIcone} name="shopping-bag"/>
+                    </View>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 }

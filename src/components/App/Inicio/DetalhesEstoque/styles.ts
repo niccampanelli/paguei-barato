@@ -29,6 +29,7 @@ export default StyleSheet.create({
     container: {
         flex: 1,
         paddingTop: Constants.statusBarHeight + variaveisEstilo.layout.paddingVertical + 50,
+        paddingBottom: variaveisEstilo.layout.paddingVertical + variaveisEstilo.tamanhoTextos.texto + variaveisEstilo.layout.paddingHorizontal,
         paddingHorizontal: variaveisEstilo.layout.paddingHorizontal
     },
 
@@ -37,7 +38,12 @@ export default StyleSheet.create({
     },
 
     secaoBotao: {
-        marginBottom: 40
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        paddingHorizontal: variaveisEstilo.layout.paddingHorizontal,
+        marginBottom: variaveisEstilo.layout.paddingHorizontal,
     },
 
     tags: {
@@ -132,4 +138,15 @@ export default StyleSheet.create({
         color: variaveisEstilo.cores.textoClaro,
         textAlign: "center"
     },
+
+    botaoAdicionarPreco: {
+        flexDirection: "row",
+        alignItems: "center",
+    },
+
+    botaoAdicionarPrecoTexto: {
+        fontSize: variaveisEstilo.botoesGrandes.texto,
+        color: "#000000",
+        marginRight: 16
+    }
 });

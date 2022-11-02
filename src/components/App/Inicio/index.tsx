@@ -14,15 +14,13 @@ import produtoServices from "../../../services/produtoServices";
 
 export default function Inicio() {
 
-	const Stack = createNativeStackNavigator();
-
-    // useEffect(() => {
-    //     navigation.getParent()?.navigate("login");
-    // }, []);
+    const Stack = createNativeStackNavigator();
 
     const Principal = () => {
 
-        const navigation = useNavigation();
+        useEffect(() => {
+            
+        }, []);
 
         const dummydata = [
             {
@@ -105,7 +103,7 @@ export default function Inicio() {
         return (
             <View style={estilos.main}>
                 <ScrollView contentContainerStyle={estilos.container}>
-                    <StatusBar style="dark" backgroundColor={variaveisEstilo.cores.fundoPrincipal} hidden={false}/>
+                    <StatusBar style="dark" backgroundColor={variaveisEstilo.cores.fundoPrincipal} hidden={false} />
                     <View style={estilos.cabecalho}>
                         <Image style={estilos.logo} resizeMode="contain" source={require("../../../../assets/logo.png")} />
                         <Text style={estiloGlobal.subtitulo}>Boa noite, Nicholas!</Text>
@@ -114,24 +112,19 @@ export default function Inicio() {
                         <View style={[estiloGlobal.tagPequenaSecundaria, estilos.destaqueBadge]}>
                             <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Promoções de laticínios</Text>
                         </View>
-                        <Image style={estilos.destaqueImagem} source={{ uri: "https://images.unsplash.com/5/unsplash-kitsune-4.jpg?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjEyMDd9&s=fb86e2e09fceac9b363af536b93a1275", height: 150 }}/>
+                        <Image style={estilos.destaqueImagem} source={{ uri: "https://images.unsplash.com/5/unsplash-kitsune-4.jpg?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjEyMDd9&s=fb86e2e09fceac9b363af536b93a1275", height: 150 }} />
                     </View>
-                    <Carrossel style={estilos.carrossel} titulo="Maiores descontos" dados={dummydata}/>
-                    <Carrossel style={estilos.carrossel} titulo="Maiores descontos" dados={dummydata}/>
-                    <Carrossel style={estilos.carrossel} titulo="Maiores descontos" dados={dummydata}/>
+                    <Carrossel style={estilos.carrossel} titulo="Maiores descontos" dados={dummydata} />
+                    <Carrossel style={estilos.carrossel} titulo="Maiores descontos" dados={dummydata} />
+                    <Carrossel style={estilos.carrossel} titulo="Maiores descontos" dados={dummydata} />
                 </ScrollView>
             </View>
         );
     };
 
-	return (
+    return (
         <Stack.Navigator initialRouteName="principal" screenOptions={{ headerShown: false, contentStyle: { backgroundColor: variaveisEstilo.cores.fundoPrincipal } }}>
             <Stack.Screen name="principal" component={Principal} />
-            <Stack.Group>
-                <Stack.Screen name="detalhesProduto" component={DetalhesProduto} />
-                <Stack.Screen name="detalhesMercado" component={DetalhesMercado} />
-                <Stack.Screen name="detalhesEstoque" component={DetalhesEstoque} />
-            </Stack.Group>
         </Stack.Navigator>
-	);
+    );
 }
