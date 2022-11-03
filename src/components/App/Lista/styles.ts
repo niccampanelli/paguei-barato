@@ -138,5 +138,16 @@ export default StyleSheet.create({
         width: "100%",
         height: 200,
         borderRadius: variaveisEstilo.layout.raioBorda
+    },
+
+    modalBotaoAdicionarPreco: {
+        flexDirection: "row",
+        alignItems: "center",
+    },
+
+    modalBotaoAdicionarPrecoTexto: {
+        fontSize: variaveisEstilo.botoesGrandes.texto,
+        color: "#000000",
+        marginRight: 16
     }
 });

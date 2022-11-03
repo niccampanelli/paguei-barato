@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { GestureResponderEvent, Image, KeyboardAvoidingView, Text, TouchableOpacity, View, } from "react-native";
@@ -5,10 +6,13 @@ import { Feather } from "@expo/vector-icons"; "@expo/vector-icons/Feather";
 import estiloGlobal from "../../../estiloGlobal";
 import Input from "../../Input";
 import estilos from "./styles";
+import { TextInput } from "react-native-gesture-handler";
 
 export default function Login() {
 
     const navigation = useNavigation();
+
+    const inputSenhaRef = useRef<TextInput>(null);
 
     const cadastrar = (e: GestureResponderEvent) => {
         e.preventDefault();
@@ -32,11 +36,28 @@ export default function Login() {
                 <View style={estilos.form}>
                     <View style={estilos.grupoForm}>
                         <Text style={[estiloGlobal.label, estilos.label]}>E-mail</Text>
-                        <Input icone={<Feather name="at-sign" style={estiloGlobal.inputIcone}/>} keyboardType="email-address" returnKeyType="next" autoCapitalize="none" autoCorrect={false} placeholder="Insira seu e-mail" />
+                        <Input
+                            icone={<Feather name="at-sign" style={estiloGlobal.inputIcone}/>}
+                            keyboardType="email-address"
+                            onSubmitEditing={() => inputSenhaRef.current?.focus()}
+                            blurOnSubmit={false}
+                            returnKeyType="next"
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            placeholder="Insira seu e-mail"
+                        />
                     </View>
                     <View style={estilos.grupoForm}>
                         <Text style={[estiloGlobal.label, estilos.label]}>Senha</Text>
-                        <Input icone={<Feather name="lock" style={estiloGlobal.inputIcone}/>} secureTextEntry placeholder="Digite sua senha" />
+                        <Input
+                            icone={<Feather name="lock" style={estiloGlobal.inputIcone}/>}
+                            returnKeyType="done"
+                            forwardRef={inputSenhaRef}
+                            textContentType="password"
+                            secureTextEntry
+                            autoCorrect={false}
+                            placeholder="Digite sua senha"
+                        />
                     </View>
                 </View>
                 <View>

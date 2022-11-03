@@ -2,7 +2,7 @@ import { Feather } from "@expo/vector-icons"
 import { useEffect, useRef, useState } from "react";
 import { Image, ListRenderItemInfo, ScrollView, Text, TextInput, TouchableOpacity, useWindowDimensions, View } from "react-native";
 import { FlatList, Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler";
-import Animated, { useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
+import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
 import RBSheet from "react-native-raw-bottom-sheet";
 import estiloGlobal from "../../../estiloGlobal";
 import Modal from "../../Modal";
@@ -14,6 +14,7 @@ export default function Lista() {
     const navigation = useNavigation();
 
     const modalRef = useRef<RBSheet>(null);
+    const [listaScrollEnabled, setListaScrollEnabled] = useState(true);
 
     const dimensoesTela = useWindowDimensions();
     const [alturaModal, setAlturaModal] = useState(0);
@@ -108,10 +109,12 @@ export default function Lista() {
         const opacidade = useSharedValue(1);
         
         const gestoArrastar = Gesture.Pan()
-            .shouldCancelWhenOutside(false)
+            .shouldCancelWhenOutside(true)
             .onUpdate((e) => {
-                if(e.translationX < 100 && e.translationX > -100)
+                if(e.translationX < 100 && e.translationX > -100){
                     offset.value = e.translationX;
+                    runOnJS(setListaScrollEnabled)(false);
+                }
             })
             .onTouchesUp(() => {
                 if(offset.value > 50){
@@ -135,6 +138,7 @@ export default function Lista() {
                     }
                 }
                 offset.value = 0;
+                runOnJS(setListaScrollEnabled)(true);
             });
 
         const gestoPressionar = Gesture.Tap()
@@ -215,9 +219,13 @@ export default function Lista() {
                             <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Text>
                         </View>
                     </ScrollView>
-                    <FlatList style={estilos.lista} contentContainerStyle={{ paddingBottom: 60 }} data={dummydata} renderItem={(props: ListRenderItemInfo<any>) => <ItemLista {...props}/>}/>
-                    <TouchableOpacity style={estiloGlobal.tagPequenaDestaque}>
-                        <Text style={estiloGlobal.tagPequenaDestaqueTexto}>Adicionar</Text>
+                    <FlatList style={estilos.lista} data={dummydata} renderItem={(props: ListRenderItemInfo<any>) => <ItemLista {...props}/>}/>
+                    <TouchableOpacity style={estiloGlobal.botaoPrincipalGrande} onPress={() => modalRef.current?.open()}>
+                        <Text style={estiloGlobal.botaoPrincipalGrandeTexto}>Adicionar à lista</Text>
+                        <View style={estilos.modalBotaoAdicionarPreco}>
+                            <Text style={estilos.modalBotaoAdicionarPrecoTexto}>R$ 2,38</Text>
+                            <Feather style={estiloGlobal.botaoPrincipalGrandeIcone} name="shopping-bag"/>
+                        </View>
                     </TouchableOpacity>
                 </ScrollView>
             </Modal>
@@ -255,7 +263,7 @@ export default function Lista() {
                     </View>
                 </ScrollView>
             </View>
-            <FlatList style={estilos.lista} contentContainerStyle={{ paddingBottom: 60 }} data={dummydata} renderItem={(props: ListRenderItemInfo<any>) => <ItemLista {...props}/>}/>
+            <FlatList style={estilos.lista} scrollEnabled={listaScrollEnabled} contentContainerStyle={{ paddingBottom: 60 }} data={dummydata} renderItem={(props: ListRenderItemInfo<any>) => <ItemLista {...props}/>}/>
             <View style={estilos.listaFooter}>
                 <TouchableOpacity onPress={() => modalRef.current?.open()} style={estilos.adicionarFlutuante}>
                     <Feather name="plus" style={estilos.adicionarFlutuanteIcone}/>

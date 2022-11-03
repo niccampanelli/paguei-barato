@@ -14,10 +14,10 @@ export default function StackExterna() {
 
 	return (
 		<NavigationContainer>
-			<Stack.Navigator initialRouteName="app" screenOptions={{ headerShown: false, contentStyle: { backgroundColor: variaveisEstilo.cores.fundoPrincipal } }}>
+			<Stack.Navigator initialRouteName="login" screenOptions={{ headerShown: false, contentStyle: { backgroundColor: variaveisEstilo.cores.fundoPrincipal } }}>
 				<Stack.Group>
 					<Stack.Screen name="login" component={Login} />
-					<Stack.Screen options={{animation: "fade_from_bottom"}} name="cadastro" component={Cadastro} />
+					<Stack.Screen name="cadastro" options={{animation: "slide_from_left"}} component={Cadastro} />
 				</Stack.Group>
 				<Stack.Group>
 					<Stack.Screen name="app" options={{animation: "slide_from_right"}} component={NavegacaoApp} />
