@@ -46,11 +46,20 @@ export default StyleSheet.create({
         flex: 1
     },
 
+    listaItemSwipe: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        paddingLeft: 8,
+        paddingRight: 16,
+    },
+
     listaItem: {
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
-        paddingBottom: 16
+        backgroundColor: variaveisEstilo.cores.fundoPrincipal,
+        paddingVertical: 8
     },
 
     listaItemImagem: {

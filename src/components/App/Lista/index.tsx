@@ -1,31 +1,16 @@
 import { Feather } from "@expo/vector-icons"
 import { useEffect, useRef, useState } from "react";
 import { Image, ListRenderItemInfo, ScrollView, Text, TextInput, TouchableOpacity, useWindowDimensions, View } from "react-native";
-import { FlatList, Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler";
+import { FlatList, Gesture, GestureDetector, GestureHandlerRootView, Swipeable } from "react-native-gesture-handler";
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
 import RBSheet from "react-native-raw-bottom-sheet";
 import estiloGlobal from "../../../estiloGlobal";
 import Modal from "../../Modal";
 import estilos from "./styles";
 import { useNavigation } from "@react-navigation/native";
+import variaveisEstilo from "../../../variaveisEstilo";
 
 export default function Lista() {
-
-    const navigation = useNavigation();
-
-    const modalRef = useRef<RBSheet>(null);
-    const [listaScrollEnabled, setListaScrollEnabled] = useState(true);
-
-    const dimensoesTela = useWindowDimensions();
-    const [alturaModal, setAlturaModal] = useState(0);
-
-    useEffect(() => {
-        setAlturaModal(dimensoesTela.height*0.9);
-    }, [dimensoesTela]);
-
-    const irParaDetalhes = () => {
-        navigation.navigate("detalhesEstoque" as never);
-    }
 
     const dummydata = [
         {
@@ -102,44 +87,28 @@ export default function Lista() {
         },
     ];
 
-    const ItemLista = ({item}: ListRenderItemInfo<any>) => {
+    const navigation = useNavigation();
+
+    const modalRef = useRef<RBSheet>(null);
+    const [listaScrollEnabled, setListaScrollEnabled] = useState(true);
+
+    const dimensoesTela = useWindowDimensions();
+    const [alturaModal, setAlturaModal] = useState(0);
+    const [dados, setDados] = useState(dummydata);
+
+    useEffect(() => {
+        setAlturaModal(dimensoesTela.height*0.9);
+    }, [dimensoesTela]);
+
+    const irParaDetalhes = () => {
+        navigation.navigate("detalhesEstoque" as never);
+    }
+
+    const ItemLista = ({item, index}: ListRenderItemInfo<any>) => {
 
         const desativado = useSharedValue(false);
         const offset = useSharedValue(0);
         const opacidade = useSharedValue(1);
-        
-        const gestoArrastar = Gesture.Pan()
-            .shouldCancelWhenOutside(true)
-            .onUpdate((e) => {
-                if(e.translationX < 100 && e.translationX > -100){
-                    offset.value = e.translationX;
-                    runOnJS(setListaScrollEnabled)(false);
-                }
-            })
-            .onTouchesUp(() => {
-                if(offset.value > 50){
-                    if(desativado.value == true){
-                        opacidade.value = 1;
-                        desativado.value = false;
-                    }
-                    else{
-                        opacidade.value = .3;
-                        desativado.value = true;
-                    }
-                }
-                else if(offset.value < -50){
-                    if(desativado.value == true){
-                        opacidade.value = 1;
-                        desativado.value = false;
-                    }
-                    else{
-                        opacidade.value = 0;
-                        desativado.value = true;
-                    }
-                }
-                offset.value = 0;
-                runOnJS(setListaScrollEnabled)(true);
-            });
 
         const gestoPressionar = Gesture.Tap()
             .onBegin(() => {
@@ -152,27 +121,62 @@ export default function Lista() {
                     opacidade.value = withTiming(1, { duration: 200 });
             });
 
-        const gestoComposto = Gesture.Exclusive(gestoArrastar, gestoPressionar);
-
         const estiloAnimado = useAnimatedStyle(() => {
-
             return {
                 transform: [{ translateX: withSpring(offset.value, {damping: 5, mass: 0.2}) }],
                 opacity: opacidade.value
             };
         });
 
+        const swipeableRef = useRef<Swipeable>(null);
+
+        const IconeSwipeConcluido = () => {
+            return(
+                <View style={estilos.listaItemSwipe}>
+                    <Feather name="check" size={variaveisEstilo.tamanhoTextos.subtitulo} />
+                </View>
+            );
+        };
+
+        const IconeSwipeRemover = () => {
+            return(
+                <View style={estilos.listaItemSwipe}>
+                    <Feather name="trash" size={variaveisEstilo.tamanhoTextos.subtitulo} />
+                </View>
+            );
+        };
+
         return (
+            // <GestureHandlerRootView>
+            // <GestureDetector gesture={gestoComposto}>
+            // <Animated.View onTouchEnd={irParaDetalhes} style={[estilos.listaItem, estiloAnimado]}>
+            //     <Image style={estilos.listaItemImagem} source={item.imagem}/>
+            //     <View>
+            //         <Text style={estilos.listaItemTexto} numberOfLines={1}>{item.nome}</Text>
+            //         <Text style={estilos.listaItemMercado} numberOfLines={1}>{item.mercado} - R$ {item.preco}</Text>
+            //     </View>
+            // </Animated.View>
+            // </GestureDetector>
+            // </GestureHandlerRootView>
             <GestureHandlerRootView>
-            <GestureDetector gesture={gestoComposto}>
-            <Animated.View onTouchEnd={irParaDetalhes} style={[estilos.listaItem, estiloAnimado]}>
+            <Swipeable
+                ref={swipeableRef}
+                renderLeftActions={IconeSwipeConcluido}
+                renderRightActions={IconeSwipeRemover}
+                childrenContainerStyle={[estilos.listaItem, estiloAnimado]}
+                activeOffsetX={[-50, 50]}
+                failOffsetY={[-100, 100]}
+                onSwipeableOpen={() => {
+                    swipeableRef.current?.close();
+                    irParaDetalhes();
+                }}
+            >
                 <Image style={estilos.listaItemImagem} source={item.imagem}/>
                 <View>
                     <Text style={estilos.listaItemTexto} numberOfLines={1}>{item.nome}</Text>
                     <Text style={estilos.listaItemMercado} numberOfLines={1}>{item.mercado} - R$ {item.preco}</Text>
                 </View>
-            </Animated.View>
-            </GestureDetector>
+            </Swipeable>
             </GestureHandlerRootView>
         );
     };
@@ -219,7 +223,7 @@ export default function Lista() {
                             <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Text>
                         </View>
                     </ScrollView>
-                    <FlatList style={estilos.lista} data={dummydata} renderItem={(props: ListRenderItemInfo<any>) => <ItemLista {...props}/>}/>
+                    <FlatList style={estilos.lista} data={dados} renderItem={(props: ListRenderItemInfo<any>) => <ItemLista {...props}/>}/>
                     <TouchableOpacity style={estiloGlobal.botaoPrincipalGrande} onPress={() => modalRef.current?.open()}>
                         <Text style={estiloGlobal.botaoPrincipalGrandeTexto}>Adicionar à lista</Text>
                         <View style={estilos.modalBotaoAdicionarPreco}>
@@ -263,7 +267,7 @@ export default function Lista() {
                     </View>
                 </ScrollView>
             </View>
-            <FlatList style={estilos.lista} scrollEnabled={listaScrollEnabled} contentContainerStyle={{ paddingBottom: 60 }} data={dummydata} renderItem={(props: ListRenderItemInfo<any>) => <ItemLista {...props}/>}/>
+            <FlatList style={estilos.lista} scrollEnabled={listaScrollEnabled} contentContainerStyle={{ paddingBottom: 60 }} data={dados} renderItem={(props: ListRenderItemInfo<any>) => <ItemLista {...props}/>}/>
             <View style={estilos.listaFooter}>
                 <TouchableOpacity onPress={() => modalRef.current?.open()} style={estilos.adicionarFlutuante}>
                     <Feather name="plus" style={estilos.adicionarFlutuanteIcone}/>
