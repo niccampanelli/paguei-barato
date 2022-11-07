@@ -1,7 +1,7 @@
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
-import { Image, ScrollView, Text, View } from "react-native";
+import { Image, ScrollView, Text, View, TouchableOpacity } from "react-native";
 import variaveisEstilo from "../../../variaveisEstilo";
 import estiloGlobal from "../../../estiloGlobal";
 import estilos from "./styles";

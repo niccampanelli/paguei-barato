@@ -200,4 +200,12 @@ const estilos = {
     "vermelho": vermelho,
 }
 
+export const estiloNotificacao = StyleSheet.create({
+    notificacao: {
+        marginBottom: 10,
+        marginLeft: 20,
+        marginRight: 20,
+    }
+});
+
 export default estilos;

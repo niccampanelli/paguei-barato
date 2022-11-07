@@ -55,10 +55,13 @@ export default StyleSheet.create({
     },
 
     listaItem: {
+        backgroundColor: variaveisEstilo.cores.fundoPrincipal,
+    },
+
+    listaItemConteudo: {
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
-        backgroundColor: variaveisEstilo.cores.fundoPrincipal,
         paddingVertical: 8
     },
 

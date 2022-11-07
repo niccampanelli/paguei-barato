@@ -1,7 +1,7 @@
-import StackExterna from "./src/StackExterna";
 import 'react-native-gesture-handler';
 import 'intl';
 import 'intl/locale-data/jsonp/en';
+import AppIndex from "./src";
 
 /**
  * # PagueiBarato
@@ -13,6 +13,6 @@ import 'intl/locale-data/jsonp/en';
 export default function App() {
 
 	return (
-		<StackExterna/>
+		<AppIndex/>
 	);
 }
