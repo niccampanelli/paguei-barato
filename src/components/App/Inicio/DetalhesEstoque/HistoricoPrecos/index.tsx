@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Text, View, ViewProps, ScrollView } from "react-native";
 import Animated, { useAnimatedReaction, useAnimatedStyle, useSharedValue, withDelay, withSpring, withTiming } from "react-native-reanimated";
 import estiloGlobal from "../../../../../estiloGlobal";
@@ -30,6 +30,8 @@ export default function HistoricoPrecos({
     const [maiorData, setMaiorData] = useState(0);
     const [menorData, setMenorData] = useState(0);
     const [periodoData, setPeriodoData] = useState(0);
+
+    const scrollViewRef = useRef<ScrollView>(null);
 
     useEffect(() => {
         let valores = dados.map((dado) => dado.preco);
@@ -82,7 +84,7 @@ export default function HistoricoPrecos({
             <View style={[estiloGlobal.tagPequenaDestaque, estilos.quantidade]}>
                 <Text style={estiloGlobal.tagPequenaDestaqueTexto}>{dados.length} {dados.length === 1 ? "sugestão" : "sugestões"} em {(periodoData / 86400000) / 365} anos</Text>
             </View>
-            <ScrollView nestedScrollEnabled horizontal style={estilos.scroll} contentContainerStyle={estilos.conteudo}>
+            <ScrollView nestedScrollEnabled onContentSizeChange={() => { scrollViewRef.current?.scrollToEnd({ animated: false }) }} ref={scrollViewRef} horizontal style={estilos.scroll} contentContainerStyle={estilos.conteudo}>
                 {dados ?
                     dados.map((dado, indice) => {
 

@@ -28,7 +28,7 @@ export default StyleSheet.create({
 
     container: {
         flex: 1,
-        paddingTop: Constants.statusBarHeight + variaveisEstilo.layout.paddingVertical + 50,
+        paddingTop: 20,
         paddingBottom: variaveisEstilo.layout.paddingVertical + variaveisEstilo.tamanhoTextos.texto + variaveisEstilo.layout.paddingHorizontal,
         paddingHorizontal: variaveisEstilo.layout.paddingHorizontal
     },

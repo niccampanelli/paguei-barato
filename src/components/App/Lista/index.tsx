@@ -124,7 +124,7 @@ export default function Lista() {
         setDados(novaLista);
         notificar({
             estilo: "normal",
-            texto: "Item removido da lista.",
+            texto: "Item removido da lista de compras.",
             icone: "trash",
             dispensavel: true,
             possuiBotao: true,
@@ -233,7 +233,7 @@ export default function Lista() {
     return (
         <View style={estilos.container}>
             <Modal titulo="Adicionar item à lista" refSheet={modalRef} height={alturaModal}>
-                <ScrollView showsVerticalScrollIndicator={false} overScrollMode={"never"} style={estilos.modalScrollview} contentContainerStyle={estilos.modalScrollContent}>
+                <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnabled style={estilos.modalScrollview} contentContainerStyle={estilos.modalScrollContent}>
                     <View style={estilos.modalSecao}>
                         <Text style={estiloGlobal.subtitulo}>Selecione o produto</Text>
                         <View style={estilos.modalBusca}>
@@ -245,7 +245,7 @@ export default function Lista() {
                         <Text style={estiloGlobal.subtitulo}>Escolha onde quer comprar</Text>
                         <Image source={require("../../../../assets/mapa.png")} style={estilos.modalMapa} />
                     </View>
-                    <ScrollView showsHorizontalScrollIndicator={false} horizontal style={estilos.listaFiltros}>
+                    <ScrollView showsHorizontalScrollIndicator={false} nestedScrollEnabled horizontal style={estilos.listaFiltros}>
                         <TouchableOpacity onPress={() => { }} style={[estiloGlobal.tagPequenaDestaque, estilos.filtro]}>
                             <Text style={estiloGlobal.tagPequenaDestaqueTexto}>Filtros</Text>
                             <Text style={estilos.filtroContador}>2</Text>
@@ -272,7 +272,7 @@ export default function Lista() {
                             <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Text>
                         </View>
                     </ScrollView>
-                    <FlatList style={estilos.lista} data={dados} renderItem={(props: ListRenderItemInfo<any>) => <ItemLista {...props} />} />
+                    <FlatList style={estilos.lista} data={dados} nestedScrollEnabled renderItem={(props: ListRenderItemInfo<any>) => <ItemLista {...props} />} />
                     <TouchableOpacity style={estiloGlobal.botaoPrincipalGrande} onPress={() => modalRef.current?.open()}>
                         <Text style={estiloGlobal.botaoPrincipalGrandeTexto}>Adicionar à lista</Text>
                         <View style={estilos.modalBotaoAdicionarPreco}>
