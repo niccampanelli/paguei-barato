@@ -58,7 +58,7 @@ export default function DetalhesEstoque() {
     return (
         <View style={estilos.main}>
             <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.voltar]} onPress={() => navigation.goBack()}>
-                <Feather name="arrow-left" />
+                <Feather name="arrow-left" style={estiloGlobal.tagPequenaNormalTexto} />
                 <Text style={estiloGlobal.tagPequenaNormalTexto}>Voltar</Text>
             </TouchableOpacity>
             <ScrollView>
@@ -66,23 +66,34 @@ export default function DetalhesEstoque() {
                     <Image style={estilos.itemImagem} source={{ uri: "https://a-static.mlcdn.com.br/800x560/molho-de-tomate-fugini-sache-300g-caixa-com-36-unidades/calcadosdmais/308d194e1d5211ecb8da4201ac185013/032bae61bf039c555f62d1ed00a2ecaa.jpeg" }} />
                 </View>
                 <View style={estilos.container}>
-                    <View style={estilos.tags}>
-                        <View style={estiloGlobal.tagPequenaDestaque}>
-                            <Text style={estiloGlobal.tagPequenaDestaqueTexto}>Molhos e Condimentos</Text>
-                        </View>
-                        <View style={[estiloGlobal.tagPequenaNormal, { marginLeft: 10 }]}>
-                            <Text style={estiloGlobal.tagPequenaNormalTexto}>Sugerido há 2h e 10min</Text>
-                        </View>
-                    </View>
+                    <Text style={estilos.preco}>R$ 1,55</Text>
                     <TouchableOpacity onPress={() => navigation.navigate("detalhesProduto" as never)}>
                         <Text style={[estiloGlobal.titulo, estilos.titulo]}>Molho De Tomate Tradicional 450g Melhore <Feather name="arrow-right" style={estilos.tituloIcone} /></Text>
                     </TouchableOpacity>
+                    <TouchableOpacity style={estilos.mercadoCard} onPress={() => navigation.navigate("detalhesMercado" as never)} >
+                        <Image style={estilos.mercadoCardImagem} source={{ uri: "https://i.pinimg.com/originals/b1/f0/93/b1f093fb7e294260afe1cae34996eb33.jpg" }} />
+                        <View>
+                            <Text style={estiloGlobal.texto} >Esse item se encontra em:</Text>
+                            <Text style={estiloGlobal.label} >Sonda Supermercados Carrão</Text>
+                        </View>
+                        <Feather style={estilos.mercadoCardIcone} name="arrow-right" />
+                    </TouchableOpacity>
                     <View style={estilos.secao}>
                         <Text style={[estiloGlobal.subtitulo, estilos.titulo]}>Histórico de preços</Text>
-                        <HistoricoPrecos dados={dummyLevantamento} />
+                        <Text style={estiloGlobal.texto}>Preços registrados desse item desde que foi cadastrado pela primeira vez nesse mercado.</Text>
                     </View>
+                    <HistoricoPrecos dados={dummyLevantamento} />
                 </View>
             </ScrollView>
+            <View style={estilos.botaoAdicionarView}>
+                <TouchableOpacity style={estiloGlobal.botaoPrincipalGrande} onPress={() => navigation.navigate("lista" as never)}>
+                    <Text style={estiloGlobal.botaoPrincipalGrandeTexto}>Adicionar à lista</Text>
+                    <View style={estilos.botaoAdicionarPreco}>
+                        <Text style={estilos.botaoAdicionarPrecoTexto}>R$ 1,55</Text>
+                        <Feather name="shopping-bag" style={estiloGlobal.botaoPrincipalGrandeTexto} />
+                    </View>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 }

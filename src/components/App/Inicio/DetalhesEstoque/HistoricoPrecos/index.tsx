@@ -82,7 +82,7 @@ export default function HistoricoPrecos({
     return (
         <View style={estilos.main} {...props}>
             <View style={[estiloGlobal.tagPequenaDestaque, estilos.quantidade]}>
-                <Text style={estiloGlobal.tagPequenaDestaqueTexto}>{dados.length} {dados.length === 1 ? "sugestão" : "sugestões"} em {(periodoData / 86400000) / 365} anos</Text>
+                <Text style={estiloGlobal.tagPequenaDestaqueTexto}>{dados.length} {dados.length === 1 ? "sugestão" : "sugestões"} em {Math.round((periodoData / 86400000) / 365)} anos</Text>
             </View>
             <ScrollView nestedScrollEnabled onContentSizeChange={() => { scrollViewRef.current?.scrollToEnd({ animated: false }) }} ref={scrollViewRef} horizontal style={estilos.scroll} contentContainerStyle={estilos.conteudo}>
                 {dados ?

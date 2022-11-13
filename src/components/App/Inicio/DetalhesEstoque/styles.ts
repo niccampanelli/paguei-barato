@@ -62,9 +62,6 @@ export default StyleSheet.create({
     },
 
     titulo: {
-        fontWeight: "800",
-        fontSize: variaveisEstilo.tamanhoTextos.titulo,
-        color: variaveisEstilo.cores.textoEscuro,
         marginBottom: 16
     },
 
@@ -72,6 +69,28 @@ export default StyleSheet.create({
         fontSize: variaveisEstilo.tamanhoTextos.titulo,
         color: variaveisEstilo.cores.textoEscuro,
         alignSelf: "baseline"
+    },
+
+    mercadoCard: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: variaveisEstilo.cores.fundoSecundario,
+        borderRadius: variaveisEstilo.layout.raioBorda,
+        padding: 20,
+        marginBottom: 16
+    },
+
+    mercadoCardImagem: {
+        marginRight: 20,
+        height: 30,
+        width: 30
+    },
+
+    mercadoCardIcone: {
+        marginLeft: "auto",
+        fontSize: variaveisEstilo.tamanhoTextos.subtitulo,
+        color: variaveisEstilo.cores.textoEscuro,
     },
 
     informacao: {
@@ -137,6 +156,16 @@ export default StyleSheet.create({
         fontSize: variaveisEstilo.tamanhoTextos.observacao,
         color: variaveisEstilo.cores.textoClaro,
         textAlign: "center"
+    },
+
+    botaoAdicionarView: {
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        paddingVertical: 10,
+        paddingHorizontal: variaveisEstilo.layout.paddingHorizontal,
+        backgroundColor: variaveisEstilo.cores.fundoPrincipal,
     },
 
     botaoAdicionarPreco: {

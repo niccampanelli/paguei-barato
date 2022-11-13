@@ -114,7 +114,7 @@ export default function DetalhesMercado() {
     return (
         <View style={estilos.main}>
             <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.voltar]} onPress={() => navigation.goBack()}>
-                <Feather name="arrow-left" />
+                <Feather name="arrow-left" style={estiloGlobal.tagPequenaNormalTexto} />
                 <Text style={estiloGlobal.tagPequenaNormalTexto}>Voltar</Text>
             </TouchableOpacity>
             <ScrollView>

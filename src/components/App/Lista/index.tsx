@@ -10,6 +10,7 @@ import estilos from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import variaveisEstilo from "../../../variaveisEstilo";
 import { useNotificacaoToast } from "../../../util/context/providers/notificacaoProvider";
+import Formatador from "../../../util/Formatador";
 
 export default function Lista() {
 
@@ -110,10 +111,19 @@ export default function Lista() {
     const dimensoesTela = useWindowDimensions();
     const [alturaModal, setAlturaModal] = useState(0);
     const [dados, setDados] = useState(dummydata);
+    const [valorTotal, setValorTotal] = useState(0);
 
     useEffect(() => {
         setAlturaModal(dimensoesTela.height * 0.9);
     }, [dimensoesTela]);
+
+    useEffect(() => {
+        let valor = 0;
+        dados.forEach((item) => {
+            valor += item.preco;
+        });
+        setValorTotal(valor);
+    }, [dados]);
 
     const irParaDetalhes = () => {
         navigation.navigate("detalhesEstoque" as never);
@@ -221,7 +231,7 @@ export default function Lista() {
                             <Image style={estilos.listaItemImagem} source={item.imagem} />
                             <View>
                                 <Text style={estilos.listaItemTexto} numberOfLines={1}>{item.nome}</Text>
-                                <Text style={estilos.listaItemMercado} numberOfLines={1}>{item.mercado} - R$ {item.preco}</Text>
+                                <Text style={estilos.listaItemMercado} numberOfLines={1}>{item.mercado} - {Formatador.formatarMoeda(item.preco)}</Text>
                             </View>
                         </Animated.View>
                     </GestureDetector>
@@ -289,7 +299,7 @@ export default function Lista() {
                         <Text style={estiloGlobal.tagPequenaNormalTexto}>{dados.length} produtos em 5 mercados</Text>
                     </View>
                     <View style={estiloGlobal.tagPequenaDestaque}>
-                        <Text style={estiloGlobal.tagPequenaDestaqueTexto}>R$ 38,99</Text>
+                        <Text style={estiloGlobal.tagPequenaDestaqueTexto}>{Formatador.formatarMoeda(valorTotal)}</Text>
                     </View>
                 </View>
                 <ScrollView showsHorizontalScrollIndicator={false} horizontal style={estilos.listaFiltros}>

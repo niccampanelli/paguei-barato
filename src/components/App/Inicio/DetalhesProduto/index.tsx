@@ -127,7 +127,7 @@ export default function DetalhesProduto() {
     return (
         <View style={estilos.main}>
             <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.voltar]} onPress={() => navigation.goBack()}>
-                <Feather name="arrow-left" />
+                <Feather name="arrow-left" style={estiloGlobal.tagPequenaNormalTexto} />
                 <Text style={estiloGlobal.tagPequenaNormalTexto}>Voltar</Text>
             </TouchableOpacity>
             <ScrollView>
@@ -165,7 +165,7 @@ export default function DetalhesProduto() {
                     </View>
                     <View style={estilos.secao}>
                         <Text style={[estiloGlobal.subtitulo, estilos.titulo]}>Levantamento de preços</Text>
-                        <Text style={[estilos.informacaoTexto, estilos.informacao]}>Informações sobre a variação de preços desse produto em todos os mercados.</Text>
+                        <Text style={[estilos.informacaoTexto, estilos.informacao]}>Informações sobre a variação de preços desse produto em todos os mercados nos quais ele foi cadastrado.</Text>
                         <LevantamentoPrecos dados={dummyLevantamento} />
                         <Toast icone="clock" texto="Data da última sugestão de preço: 23/07/2022 às 17:53" style={{ marginTop: 20 }} estilo="secundario" />
                     </View>

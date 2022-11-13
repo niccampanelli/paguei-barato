@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { FlatList, Image, ListRenderItemInfo, ScrollView, Text, TextInput, TouchableOpacity, useWindowDimensions, View } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import estiloGlobal from "../../../estiloGlobal";
+import variaveisEstilo from "../../../variaveisEstilo";
 import Modal from "../../Modal";
 import estilos from "./styles";
 
@@ -240,7 +241,7 @@ export default function Busca() {
             <View style={estilos.cabecalho}>
                 <Text style={estiloGlobal.titulo}>Buscar</Text>
                 <View style={estilos.barraBusca}>
-                    <TextInput style={estilos.barraBuscaCampo} placeholder="Escreva aqui sua pesquisa..."/>
+                    <TextInput placeholderTextColor={variaveisEstilo.cores.textoClaro} style={estilos.barraBuscaCampo} placeholder="Escreva aqui sua pesquisa..."/>
                     <Feather style={estilos.barraBuscaIcone} name="search"/>
                 </View>
                 <ScrollView showsHorizontalScrollIndicator={false} horizontal style={estilos.listaFiltros}>
@@ -272,10 +273,10 @@ export default function Busca() {
                 </ScrollView>
             </View>
             <View style={estilos.listaCabecalho}>
-                <Text style={estiloGlobal.subtitulo}>Resultados - 3</Text>
+                <Text style={estiloGlobal.subtitulo}>3 Resultados</Text>
                 <TouchableOpacity onPress={() => abrirModal("ordenar")} style={estiloGlobal.tagPequenaNormal}>
                     <Text style={estiloGlobal.tagPequenaNormalTexto}>Ordenar</Text>
-                    <Feather name="bar-chart"/>
+                    <Feather name="bar-chart" style={estiloGlobal.tagPequenaNormalTexto}/>
                 </TouchableOpacity>
             </View>
             <FlatList style={estilos.lista} data={dummydata} renderItem={ItemLista}/>

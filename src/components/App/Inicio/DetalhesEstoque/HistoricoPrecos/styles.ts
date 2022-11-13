@@ -7,14 +7,16 @@ export default StyleSheet.create({
         flex: 1,
         width: "100%",
         height: 400,
-        paddingTop: 60,
         padding: 20,
+        paddingTop: 60,
+        paddingBottom: 10,
         backgroundColor: variaveisEstilo.cores.fundoSecundario,
         borderRadius: variaveisEstilo.layout.raioBorda,
     },
 
     scroll: {
         flex: 1,
+        paddingBottom: 10,
     },
 
     conteudo: {
