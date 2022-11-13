@@ -3,12 +3,15 @@ import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { GestureResponderEvent, Image, KeyboardAvoidingView, Text, TouchableOpacity, View, } from "react-native";
 import { Feather } from "@expo/vector-icons"; "@expo/vector-icons/Feather";
-import estiloGlobal from "../../../estiloGlobal";
+import { useEstiloGlobal } from "../../../estiloGlobal";
 import Input from "../../Input";
-import estilos from "./styles";
+import { useEstilos } from "./styles";
 import { TextInput } from "react-native-gesture-handler";
 
 export default function Login() {
+
+    const { estilos } = useEstilos();
+    const { estiloGlobal } = useEstiloGlobal();
 
     const navigation = useNavigation();
 

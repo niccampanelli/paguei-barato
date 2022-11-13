@@ -4,11 +4,11 @@ import { useRef } from "react";
 import { Image, ListRenderItemInfo, Text, TouchableOpacity, View, ViewProps } from "react-native";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
 import RBSheet from "react-native-raw-bottom-sheet";
-import estiloGlobal from "../../../../estiloGlobal";
+import { useEstiloGlobal } from "../../../../estiloGlobal";
 import Formatador from "../../../../util/Formatador";
 import Modal from "../../../Modal";
 import Toast from "../../../Toast";
-import estilos from "./styles";
+import { useEstilos } from "./styles";
 
 interface Estoque {
     imagem: any,
@@ -21,6 +21,9 @@ interface EstoqueProp extends ViewProps {
 }
 
 export default function DetalhesMercado() {
+
+    const { estilos } = useEstilos();
+    const { estiloGlobal } = useEstiloGlobal();
 
     const navigation = useNavigation();
     const modalRef = useRef<RBSheet>(null);

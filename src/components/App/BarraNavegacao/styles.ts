@@ -1,52 +1,58 @@
 import { StyleSheet } from "react-native";
-import variaveisEstilo from "../../../variaveisEstilo";
+import { useTemaContext } from "../../../util/context/providers/temaProvider";
 
-export default StyleSheet.create({
-    
-    barra: {
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        paddingHorizontal: variaveisEstilo.layout.paddingHorizontal,
-        paddingVertical: 10,
-        height: 68
-    },
+export const useEstilos = () => {
 
-    botaoNormal: {
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        paddingHorizontal: 20,
-        backgroundColor: variaveisEstilo.cores.fundoPrincipal,
-        borderRadius: variaveisEstilo.layout.raioBorda,
-    },
+    const { propriedadesTema } = useTemaContext();
+    const estilos = StyleSheet.create({
 
-    botaoNormalTexto: {
-        display: "none"
-    },
+        barra: {
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            paddingHorizontal: propriedadesTema.layout.paddingHorizontal,
+            paddingVertical: 10,
+            height: 68
+        },
 
-    botaoNormalIcone: {
-        fontSize: variaveisEstilo.botoesGrandes.texto,
-        color: variaveisEstilo.cores.textoEscuro
-    },
+        botaoNormal: {
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            paddingHorizontal: 20,
+            backgroundColor: propriedadesTema.cores.fundoPrincipal,
+            borderRadius: propriedadesTema.layout.raioBorda,
+        },
 
-    botaoSelecionado: {
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        paddingHorizontal: 20,
-        backgroundColor: variaveisEstilo.cores.destaque,
-        borderRadius: variaveisEstilo.layout.raioBorda
-    },
+        botaoNormalTexto: {
+            display: "none"
+        },
 
-    botaoSelecionadoTexto: {
-        fontSize: variaveisEstilo.botoesGrandes.texto,
-        fontWeight: "800",
-        color: "#000000"
-    },
+        botaoNormalIcone: {
+            fontSize: propriedadesTema.botoesGrandes.texto,
+            color: propriedadesTema.cores.textoEscuro
+        },
 
-    botaoSelecionadoIcone: {
-        fontSize: variaveisEstilo.botoesGrandes.texto,
-        marginRight: variaveisEstilo.botoesGrandes.espacamento
-    }
-});
+        botaoSelecionado: {
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            paddingHorizontal: 20,
+            backgroundColor: propriedadesTema.cores.destaque,
+            borderRadius: propriedadesTema.layout.raioBorda
+        },
+
+        botaoSelecionadoTexto: {
+            fontSize: propriedadesTema.botoesGrandes.texto,
+            fontWeight: "800",
+            color: "#000000"
+        },
+
+        botaoSelecionadoIcone: {
+            fontSize: propriedadesTema.botoesGrandes.texto,
+            marginRight: propriedadesTema.botoesGrandes.espacamento
+        }
+    });
+
+    return { estilos };
+};

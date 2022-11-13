@@ -2,19 +2,19 @@ import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import { Image, ScrollView, Text, View, TouchableOpacity } from "react-native";
-import variaveisEstilo from "../../../variaveisEstilo";
-import estiloGlobal from "../../../estiloGlobal";
-import estilos from "./styles";
+import { useEstiloGlobal } from "../../../estiloGlobal";
+import { useEstilos } from "./styles";
 import Carrossel from "../../Carrossel";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import DetalhesProduto from "./DetalhesProduto";
-import DetalhesMercado from "./DetalhesMercado";
-import DetalhesEstoque from "./DetalhesEstoque";
-import produtoServices from "../../../services/produtoServices";
+import { useTemaContext } from "../../../util/context/providers/temaProvider";
 
 export default function Inicio() {
 
+    const { estilos } = useEstilos();
+    const { estiloGlobal } = useEstiloGlobal();
+
     const Stack = createNativeStackNavigator();
+    const { propriedadesTema, temaAtivo } = useTemaContext();
 
     const Principal = () => {
 
@@ -103,7 +103,7 @@ export default function Inicio() {
         return (
             <View style={estilos.main}>
                 <ScrollView contentContainerStyle={estilos.container}>
-                    <StatusBar style="dark" backgroundColor={variaveisEstilo.cores.fundoPrincipal} hidden={false} />
+                    <StatusBar style={ temaAtivo === "claro" ? "dark" : "light" } backgroundColor={propriedadesTema.cores.fundoPrincipal} hidden={false} />
                     <View style={estilos.cabecalho}>
                         <Image style={estilos.logo} resizeMode="contain" source={require("../../../../assets/logo.png")} />
                         <Text style={estiloGlobal.subtitulo}>Boa noite, Nicholas!</Text>
@@ -123,7 +123,7 @@ export default function Inicio() {
     };
 
     return (
-        <Stack.Navigator initialRouteName="principal" screenOptions={{ headerShown: false, contentStyle: { backgroundColor: variaveisEstilo.cores.fundoPrincipal } }}>
+        <Stack.Navigator initialRouteName="principal" screenOptions={{ headerShown: false, contentStyle: { backgroundColor: propriedadesTema.cores.fundoPrincipal } }}>
             <Stack.Screen name="principal" component={Principal} />
         </Stack.Navigator>
     );

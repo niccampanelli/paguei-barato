@@ -4,15 +4,18 @@ import { useRef } from "react";
 import { Image, ListRenderItemInfo, Text, TouchableOpacity, View } from "react-native";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
 import RBSheet from "react-native-raw-bottom-sheet";
-import estiloGlobal from "../../../../estiloGlobal";
+import { useEstiloGlobal } from "../../../../estiloGlobal";
 import Formatador from "../../../../util/Formatador";
 import Modal from "../../../Modal";
 import Toast from "../../../Toast";
 import LevantamentoPrecos, { DadoLevantamentoPrecos } from "./LevantamentoPrecos";
 import dummyimagem from "./dummyimagem.json";
-import estilos from "./styles";
+import { useEstilos } from "./styles";
 
 export default function DetalhesProduto() {
+
+    const { estilos } = useEstilos();
+    const { estiloGlobal } = useEstiloGlobal();
 
     const navigation = useNavigation();
     const modalRef = useRef<RBSheet>(null);
@@ -167,7 +170,7 @@ export default function DetalhesProduto() {
                         <Text style={[estiloGlobal.subtitulo, estilos.titulo]}>Levantamento de preços</Text>
                         <Text style={[estilos.informacaoTexto, estilos.informacao]}>Informações sobre a variação de preços desse produto em todos os mercados nos quais ele foi cadastrado.</Text>
                         <LevantamentoPrecos dados={dummyLevantamento} />
-                        <Toast icone="clock" texto="Data da última sugestão de preço: 23/07/2022 às 17:53" style={{ marginTop: 20 }} estilo="secundario" />
+                        <Toast icone="clock" texto="Data da última sugestão de preço: 23/07/2022 às 17:53" style={{ marginTop: 20 }} estilo="normal" />
                     </View>
                     <View style={estilos.secao}>
                         <Text style={[estiloGlobal.subtitulo, estilos.titulo]}>Onde encontrar esse produto</Text>

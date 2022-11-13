@@ -1,69 +1,75 @@
 import { StyleSheet } from "react-native";
 import Constants from "expo-constants";
-import variaveisEstilo from "../../../variaveisEstilo";
+import { useTemaContext } from "../../../util/context/providers/temaProvider";
 
-export default StyleSheet.create({
+export const useEstilos = () => {
 
-    main: {
-        flex: 1,
-        justifyContent: "flex-end"
-    },
+    const { propriedadesTema } = useTemaContext();
+    const estilos = StyleSheet.create({
 
-    banner: {
-        flex: .2,
-        width: "100%",
-    },
+        main: {
+            flex: 1,
+            justifyContent: "flex-end"
+        },
 
-    container: {
-        flex: 1,
-        paddingVertical: variaveisEstilo.layout.paddingVertical,
-        paddingHorizontal: variaveisEstilo.layout.paddingHorizontal
-    },
+        banner: {
+            flex: .2,
+            width: "100%",
+        },
 
-    cadastro: {
-        flex: 1
-    },
+        container: {
+            flex: 1,
+            paddingVertical: propriedadesTema.layout.paddingVertical,
+            paddingHorizontal: propriedadesTema.layout.paddingHorizontal
+        },
 
-    logo: {
-        height: 34,
-        width: 220,
-        marginBottom: 24,
-    },
+        cadastro: {
+            flex: 1
+        },
 
-    titulo: {
-        marginBottom: 32
-    },
+        logo: {
+            height: 34,
+            width: 220,
+            marginBottom: 24,
+        },
 
-    form: {
-        marginBottom: 24
-    },
+        titulo: {
+            marginBottom: 32
+        },
 
-    grupoForm: {
-        marginBottom: 10
-    },
+        form: {
+            marginBottom: 24
+        },
 
-    label: {
-        marginBottom: 10
-    },
+        grupoForm: {
+            marginBottom: 10
+        },
 
-    containerFim: {
-        flex: 1,
-        paddingTop: variaveisEstilo.layout.paddingVertical + Constants.statusBarHeight,
-        paddingBottom: variaveisEstilo.layout.paddingVertical,
-        paddingHorizontal: variaveisEstilo.layout.paddingHorizontal
-    },
+        label: {
+            marginBottom: 10
+        },
 
-    cadastroFim: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center"
-    },
+        containerFim: {
+            flex: 1,
+            paddingTop: propriedadesTema.layout.paddingVertical + Constants.statusBarHeight,
+            paddingBottom: propriedadesTema.layout.paddingVertical,
+            paddingHorizontal: propriedadesTema.layout.paddingHorizontal
+        },
 
-    cadastroFimIcone: {
-        fontSize: 100,
-        color: "#000000",
-        backgroundColor: variaveisEstilo.cores.destaque,
-        borderRadius: 100,
-        padding: 40
-    }
-});
+        cadastroFim: {
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center"
+        },
+
+        cadastroFimIcone: {
+            fontSize: 100,
+            color: "#000000",
+            backgroundColor: propriedadesTema.cores.destaque,
+            borderRadius: 100,
+            padding: 40
+        }
+    });
+
+    return { estilos };
+};

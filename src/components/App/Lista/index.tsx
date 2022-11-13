@@ -4,15 +4,18 @@ import { Image, ListRenderItemInfo, ScrollView, Text, TextInput, TouchableOpacit
 import { FlatList, Gesture, GestureDetector, GestureHandlerRootView, Swipeable } from "react-native-gesture-handler";
 import Animated, { runOnJS, useAnimatedReaction, useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
 import RBSheet from "react-native-raw-bottom-sheet";
-import estiloGlobal from "../../../estiloGlobal";
+import { useEstiloGlobal } from "../../../estiloGlobal";
 import Modal from "../../Modal";
-import estilos from "./styles";
+import { useEstilos } from "./styles";
 import { useNavigation } from "@react-navigation/native";
-import variaveisEstilo from "../../../variaveisEstilo";
 import { useNotificacaoToast } from "../../../util/context/providers/notificacaoProvider";
 import Formatador from "../../../util/Formatador";
+import { useTemaContext } from "../../../util/context/providers/temaProvider";
 
 export default function Lista() {
+
+    const { estilos } = useEstilos();
+    const { estiloGlobal } = useEstiloGlobal();
 
     const dummydata = [
         {
@@ -102,6 +105,7 @@ export default function Lista() {
     ];
 
     const navigation = useNavigation();
+    const { propriedadesTema } = useTemaContext();
 
     const { notificar } = useNotificacaoToast();
 
@@ -195,7 +199,7 @@ export default function Lista() {
         const IconeSwipeConcluido = () => {
             return (
                 <View style={estilos.listaItemSwipe}>
-                    <Feather name={item.riscado === true ? "rotate-ccw" : "check"} size={variaveisEstilo.tamanhoTextos.subtitulo} />
+                    <Feather name={item.riscado === true ? "rotate-ccw" : "check"} size={propriedadesTema.tamanhoTextos.subtitulo} />
                 </View>
             );
         };
@@ -203,7 +207,7 @@ export default function Lista() {
         const IconeSwipeRemover = () => {
             return (
                 <View style={estilos.listaItemSwipe}>
-                    <Feather name="trash" size={variaveisEstilo.tamanhoTextos.subtitulo} />
+                    <Feather name="trash" size={propriedadesTema.tamanhoTextos.subtitulo} />
                 </View>
             );
         };

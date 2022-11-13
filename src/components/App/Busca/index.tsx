@@ -3,15 +3,19 @@ import { useNavigation } from "@react-navigation/native";
 import { useEffect, useRef, useState } from "react";
 import { FlatList, Image, ListRenderItemInfo, ScrollView, Text, TextInput, TouchableOpacity, useWindowDimensions, View } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
-import estiloGlobal from "../../../estiloGlobal";
-import variaveisEstilo from "../../../variaveisEstilo";
+import { useEstiloGlobal } from "../../../estiloGlobal";
 import Modal from "../../Modal";
-import estilos from "./styles";
+import { useTemaContext } from "../../../util/context/providers/temaProvider";
+import { useEstilos } from "./styles";
 
 export default function Busca() {
 
+    const { estilos } = useEstilos();
+    const { estiloGlobal } = useEstiloGlobal();
+
     const navigation = useNavigation();
     const modalRef = useRef<RBSheet>(null);
+    const { propriedadesTema } = useTemaContext();
 
     const dimensoesTela = useWindowDimensions();
     const [alturaModal, setAlturaModal] = useState(0);
@@ -241,7 +245,7 @@ export default function Busca() {
             <View style={estilos.cabecalho}>
                 <Text style={estiloGlobal.titulo}>Buscar</Text>
                 <View style={estilos.barraBusca}>
-                    <TextInput placeholderTextColor={variaveisEstilo.cores.textoClaro} style={estilos.barraBuscaCampo} placeholder="Escreva aqui sua pesquisa..."/>
+                    <TextInput placeholderTextColor={propriedadesTema.cores.textoClaro} style={estilos.barraBuscaCampo} placeholder="Escreva aqui sua pesquisa..."/>
                     <Feather style={estilos.barraBuscaIcone} name="search"/>
                 </View>
                 <ScrollView showsHorizontalScrollIndicator={false} horizontal style={estilos.listaFiltros}>

@@ -1,204 +1,203 @@
 import { StyleSheet } from "react-native";
-import variaveisEstilo from "../../variaveisEstilo";
+import { useTemaContext } from "../../util/context/providers/temaProvider";
 
-const destaque = StyleSheet.create({
+export const useEstilos = () => {
 
-    card: {
-        display: "flex",
-        flexDirection: "column",
-        backgroundColor: variaveisEstilo.cores.destaqueClaro,
-        borderRadius: variaveisEstilo.layout.raioBorda,
-        padding: 20
-    },
+    const { propriedadesTema } = useTemaContext();
+    const destaque = StyleSheet.create({
 
-    infos: {
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "flex-start",
-        justifyContent: "space-between",
-    },
+        card: {
+            display: "flex",
+            flexDirection: "column",
+            backgroundColor: propriedadesTema.cores.destaqueClaro,
+            borderRadius: propriedadesTema.layout.raioBorda,
+            padding: 20
+        },
 
-    icone: {
-        color: variaveisEstilo.cores.destaqueEscuro,
-        fontSize: variaveisEstilo.tamanhoTextos.subtitulo
-    },
+        infos: {
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "flex-start",
+            justifyContent: "space-between",
+        },
 
-    texto: {
-        flex: 1,
-        alignSelf: "center",
-        fontWeight: "400",
-        fontSize: variaveisEstilo.tamanhoTextos.texto,
-        color: variaveisEstilo.cores.destaqueEscuro,
-        marginLeft: 20
-    },
+        icone: {
+            color: propriedadesTema.cores.destaqueEscuro,
+            fontSize: propriedadesTema.tamanhoTextos.subtitulo
+        },
 
-    fechar: {
-        color: variaveisEstilo.cores.destaqueEscuro,
-        fontSize: variaveisEstilo.tamanhoTextos.texto,
-        marginLeft: 20
-    },
+        texto: {
+            flex: 1,
+            alignSelf: "center",
+            fontWeight: "400",
+            fontSize: propriedadesTema.tamanhoTextos.texto,
+            color: propriedadesTema.cores.destaqueEscuro,
+            marginLeft: 20
+        },
 
-    botao: {
-        alignSelf: "flex-end",
-        marginTop: 20
-    },
+        fechar: {
+            color: propriedadesTema.cores.destaqueEscuro,
+            fontSize: propriedadesTema.tamanhoTextos.texto,
+            marginLeft: 20
+        },
 
-    botaoTexto: {
-        color: variaveisEstilo.cores.destaque,
-        fontSize: variaveisEstilo.tamanhoTextos.texto
-    }
-});
+        botao: {
+            alignSelf: "flex-end",
+            marginTop: 20
+        },
 
-const secundario = StyleSheet.create({
+        botaoTexto: {
+            color: propriedadesTema.cores.destaque,
+            fontSize: propriedadesTema.tamanhoTextos.texto
+        }
+    });
 
-    card: {
-        display: "flex",
-        flexDirection: "column",
-        backgroundColor: variaveisEstilo.cores.secundariaClaro,
-        borderRadius: variaveisEstilo.layout.raioBorda,
-        padding: 20
-    },
+    const secundario = StyleSheet.create({
 
-    infos: {
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "flex-start",
-        justifyContent: "space-between",
-    },
+        card: {
+            display: "flex",
+            flexDirection: "column",
+            backgroundColor: propriedadesTema.cores.secundariaClaro,
+            borderRadius: propriedadesTema.layout.raioBorda,
+            padding: 20
+        },
 
-    icone: {
-        color: variaveisEstilo.cores.secundariaEscuro,
-        fontSize: variaveisEstilo.tamanhoTextos.subtitulo
-    },
+        infos: {
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "flex-start",
+            justifyContent: "space-between",
+        },
 
-    texto: {
-        flex: 1,
-        alignSelf: "center",
-        fontWeight: "400",
-        fontSize: variaveisEstilo.tamanhoTextos.texto,
-        color: variaveisEstilo.cores.secundariaEscuro,
-        marginLeft: 20
-    },
+        icone: {
+            color: propriedadesTema.cores.secundariaEscuro,
+            fontSize: propriedadesTema.tamanhoTextos.subtitulo
+        },
 
-    fechar: {
-        color: variaveisEstilo.cores.secundariaEscuro,
-        fontSize: variaveisEstilo.tamanhoTextos.texto,
-        marginLeft: 20
-    },
+        texto: {
+            flex: 1,
+            alignSelf: "center",
+            fontWeight: "400",
+            fontSize: propriedadesTema.tamanhoTextos.texto,
+            color: propriedadesTema.cores.secundariaEscuro,
+            marginLeft: 20
+        },
 
-    botao: {
-        alignSelf: "flex-end",
-        marginTop: 20
-    },
+        fechar: {
+            color: propriedadesTema.cores.secundariaEscuro,
+            fontSize: propriedadesTema.tamanhoTextos.texto,
+            marginLeft: 20
+        },
 
-    botaoTexto: {
-        color: variaveisEstilo.cores.secundariaEscuro,
-        fontSize: variaveisEstilo.tamanhoTextos.texto
-    }
-});
+        botao: {
+            alignSelf: "flex-end",
+            marginTop: 20
+        },
 
-const normal = StyleSheet.create({
+        botaoTexto: {
+            color: propriedadesTema.cores.secundariaEscuro,
+            fontSize: propriedadesTema.tamanhoTextos.texto
+        }
+    });
 
-    card: {
-        display: "flex",
-        flexDirection: "column",
-        backgroundColor: variaveisEstilo.cores.fundoSecundario,
-        borderRadius: variaveisEstilo.layout.raioBorda,
-        padding: 20
-    },
+    const normal = StyleSheet.create({
 
-    infos: {
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "flex-start",
-        justifyContent: "space-between",
-    },
+        card: {
+            display: "flex",
+            flexDirection: "column",
+            backgroundColor: propriedadesTema.cores.fundoSecundario,
+            borderRadius: propriedadesTema.layout.raioBorda,
+            padding: 20
+        },
 
-    icone: {
-        color: variaveisEstilo.cores.textoEscuro,
-        fontSize: variaveisEstilo.tamanhoTextos.subtitulo
-    },
+        infos: {
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "flex-start",
+            justifyContent: "space-between",
+        },
 
-    texto: {
-        flex: 1,
-        alignSelf: "center",
-        fontWeight: "400",
-        fontSize: variaveisEstilo.tamanhoTextos.texto,
-        color: variaveisEstilo.cores.textoEscuro,
-        marginLeft: 20
-    },
+        icone: {
+            color: propriedadesTema.cores.textoEscuro,
+            fontSize: propriedadesTema.tamanhoTextos.subtitulo
+        },
 
-    fechar: {
-        color: variaveisEstilo.cores.textoEscuro,
-        fontSize: variaveisEstilo.tamanhoTextos.texto,
-        marginLeft: 20
-    },
+        texto: {
+            flex: 1,
+            alignSelf: "center",
+            fontWeight: "400",
+            fontSize: propriedadesTema.tamanhoTextos.texto,
+            color: propriedadesTema.cores.textoEscuro,
+            marginLeft: 20
+        },
 
-    botao: {
-        alignSelf: "flex-end",
-        marginTop: 20
-    },
+        fechar: {
+            color: propriedadesTema.cores.textoEscuro,
+            fontSize: propriedadesTema.tamanhoTextos.texto,
+            marginLeft: 20
+        },
 
-    botaoTexto: {
-        color: variaveisEstilo.cores.textoEscuro,
-        fontSize: variaveisEstilo.tamanhoTextos.texto
-    }
-});
+        botao: {
+            alignSelf: "flex-end",
+            marginTop: 20
+        },
 
-const vermelho = StyleSheet.create({
+        botaoTexto: {
+            color: propriedadesTema.cores.textoEscuro,
+            fontSize: propriedadesTema.tamanhoTextos.texto
+        }
+    });
 
-    card: {
-        display: "flex",
-        flexDirection: "column",
-        backgroundColor: variaveisEstilo.cores.vermelhoClaro,
-        borderRadius: variaveisEstilo.layout.raioBorda,
-        padding: 20
-    },
+    const vermelho = StyleSheet.create({
 
-    infos: {
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "flex-start",
-        justifyContent: "space-between",
-    },
+        card: {
+            display: "flex",
+            flexDirection: "column",
+            backgroundColor: propriedadesTema.cores.vermelhoClaro,
+            borderRadius: propriedadesTema.layout.raioBorda,
+            padding: 20
+        },
 
-    icone: {
-        color: variaveisEstilo.cores.vermelhoEscuro,
-        fontSize: variaveisEstilo.tamanhoTextos.subtitulo
-    },
+        infos: {
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "flex-start",
+            justifyContent: "space-between",
+        },
 
-    texto: {
-        flex: 1,
-        alignSelf: "center",
-        fontWeight: "400",
-        fontSize: variaveisEstilo.tamanhoTextos.texto,
-        color: variaveisEstilo.cores.vermelhoEscuro,
-        marginLeft: 20
-    },
+        icone: {
+            color: propriedadesTema.cores.vermelhoEscuro,
+            fontSize: propriedadesTema.tamanhoTextos.subtitulo
+        },
 
-    fechar: {
-        color: variaveisEstilo.cores.vermelhoEscuro,
-        fontSize: variaveisEstilo.tamanhoTextos.texto,
-        marginLeft: 20
-    },
+        texto: {
+            flex: 1,
+            alignSelf: "center",
+            fontWeight: "400",
+            fontSize: propriedadesTema.tamanhoTextos.texto,
+            color: propriedadesTema.cores.vermelhoEscuro,
+            marginLeft: 20
+        },
 
-    botao: {
-        alignSelf: "flex-end",
-        marginTop: 20
-    },
+        fechar: {
+            color: propriedadesTema.cores.vermelhoEscuro,
+            fontSize: propriedadesTema.tamanhoTextos.texto,
+            marginLeft: 20
+        },
 
-    botaoTexto: {
-        color: variaveisEstilo.cores.vermelhoEscuro,
-        fontSize: variaveisEstilo.tamanhoTextos.texto
-    }
-});
+        botao: {
+            alignSelf: "flex-end",
+            marginTop: 20
+        },
 
-const estilos = {
-    "destaque": destaque,
-    "secundario": secundario,
-    "normal": normal,
-    "vermelho": vermelho,
-}
+        botaoTexto: {
+            color: propriedadesTema.cores.vermelhoEscuro,
+            fontSize: propriedadesTema.tamanhoTextos.texto
+        }
+    });
+
+    return { estilos: { destaque, secundario, normal, vermelho } };
+};
 
 export const estiloNotificacao = StyleSheet.create({
     notificacao: {
@@ -207,5 +206,3 @@ export const estiloNotificacao = StyleSheet.create({
         marginRight: 20,
     }
 });
-
-export default estilos;

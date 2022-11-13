@@ -1,54 +1,60 @@
 import { StyleSheet } from "react-native";
-import variaveisEstilo from "../../variaveisEstilo";
+import { useTemaContext } from "../../util/context/providers/temaProvider";
 
-export default StyleSheet.create({
-    
-    corpo: {
-        width: "100%"
-    },
+export const useEstilos = () => {
 
-    titulo: {
-        paddingHorizontal: variaveisEstilo.layout.paddingHorizontal,
-        marginBottom: 10
-    },
+    const { propriedadesTema } = useTemaContext();
+    const estilos = StyleSheet.create({
 
-    container: {
-        paddingHorizontal: variaveisEstilo.layout.paddingHorizontal
-    },
+        corpo: {
+            width: "100%"
+        },
 
-    item: {
-        width: 130,
-        position: "relative"
-    },
+        titulo: {
+            paddingHorizontal: propriedadesTema.layout.paddingHorizontal,
+            marginBottom: 10
+        },
 
-    itemBadge: {
-        position: "absolute",
-        right: 5,
-        top: 5,
-        zIndex: 1
-    },
+        container: {
+            paddingHorizontal: propriedadesTema.layout.paddingHorizontal
+        },
 
-    itemImagem: {
-        width: 130,
-        height: 130,
-        marginBottom: 10
-    },
+        item: {
+            width: 130,
+            position: "relative"
+        },
 
-    itemPreco: {
-        fontSize: variaveisEstilo.tamanhoTextos.subtitulo,
-        fontWeight: "800",
-        color: variaveisEstilo.cores.secundaria
-    },
+        itemBadge: {
+            position: "absolute",
+            right: 5,
+            top: 5,
+            zIndex: 1
+        },
 
-    itemNome: {
-        fontSize: variaveisEstilo.tamanhoTextos.texto,
-        fontWeight: "800",
-        color: variaveisEstilo.cores.textoEscuro
-    },
+        itemImagem: {
+            width: 130,
+            height: 130,
+            marginBottom: 10
+        },
 
-    itemMercado: {
-        fontSize: variaveisEstilo.tamanhoTextos.observacao,
-        fontWeight: "400",
-        color: variaveisEstilo.cores.textoClaro
-    }
-});
+        itemPreco: {
+            fontSize: propriedadesTema.tamanhoTextos.subtitulo,
+            fontWeight: "800",
+            color: propriedadesTema.cores.secundaria
+        },
+
+        itemNome: {
+            fontSize: propriedadesTema.tamanhoTextos.texto,
+            fontWeight: "800",
+            color: propriedadesTema.cores.textoEscuro
+        },
+
+        itemMercado: {
+            fontSize: propriedadesTema.tamanhoTextos.observacao,
+            fontWeight: "400",
+            color: propriedadesTema.cores.textoClaro
+        }
+    });
+
+    return { estilos };
+};

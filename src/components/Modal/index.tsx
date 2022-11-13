@@ -2,8 +2,8 @@ import { Ref } from "react";
 import { LegacyRef, ReactNode } from "react";
 import { GestureResponderEvent, Text, TouchableOpacity, View } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
-import estiloGlobal from "../../estiloGlobal";
-import variaveisEstilo from "../../variaveisEstilo";
+import { useEstiloGlobal } from "../../estiloGlobal";
+import { useTemaContext } from "../../util/context/providers/temaProvider";
 
 interface ModalProps {
     titulo: string;
@@ -29,8 +29,11 @@ export default function Modal({
     height = 240
 }: ModalProps) {
 
+    const { propriedadesTema } = useTemaContext();
+    const { estiloGlobal } = useEstiloGlobal();
+
     return (
-        <RBSheet animationType="fade" closeOnDragDown dragFromTopOnly ref={refSheet} height={height} customStyles={{ draggableIcon: estiloGlobal.modalHandle, container: { borderRadius: variaveisEstilo.layout.raioBorda } }}>
+        <RBSheet animationType="fade" closeOnDragDown dragFromTopOnly ref={refSheet} height={height} customStyles={{ draggableIcon: estiloGlobal.modalHandle, container: { backgroundColor: propriedadesTema.cores.fundoPrincipal, borderRadius: propriedadesTema.layout.raioBorda } }}>
             <View style={estiloGlobal.modalCard}>
                 <Text style={[estiloGlobal.titulo, estiloGlobal.modalTitulo]}>{titulo}</Text>
                 <>

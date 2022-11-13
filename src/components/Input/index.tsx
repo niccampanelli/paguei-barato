@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { TextInput, TextInputProps, View } from "react-native";
-import estiloGlobal from "../../estiloGlobal";
+import { useEstiloGlobal } from "../../estiloGlobal";
 
 interface InputProps extends TextInputProps{
     icone: ReactElement,
@@ -12,6 +12,8 @@ export default function Input({
     forwardRef,
     ...props
 }: InputProps) {
+    
+    const { estiloGlobal } = useEstiloGlobal();
 
     return (
         <View style={estiloGlobal.input}>

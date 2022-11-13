@@ -4,16 +4,20 @@ import { StatusBar } from "expo-status-bar";
 import { useEffect, useRef, useState } from "react";
 import { GestureResponderEvent, Image, KeyboardAvoidingView, Text, TouchableOpacity, View, } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import estiloGlobal from "../../../estiloGlobal";
-import variaveisEstilo from "../../../variaveisEstilo";
+import { useEstiloGlobal } from "../../../estiloGlobal";
 import Input from "../../Input";
-import estilos from "./styles";
+import { useEstilos } from "./styles";
 import Animated, { useAnimatedStyle, useSharedValue, withDelay, withSpring } from "react-native-reanimated";
 import { TextInput } from "react-native-gesture-handler";
+import { useTemaContext } from "../../../util/context/providers/temaProvider";
 
 export default function Cadastro() {
 
+    const { estilos } = useEstilos();
+    const { estiloGlobal } = useEstiloGlobal();
+
     const FluxoCadastro = createNativeStackNavigator();
+    const { propriedadesTema, temaAtivo } = useTemaContext();
 
     const [mostraBanner, setMostraBanner] = useState(true);
 
@@ -365,10 +369,10 @@ export default function Cadastro() {
                 </>
                 :
                 <>
-                    <StatusBar style="dark" backgroundColor={variaveisEstilo.cores.fundoPrincipal} hidden={false} />
+                    <StatusBar style={ temaAtivo === "claro" ? "dark" : "light" } backgroundColor={propriedadesTema.cores.fundoPrincipal} hidden={false} />
                 </>
             }
-            <FluxoCadastro.Navigator screenOptions={{ headerShown: false, contentStyle: { backgroundColor: variaveisEstilo.cores.fundoPrincipal } }}>
+            <FluxoCadastro.Navigator screenOptions={{ headerShown: false, contentStyle: { backgroundColor: propriedadesTema.cores.fundoPrincipal } }}>
                 <FluxoCadastro.Screen name="fluxoCadastro1" options={{ animation: "slide_from_right" }} component={CadastroTela1} />
                 <FluxoCadastro.Screen name="fluxoCadastro2" options={{ animation: "slide_from_right" }} component={CadastroTela2} />
                 <FluxoCadastro.Screen name="fluxoCadastro3" options={{ animation: "slide_from_right" }} component={CadastroTela3} />

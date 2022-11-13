@@ -1,53 +1,59 @@
 import { StyleSheet } from "react-native";
 import Constants from "expo-constants";
-import variaveisEstilo from "../../../variaveisEstilo";
+import { useTemaContext } from "../../../util/context/providers/temaProvider";
 
-export default StyleSheet.create({
+export const useEstilos = () => {
 
-    main: {
-        flex: 1,
-        paddingTop: Constants.statusBarHeight,
-        paddingHorizontal: 0
-    },
+    const { propriedadesTema } = useTemaContext();
+    const estilos = StyleSheet.create({
 
-    container: {
-        paddingVertical: variaveisEstilo.layout.paddingVertical,
-        paddingHorizontal: 0
-    },
+        main: {
+            flex: 1,
+            paddingTop: Constants.statusBarHeight,
+            paddingHorizontal: 0
+        },
 
-    logo: {
-        height: 34,
-        width: 220,
-        marginBottom: 24,
-    },
+        container: {
+            paddingVertical: propriedadesTema.layout.paddingVertical,
+            paddingHorizontal: 0
+        },
 
-    cabecalho: {
-        paddingHorizontal: variaveisEstilo.layout.paddingHorizontal,
-        marginBottom: 16
-    },
+        logo: {
+            height: 34,
+            width: 220,
+            marginBottom: 24,
+        },
 
-    destaque: {
-        position: "relative",
-        width: "100%",
-        height: 150,
-        paddingHorizontal: variaveisEstilo.layout.paddingHorizontal,
-        marginBottom: 16
-    },
+        cabecalho: {
+            paddingHorizontal: propriedadesTema.layout.paddingHorizontal,
+            marginBottom: 16
+        },
 
-    destaqueImagem: {
-        width: "100%",
-        height: "100%",
-        borderRadius: variaveisEstilo.layout.raioBorda
-    },
+        destaque: {
+            position: "relative",
+            width: "100%",
+            height: 150,
+            paddingHorizontal: propriedadesTema.layout.paddingHorizontal,
+            marginBottom: 16
+        },
 
-    destaqueBadge: {
-        position: "absolute",
-        left: variaveisEstilo.layout.paddingHorizontal + 10,
-        top: 10,
-        zIndex: 1
-    },
+        destaqueImagem: {
+            width: "100%",
+            height: "100%",
+            borderRadius: propriedadesTema.layout.raioBorda
+        },
 
-    carrossel: {
-        marginBottom: 24
-    }
-});
+        destaqueBadge: {
+            position: "absolute",
+            left: propriedadesTema.layout.paddingHorizontal + 10,
+            top: 10,
+            zIndex: 1
+        },
+
+        carrossel: {
+            marginBottom: 24
+        }
+    });
+
+    return { estilos };
+};

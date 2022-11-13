@@ -4,24 +4,26 @@ import Busca from "./Busca";
 import Lista from "./Lista";
 import Menu from "./Menu";
 import BarraNavegacao from "./BarraNavegacao";
-import estiloBarraNavegacao from "./BarraNavegacao/styles";
+import { useEstilos } from "./BarraNavegacao/styles";
 import { Feather } from "@expo/vector-icons";
-import variaveisEstilo from "../../variaveisEstilo";
+import { useTemaContext } from "../../util/context/providers/temaProvider";
 
 export default function NavegacaoApp() {
 
 	const Tabs = createBottomTabNavigator();
+	const { propriedadesTema } = useTemaContext();
+	const { estilos } = useEstilos();
 
 	return (
-		<Tabs.Navigator sceneContainerStyle={{ backgroundColor: variaveisEstilo.cores.fundoPrincipal }} initialRouteName="inicio" screenOptions={{ headerShown: false }} tabBar={(props: BottomTabBarProps) => <BarraNavegacao {...props} />}>
+		<Tabs.Navigator sceneContainerStyle={{ backgroundColor: propriedadesTema.cores.fundoPrincipal }} initialRouteName="inicio" screenOptions={{ headerShown: false }} tabBar={(props: BottomTabBarProps) => <BarraNavegacao {...props} />}>
 			<Tabs.Screen name="inicio" options={{
 				tabBarLabel: "Início",
 				tabBarIcon: ({ focused }) =>
 					<Feather
 						name="home"
 						style={focused ?
-							estiloBarraNavegacao.botaoSelecionadoIcone :
-							estiloBarraNavegacao.botaoNormalIcone
+							estilos.botaoSelecionadoIcone :
+							estilos.botaoNormalIcone
 						}
 					/>
 			}}
@@ -33,8 +35,8 @@ export default function NavegacaoApp() {
 					<Feather
 						name="search"
 						style={focused ?
-							estiloBarraNavegacao.botaoSelecionadoIcone :
-							estiloBarraNavegacao.botaoNormalIcone
+							estilos.botaoSelecionadoIcone :
+							estilos.botaoNormalIcone
 						}
 					/>
 			}}
@@ -46,8 +48,8 @@ export default function NavegacaoApp() {
 					<Feather
 						name="shopping-bag"
 						style={focused ?
-							estiloBarraNavegacao.botaoSelecionadoIcone :
-							estiloBarraNavegacao.botaoNormalIcone
+							estilos.botaoSelecionadoIcone :
+							estilos.botaoNormalIcone
 						}
 					/>
 			}}
@@ -59,8 +61,8 @@ export default function NavegacaoApp() {
 					<Feather
 						name="menu"
 						style={focused ?
-							estiloBarraNavegacao.botaoSelecionadoIcone :
-							estiloBarraNavegacao.botaoNormalIcone
+							estilos.botaoSelecionadoIcone :
+							estilos.botaoNormalIcone
 						}
 					/>
 			}}

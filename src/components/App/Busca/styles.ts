@@ -1,111 +1,117 @@
 import { StyleSheet } from "react-native";
 import Constants from "expo-constants";
-import variaveisEstilo from "../../../variaveisEstilo";
+import { useTemaContext } from "../../../util/context/providers/temaProvider";
 
-export default StyleSheet.create({
+export const useEstilos = () => {
 
-    container: {
-        flex: 1,
-        paddingTop: Constants.statusBarHeight + variaveisEstilo.layout.paddingVertical,
-        paddingHorizontal: variaveisEstilo.layout.paddingHorizontal
-    },
+    const { propriedadesTema } = useTemaContext();
+    const estilos = StyleSheet.create({
 
-    cabecalho: {
-    },
-    
-    barraBusca: {
-        display: "flex",
-        width: "100%",
-        flexDirection: "row",
-        alignItems: "center",
-        marginTop: 16,
-        borderRadius: variaveisEstilo.layout.raioBorda,
-        backgroundColor: variaveisEstilo.cores.fundoSecundario,
-        paddingVertical: variaveisEstilo.botoesGrandes.paddingVertical,
-        paddingHorizontal: variaveisEstilo.botoesGrandes.paddingHorizontal
-    },
-    
-    barraBuscaCampo: {
-        flex: 1,
-        fontSize: variaveisEstilo.botoesGrandes.texto,
-        marginRight: variaveisEstilo.botoesGrandes.espacamento,
-        color: variaveisEstilo.cores.textoEscuro,
-        height: "100%",
-    },
-    
-    barraBuscaIcone: {
-        fontSize: variaveisEstilo.botoesGrandes.texto,
-        color: variaveisEstilo.cores.textoClaro
-    },
-    
-    listaFiltros: {
-        display: "flex",
-        paddingVertical: 16
-    },
+        container: {
+            flex: 1,
+            paddingTop: Constants.statusBarHeight + propriedadesTema.layout.paddingVertical,
+            paddingHorizontal: propriedadesTema.layout.paddingHorizontal
+        },
 
-    filtro: {
-        marginRight: 10
-    },
+        cabecalho: {
+        },
 
-    filtroContador: {
-        marginLeft: variaveisEstilo.botoes.espacamento
-    },
+        barraBusca: {
+            display: "flex",
+            width: "100%",
+            flexDirection: "row",
+            alignItems: "center",
+            marginTop: 16,
+            borderRadius: propriedadesTema.layout.raioBorda,
+            backgroundColor: propriedadesTema.cores.fundoSecundario,
+            paddingVertical: propriedadesTema.botoesGrandes.paddingVertical,
+            paddingHorizontal: propriedadesTema.botoesGrandes.paddingHorizontal
+        },
 
-    listaCabecalho: {
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginBottom: 16
-    },
+        barraBuscaCampo: {
+            flex: 1,
+            fontSize: propriedadesTema.botoesGrandes.texto,
+            marginRight: propriedadesTema.botoesGrandes.espacamento,
+            color: propriedadesTema.cores.textoEscuro,
+            height: "100%",
+        },
 
-    lista: {
-        flex: 1
-    },
+        barraBuscaIcone: {
+            fontSize: propriedadesTema.botoesGrandes.texto,
+            color: propriedadesTema.cores.textoClaro
+        },
 
-    listaItem: {
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        paddingBottom: 16
-    },
+        listaFiltros: {
+            display: "flex",
+            paddingVertical: 16
+        },
 
-    listaItemImagem: {
-        marginRight: 20,
-        height: 30,
-        width: 30
-    },
+        filtro: {
+            marginRight: 10
+        },
 
-    listaItemTexto: {
-        flex: 1,
-        fontSize: variaveisEstilo.tamanhoTextos.texto,
-        color: variaveisEstilo.cores.textoEscuro
-    },
+        filtroContador: {
+            marginLeft: propriedadesTema.botoes.espacamento
+        },
 
-    modalScrollview: {
-        flex: 1,
-    },
+        listaCabecalho: {
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: 16
+        },
 
-    modalScrollContent: {
-    },
+        lista: {
+            flex: 1
+        },
 
-    modalSubtitulo: {
-        marginBottom: 10
-    },
-    
-    modalSecao: {
-        marginTop: 6,
-    },
+        listaItem: {
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            paddingBottom: 16
+        },
 
-    modalOpcoes: {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "flex-start",
-        flex: 1
-    },
+        listaItemImagem: {
+            marginRight: 20,
+            height: 30,
+            width: 30
+        },
 
-    modalOpcao: {
-        alignSelf: "flex-start",
-        marginBottom: 10,
-    }
-});
+        listaItemTexto: {
+            flex: 1,
+            fontSize: propriedadesTema.tamanhoTextos.texto,
+            color: propriedadesTema.cores.textoEscuro
+        },
+
+        modalScrollview: {
+            flex: 1,
+        },
+
+        modalScrollContent: {
+        },
+
+        modalSubtitulo: {
+            marginBottom: 10
+        },
+
+        modalSecao: {
+            marginTop: 6,
+        },
+
+        modalOpcoes: {
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-start",
+            flex: 1
+        },
+
+        modalOpcao: {
+            alignSelf: "flex-start",
+            marginBottom: 10,
+        }
+    });
+
+    return { estilos };
+};

@@ -3,18 +3,19 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Login from "./components/Autenticacao/Login";
 import Cadastro from "./components/Autenticacao/Cadastro";
 import NavegacaoApp from "./components/App/NavegacaoApp";
-import variaveisEstilo from "./variaveisEstilo";
 import DetalhesProduto from "./components/App/Inicio/DetalhesProduto";
 import DetalhesMercado from "./components/App/Inicio/DetalhesMercado";
 import DetalhesEstoque from "./components/App/Inicio/DetalhesEstoque";
+import { useTemaContext } from "./util/context/providers/temaProvider";
 
 export default function StackExterna() {
 
 	const Stack = createNativeStackNavigator();
+	const { propriedadesTema } = useTemaContext();
 
 	return (
 		<NavigationContainer>
-			<Stack.Navigator initialRouteName="login" screenOptions={{ headerShown: false, contentStyle: { backgroundColor: variaveisEstilo.cores.fundoPrincipal } }}>
+			<Stack.Navigator initialRouteName="login" screenOptions={{ headerShown: false, contentStyle: { backgroundColor: propriedadesTema.cores.fundoPrincipal } }}>
 				<Stack.Group>
 					<Stack.Screen name="login" component={Login} />
 					<Stack.Screen name="cadastro" options={{animation: "slide_from_left"}} component={Cadastro} />

@@ -3,14 +3,20 @@ import { useNavigation } from "@react-navigation/native";
 import { useRef } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
-import estiloGlobal from "../../../estiloGlobal";
+import { useEstiloGlobal } from "../../../estiloGlobal";
+import { useTemaContext } from "../../../util/context/providers/temaProvider";
 import Modal from "../../Modal";
-import estilos from "./styles";
+import { useEstilos } from "./styles";
 
 export default function Menu() {
 
+    const { estilos } = useEstilos();
+    const { estiloGlobal } = useEstiloGlobal();
+
     const navigation = useNavigation();
     const modalRef = useRef<RBSheet>(null);
+
+    const { alterarTema } = useTemaContext();
 
     const sair = () => {
         modalRef.current?.close();
@@ -52,6 +58,10 @@ export default function Menu() {
                 <TouchableOpacity style={estilos.opcao}>
                     <Feather name="info" style={estilos.opcaoIcone} />
                     <Text style={estilos.opcaoTexto}>Sobre</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={estilos.opcao} onPress={() => alterarTema()}>
+                    <Feather name="moon" style={estilos.opcaoIcone} />
+                    <Text style={estilos.opcaoTexto}>Alternar tema</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={estilos.opcao} onPress={() => modalRef.current?.open()}>
                     <Feather name="log-out" style={estilos.opcaoIconeVermelho} />

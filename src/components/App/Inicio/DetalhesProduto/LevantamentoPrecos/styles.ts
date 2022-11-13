@@ -1,55 +1,61 @@
 import { StyleSheet } from "react-native";
-import variaveisEstilo from "../../../../../variaveisEstilo";
+import { useTemaContext } from "../../../../../util/context/providers/temaProvider";
 
-export default StyleSheet.create({
+export const useEstilos = () => {
 
-    main: {
-        flex: 1,
-        width: "100%",
-        height: 400,
-        flexDirection: "row",
-        justifyContent: "space-between",
-        paddingTop: 60,
-        padding: 20,
-        backgroundColor: variaveisEstilo.cores.fundoSecundario,
-        borderRadius: variaveisEstilo.layout.raioBorda,
-    },
+    const { propriedadesTema } = useTemaContext();
+    const estilos = StyleSheet.create({
 
-    quantidade: {
-        position: "absolute",
-        top: 20,
-        left: 20
-    },
+        main: {
+            flex: 1,
+            width: "100%",
+            height: 400,
+            flexDirection: "row",
+            justifyContent: "space-between",
+            paddingTop: 60,
+            padding: 20,
+            backgroundColor: propriedadesTema.cores.fundoSecundario,
+            borderRadius: propriedadesTema.layout.raioBorda,
+        },
 
-    coluna: {
-        height: "100%",
-        display: "flex",
-        flexGrow: 0,
-        flexShrink: 1,
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "flex-end"
-    },
+        quantidade: {
+            position: "absolute",
+            top: 20,
+            left: 20
+        },
 
-    label: {
-        flex: 0,
-        display: "flex",
-        fontSize: variaveisEstilo.tamanhoTextos.texto,
-        fontWeight: "400",
-        color: variaveisEstilo.cores.textoEscuro,
-        marginBottom: 10
-    },
+        coluna: {
+            height: "100%",
+            display: "flex",
+            flexGrow: 0,
+            flexShrink: 1,
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "flex-end"
+        },
 
-    tagPreco: {
-        flex: 0,
-        display: "flex",
-        marginBottom: 10
-    },
+        label: {
+            flex: 0,
+            display: "flex",
+            fontSize: propriedadesTema.tamanhoTextos.texto,
+            fontWeight: "400",
+            color: propriedadesTema.cores.textoEscuro,
+            marginBottom: 10
+        },
 
-    barra: {
-        flex: 1,
-        width: "100%",
-        borderTopLeftRadius: variaveisEstilo.layout.raioBorda,
-        borderTopRightRadius: variaveisEstilo.layout.raioBorda
-    }
-});
+        tagPreco: {
+            flex: 0,
+            display: "flex",
+            marginBottom: 10
+        },
+
+        barra: {
+            flex: 1,
+            width: "100%",
+            borderTopLeftRadius: propriedadesTema.layout.raioBorda,
+            borderTopRightRadius: propriedadesTema.layout.raioBorda
+        }
+    });
+
+    return { estilos };
+};

@@ -1,62 +1,68 @@
 import { StyleSheet } from "react-native";
-import variaveisEstilo from "../../../../../variaveisEstilo";
+import { useTemaContext } from "../../../../../util/context/providers/temaProvider";
 
-export default StyleSheet.create({
+export const useEstilos = () => {
 
-    main: {
-        flex: 1,
-        width: "100%",
-        height: 400,
-        padding: 20,
-        paddingTop: 60,
-        paddingBottom: 10,
-        backgroundColor: variaveisEstilo.cores.fundoSecundario,
-        borderRadius: variaveisEstilo.layout.raioBorda,
-    },
+    const { propriedadesTema } = useTemaContext();
+    const estilos = StyleSheet.create({
 
-    scroll: {
-        flex: 1,
-        paddingBottom: 10,
-    },
+        main: {
+            flex: 1,
+            width: "100%",
+            height: 400,
+            padding: 20,
+            paddingTop: 60,
+            paddingBottom: 10,
+            backgroundColor: propriedadesTema.cores.fundoSecundario,
+            borderRadius: propriedadesTema.layout.raioBorda,
+        },
 
-    conteudo: {
-        flexDirection: "row",
-    },
+        scroll: {
+            flex: 1,
+            paddingBottom: 10,
+        },
 
-    quantidade: {
-        position: "absolute",
-        top: 20,
-        left: 20
-    },
+        conteudo: {
+            flexDirection: "row",
+        },
 
-    coluna: {
-        width: 70,
-        height: "100%",
-        display: "flex",
-        flex: 1,
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "flex-end"
-    },
+        quantidade: {
+            position: "absolute",
+            top: 20,
+            left: 20
+        },
 
-    label: {
-        flex: 0,
-        display: "flex",
-        fontSize: variaveisEstilo.tamanhoTextos.texto,
-        fontWeight: "400",
-        color: variaveisEstilo.cores.textoEscuro,
-        marginTop: 10
-    },
+        coluna: {
+            width: 70,
+            height: "100%",
+            display: "flex",
+            flex: 1,
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "flex-end"
+        },
 
-    tagPreco: {
-        flex: 0,
-        display: "flex",
-        marginBottom: 10
-    },
+        label: {
+            flex: 0,
+            display: "flex",
+            fontSize: propriedadesTema.tamanhoTextos.texto,
+            fontWeight: "400",
+            color: propriedadesTema.cores.textoEscuro,
+            marginTop: 10
+        },
 
-    barra: {
-        width: "100%",
-        borderTopLeftRadius: variaveisEstilo.layout.raioBorda,
-        borderTopRightRadius: variaveisEstilo.layout.raioBorda
-    }
-});
+        tagPreco: {
+            flex: 0,
+            display: "flex",
+            marginBottom: 10
+        },
+
+        barra: {
+            width: "100%",
+            borderTopLeftRadius: propriedadesTema.layout.raioBorda,
+            borderTopRightRadius: propriedadesTema.layout.raioBorda
+        }
+    });
+
+    return { estilos };
+};

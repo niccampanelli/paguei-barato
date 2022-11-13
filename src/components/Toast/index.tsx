@@ -2,11 +2,13 @@ import { Feather } from "@expo/vector-icons";
 import { ReactNode } from "react";
 import { GestureResponderEvent, ViewProps, Text, TouchableOpacity, View } from "react-native";
 import NotificacaoToast from "../../interfaces/NotificacaoToast";
-import estilos, { estiloNotificacao } from "./styles";
+import { useEstilos, estiloNotificacao } from "./styles";
 
 type ToastProps = NotificacaoToast & ViewProps;
 
 export default function Toast(props: ToastProps) {
+
+    const { estilos } = useEstilos();
 
     return (
         <View {...props} style={[

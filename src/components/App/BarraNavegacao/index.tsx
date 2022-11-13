@@ -2,9 +2,11 @@ import { Feather } from "@expo/vector-icons";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { Route } from "@react-navigation/native";
 import { Text, TouchableOpacity, View } from "react-native";
-import estilos from "./styles";
+import { useEstilos } from "./styles";
 
 export default function BarraNavegacao({ descriptors, state, navigation }: BottomTabBarProps) {
+
+    const { estilos } = useEstilos();
 
     interface ComponenteBotaoProps {
         propsRota: Route<any>,

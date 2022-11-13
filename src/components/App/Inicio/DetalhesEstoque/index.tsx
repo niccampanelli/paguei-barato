@@ -4,13 +4,16 @@ import { useRef } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
 import RBSheet from "react-native-raw-bottom-sheet";
-import estiloGlobal from "../../../../estiloGlobal";
+import { useEstiloGlobal } from "../../../../estiloGlobal";
 import Formatador from "../../../../util/Formatador";
 import Toast from "../../../Toast";
 import HistoricoPrecos, { DadoHistoricoPrecos } from "./HistoricoPrecos";
-import estilos from "./styles";
+import { useEstilos } from "./styles";
 
 export default function DetalhesEstoque() {
+
+    const { estilos } = useEstilos();
+    const { estiloGlobal } = useEstiloGlobal();
 
     const navigation = useNavigation();
     const modalRef = useRef<RBSheet>(null);

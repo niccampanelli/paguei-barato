@@ -1,115 +1,121 @@
 import { StyleSheet } from "react-native";
 import Constants from "expo-constants";
-import variaveisEstilo from "../../../../variaveisEstilo";
+import { useTemaContext } from "../../../../util/context/providers/temaProvider";
 
-export default StyleSheet.create({
+export const useEstilos = () => {
 
-    main: {
-        flex: 1,
-    },
+    const { propriedadesTema } = useTemaContext();
+    const estilos = StyleSheet.create({
 
-    itemImagem: {
-        width: "100%",
-        height: 200,
-        resizeMode: "contain"
-    },
+        main: {
+            flex: 1,
+        },
 
-    voltar: {
-        position: "absolute",
-        top: Constants.statusBarHeight + variaveisEstilo.layout.paddingVertical,
-        left: variaveisEstilo.layout.paddingHorizontal,
-        zIndex: 2
-    },
+        itemImagem: {
+            width: "100%",
+            height: 200,
+            resizeMode: "contain"
+        },
 
-    cabecalho: {
-        position: "relative",
-        paddingTop: Constants.statusBarHeight + variaveisEstilo.layout.paddingVertical
-    },
+        voltar: {
+            position: "absolute",
+            top: Constants.statusBarHeight + propriedadesTema.layout.paddingVertical,
+            left: propriedadesTema.layout.paddingHorizontal,
+            zIndex: 2
+        },
 
-    container: {
-        flex: 1,
-        paddingVertical: 20,
-        paddingHorizontal: variaveisEstilo.layout.paddingHorizontal
-    },
+        cabecalho: {
+            position: "relative",
+            paddingTop: Constants.statusBarHeight + propriedadesTema.layout.paddingVertical
+        },
 
-    secao: {
-        paddingBottom: 16
-    },
+        container: {
+            flex: 1,
+            paddingVertical: 20,
+            paddingHorizontal: propriedadesTema.layout.paddingHorizontal
+        },
 
-    tags: {
-        flex: 1,
-        flexDirection: "row",
-        marginBottom: 16,
-    },
+        secao: {
+            paddingBottom: 16
+        },
 
-    tag: {
-    },
+        tags: {
+            flex: 1,
+            flexDirection: "row",
+            marginBottom: 16,
+        },
 
-    titulo: {
-        paddingBottom: 16,
-    },
+        tag: {
+        },
 
-    informacao: {
-        flex: 1,
-        flexDirection: "row",
-        marginBottom: 10,
-    },
+        titulo: {
+            paddingBottom: 16,
+        },
 
-    informacaoTitulo: {
-        fontWeight: "800",
-        fontSize: variaveisEstilo.tamanhoTextos.texto,
-        color: variaveisEstilo.cores.textoEscuro
-    },
+        informacao: {
+            flex: 1,
+            flexDirection: "row",
+            marginBottom: 10,
+        },
 
-    informacaoTexto: {
-        fontWeight: "400",
-        fontSize: variaveisEstilo.tamanhoTextos.texto,
-        color: variaveisEstilo.cores.textoEscuro
-    },
+        informacaoTitulo: {
+            fontWeight: "800",
+            fontSize: propriedadesTema.tamanhoTextos.texto,
+            color: propriedadesTema.cores.textoEscuro
+        },
 
-    lista: {
-        maxHeight: 460
-    },
+        informacaoTexto: {
+            fontWeight: "400",
+            fontSize: propriedadesTema.tamanhoTextos.texto,
+            color: propriedadesTema.cores.textoEscuro
+        },
 
-    listaConteudo: {
-        display: "flex",
-        flexDirection: "row",
-        flexWrap: "wrap",
-    },
+        lista: {
+            maxHeight: 460
+        },
 
-    listaItem: {
-        width: "46%",
-        display: "flex",
-        flexDirection: "column",
-        paddingBottom: 40
-    },
+        listaConteudo: {
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "wrap",
+        },
 
-    listaItemImagem: {
-        resizeMode: "contain", 
-        width: "100%",
-        height: 100
-    },
+        listaItem: {
+            width: "46%",
+            display: "flex",
+            flexDirection: "column",
+            paddingBottom: 40
+        },
 
-    listaItemInfos: {
-        flex: 1,
-        justifyContent: "center"
-    },
+        listaItemImagem: {
+            resizeMode: "contain",
+            width: "100%",
+            height: 100
+        },
 
-    listaItemTexto: {
-        fontWeight: "800",
-        fontSize: variaveisEstilo.tamanhoTextos.texto,
-        color: variaveisEstilo.cores.textoEscuro
-    },
+        listaItemInfos: {
+            flex: 1,
+            justifyContent: "center"
+        },
 
-    listaItemPreco: {
-        fontWeight: "800",
-        fontSize: variaveisEstilo.tamanhoTextos.subtitulo,
-        color: variaveisEstilo.cores.secundaria
-    },
+        listaItemTexto: {
+            fontWeight: "800",
+            fontSize: propriedadesTema.tamanhoTextos.texto,
+            color: propriedadesTema.cores.textoEscuro
+        },
 
-    listaObservacao: {
-        fontSize: variaveisEstilo.tamanhoTextos.observacao,
-        color: variaveisEstilo.cores.textoClaro,
-        textAlign: "center"
-    },
-});
+        listaItemPreco: {
+            fontWeight: "800",
+            fontSize: propriedadesTema.tamanhoTextos.subtitulo,
+            color: propriedadesTema.cores.secundaria
+        },
+
+        listaObservacao: {
+            fontSize: propriedadesTema.tamanhoTextos.observacao,
+            color: propriedadesTema.cores.textoClaro,
+            textAlign: "center"
+        },
+    });
+
+    return { estilos };
+};

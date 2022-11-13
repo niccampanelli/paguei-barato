@@ -1,67 +1,73 @@
 import { StyleSheet } from "react-native";
 import Constants from "expo-constants";
-import variaveisEstilo from "../../../variaveisEstilo";
+import { useTemaContext } from "../../../util/context/providers/temaProvider";
 
-export default StyleSheet.create({
+export const useEstilos = () => {
 
-    container: {
-        flex: 1,
-        paddingVertical: Constants.statusBarHeight + variaveisEstilo.layout.paddingVertical,
-        paddingHorizontal: variaveisEstilo.layout.paddingHorizontal
-    },
+    const { propriedadesTema } = useTemaContext();
+    const estilos = StyleSheet.create({
 
-    cabecalho: {
-        marginBottom: 30
-    },
+        container: {
+            flex: 1,
+            paddingVertical: Constants.statusBarHeight + propriedadesTema.layout.paddingVertical,
+            paddingHorizontal: propriedadesTema.layout.paddingHorizontal
+        },
 
-    usuario: {
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        marginTop: 16
-    },
+        cabecalho: {
+            marginBottom: 30
+        },
 
-    usuarioIcone: {
-        padding: 10,
-        marginRight: 10,
-        backgroundColor: variaveisEstilo.cores.destaque,
-        borderRadius: 100
-    },
+        usuario: {
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            marginTop: 16
+        },
 
-    usuarioInfo: {
+        usuarioIcone: {
+            padding: 10,
+            marginRight: 10,
+            backgroundColor: propriedadesTema.cores.destaque,
+            borderRadius: 100
+        },
 
-    },
+        usuarioInfo: {
 
-    opcoes: {
-        marginBottom: 0
-    },
+        },
 
-    opcao: {
-        display: "flex",
-        alignItems: "center",
-        flexDirection: "row",
-        marginBottom: 20
-    },
+        opcoes: {
+            marginBottom: 0
+        },
 
-    opcaoIcone: {
-        fontSize: 24,
-        marginRight: 10,
-        color: variaveisEstilo.cores.textoEscuro
-    },
+        opcao: {
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "row",
+            marginBottom: 20
+        },
 
-    opcaoIconeVermelho: {
-        fontSize: 24,
-        marginRight: 10,
-        color: variaveisEstilo.cores.vermelho
-    },
+        opcaoIcone: {
+            fontSize: 24,
+            marginRight: 10,
+            color: propriedadesTema.cores.textoEscuro
+        },
 
-    opcaoTexto: {
-        fontSize: variaveisEstilo.tamanhoTextos.texto,
-        color: variaveisEstilo.cores.textoEscuro
-    },
+        opcaoIconeVermelho: {
+            fontSize: 24,
+            marginRight: 10,
+            color: propriedadesTema.cores.vermelho
+        },
 
-    opcaoTextoVermelho: {
-        fontSize: variaveisEstilo.tamanhoTextos.texto,
-        color: variaveisEstilo.cores.vermelho
-    }
-});
+        opcaoTexto: {
+            fontSize: propriedadesTema.tamanhoTextos.texto,
+            color: propriedadesTema.cores.textoEscuro
+        },
+
+        opcaoTextoVermelho: {
+            fontSize: propriedadesTema.tamanhoTextos.texto,
+            color: propriedadesTema.cores.vermelho
+        }
+    });
+
+    return { estilos };
+};

@@ -1,165 +1,171 @@
 import { StyleSheet } from "react-native";
 import Constants from "expo-constants";
-import variaveisEstilo from "../../../variaveisEstilo";
+import { useTemaContext } from "../../../util/context/providers/temaProvider";
 
-export default StyleSheet.create({
+export const useEstilos = () => {
 
-    container: {
-        flex: 1,
-        paddingTop: Constants.statusBarHeight + variaveisEstilo.layout.paddingVertical,
-        paddingHorizontal: variaveisEstilo.layout.paddingHorizontal
-    },
+    const { propriedadesTema } = useTemaContext();
+    const estilos = StyleSheet.create({
 
-    cabecalho: {
-    },
+        container: {
+            flex: 1,
+            paddingTop: Constants.statusBarHeight + propriedadesTema.layout.paddingVertical,
+            paddingHorizontal: propriedadesTema.layout.paddingHorizontal
+        },
 
-    resumo: {
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        marginTop: 16
-    },
+        cabecalho: {
+        },
 
-    listaFiltros: {
-        display: "flex",
-        paddingVertical: 16
-    },
+        resumo: {
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginTop: 16
+        },
 
-    filtro: {
-        marginRight: 10
-    },
+        listaFiltros: {
+            display: "flex",
+            paddingVertical: 16
+        },
 
-    filtroContador: {
-        marginLeft: variaveisEstilo.botoes.espacamento
-    },
+        filtro: {
+            marginRight: 10
+        },
 
-    listaCabecalho: {
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginBottom: 16
-    },
+        filtroContador: {
+            marginLeft: propriedadesTema.botoes.espacamento
+        },
 
-    lista: {
-        flex: 1
-    },
+        listaCabecalho: {
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: 16
+        },
 
-    listaItemSwipe: {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        paddingLeft: 8,
-        paddingRight: 16,
-    },
+        lista: {
+            flex: 1
+        },
 
-    listaItem: {
-        backgroundColor: variaveisEstilo.cores.fundoPrincipal,
-    },
+        listaItemSwipe: {
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            paddingLeft: 8,
+            paddingRight: 16,
+        },
 
-    listaItemConteudo: {
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        paddingVertical: 8
-    },
+        listaItem: {
+            backgroundColor: propriedadesTema.cores.fundoPrincipal,
+        },
 
-    listaItemImagem: {
-        marginRight: 20,
-        height: 30,
-        width: 30
-    },
+        listaItemConteudo: {
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            paddingVertical: 8
+        },
 
-    listaItemTexto: {
-        flex: 1,
-        fontSize: variaveisEstilo.tamanhoTextos.texto,
-        color: variaveisEstilo.cores.textoEscuro
-    },
+        listaItemImagem: {
+            marginRight: 20,
+            height: 30,
+            width: 30
+        },
 
-    listaItemMercado: {
-        flex: 1,
-        fontSize: variaveisEstilo.tamanhoTextos.texto,
-        color: variaveisEstilo.cores.textoClaro
-    },
+        listaItemTexto: {
+            flex: 1,
+            fontSize: propriedadesTema.tamanhoTextos.texto,
+            color: propriedadesTema.cores.textoEscuro
+        },
 
-    listaFooter: {
-        position: "relative",
-        paddingVertical: 10
-    },
+        listaItemMercado: {
+            flex: 1,
+            fontSize: propriedadesTema.tamanhoTextos.texto,
+            color: propriedadesTema.cores.textoClaro
+        },
 
-    adicionarFlutuante: {
-        position: "absolute",
-        backgroundColor: variaveisEstilo.cores.secundaria,
-        padding: 10,
-        borderRadius: variaveisEstilo.layout.raioBorda,
-        zIndex: 1,
-        right: 10,
-        top: "-220%"
-    },
+        listaFooter: {
+            position: "relative",
+            paddingVertical: 10
+        },
 
-    adicionarFlutuanteIcone: {
-        fontSize: 34,
-        color: "#ffffff"
-    },
+        adicionarFlutuante: {
+            position: "absolute",
+            backgroundColor: propriedadesTema.cores.secundaria,
+            padding: 10,
+            borderRadius: propriedadesTema.layout.raioBorda,
+            zIndex: 1,
+            right: 10,
+            top: "-220%"
+        },
 
-    listaObservacao: {
-        fontSize: variaveisEstilo.tamanhoTextos.observacao,
-        color: variaveisEstilo.cores.textoClaro,
-        textAlign: "center"
-    },
+        adicionarFlutuanteIcone: {
+            fontSize: 34,
+            color: "#ffffff"
+        },
 
-    modalScrollview: {
-        flex: 1,
-    },
+        listaObservacao: {
+            fontSize: propriedadesTema.tamanhoTextos.observacao,
+            color: propriedadesTema.cores.textoClaro,
+            textAlign: "center"
+        },
 
-    modalScrollContent: {
-    },
-    
-    modalSecao: {
-        marginBottom: 16
-    },
+        modalScrollview: {
+            flex: 1,
+        },
 
-    modalBusca: {
-        display: "flex",
-        width: "100%",
-        flexDirection: "row",
-        alignItems: "center",
-        marginTop: 10,
-        borderRadius: variaveisEstilo.layout.raioBorda,
-        backgroundColor: variaveisEstilo.cores.fundoSecundario,
-        paddingVertical: variaveisEstilo.botoesGrandes.paddingVertical,
-        paddingHorizontal: variaveisEstilo.botoesGrandes.paddingHorizontal
-    },
-    
-    modalBuscaCampo: {
-        flex: 1,
-        fontSize: variaveisEstilo.botoesGrandes.texto,
-        marginRight: variaveisEstilo.botoesGrandes.espacamento,
-        color: variaveisEstilo.cores.textoEscuro,
-        height: "100%",
-    },
-    
-    modalBuscaIcone: {
-        fontSize: variaveisEstilo.botoesGrandes.texto,
-        color: variaveisEstilo.cores.textoClaro
-    },
+        modalScrollContent: {
+        },
 
-    modalMapa: {
-        marginTop: 10,
-        width: "100%",
-        height: 200,
-        borderRadius: variaveisEstilo.layout.raioBorda
-    },
+        modalSecao: {
+            marginBottom: 16
+        },
 
-    modalBotaoAdicionarPreco: {
-        flexDirection: "row",
-        alignItems: "center",
-    },
+        modalBusca: {
+            display: "flex",
+            width: "100%",
+            flexDirection: "row",
+            alignItems: "center",
+            marginTop: 10,
+            borderRadius: propriedadesTema.layout.raioBorda,
+            backgroundColor: propriedadesTema.cores.fundoSecundario,
+            paddingVertical: propriedadesTema.botoesGrandes.paddingVertical,
+            paddingHorizontal: propriedadesTema.botoesGrandes.paddingHorizontal
+        },
 
-    modalBotaoAdicionarPrecoTexto: {
-        fontSize: variaveisEstilo.botoesGrandes.texto,
-        color: "#000000",
-        marginRight: 16
-    }
-});
+        modalBuscaCampo: {
+            flex: 1,
+            fontSize: propriedadesTema.botoesGrandes.texto,
+            marginRight: propriedadesTema.botoesGrandes.espacamento,
+            color: propriedadesTema.cores.textoEscuro,
+            height: "100%",
+        },
+
+        modalBuscaIcone: {
+            fontSize: propriedadesTema.botoesGrandes.texto,
+            color: propriedadesTema.cores.textoClaro
+        },
+
+        modalMapa: {
+            marginTop: 10,
+            width: "100%",
+            height: 200,
+            borderRadius: propriedadesTema.layout.raioBorda
+        },
+
+        modalBotaoAdicionarPreco: {
+            flexDirection: "row",
+            alignItems: "center",
+        },
+
+        modalBotaoAdicionarPrecoTexto: {
+            fontSize: propriedadesTema.botoesGrandes.texto,
+            color: "#000000",
+            marginRight: 16
+        }
+    });
+
+    return { estilos };
+};

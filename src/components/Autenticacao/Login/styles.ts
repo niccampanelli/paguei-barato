@@ -1,59 +1,65 @@
 import { StyleSheet } from "react-native";
-import variaveisEstilo from "../../../variaveisEstilo";
+import { useTemaContext } from "../../../util/context/providers/temaProvider";
 
-export default StyleSheet.create({
+export const useEstilos = () => {
 
-    main: {
-        flex: 1,
-        justifyContent: "flex-end"
-    },
+    const { propriedadesTema } = useTemaContext();
+    const estilos = StyleSheet.create({
 
-    banner: {
-        flex: 1,
-        width: "100%",
-    },
+        main: {
+            flex: 1,
+            justifyContent: "flex-end"
+        },
 
-    container: {
-        paddingVertical: variaveisEstilo.layout.paddingVertical,
-        paddingHorizontal: variaveisEstilo.layout.paddingHorizontal
-    },
+        banner: {
+            flex: 1,
+            width: "100%",
+        },
 
-    logo: {
-        height: 34,
-        width: 220,
-        marginBottom: 24,
-    },
+        container: {
+            paddingVertical: propriedadesTema.layout.paddingVertical,
+            paddingHorizontal: propriedadesTema.layout.paddingHorizontal
+        },
 
-    titulo: {
-        marginBottom: 32
-    },
+        logo: {
+            height: 34,
+            width: 220,
+            marginBottom: 24,
+        },
 
-    form: {
-        marginBottom: 60
-    },
+        titulo: {
+            marginBottom: 32
+        },
 
-    grupoForm: {
-        marginBottom: 10
-    },
+        form: {
+            marginBottom: 60
+        },
 
-    label: {
-        marginBottom: 10
-    },
+        grupoForm: {
+            marginBottom: 10
+        },
 
-    opcoesLoginCima: {
-        flexDirection: "row"
-    },
+        label: {
+            marginBottom: 10
+        },
 
-    opcoesLoginPrincipal: {
-        flex: 1,
-        marginLeft: 16
-    },
+        opcoesLoginCima: {
+            flexDirection: "row"
+        },
 
-    opcoesLoginLabel: {
-        width: "100%",
-        marginVertical: 16,
-        color: variaveisEstilo.cores.textoClaro,
-        fontSize: variaveisEstilo.tamanhoTextos.texto,
-        textAlign: "center"
-    }
-});
+        opcoesLoginPrincipal: {
+            flex: 1,
+            marginLeft: 16
+        },
+
+        opcoesLoginLabel: {
+            width: "100%",
+            marginVertical: 16,
+            color: propriedadesTema.cores.textoClaro,
+            fontSize: propriedadesTema.tamanhoTextos.texto,
+            textAlign: "center"
+        }
+    });
+
+    return { estilos };
+};

@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Text, View, ViewProps, ScrollView } from "react-native";
 import Animated, { useAnimatedReaction, useAnimatedStyle, useSharedValue, withDelay, withSpring, withTiming } from "react-native-reanimated";
-import estiloGlobal from "../../../../../estiloGlobal";
+import { useEstiloGlobal } from "../../../../../estiloGlobal";
+import { useTemaContext } from "../../../../../util/context/providers/temaProvider";
 import Formatador from "../../../../../util/Formatador";
-import variaveisEstilo from "../../../../../variaveisEstilo";
-import estilos from "./styles";
+import { useEstilos } from "./styles";
 
 export interface DadoHistoricoPrecos {
     data: Date,
@@ -25,6 +25,11 @@ export default function HistoricoPrecos({
     dados,
     ...props
 }: HistoricoPrecosProps) {
+
+    const { estilos } = useEstilos();
+    const { estiloGlobal } = useEstiloGlobal();
+
+    const { propriedadesTema } = useTemaContext();
 
     const [maiorValor, setMaiorValor] = useState(-0.1);
     const [maiorData, setMaiorData] = useState(0);
@@ -49,7 +54,7 @@ export default function HistoricoPrecos({
     const obterEstiloPreco = (valor: number): RetornoEstiloPreco => {
         if (!valor)
             return {
-                barra: variaveisEstilo.cores.destaque,
+                barra: propriedadesTema.cores.destaque,
                 tag: estiloGlobal.tagPequenaDestaque,
                 tagTexto: estiloGlobal.tagPequenaDestaqueTexto
             };
@@ -57,14 +62,14 @@ export default function HistoricoPrecos({
         if (valor >= (maiorValor / 3)) {
             if (valor >= (maiorValor * 2 / 3)) {
                 return {
-                    barra: variaveisEstilo.cores.fundoTerciario,
+                    barra: propriedadesTema.cores.fundoTerciario,
                     tag: estiloGlobal.tagPequenaEscura,
                     tagTexto: estiloGlobal.tagPequenaEscuraTexto
                 };
             }
             else {
                 return {
-                    barra: variaveisEstilo.cores.secundaria,
+                    barra: propriedadesTema.cores.secundaria,
                     tag: estiloGlobal.tagPequenaSecundaria,
                     tagTexto: estiloGlobal.tagPequenaSecundariaTexto
                 };
@@ -72,7 +77,7 @@ export default function HistoricoPrecos({
         }
         else {
             return {
-                barra: variaveisEstilo.cores.destaque,
+                barra: propriedadesTema.cores.destaque,
                 tag: estiloGlobal.tagPequenaDestaque,
                 tagTexto: estiloGlobal.tagPequenaDestaqueTexto
             };

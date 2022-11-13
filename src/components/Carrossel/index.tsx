@@ -1,8 +1,8 @@
 import { Image, ListRenderItemInfo, Text, TouchableOpacity, View, ViewProps } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import estiloGlobal from "../../estiloGlobal";
+import { useEstiloGlobal } from "../../estiloGlobal";
 import Formatador from "../../util/Formatador";
-import estilos from "./styles";
+import { useEstilos } from "./styles";
 
 interface CarrosselProps extends ViewProps {
     titulo: string,
@@ -10,6 +10,9 @@ interface CarrosselProps extends ViewProps {
 }
 
 export default function Carrossel({titulo, dados, ...props}: CarrosselProps) {
+
+    const { estilos } = useEstilos();
+    const { estiloGlobal } = useEstiloGlobal();
 
     const ItemCarrossel = (props: ListRenderItemInfo<any>) => {
 
