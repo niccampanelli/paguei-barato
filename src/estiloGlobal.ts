@@ -53,8 +53,36 @@ export const useEstiloGlobal = () => {
         inputCampo: {
             fontSize: propriedadesTema.botoesGrandes.texto,
             marginLeft: propriedadesTema.botoesGrandes.espacamento,
+            color: propriedadesTema.cores.textoEscuro,
             height: "100%",
             width: "100%"
+        },
+
+        autocomplete: {
+            position: "relative",
+            flex: 1
+        },
+
+        autocompleteLista: {
+            position: "absolute",
+            zIndex: 1,
+            elevation: 1,
+            top: "100%",
+            left: 0,
+            right: 0,
+            backgroundColor: propriedadesTema.cores.fundoSecundario,
+            borderRadius: propriedadesTema.layout.raioBorda,
+            marginTop: 10,
+            paddingHorizontal: propriedadesTema.botoesGrandes.paddingHorizontal
+        },
+
+        autocompleteListaItem: {
+            paddingVertical: 10,
+        },
+
+        autocompleteListaItemTexto: {
+            color: propriedadesTema.cores.textoEscuro,
+            fontSize: propriedadesTema.botoesGrandes.texto
         },
     
         botaoPrincipal: {
@@ -101,7 +129,7 @@ export const useEstiloGlobal = () => {
     
         botaoPrincipalGrandeIcone: {
             fontSize: propriedadesTema.botoesGrandes.texto,
-            color: propriedadesTema.cores.textoEscuro
+            color: "#000000"
         },
     
         botaoSecundarioGrande: {

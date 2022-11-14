@@ -11,6 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useNotificacaoToast } from "../../../util/context/providers/notificacaoProvider";
 import Formatador from "../../../util/Formatador";
 import { useTemaContext } from "../../../util/context/providers/temaProvider";
+import AutoComplete from "../../AutoComplete";
 
 export default function Lista() {
 
@@ -102,6 +103,38 @@ export default function Lista() {
             preco: 2.50,
             riscado: false,
         },
+    ];
+
+    const produtosTeste = [
+        "Sabão Em Pó Lavanda Ipê 500g",
+        "Sabão Em Pó Coco ÉBomMesmo 1kg",
+        "Detergente Neutro Clear LavaMais 250ml",
+        "Sabão Em Pó Lavanda ÉBomMesmo 250g",
+        "Molho De Tomate Ketchup Heinz 1kg",
+        "Creme Dental Colgate 90g",
+        "Ovos Brancos 12 Unidades",
+        "Arroz Agulhinha 5kg",
+        "Feijão Carioca 1kg",
+        "Açúcar Cristal 1kg",
+        "Óleo De Soja 1L",
+        "Leite Integral 1L",
+        "Café Solúvel 500g",
+        "Queijo Mussarela 1kg",
+        "Manteiga 250g",
+        "Pão Francês 1kg",
+        "Pão De Forma 1kg",
+        "Pão De Hambúrguer 1kg",
+        "Pão De Queijo 1kg",
+        "Pão De Milho 1kg",
+        "Pão De Ló 1kg",
+        "Pão De Mel 1kg",
+        "Pão De Açúcar 1kg",
+        "Pão De Alho 1kg",
+        "Pão De Queijo 1kg",
+        "Requeijão 1kg",
+        "Iogurte Natural 1kg",
+        "Maionese 1kg",
+        "Mostarda 1kg"
     ];
 
     const navigation = useNavigation();
@@ -247,13 +280,14 @@ export default function Lista() {
     return (
         <View style={estilos.container}>
             <Modal titulo="Adicionar item à lista" refSheet={modalRef} height={alturaModal}>
-                <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnabled style={estilos.modalScrollview} contentContainerStyle={estilos.modalScrollContent}>
+                <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnabled={true} style={estilos.modalScrollview} contentContainerStyle={estilos.modalScrollContent}>
                     <View style={estilos.modalSecao}>
                         <Text style={estiloGlobal.subtitulo}>Selecione o produto</Text>
-                        <View style={estilos.modalBusca}>
-                            <TextInput style={estilos.modalBuscaCampo} placeholder="Pesquise um produto..." />
+                        {/* <View style={estilos.modalBusca}>
+                            <TextInput style={estilos.modalBuscaCampo} placeholderTextColor={propriedadesTema.cores.textoClaro} placeholder="Pesquise um produto..." />
                             <Feather style={estilos.modalBuscaIcone} name="shopping-bag" />
-                        </View>
+                        </View> */}
+                        <AutoComplete dados={produtosTeste} onChangeText={() => console.log("asd")} placeholder="Escolha um produto..." icone="shopping-cart"/>
                     </View>
                     <View style={estilos.modalSecao}>
                         <Text style={estiloGlobal.subtitulo}>Escolha onde quer comprar</Text>
@@ -286,14 +320,16 @@ export default function Lista() {
                             <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Text>
                         </View>
                     </ScrollView>
-                    <FlatList style={estilos.lista} data={dados} nestedScrollEnabled renderItem={(props: ListRenderItemInfo<any>) => <ItemLista {...props} />} />
-                    <TouchableOpacity style={estiloGlobal.botaoPrincipalGrande} onPress={() => modalRef.current?.open()}>
-                        <Text style={estiloGlobal.botaoPrincipalGrandeTexto}>Adicionar à lista</Text>
-                        <View style={estilos.modalBotaoAdicionarPreco}>
-                            <Text style={estilos.modalBotaoAdicionarPrecoTexto}>R$ 2,38</Text>
-                            <Feather style={estiloGlobal.botaoPrincipalGrandeIcone} name="shopping-bag" />
-                        </View>
-                    </TouchableOpacity>
+                    <FlatList style={estilos.modalLista} data={dados} nestedScrollEnabled={true} renderItem={(props: ListRenderItemInfo<any>) => <ItemLista {...props} />} />
+                    <View style={estilos.modalBotaoAdicionar}>
+                        <TouchableOpacity style={estiloGlobal.botaoPrincipalGrande} onPress={() => modalRef.current?.open()}>
+                            <Text style={estiloGlobal.botaoPrincipalGrandeTexto}>Adicionar à lista</Text>
+                            <View style={estilos.modalBotaoAdicionarPreco}>
+                                <Text style={estilos.modalBotaoAdicionarPrecoTexto}>R$ 2,38</Text>
+                                <Feather style={estiloGlobal.botaoPrincipalGrandeIcone} name="shopping-bag" />
+                            </View>
+                        </TouchableOpacity>
+                    </View>
                 </ScrollView>
             </Modal>
             <View style={estilos.cabecalho}>

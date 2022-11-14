@@ -12,4 +12,8 @@ export default class Formatador {
         valorFormatado = valorFormatado.replace("\$", '$ ');
         return valorFormatado;
     }
+
+    static removerDiacriticos(texto: string): string {
+        return texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    }
 }

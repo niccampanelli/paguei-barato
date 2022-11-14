@@ -155,6 +155,15 @@ export const useEstilos = () => {
             borderRadius: propriedadesTema.layout.raioBorda
         },
 
+        modalLista: {
+            flex: 1,
+            maxHeight: 300,
+        },
+
+        modalBotaoAdicionar: {
+            paddingVertical: 10,
+        },
+
         modalBotaoAdicionarPreco: {
             flexDirection: "row",
             alignItems: "center",

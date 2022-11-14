@@ -1,8 +1,9 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import ContextTema from "../../../interfaces/ContextTema";
 import TemaPropriedades from "../../../interfaces/TemaPropriedades";
 import valoresTema from "./valoresTema";
 import * as NavigationBar from "expo-navigation-bar";
+import { useColorScheme } from "react-native";
 
 const TemaContext = createContext<ContextTema>({ propriedadesTema: valoresTema["claro"], temaAtivo: "claro", alterarTema: () => { } });
 
@@ -10,6 +11,11 @@ export default function TemaProvider(props: any) {
 
     const [propriedadesTema, setPropriedadesTema] = useState<TemaPropriedades>(valoresTema["claro"]);
     const [temaAtivo, setTemaAtivo] = useState<"claro" | "escuro">("claro");
+    const androidActiveTheme = useColorScheme();
+
+    useEffect(() => {
+        alterarTema(androidActiveTheme === "dark" ? "escuro" : "claro");
+    }, [androidActiveTheme]);
 
     const alterarTema = (tema?: "claro" | "escuro") => {
         if (tema) {

@@ -33,6 +33,14 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "./plugins/withAndroidColorEdgeEffect",
+        {
+          "color": "#ff0000"
+        }
+      ]
+    ]
   }
 }

@@ -2,11 +2,8 @@ import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useRef } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
-import { FlatList, ScrollView } from "react-native-gesture-handler";
-import RBSheet from "react-native-raw-bottom-sheet";
+import { ScrollView } from "react-native-gesture-handler";
 import { useEstiloGlobal } from "../../../../estiloGlobal";
-import Formatador from "../../../../util/Formatador";
-import Toast from "../../../Toast";
 import HistoricoPrecos, { DadoHistoricoPrecos } from "./HistoricoPrecos";
 import { useEstilos } from "./styles";
 
@@ -16,12 +13,6 @@ export default function DetalhesEstoque() {
     const { estiloGlobal } = useEstiloGlobal();
 
     const navigation = useNavigation();
-    const modalRef = useRef<RBSheet>(null);
-
-    const sair = () => {
-        modalRef.current?.close();
-        navigation.getParent()?.navigate("login");
-    };
 
     const dummyLevantamento: DadoHistoricoPrecos[] = [
         {
@@ -93,7 +84,7 @@ export default function DetalhesEstoque() {
                     <Text style={estiloGlobal.botaoPrincipalGrandeTexto}>Adicionar à lista</Text>
                     <View style={estilos.botaoAdicionarPreco}>
                         <Text style={estilos.botaoAdicionarPrecoTexto}>R$ 1,55</Text>
-                        <Feather name="shopping-bag" style={estiloGlobal.botaoPrincipalGrandeTexto} />
+                        <Feather name="shopping-bag" style={estiloGlobal.botaoPrincipalGrandeIcone} />
                     </View>
                 </TouchableOpacity>
             </View>

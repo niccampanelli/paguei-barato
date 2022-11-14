@@ -28,7 +28,10 @@ export const useEstilos = () => {
             padding: 10,
             marginRight: 10,
             backgroundColor: propriedadesTema.cores.destaque,
-            borderRadius: 100
+            borderRadius: 100,
+            color: "#000000",
+            fontSize: propriedadesTema.tamanhoTextos.subtitulo,
+            fontWeight: "bold",
         },
 
         usuarioInfo: {

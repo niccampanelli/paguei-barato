@@ -16,7 +16,7 @@ export default function Menu() {
     const navigation = useNavigation();
     const modalRef = useRef<RBSheet>(null);
 
-    const { alterarTema } = useTemaContext();
+    const { alterarTema, temaAtivo } = useTemaContext();
 
     const sair = () => {
         modalRef.current?.close();
@@ -60,7 +60,7 @@ export default function Menu() {
                     <Text style={estilos.opcaoTexto}>Sobre</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={estilos.opcao} onPress={() => alterarTema()}>
-                    <Feather name="moon" style={estilos.opcaoIcone} />
+                    <Feather name={temaAtivo === "claro" ? "moon" : "sun"} style={estilos.opcaoIcone} />
                     <Text style={estilos.opcaoTexto}>Alternar tema</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={estilos.opcao} onPress={() => modalRef.current?.open()}>

@@ -1,0 +1,67 @@
+import { Feather } from "@expo/vector-icons";
+import { useState } from "react";
+import { View, Text, TouchableOpacity } from "react-native";
+import { FlatList } from "react-native-gesture-handler";
+import Formatador from "../../util/Formatador";
+import AutocompleteProps from "../../interfaces/AutocompleteProps";
+import Input from "../Input";
+import { useEstiloGlobal } from "../../estiloGlobal";
+
+export default function AutoComplete({
+    dados,
+    icone,
+    alturaLista,
+    onChangeText,
+    ...props
+}: AutocompleteProps) {
+
+    const { estiloGlobal } = useEstiloGlobal();
+    const [valorInput, setValorInput] = useState("");
+    const [valorSelecionado, setValorSelecionado] = useState("");
+    const [correspondencias, setCorrespondencias] = useState<string[]>(dados);
+
+    const aoModificarInput = (texto: string) => {
+        setValorInput(texto);
+        let valores = dados.filter((valor) => {
+            return Formatador.removerDiacriticos(valor)
+                .toLowerCase()
+                .includes(
+                    Formatador.removerDiacriticos(texto)
+                    .toLowerCase()
+                );
+        });
+        setCorrespondencias(valores);
+    };
+
+    const selecionarItem = (valor: string) => {
+        setCorrespondencias(dados);
+        setValorInput(valor);
+        setValorSelecionado(valor);
+    };
+
+    const ItemLista = ({ item }: any) => {
+        return (
+            <TouchableOpacity style={estiloGlobal.autocompleteListaItem} onPress={() => selecionarItem(item)}>
+                <Text style={estiloGlobal.autocompleteListaItemTexto}>{item}</Text>
+            </TouchableOpacity>
+        );
+    };
+
+    const ListaVazia = () => {
+        
+        return (
+            <View style={estiloGlobal.autocompleteListaItem}>
+                <Text style={estiloGlobal.autocompleteListaItemTexto}>Nenhum resultado encontrado.</Text>
+            </View>
+        );
+    }
+
+    return (
+        <View style={estiloGlobal.autocomplete}>
+            <Input icone={<Feather name={icone} style={estiloGlobal.inputIcone} />} value={valorInput} onChangeText={t => {aoModificarInput(t); onChangeText?.(t)}} {...props} />
+            { valorSelecionado === valorInput ? null :
+                <FlatList data={correspondencias} nestedScrollEnabled style={[estiloGlobal.autocompleteLista, { maxHeight: alturaLista ?? 200 }]} renderItem={(props) => <ItemLista {...props} />} ListEmptyComponent={ListaVazia} />
+            }
+        </View>
+    );
+}
