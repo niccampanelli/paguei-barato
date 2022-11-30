@@ -59,13 +59,11 @@ export const useEstilos = () => {
         },
 
         informacaoTitulo: {
-            fontWeight: "800",
             fontSize: propriedadesTema.tamanhoTextos.texto,
             color: propriedadesTema.cores.textoEscuro
         },
 
         informacaoTexto: {
-            fontWeight: "400",
             fontSize: propriedadesTema.tamanhoTextos.texto,
             color: propriedadesTema.cores.textoEscuro
         },
@@ -99,13 +97,11 @@ export const useEstilos = () => {
         },
 
         listaItemTexto: {
-            fontWeight: "800",
             fontSize: propriedadesTema.tamanhoTextos.texto,
             color: propriedadesTema.cores.textoEscuro
         },
 
         listaItemPreco: {
-            fontWeight: "800",
             fontSize: propriedadesTema.tamanhoTextos.subtitulo,
             color: propriedadesTema.cores.secundaria
         },

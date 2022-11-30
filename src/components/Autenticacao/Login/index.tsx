@@ -1,12 +1,13 @@
 import { useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
-import { GestureResponderEvent, Image, KeyboardAvoidingView, Text, TouchableOpacity, View, } from "react-native";
+import { GestureResponderEvent, Image, KeyboardAvoidingView,  TouchableOpacity, View, } from "react-native";
 import { Feather } from "@expo/vector-icons"; "@expo/vector-icons/Feather";
 import { useEstiloGlobal } from "../../../estiloGlobal";
 import Input from "../../Input";
 import { useEstilos } from "./styles";
 import { TextInput } from "react-native-gesture-handler";
+import Texto from "../../Texto";
 
 export default function Login() {
 
@@ -35,10 +36,10 @@ export default function Login() {
             <Image style={estilos.banner} source={require("../../../../assets/fundo_autenticacao.png")} />
             <KeyboardAvoidingView behavior="padding" style={estilos.container}>
                 <Image style={estilos.logo} resizeMode="contain" source={require("../../../../assets/logo.png")} />
-                <Text style={[estiloGlobal.subtitulo, estilos.titulo]}>Que tal fazer login?</Text>
+                <Texto style={[estiloGlobal.subtitulo, estilos.titulo]}>Que tal fazer login?</Texto>
                 <View style={estilos.form}>
                     <View style={estilos.grupoForm}>
-                        <Text style={[estiloGlobal.label, estilos.label]}>E-mail</Text>
+                        <Texto style={[estiloGlobal.label, estilos.label]}>E-mail</Texto>
                         <Input
                             icone={<Feather name="at-sign" style={estiloGlobal.inputIcone}/>}
                             keyboardType="email-address"
@@ -51,7 +52,7 @@ export default function Login() {
                         />
                     </View>
                     <View style={estilos.grupoForm}>
-                        <Text style={[estiloGlobal.label, estilos.label]}>Senha</Text>
+                        <Texto style={[estiloGlobal.label, estilos.label]}>Senha</Texto>
                         <Input
                             icone={<Feather name="lock" style={estiloGlobal.inputIcone}/>}
                             returnKeyType="done"
@@ -66,15 +67,15 @@ export default function Login() {
                 <View>
                     <View style={estilos.opcoesLoginCima}>
                         <TouchableOpacity style={estiloGlobal.botaoSecundarioGrande} onPress={e => cadastrar(e)}>
-                            <Text style={estiloGlobal.botaoSecundarioGrandeTexto}>Cadastre-se</Text>
+                            <Texto style={estiloGlobal.botaoSecundarioGrandeTexto}>Cadastre-se</Texto>
                         </TouchableOpacity>
                         <TouchableOpacity style={[estiloGlobal.botaoPrincipalGrande, estilos.opcoesLoginPrincipal]}>
-                            <Text style={estiloGlobal.botaoPrincipalGrandeTexto}>Fazer login</Text>
+                            <Texto style={estiloGlobal.botaoPrincipalGrandeTexto}>Fazer login</Texto>
                         </TouchableOpacity>
                     </View>
-                    <Text style={estilos.opcoesLoginLabel}>ou</Text>
+                    <Texto style={estilos.opcoesLoginLabel}>ou</Texto>
                     <TouchableOpacity style={estiloGlobal.botaoSecundarioGrande} onPress={e => continuarSemLogin(e)}>
-                        <Text style={estiloGlobal.botaoSecundarioGrandeTexto}>Continuar sem login</Text>
+                        <Texto style={estiloGlobal.botaoSecundarioGrandeTexto}>Continuar sem login</Texto>
                     </TouchableOpacity>
                 </View>
             </KeyboardAvoidingView>

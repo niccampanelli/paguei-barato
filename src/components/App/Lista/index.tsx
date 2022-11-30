@@ -1,6 +1,6 @@
 import { Feather } from "@expo/vector-icons"
 import { useEffect, useRef, useState } from "react";
-import { Image, ListRenderItemInfo, ScrollView, Text, TextInput, TouchableOpacity, useWindowDimensions, View } from "react-native";
+import { Image, ListRenderItemInfo, ScrollView,  TextInput, TouchableOpacity, useWindowDimensions, View } from "react-native";
 import { FlatList, Gesture, GestureDetector, GestureHandlerRootView, Swipeable } from "react-native-gesture-handler";
 import Animated, { runOnJS, useAnimatedReaction, useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
 import RBSheet from "react-native-raw-bottom-sheet";
@@ -12,6 +12,9 @@ import { useNotificacaoToast } from "../../../util/context/providers/notificacao
 import Formatador from "../../../util/Formatador";
 import { useTemaContext } from "../../../util/context/providers/temaProvider";
 import AutoComplete from "../../AutoComplete";
+import Produto from "../../../interfaces/Produto";
+import { useCacheContext } from "../../../util/context/providers/cacheProvider";
+import Texto from "../../Texto";
 
 export default function Lista() {
 
@@ -136,6 +139,9 @@ export default function Lista() {
         "Maionese 1kg",
         "Mostarda 1kg"
     ];
+    
+    const { produtosCache } = useCacheContext();
+    const [produtos, setProdutos] = useState<(string | undefined)[]>([]);
 
     const navigation = useNavigation();
     const { propriedadesTema } = useTemaContext();
@@ -161,6 +167,12 @@ export default function Lista() {
         });
         setValorTotal(valor);
     }, [dados]);
+
+    useEffect(() => {
+        produtosCache.forEach((item) => {
+            setProdutos((produtos) => [...produtos, item.nome]);
+        });
+    }, [])
 
     const irParaDetalhes = () => {
         navigation.navigate("detalhesEstoque" as never);
@@ -267,8 +279,8 @@ export default function Lista() {
                         <Animated.View onTouchEnd={irParaDetalhes} style={[estilos.listaItemConteudo, estiloAnimado, estiloOpacidade]}>
                             <Image style={estilos.listaItemImagem} source={item.imagem} />
                             <View>
-                                <Text style={estilos.listaItemTexto} numberOfLines={1}>{item.nome}</Text>
-                                <Text style={estilos.listaItemMercado} numberOfLines={1}>{item.mercado} - {Formatador.formatarMoeda(item.preco)}</Text>
+                                <Texto peso="700Bold" style={estilos.listaItemTexto} numberOfLines={1}>{item.nome}</Texto>
+                                <Texto style={estilos.listaItemMercado} numberOfLines={1}>{item.mercado} - {Formatador.formatarMoeda(item.preco)}</Texto>
                             </View>
                         </Animated.View>
                     </GestureDetector>
@@ -282,50 +294,50 @@ export default function Lista() {
             <Modal titulo="Adicionar item à lista" refSheet={modalRef} height={alturaModal}>
                 <ScrollView showsVerticalScrollIndicator={false} nestedScrollEnabled={true} style={estilos.modalScrollview} contentContainerStyle={estilos.modalScrollContent}>
                     <View style={estilos.modalSecao}>
-                        <Text style={estiloGlobal.subtitulo}>Selecione o produto</Text>
+                        <Texto peso="700Bold" style={estiloGlobal.subtitulo}>Selecione o produto</Texto>
                         {/* <View style={estilos.modalBusca}>
                             <TextInput style={estilos.modalBuscaCampo} placeholderTextColor={propriedadesTema.cores.textoClaro} placeholder="Pesquise um produto..." />
                             <Feather style={estilos.modalBuscaIcone} name="shopping-bag" />
                         </View> */}
-                        <AutoComplete dados={produtosTeste} onChangeText={() => console.log("asd")} placeholder="Escolha um produto..." icone="shopping-cart"/>
+                        <AutoComplete dados={produtos} onChangeText={() => console.log("asd")} placeholder="Escolha um produto..." icone="shopping-cart"/>
                     </View>
                     <View style={estilos.modalSecao}>
-                        <Text style={estiloGlobal.subtitulo}>Escolha onde quer comprar</Text>
+                        <Texto peso="700Bold" style={estiloGlobal.subtitulo}>Escolha onde quer comprar</Texto>
                         <Image source={require("../../../../assets/mapa.png")} style={estilos.modalMapa} />
                     </View>
                     <ScrollView showsHorizontalScrollIndicator={false} nestedScrollEnabled horizontal style={estilos.listaFiltros}>
                         <TouchableOpacity onPress={() => { }} style={[estiloGlobal.tagPequenaDestaque, estilos.filtro]}>
-                            <Text style={estiloGlobal.tagPequenaDestaqueTexto}>Filtros</Text>
-                            <Text style={estilos.filtroContador}>2</Text>
+                            <Texto style={estiloGlobal.tagPequenaDestaqueTexto}>Filtros</Texto>
+                            <Texto style={estilos.filtroContador}>2</Texto>
                         </TouchableOpacity>
                         <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                            <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Text>
+                            <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
                         </View>
                         <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                            <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Text>
+                            <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
                         </View>
                         <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                            <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Text>
+                            <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
                         </View>
                         <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                            <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Text>
+                            <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
                         </View>
                         <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                            <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Text>
+                            <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
                         </View>
                         <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                            <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Text>
+                            <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
                         </View>
                         <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                            <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Text>
+                            <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
                         </View>
                     </ScrollView>
                     <FlatList style={estilos.modalLista} data={dados} nestedScrollEnabled={true} renderItem={(props: ListRenderItemInfo<any>) => <ItemLista {...props} />} />
                     <View style={estilos.modalBotaoAdicionar}>
                         <TouchableOpacity style={estiloGlobal.botaoPrincipalGrande} onPress={() => modalRef.current?.open()}>
-                            <Text style={estiloGlobal.botaoPrincipalGrandeTexto}>Adicionar à lista</Text>
+                            <Texto style={estiloGlobal.botaoPrincipalGrandeTexto}>Adicionar à lista</Texto>
                             <View style={estilos.modalBotaoAdicionarPreco}>
-                                <Text style={estilos.modalBotaoAdicionarPrecoTexto}>R$ 2,38</Text>
+                                <Texto style={estilos.modalBotaoAdicionarPrecoTexto}>R$ 2,38</Texto>
                                 <Feather style={estiloGlobal.botaoPrincipalGrandeIcone} name="shopping-bag" />
                             </View>
                         </TouchableOpacity>
@@ -333,36 +345,36 @@ export default function Lista() {
                 </ScrollView>
             </Modal>
             <View style={estilos.cabecalho}>
-                <Text style={estiloGlobal.titulo}>Lista de compras</Text>
+                <Texto peso="800ExtraBold" style={estiloGlobal.titulo}>Lista de compras</Texto>
                 <View style={estilos.resumo}>
                     <View style={estiloGlobal.tagPequenaNormal}>
-                        <Text style={estiloGlobal.tagPequenaNormalTexto}>{dados.length} produtos em 5 mercados</Text>
+                        <Texto style={estiloGlobal.tagPequenaNormalTexto}>{dados.length} produtos em 5 mercados</Texto>
                     </View>
                     <View style={estiloGlobal.tagPequenaDestaque}>
-                        <Text style={estiloGlobal.tagPequenaDestaqueTexto}>{Formatador.formatarMoeda(valorTotal)}</Text>
+                        <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaDestaqueTexto}>{Formatador.formatarMoeda(valorTotal)}</Texto>
                     </View>
                 </View>
                 <ScrollView showsHorizontalScrollIndicator={false} horizontal style={estilos.listaFiltros}>
                     <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                        <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Extra</Text>
+                        <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Extra</Texto>
                     </View>
                     <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                        <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Dia</Text>
+                        <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Dia</Texto>
                     </View>
                     <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                        <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Kawahara</Text>
+                        <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Kawahara</Texto>
                     </View>
                     <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                        <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Nova Estação</Text>
+                        <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Nova Estação</Texto>
                     </View>
                     <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                        <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Dovale</Text>
+                        <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Dovale</Texto>
                     </View>
                     <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                        <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Text>
+                        <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
                     </View>
                     <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                        <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Text>
+                        <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
                     </View>
                 </ScrollView>
             </View>
@@ -371,8 +383,8 @@ export default function Lista() {
                 <TouchableOpacity onPress={() => modalRef.current?.open()} style={estilos.adicionarFlutuante}>
                     <Feather name="plus" style={estilos.adicionarFlutuanteIcone} />
                 </TouchableOpacity>
-                <Text style={estilos.listaObservacao}>Arraste o item para a direita para marcá-lo como comprado.</Text>
-                <Text style={estilos.listaObservacao}>Arraste o item para a esquerda para removê-lo.</Text>
+                <Texto style={estilos.listaObservacao}>Arraste o item para a direita para marcá-lo como comprado.</Texto>
+                <Texto style={estilos.listaObservacao}>Arraste o item para a esquerda para removê-lo.</Texto>
             </View>
         </View>
     );

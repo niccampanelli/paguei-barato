@@ -44,7 +44,6 @@ export const useEstilos = () => {
 
         botaoSelecionadoTexto: {
             fontSize: propriedadesTema.botoesGrandes.texto,
-            fontWeight: "800",
             color: "#000000"
         },
 

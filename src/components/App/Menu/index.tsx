@@ -1,11 +1,12 @@
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useRef } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import {  TouchableOpacity, View } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { useEstiloGlobal } from "../../../estiloGlobal";
 import { useTemaContext } from "../../../util/context/providers/temaProvider";
 import Modal from "../../Modal";
+import Texto from "../../Texto";
 import { useEstilos } from "./styles";
 
 export default function Menu() {
@@ -34,38 +35,38 @@ export default function Menu() {
                 aoPressionarBotaoPrincipal={sair}
                 aoPressionarBotaoSecundario={() => modalRef.current?.close()}
             >
-                <Text style={estiloGlobal.texto}>Deseja mesmo sair da sua conta?</Text>
+                <Texto style={estiloGlobal.texto}>Deseja mesmo sair da sua conta?</Texto>
             </Modal>
             <View style={estilos.cabecalho}>
-                <Text style={estiloGlobal.titulo}>Menu</Text>
+                <Texto peso="800ExtraBold" style={estiloGlobal.titulo}>Menu</Texto>
                 <View style={estilos.usuario}>
-                    <Text style={[estiloGlobal.subtitulo, estilos.usuarioIcone]}>NC</Text>
+                    <Texto peso="900Black" style={[estiloGlobal.subtitulo, estilos.usuarioIcone]}>NC</Texto>
                     <View style={estilos.usuarioInfo}>
-                        <Text style={estiloGlobal.subtitulo}>Nicholas Campanelli</Text>
-                        <Text style={estiloGlobal.observacao}>nicholasoucampanelli@hotmail.com</Text>
+                        <Texto peso="700Bold" style={estiloGlobal.subtitulo}>Nicholas Campanelli</Texto>
+                        <Texto style={estiloGlobal.observacao}>nicholasoucampanelli@hotmail.com</Texto>
                     </View>
                 </View>
             </View>
             <View style={estilos.opcoes}>
                 <TouchableOpacity style={estilos.opcao}>
                     <Feather name="user" style={estilos.opcaoIcone} />
-                    <Text style={estilos.opcaoTexto}>Conta</Text>
+                    <Texto peso="700Bold" style={estilos.opcaoTexto}>Conta</Texto>
                 </TouchableOpacity>
                 <TouchableOpacity style={estilos.opcao}>
                     <Feather name="bell" style={estilos.opcaoIcone} />
-                    <Text style={estilos.opcaoTexto}>Notificações</Text>
+                    <Texto peso="700Bold" style={estilos.opcaoTexto}>Notificações</Texto>
                 </TouchableOpacity>
                 <TouchableOpacity style={estilos.opcao}>
                     <Feather name="info" style={estilos.opcaoIcone} />
-                    <Text style={estilos.opcaoTexto}>Sobre</Text>
+                    <Texto peso="700Bold" style={estilos.opcaoTexto}>Sobre</Texto>
                 </TouchableOpacity>
                 <TouchableOpacity style={estilos.opcao} onPress={() => alterarTema()}>
                     <Feather name={temaAtivo === "claro" ? "moon" : "sun"} style={estilos.opcaoIcone} />
-                    <Text style={estilos.opcaoTexto}>Alternar tema</Text>
+                    <Texto peso="700Bold" style={estilos.opcaoTexto}>Alternar tema</Texto>
                 </TouchableOpacity>
                 <TouchableOpacity style={estilos.opcao} onPress={() => modalRef.current?.open()}>
                     <Feather name="log-out" style={estilos.opcaoIconeVermelho} />
-                    <Text style={estilos.opcaoTextoVermelho}>Sair</Text>
+                    <Texto peso="700Bold" style={estilos.opcaoTextoVermelho}>Sair</Texto>
                 </TouchableOpacity>
             </View>
         </View>

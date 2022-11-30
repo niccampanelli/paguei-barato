@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { Text, View, ViewProps, ScrollView } from "react-native";
+import {  View, ViewProps, ScrollView } from "react-native";
 import Animated, { useAnimatedReaction, useAnimatedStyle, useSharedValue, withDelay, withSpring, withTiming } from "react-native-reanimated";
 import { useEstiloGlobal } from "../../../../../estiloGlobal";
 import { useTemaContext } from "../../../../../util/context/providers/temaProvider";
 import Formatador from "../../../../../util/Formatador";
+import Texto from "../../../../Texto";
 import { useEstilos } from "./styles";
 
 export interface DadoHistoricoPrecos {
@@ -87,7 +88,7 @@ export default function HistoricoPrecos({
     return (
         <View style={estilos.main} {...props}>
             <View style={[estiloGlobal.tagPequenaDestaque, estilos.quantidade]}>
-                <Text style={estiloGlobal.tagPequenaDestaqueTexto}>{dados.length} {dados.length === 1 ? "sugestão" : "sugestões"} em {Math.round((periodoData / 86400000) / 365)} anos</Text>
+                <Texto style={estiloGlobal.tagPequenaDestaqueTexto}>{dados.length} {dados.length === 1 ? "sugestão" : "sugestões"} em {Math.round((periodoData / 86400000) / 365)} anos</Texto>
             </View>
             <ScrollView nestedScrollEnabled onContentSizeChange={() => { scrollViewRef.current?.scrollToEnd({ animated: false }) }} ref={scrollViewRef} horizontal style={estilos.scroll} contentContainerStyle={estilos.conteudo}>
                 {dados ?
@@ -106,10 +107,10 @@ export default function HistoricoPrecos({
                         return (
                             <View key={indice} style={[estilos.coluna, (indice < dados.length - 1 ? { marginRight: 40 } : undefined)]}>
                                 <View style={[obterEstiloPreco(dado.preco).tag, estilos.tagPreco]}>
-                                    <Text style={obterEstiloPreco(dado.preco).tagTexto}>{Formatador.formatarMoeda(dado.preco)}</Text>
+                                    <Texto style={obterEstiloPreco(dado.preco).tagTexto}>{Formatador.formatarMoeda(dado.preco)}</Texto>
                                 </View>
                                 <Animated.View style={[estilos.barra, { backgroundColor: obterEstiloPreco(dado.preco).barra }, alturaBarraEstilo]} />
-                                <Text style={estilos.label}>{dado.data.toLocaleDateString('pt-BR')}</Text>
+                                <Texto style={estilos.label}>{dado.data.toLocaleDateString('pt-BR')}</Texto>
                             </View>
                         );
                     })

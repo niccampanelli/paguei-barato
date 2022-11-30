@@ -18,13 +18,13 @@ export default function StackExterna() {
 			<Stack.Navigator initialRouteName="login" screenOptions={{ headerShown: false, contentStyle: { backgroundColor: propriedadesTema.cores.fundoPrincipal } }}>
 				<Stack.Group>
 					<Stack.Screen name="login" component={Login} />
-					<Stack.Screen name="cadastro" options={{animation: "slide_from_left"}} component={Cadastro} />
+					<Stack.Screen name="cadastro" options={{ animation: "slide_from_left" }} component={Cadastro} />
 				</Stack.Group>
 				<Stack.Group>
-					<Stack.Screen name="app" options={{animation: "slide_from_right"}} component={NavegacaoApp} />
-					<Stack.Screen name="detalhesProduto" options={{animation: "slide_from_right"}} component={DetalhesProduto} />
-					<Stack.Screen name="detalhesMercado" options={{animation: "slide_from_right"}} component={DetalhesMercado} />
-					<Stack.Screen name="detalhesEstoque" options={{animation: "slide_from_right"}} component={DetalhesEstoque} />
+					<Stack.Screen name="app" options={{ animation: "slide_from_right" }} component={NavegacaoApp} />
+					<Stack.Screen name="detalhesProduto" options={{ animation: "slide_from_right" }} component={DetalhesProduto} />
+					<Stack.Screen name="detalhesMercado" options={{ animation: "slide_from_right" }} component={DetalhesMercado} />
+					<Stack.Screen name="detalhesEstoque" options={{ animation: "slide_from_right" }} component={DetalhesEstoque} />
 				</Stack.Group>
 			</Stack.Navigator>
 		</NavigationContainer>

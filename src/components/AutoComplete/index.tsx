@@ -1,11 +1,13 @@
 import { Feather } from "@expo/vector-icons";
 import { useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View,  TouchableOpacity } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import Formatador from "../../util/Formatador";
 import AutocompleteProps from "../../interfaces/AutocompleteProps";
 import Input from "../Input";
 import { useEstiloGlobal } from "../../estiloGlobal";
+import buscaObjeto from "../../services/buscaObjeto";
+import Texto from "../Texto";
 
 export default function AutoComplete({
     dados,
@@ -22,14 +24,7 @@ export default function AutoComplete({
 
     const aoModificarInput = (texto: string) => {
         setValorInput(texto);
-        let valores = dados.filter((valor) => {
-            return Formatador.removerDiacriticos(valor)
-                .toLowerCase()
-                .includes(
-                    Formatador.removerDiacriticos(texto)
-                    .toLowerCase()
-                );
-        });
+        let valores = buscaObjeto.corresponder(dados, texto);
         setCorrespondencias(valores);
     };
 
@@ -42,7 +37,7 @@ export default function AutoComplete({
     const ItemLista = ({ item }: any) => {
         return (
             <TouchableOpacity style={estiloGlobal.autocompleteListaItem} onPress={() => selecionarItem(item)}>
-                <Text style={estiloGlobal.autocompleteListaItemTexto}>{item}</Text>
+                <Texto style={estiloGlobal.autocompleteListaItemTexto}>{item}</Texto>
             </TouchableOpacity>
         );
     };
@@ -51,7 +46,7 @@ export default function AutoComplete({
         
         return (
             <View style={estiloGlobal.autocompleteListaItem}>
-                <Text style={estiloGlobal.autocompleteListaItemTexto}>Nenhum resultado encontrado.</Text>
+                <Texto style={estiloGlobal.autocompleteListaItemTexto}>Nenhum resultado encontrado.</Texto>
             </View>
         );
     }

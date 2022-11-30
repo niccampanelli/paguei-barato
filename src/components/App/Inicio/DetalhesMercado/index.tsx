@@ -1,12 +1,13 @@
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useRef } from "react";
-import { Image, ListRenderItemInfo, Text, TouchableOpacity, View, ViewProps } from "react-native";
+import { Image, ListRenderItemInfo,  TouchableOpacity, View, ViewProps } from "react-native";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { useEstiloGlobal } from "../../../../estiloGlobal";
 import Formatador from "../../../../util/Formatador";
 import Modal from "../../../Modal";
+import Texto from "../../../Texto";
 import Toast from "../../../Toast";
 import { useEstilos } from "./styles";
 
@@ -107,8 +108,8 @@ export default function DetalhesMercado() {
             <TouchableOpacity {...props} style={[estilos.listaItem, props.style]} onPress={() => navigation.navigate('detalhesEstoque' as never)}>
                 <Image style={estilos.listaItemImagem} source={item.imagem} />
                 <View style={estilos.listaItemInfos}>
-                    <Text style={estilos.listaItemPreco} numberOfLines={1}>{Formatador.formatarMoeda(item.preco)}</Text>
-                    <Text style={estilos.listaItemTexto}>{item.nome}</Text>
+                    <Texto style={estilos.listaItemPreco} numberOfLines={1}>{Formatador.formatarMoeda(item.preco)}</Texto>
+                    <Texto style={estilos.listaItemTexto}>{item.nome}</Texto>
                 </View>
             </TouchableOpacity>
         );
@@ -118,7 +119,7 @@ export default function DetalhesMercado() {
         <View style={estilos.main}>
             <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.voltar]} onPress={() => navigation.goBack()}>
                 <Feather name="arrow-left" style={estiloGlobal.tagPequenaNormalTexto} />
-                <Text style={estiloGlobal.tagPequenaNormalTexto}>Voltar</Text>
+                <Texto style={estiloGlobal.tagPequenaNormalTexto}>Voltar</Texto>
             </TouchableOpacity>
             <ScrollView>
                 <View style={estilos.cabecalho}>
@@ -127,21 +128,21 @@ export default function DetalhesMercado() {
                 <View style={estilos.container}>
                     <View style={estilos.tags}>
                         <View style={estiloGlobal.tagPequenaDestaque}>
-                            <Text style={estiloGlobal.tagPequenaDestaqueTexto}>Minimercado</Text>
+                            <Texto style={estiloGlobal.tagPequenaDestaqueTexto}>Minimercado</Texto>
                         </View>
                     </View>
-                    <Text style={[estiloGlobal.titulo, estilos.titulo]}>Minimercado Extra Artur Alvim</Text>
+                    <Texto style={[estiloGlobal.titulo, estilos.titulo]}>Minimercado Extra Artur Alvim</Texto>
                     <View style={estilos.secao}>
-                        <Text style={[estiloGlobal.subtitulo, estilos.titulo]}>Informações do mercado</Text>
+                        <Texto style={[estiloGlobal.subtitulo, estilos.titulo]}>Informações do mercado</Texto>
                         <View style={estilos.informacao}>
-                            <Text style={estilos.informacaoTitulo}>Ramo: </Text>
-                            <Text style={estilos.informacaoTexto}>Minimercado</Text>
+                            <Texto style={estilos.informacaoTitulo}>Ramo: </Texto>
+                            <Texto style={estilos.informacaoTexto}>Minimercado</Texto>
                         </View>
                         <View style={estilos.informacao}>
-                            <Text style={estilos.informacaoTitulo}>Localização: </Text>
+                            <Texto style={estilos.informacaoTitulo}>Localização: </Texto>
                         </View>
                         <View style={estilos.informacao}>
-                            <Text style={estilos.informacaoTexto}>Rua Doutor Campos Moura, 98 - Parque Artur Alvim, São Paulo - SP, 03568-010.</Text>
+                            <Texto style={estilos.informacaoTexto}>Rua Doutor Campos Moura, 98 - Parque Artur Alvim, São Paulo - SP, 03568-010.</Texto>
                         </View>
                         <ScrollView nestedScrollEnabled style={{ height: 400, width: "100%", flex: 1, borderRadius: 50 }}>
                             <ScrollView nestedScrollEnabled horizontal style={{ flex: 1, borderRadius: 20 }}>
@@ -150,14 +151,14 @@ export default function DetalhesMercado() {
                         </ScrollView>
                     </View>
                     <View style={estilos.secao}>
-                        <Text style={[estiloGlobal.subtitulo, estilos.titulo]}>Nas prateleiras desse mercado</Text>
+                        <Texto style={[estiloGlobal.subtitulo, estilos.titulo]}>Nas prateleiras desse mercado</Texto>
                         <ScrollView style={estilos.lista} contentContainerStyle={estilos.listaConteudo} nestedScrollEnabled>
                             {dummydata.map((elem, i) => (
                                 <ItemLista key={i} item={elem} style={(i%2 === 0) ? {marginRight: "4%"} : {marginLeft: "4%"}} />
                             ))}
                         </ScrollView>
                     </View>
-                    <Text style={estilos.listaObservacao}>As informações de estoque podem estar desatualizadas</Text>
+                    <Texto style={estilos.listaObservacao}>As informações de estoque podem estar desatualizadas</Texto>
                 </View>
             </ScrollView>
         </View>

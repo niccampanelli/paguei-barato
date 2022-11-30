@@ -9,31 +9,26 @@ export const useEstiloGlobal = () => {
         titulo: {
             color: propriedadesTema.cores.textoEscuro,
             fontSize: propriedadesTema.tamanhoTextos.titulo,
-            fontWeight: "bold",
         },
         
         subtitulo: {
             color: propriedadesTema.cores.textoEscuro,
             fontSize: propriedadesTema.tamanhoTextos.subtitulo,
-            fontWeight: "bold",
         },
     
         texto: {
             color: propriedadesTema.cores.textoEscuro,
             fontSize: propriedadesTema.tamanhoTextos.texto,
-            fontWeight: "400",
         },
     
         label: {
             color: propriedadesTema.cores.textoEscuro,
             fontSize: propriedadesTema.tamanhoTextos.texto,
-            fontWeight: "700",
         },
     
         observacao: {
             color: propriedadesTema.cores.textoClaro,
             fontSize: propriedadesTema.tamanhoTextos.observacao,
-            fontWeight: "400"
         },
     
         input: {
@@ -94,7 +89,6 @@ export const useEstiloGlobal = () => {
     
         botaoPrincipalTexto: {
             fontSize: propriedadesTema.botoes.texto,
-            fontWeight: "700",
             color: "#000000"
         },
     
@@ -107,7 +101,6 @@ export const useEstiloGlobal = () => {
     
         botaoSecundarioTexto: {
             fontSize: propriedadesTema.botoes.texto,
-            fontWeight: "700",
             color: propriedadesTema.cores.textoEscuro
         },
     
@@ -123,7 +116,6 @@ export const useEstiloGlobal = () => {
     
         botaoPrincipalGrandeTexto: {
             fontSize: propriedadesTema.botoesGrandes.texto,
-            fontWeight: "700",
             color: "#000000"
         },
     
@@ -144,7 +136,6 @@ export const useEstiloGlobal = () => {
     
         botaoSecundarioGrandeTexto: {
             fontSize: propriedadesTema.botoesGrandes.texto,
-            fontWeight: "700",
             color: propriedadesTema.cores.textoEscuro
         },
     
@@ -165,7 +156,6 @@ export const useEstiloGlobal = () => {
     
         tagPequenaNormalTexto: {
             fontSize: propriedadesTema.botoes.texto,
-            fontWeight: "400",
             color: propriedadesTema.cores.textoEscuro
         },
     
@@ -181,7 +171,6 @@ export const useEstiloGlobal = () => {
     
         tagPequenaDestaqueTexto: {
             fontSize: propriedadesTema.botoes.texto,
-            fontWeight: "400",
             color: "#000000"
         },
     
@@ -197,7 +186,6 @@ export const useEstiloGlobal = () => {
     
         tagPequenaSecundariaTexto: {
             fontSize: propriedadesTema.botoes.texto,
-            fontWeight: "400",
             color: "#ffffff"
         },
     
@@ -213,7 +201,6 @@ export const useEstiloGlobal = () => {
     
         tagPequenaEscuraTexto: {
             fontSize: propriedadesTema.botoes.texto,
-            fontWeight: "400",
             color: propriedadesTema.cores.textoEscuro
         },
     

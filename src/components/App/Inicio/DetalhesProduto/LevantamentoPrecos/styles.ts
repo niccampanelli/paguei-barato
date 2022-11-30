@@ -38,7 +38,6 @@ export const useEstilos = () => {
             flex: 0,
             display: "flex",
             fontSize: propriedadesTema.tamanhoTextos.texto,
-            fontWeight: "400",
             color: propriedadesTema.cores.textoEscuro,
             marginBottom: 10
         },

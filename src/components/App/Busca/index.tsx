@@ -1,12 +1,13 @@
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useRef, useState } from "react";
-import { FlatList, Image, ListRenderItemInfo, ScrollView, Text, TextInput, TouchableOpacity, useWindowDimensions, View } from "react-native";
+import { FlatList, Image, ListRenderItemInfo, ScrollView,  TextInput, TouchableOpacity, useWindowDimensions, View } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { useEstiloGlobal } from "../../../estiloGlobal";
 import Modal from "../../Modal";
 import { useTemaContext } from "../../../util/context/providers/temaProvider";
 import { useEstilos } from "./styles";
+import Texto from "../../Texto";
 
 export default function Busca() {
 
@@ -98,53 +99,53 @@ export default function Busca() {
         return (
             <ScrollView showsVerticalScrollIndicator={false} overScrollMode={"never"} style={estilos.modalScrollview} contentContainerStyle={estilos.modalScrollContent}>
                 <TouchableOpacity style={[estiloGlobal.tagPequenaSecundaria, estilos.modalOpcao]}>
-                    <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Sem filtros</Text>
+                    <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Sem filtros</Texto>
                 </TouchableOpacity>
                 <View style={estilos.modalSecao}>
-                    <Text style={[estiloGlobal.subtitulo, estilos.modalSubtitulo]}>Marca</Text>
+                    <Texto peso="700Bold" style={[estiloGlobal.subtitulo, estilos.modalSubtitulo]}>Marca</Texto>
                     <View style={estilos.modalOpcoes}>
                         <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.modalOpcao]}>
-                            <Text style={estiloGlobal.tagPequenaNormalTexto}>ÉBomMesmo</Text>
+                            <Texto style={estiloGlobal.tagPequenaNormalTexto}>ÉBomMesmo</Texto>
                         </TouchableOpacity>
                         <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.modalOpcao]}>
-                            <Text style={estiloGlobal.tagPequenaNormalTexto}>Ipê</Text>
+                            <Texto style={estiloGlobal.tagPequenaNormalTexto}>Ipê</Texto>
                         </TouchableOpacity>
                         <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.modalOpcao]}>
-                            <Text style={estiloGlobal.tagPequenaNormalTexto}>Qualidade</Text>
+                            <Texto style={estiloGlobal.tagPequenaNormalTexto}>Qualidade</Texto>
                         </TouchableOpacity>
                         <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.modalOpcao]}>
-                            <Text style={estiloGlobal.tagPequenaNormalTexto}>Escute</Text>
+                            <Texto style={estiloGlobal.tagPequenaNormalTexto}>Escute</Texto>
                         </TouchableOpacity>
                         <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.modalOpcao]}>
-                            <Text style={estiloGlobal.tagPequenaNormalTexto}>Age+</Text>
+                            <Texto style={estiloGlobal.tagPequenaNormalTexto}>Age+</Texto>
                         </TouchableOpacity>
                     </View>
                 </View>
                 <View style={estilos.modalSecao}>
-                    <Text style={[estiloGlobal.subtitulo, estilos.modalSubtitulo]}>Tamanho</Text>
+                    <Texto peso="700Bold" style={[estiloGlobal.subtitulo, estilos.modalSubtitulo]}>Tamanho</Texto>
                     <View style={estilos.modalOpcoes}>
                         <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.modalOpcao]}>
-                            <Text style={estiloGlobal.tagPequenaNormalTexto}>250g</Text>
+                            <Texto style={estiloGlobal.tagPequenaNormalTexto}>250g</Texto>
                         </TouchableOpacity>
                         <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.modalOpcao]}>
-                            <Text style={estiloGlobal.tagPequenaNormalTexto}>500ml</Text>
+                            <Texto style={estiloGlobal.tagPequenaNormalTexto}>500ml</Texto>
                         </TouchableOpacity>
                         <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.modalOpcao]}>
-                            <Text style={estiloGlobal.tagPequenaNormalTexto}>1L</Text>
+                            <Texto style={estiloGlobal.tagPequenaNormalTexto}>1L</Texto>
                         </TouchableOpacity>
                         <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.modalOpcao]}>
-                            <Text style={estiloGlobal.tagPequenaNormalTexto}>100g</Text>
+                            <Texto style={estiloGlobal.tagPequenaNormalTexto}>100g</Texto>
                         </TouchableOpacity>
                     </View>
                 </View>
                 <View style={estilos.modalSecao}>
-                    <Text style={[estiloGlobal.subtitulo, estilos.modalSubtitulo]}>Mercado</Text>
+                    <Texto peso="700Bold" style={[estiloGlobal.subtitulo, estilos.modalSubtitulo]}>Mercado</Texto>
                     <View style={estilos.modalOpcoes}>
                         <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.modalOpcao]}>
-                            <Text style={estiloGlobal.tagPequenaNormalTexto}>Kawahara Supermercado LTDA</Text>
+                            <Texto style={estiloGlobal.tagPequenaNormalTexto}>Kawahara Supermercado LTDA</Texto>
                         </TouchableOpacity>
                         <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.modalOpcao]}>
-                            <Text style={estiloGlobal.tagPequenaNormalTexto}>Extra Minimercado Doutor Campos Moura</Text>
+                            <Texto style={estiloGlobal.tagPequenaNormalTexto}>Extra Minimercado Doutor Campos Moura</Texto>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -157,49 +158,49 @@ export default function Busca() {
         return (
             <ScrollView showsVerticalScrollIndicator={false} overScrollMode={"never"} style={estilos.modalScrollview} contentContainerStyle={estilos.modalScrollContent}>
                 <TouchableOpacity style={[estiloGlobal.tagPequenaSecundaria, estilos.modalOpcao]}>
-                    <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Não ordenar</Text>
+                    <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Não ordenar</Texto>
                 </TouchableOpacity>
                 <View style={estilos.modalSecao}>
-                    <Text style={[estiloGlobal.subtitulo, estilos.modalSubtitulo]}>Nome</Text>
+                    <Texto peso="700Bold" style={[estiloGlobal.subtitulo, estilos.modalSubtitulo]}>Nome</Texto>
                     <View style={estilos.modalOpcoes}>
                         <TouchableOpacity style={[estiloGlobal.tagPequenaSecundaria, estilos.modalOpcao]}>
-                            <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Alfabética crescente</Text>
+                            <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Alfabética crescente</Texto>
                         </TouchableOpacity>
                         <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.modalOpcao]}>
-                            <Text style={estiloGlobal.tagPequenaNormalTexto}>Alfabética decrescente</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-                <View style={estilos.modalSecao}>
-                    <Text style={[estiloGlobal.subtitulo, estilos.modalSubtitulo]}>Marca</Text>
-                    <View style={estilos.modalOpcoes}>
-                        <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.modalOpcao]}>
-                            <Text style={estiloGlobal.tagPequenaNormalTexto}>Alfabética crescente</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.modalOpcao]}>
-                            <Text style={estiloGlobal.tagPequenaNormalTexto}>Alfabética decrescente</Text>
+                            <Texto style={estiloGlobal.tagPequenaNormalTexto}>Alfabética decrescente</Texto>
                         </TouchableOpacity>
                     </View>
                 </View>
                 <View style={estilos.modalSecao}>
-                    <Text style={[estiloGlobal.subtitulo, estilos.modalSubtitulo]}>Tamanho</Text>
+                    <Texto peso="700Bold" style={[estiloGlobal.subtitulo, estilos.modalSubtitulo]}>Marca</Texto>
                     <View style={estilos.modalOpcoes}>
                         <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.modalOpcao]}>
-                            <Text style={estiloGlobal.tagPequenaNormalTexto}>Maiores primeiro</Text>
+                            <Texto style={estiloGlobal.tagPequenaNormalTexto}>Alfabética crescente</Texto>
                         </TouchableOpacity>
                         <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.modalOpcao]}>
-                            <Text style={estiloGlobal.tagPequenaNormalTexto}>Menores primeiro</Text>
+                            <Texto style={estiloGlobal.tagPequenaNormalTexto}>Alfabética decrescente</Texto>
                         </TouchableOpacity>
                     </View>
                 </View>
                 <View style={estilos.modalSecao}>
-                    <Text style={[estiloGlobal.subtitulo, estilos.modalSubtitulo]}>Mercado</Text>
+                    <Texto peso="700Bold" style={[estiloGlobal.subtitulo, estilos.modalSubtitulo]}>Tamanho</Texto>
                     <View style={estilos.modalOpcoes}>
                         <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.modalOpcao]}>
-                            <Text style={estiloGlobal.tagPequenaNormalTexto}>Alfabética crescente</Text>
+                            <Texto style={estiloGlobal.tagPequenaNormalTexto}>Maiores primeiro</Texto>
                         </TouchableOpacity>
                         <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.modalOpcao]}>
-                            <Text style={estiloGlobal.tagPequenaNormalTexto}>Alfabética decrescente</Text>
+                            <Texto style={estiloGlobal.tagPequenaNormalTexto}>Menores primeiro</Texto>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                <View style={estilos.modalSecao}>
+                    <Texto peso="700Bold" style={[estiloGlobal.subtitulo, estilos.modalSubtitulo]}>Mercado</Texto>
+                    <View style={estilos.modalOpcoes}>
+                        <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.modalOpcao]}>
+                            <Texto style={estiloGlobal.tagPequenaNormalTexto}>Alfabética crescente</Texto>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.modalOpcao]}>
+                            <Texto style={estiloGlobal.tagPequenaNormalTexto}>Alfabética decrescente</Texto>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -228,7 +229,7 @@ export default function Busca() {
         return (
             <TouchableOpacity style={estilos.listaItem}>
                 <Image style={estilos.listaItemImagem} source={item.imagem}/>
-                <Text style={estilos.listaItemTexto} numberOfLines={1}>{item.nome}</Text>
+                <Texto peso="700Bold" style={estilos.listaItemTexto} numberOfLines={1}>{item.nome}</Texto>
             </TouchableOpacity>
         );
     };
@@ -243,43 +244,43 @@ export default function Busca() {
                 { componentesModal[modalAtual].componente }
             </Modal>
             <View style={estilos.cabecalho}>
-                <Text style={estiloGlobal.titulo}>Buscar</Text>
+                <Texto peso="800ExtraBold" style={estiloGlobal.titulo}>Buscar</Texto>
                 <View style={estilos.barraBusca}>
                     <TextInput placeholderTextColor={propriedadesTema.cores.textoClaro} style={estilos.barraBuscaCampo} placeholder="Escreva aqui sua pesquisa..."/>
                     <Feather style={estilos.barraBuscaIcone} name="search"/>
                 </View>
                 <ScrollView showsHorizontalScrollIndicator={false} horizontal style={estilos.listaFiltros}>
                     <TouchableOpacity onPress={() => abrirModal("filtrar")} style={[estiloGlobal.tagPequenaDestaque, estilos.filtro]}>
-                        <Text style={estiloGlobal.tagPequenaDestaqueTexto}>Filtros</Text>
-                        <Text style={estilos.filtroContador}>2</Text>
+                        <Texto peso="700Bold" style={estiloGlobal.tagPequenaDestaqueTexto}>Filtros</Texto>
+                        <Texto peso="700Bold" style={estilos.filtroContador}>2</Texto>
                     </TouchableOpacity>
                     <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                        <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Text>
+                        <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
                     </View>
                     <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                        <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Text>
+                        <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
                     </View>
                     <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                        <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Text>
+                        <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
                     </View>
                     <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                        <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Text>
+                        <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
                     </View>
                     <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                        <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Text>
+                        <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
                     </View>
                     <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                        <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Text>
+                        <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
                     </View>
                     <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                        <Text style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Text>
+                        <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
                     </View>
                 </ScrollView>
             </View>
             <View style={estilos.listaCabecalho}>
-                <Text style={estiloGlobal.subtitulo}>3 Resultados</Text>
+                <Texto peso="700Bold" style={estiloGlobal.subtitulo}>3 Resultados</Texto>
                 <TouchableOpacity onPress={() => abrirModal("ordenar")} style={estiloGlobal.tagPequenaNormal}>
-                    <Text style={estiloGlobal.tagPequenaNormalTexto}>Ordenar</Text>
+                    <Texto style={estiloGlobal.tagPequenaNormalTexto}>Ordenar</Texto>
                     <Feather name="bar-chart" style={estiloGlobal.tagPequenaNormalTexto}/>
                 </TouchableOpacity>
             </View>

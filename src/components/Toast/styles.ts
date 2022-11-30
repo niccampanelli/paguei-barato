@@ -29,7 +29,6 @@ export const useEstilos = () => {
         texto: {
             flex: 1,
             alignSelf: "center",
-            fontWeight: "400",
             fontSize: propriedadesTema.tamanhoTextos.texto,
             color: propriedadesTema.cores.destaqueEscuro,
             marginLeft: 20
@@ -77,7 +76,6 @@ export const useEstilos = () => {
         texto: {
             flex: 1,
             alignSelf: "center",
-            fontWeight: "400",
             fontSize: propriedadesTema.tamanhoTextos.texto,
             color: propriedadesTema.cores.secundariaEscuro,
             marginLeft: 20
@@ -125,7 +123,6 @@ export const useEstilos = () => {
         texto: {
             flex: 1,
             alignSelf: "center",
-            fontWeight: "400",
             fontSize: propriedadesTema.tamanhoTextos.texto,
             color: propriedadesTema.cores.textoEscuro,
             marginLeft: 20
@@ -173,7 +170,6 @@ export const useEstilos = () => {
         texto: {
             flex: 1,
             alignSelf: "center",
-            fontWeight: "400",
             fontSize: propriedadesTema.tamanhoTextos.texto,
             color: propriedadesTema.cores.vermelhoEscuro,
             marginLeft: 20

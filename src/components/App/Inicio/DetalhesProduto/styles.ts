@@ -59,13 +59,11 @@ export const useEstilos = () => {
         },
 
         informacaoTitulo: {
-            fontWeight: "800",
             fontSize: propriedadesTema.tamanhoTextos.texto,
             color: propriedadesTema.cores.textoEscuro
         },
 
         informacaoTexto: {
-            fontWeight: "400",
             fontSize: propriedadesTema.tamanhoTextos.texto,
             color: propriedadesTema.cores.textoEscuro
         },
@@ -100,7 +98,6 @@ export const useEstilos = () => {
         listaItemPreco: {
             alignSelf: "flex-start",
             textAlign: "right",
-            fontWeight: "600",
             fontSize: propriedadesTema.tamanhoTextos.texto,
             color: propriedadesTema.cores.textoEscuro
         },

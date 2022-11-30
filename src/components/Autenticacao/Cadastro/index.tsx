@@ -2,7 +2,7 @@ import { NavigationProp, NavigatorScreenParams, useNavigation } from "@react-nav
 import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useRef, useState } from "react";
-import { GestureResponderEvent, Image, KeyboardAvoidingView, Text, TouchableOpacity, View, } from "react-native";
+import { GestureResponderEvent, Image, KeyboardAvoidingView,  TouchableOpacity, View, } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useEstiloGlobal } from "../../../estiloGlobal";
 import Input from "../../Input";
@@ -10,6 +10,7 @@ import { useEstilos } from "./styles";
 import Animated, { useAnimatedStyle, useSharedValue, withDelay, withSpring } from "react-native-reanimated";
 import { TextInput } from "react-native-gesture-handler";
 import { useTemaContext } from "../../../util/context/providers/temaProvider";
+import Texto from "../../Texto";
 
 export default function Cadastro() {
 
@@ -38,10 +39,10 @@ export default function Cadastro() {
             <KeyboardAvoidingView style={estilos.container}>
                 <Image style={estilos.logo} resizeMode="contain" source={require("../../../../assets/logo.png")} />
                 <View style={estilos.cadastro}>
-                    <Text style={[estiloGlobal.subtitulo, estilos.titulo]}>Vamos nos conhecer melhor!</Text>
+                    <Texto style={[estiloGlobal.subtitulo, estilos.titulo]}>Vamos nos conhecer melhor!</Texto>
                     <View style={estilos.form}>
                         <View style={estilos.grupoForm}>
-                            <Text style={[estiloGlobal.label, estilos.label]}>Para começar, nos diga seu primeiro nome:</Text>
+                            <Texto style={[estiloGlobal.label, estilos.label]}>Para começar, nos diga seu primeiro nome:</Texto>
                             <Input
                                 icone={<Feather name="user" style={estiloGlobal.inputIcone} />}
                                 returnKeyType="next"
@@ -55,7 +56,7 @@ export default function Cadastro() {
                     </View>
                 </View>
                 <TouchableOpacity style={estiloGlobal.botaoPrincipalGrande} onPress={e => proximo(e)}>
-                    <Text style={estiloGlobal.botaoPrincipalGrandeTexto}>Próxima etapa</Text>
+                    <Texto style={estiloGlobal.botaoPrincipalGrandeTexto}>Próxima etapa</Texto>
                     <Feather style={estiloGlobal.botaoPrincipalGrandeIcone} name="arrow-right" />
                 </TouchableOpacity>
             </KeyboardAvoidingView>
@@ -75,10 +76,10 @@ export default function Cadastro() {
             <KeyboardAvoidingView style={estilos.container}>
                 <Image style={estilos.logo} resizeMode="contain" source={require("../../../../assets/logo.png")} />
                 <View style={estilos.cadastro}>
-                    <Text style={[estiloGlobal.subtitulo, estilos.titulo]}>Vamos nos conhecer melhor!</Text>
+                    <Texto style={[estiloGlobal.subtitulo, estilos.titulo]}>Vamos nos conhecer melhor!</Texto>
                     <View style={estilos.form}>
                         <View style={estilos.grupoForm}>
-                            <Text style={[estiloGlobal.label, estilos.label]}>Agora nos diga seu sobrenome:</Text>
+                            <Texto style={[estiloGlobal.label, estilos.label]}>Agora nos diga seu sobrenome:</Texto>
                             <Input
                                 icone={<Feather name="user" style={estiloGlobal.inputIcone} />}
                                 returnKeyType="next"
@@ -92,7 +93,7 @@ export default function Cadastro() {
                     </View>
                 </View>
                 <TouchableOpacity style={estiloGlobal.botaoPrincipalGrande} onPress={e => proximo(e)}>
-                    <Text style={estiloGlobal.botaoPrincipalGrandeTexto}>Próxima etapa</Text>
+                    <Texto style={estiloGlobal.botaoPrincipalGrandeTexto}>Próxima etapa</Texto>
                     <Feather style={estiloGlobal.botaoPrincipalGrandeIcone} name="arrow-right" />
                 </TouchableOpacity>
             </KeyboardAvoidingView>
@@ -112,10 +113,10 @@ export default function Cadastro() {
             <KeyboardAvoidingView style={estilos.container}>
                 <Image style={estilos.logo} resizeMode="contain" source={require("../../../../assets/logo.png")} />
                 <View style={estilos.cadastro}>
-                    <Text style={[estiloGlobal.subtitulo, estilos.titulo]}>Como podemos entrar em contato?</Text>
+                    <Texto style={[estiloGlobal.subtitulo, estilos.titulo]}>Como podemos entrar em contato?</Texto>
                     <View style={estilos.form}>
                         <View style={estilos.grupoForm}>
-                            <Text style={[estiloGlobal.label, estilos.label]}>Informe seu endereço de e-mail:</Text>
+                            <Texto style={[estiloGlobal.label, estilos.label]}>Informe seu endereço de e-mail:</Texto>
                             <Input
                                 icone={<Feather name="at-sign" style={estiloGlobal.inputIcone} />}
                                 keyboardType="email-address"
@@ -130,7 +131,7 @@ export default function Cadastro() {
                     </View>
                 </View>
                 <TouchableOpacity style={estiloGlobal.botaoPrincipalGrande} onPress={e => proximo(e)}>
-                    <Text style={estiloGlobal.botaoPrincipalGrandeTexto}>Próxima etapa</Text>
+                    <Texto style={estiloGlobal.botaoPrincipalGrandeTexto}>Próxima etapa</Texto>
                     <Feather style={estiloGlobal.botaoPrincipalGrandeIcone} name="arrow-right" />
                 </TouchableOpacity>
             </KeyboardAvoidingView>
@@ -151,11 +152,11 @@ export default function Cadastro() {
             <KeyboardAvoidingView style={estilos.container}>
                 <Image style={estilos.logo} resizeMode="contain" source={require("../../../../assets/logo.png")} />
                 <View style={estilos.cadastro}>
-                    <Text style={[estiloGlobal.subtitulo, estilos.titulo]}>Proteja seu cadastro</Text>
+                    <Texto style={[estiloGlobal.subtitulo, estilos.titulo]}>Proteja seu cadastro</Texto>
                     <View style={estilos.form}>
                         <View style={estilos.grupoForm}>
-                            <Text style={[estiloGlobal.label, estilos.label]}>Crie uma senha para fazer login no app:</Text>
-                            <Text style={[estiloGlobal.label, estilos.label]}>A senha deve possuir no mínimo 8 dígitos, letras maíusculas e minúsculas, números e simbolos.</Text>
+                            <Texto style={[estiloGlobal.label, estilos.label]}>Crie uma senha para fazer login no app:</Texto>
+                            <Texto style={[estiloGlobal.label, estilos.label]}>A senha deve possuir no mínimo 8 dígitos, letras maíusculas e minúsculas, números e simbolos.</Texto>
                             <Input
                                 icone={<Feather name="lock" style={estiloGlobal.inputIcone} />}
                                 returnKeyType="next"
@@ -168,7 +169,7 @@ export default function Cadastro() {
                             />
                         </View>
                         <View style={estilos.grupoForm}>
-                            <Text style={[estiloGlobal.label, estilos.label]}>Digite novamente sua senha:</Text>
+                            <Texto style={[estiloGlobal.label, estilos.label]}>Digite novamente sua senha:</Texto>
                             <Input
                                 icone={<Feather name="lock" style={estiloGlobal.inputIcone} />}
                                 returnKeyType="next"
@@ -183,7 +184,7 @@ export default function Cadastro() {
                     </View>
                 </View>
                 <TouchableOpacity style={estiloGlobal.botaoPrincipalGrande} onPress={e => proximo(e)}>
-                    <Text style={estiloGlobal.botaoPrincipalGrandeTexto}>Próxima etapa</Text>
+                    <Texto style={estiloGlobal.botaoPrincipalGrandeTexto}>Próxima etapa</Texto>
                     <Feather style={estiloGlobal.botaoPrincipalGrandeIcone} name="arrow-right" />
                 </TouchableOpacity>
             </KeyboardAvoidingView>
@@ -203,11 +204,11 @@ export default function Cadastro() {
             <KeyboardAvoidingView style={estilos.container}>
                 <Image style={estilos.logo} resizeMode="contain" source={require("../../../../assets/logo.png")} />
                 <View style={estilos.cadastro}>
-                    <Text style={[estiloGlobal.subtitulo, estilos.titulo]}>Não precisa ir muito longe!</Text>
+                    <Texto style={[estiloGlobal.subtitulo, estilos.titulo]}>Não precisa ir muito longe!</Texto>
                     <View style={estilos.form}>
                         <View style={estilos.grupoForm}>
-                            <Text style={[estiloGlobal.label, estilos.label]}>Preencha nos campos a seguir o seu endereço para recomendarmos os melhores preços e ofertas nas lojas próximas de você.</Text>
-                            <Text style={[estiloGlobal.label, estilos.label]}>Nos informe seu CEP:</Text>
+                            <Texto style={[estiloGlobal.label, estilos.label]}>Preencha nos campos a seguir o seu endereço para recomendarmos os melhores preços e ofertas nas lojas próximas de você.</Texto>
+                            <Texto style={[estiloGlobal.label, estilos.label]}>Nos informe seu CEP:</Texto>
                             <Input
                                 icone={<Feather name="map-pin" style={estiloGlobal.inputIcone} />}
                                 returnKeyType="next"
@@ -220,7 +221,7 @@ export default function Cadastro() {
                     </View>
                 </View>
                 <TouchableOpacity style={estiloGlobal.botaoPrincipalGrande} onPress={e => proximo(e)}>
-                    <Text style={estiloGlobal.botaoPrincipalGrandeTexto}>Próxima etapa</Text>
+                    <Texto style={estiloGlobal.botaoPrincipalGrandeTexto}>Próxima etapa</Texto>
                     <Feather style={estiloGlobal.botaoPrincipalGrandeIcone} name="arrow-right" />
                 </TouchableOpacity>
             </KeyboardAvoidingView>
@@ -243,10 +244,10 @@ export default function Cadastro() {
             <KeyboardAvoidingView style={estilos.container}>
                 <Image style={estilos.logo} resizeMode="contain" source={require("../../../../assets/logo.png")} />
                 <View style={estilos.cadastro}>
-                    <Text style={[estiloGlobal.subtitulo, estilos.titulo]}>Este é seu endereço?</Text>
+                    <Texto style={[estiloGlobal.subtitulo, estilos.titulo]}>Este é seu endereço?</Texto>
                     <View style={estilos.form}>
                         <View style={estilos.grupoForm}>
-                            <Text style={[estiloGlobal.label, estilos.label]}>Logradouro</Text>
+                            <Texto style={[estiloGlobal.label, estilos.label]}>Logradouro</Texto>
                             <Input
                                 icone={<Feather name="map-pin" style={estiloGlobal.inputIcone} />}
                                 returnKeyType="next"
@@ -259,7 +260,7 @@ export default function Cadastro() {
                             />
                         </View>
                         <View style={estilos.grupoForm}>
-                            <Text style={[estiloGlobal.label, estilos.label]}>Bairro</Text>
+                            <Texto style={[estiloGlobal.label, estilos.label]}>Bairro</Texto>
                             <Input
                                 icone={<Feather name="map-pin" style={estiloGlobal.inputIcone} />}
                                 returnKeyType="next"
@@ -273,7 +274,7 @@ export default function Cadastro() {
                             />
                         </View>
                         <View style={estilos.grupoForm}>
-                            <Text style={[estiloGlobal.label, estilos.label]}>Cidade</Text>
+                            <Texto style={[estiloGlobal.label, estilos.label]}>Cidade</Texto>
                             <Input
                                 icone={<Feather name="map-pin" style={estiloGlobal.inputIcone} />}
                                 returnKeyType="next"
@@ -287,7 +288,7 @@ export default function Cadastro() {
                             />
                         </View>
                         <View style={estilos.grupoForm}>
-                            <Text style={[estiloGlobal.label, estilos.label]}>Estado</Text>
+                            <Texto style={[estiloGlobal.label, estilos.label]}>Estado</Texto>
                             <Input
                                 icone={<Feather name="map-pin" style={estiloGlobal.inputIcone} />}
                                 returnKeyType="done"
@@ -301,7 +302,7 @@ export default function Cadastro() {
                     </View>
                 </View>
                 <TouchableOpacity style={estiloGlobal.botaoPrincipalGrande} onPress={e => proximo(e)}>
-                    <Text style={estiloGlobal.botaoPrincipalGrandeTexto}>Finalizar cadastro</Text>
+                    <Texto style={estiloGlobal.botaoPrincipalGrandeTexto}>Finalizar cadastro</Texto>
                     <Feather style={estiloGlobal.botaoPrincipalGrandeIcone} name="check-circle" />
                 </TouchableOpacity>
             </KeyboardAvoidingView>
@@ -347,13 +348,13 @@ export default function Cadastro() {
                     <Feather name="check-circle" style={estilos.cadastroFimIcone} />
                 </Animated.View>
                 <View style={estilos.cadastro}>
-                    <Text style={[estiloGlobal.titulo, estilos.titulo]}>Tudo pronto!</Text>
-                    <Text style={[estiloGlobal.subtitulo, estilos.titulo]}>Prazer em te conhecer, Nicholas!</Text>
-                    <Text style={[estiloGlobal.label, estilos.label]}>Seu cadastro está concluído. Agora você pode cadastrar mercados e produtos e informar os preços que você encontrar.</Text>
-                    <Text style={[estiloGlobal.label, estilos.label]}>Se você precisar modificar alguma informação do seu cadastro, vá até as configurações da conta.</Text>
+                    <Texto style={[estiloGlobal.titulo, estilos.titulo]}>Tudo pronto!</Texto>
+                    <Texto style={[estiloGlobal.subtitulo, estilos.titulo]}>Prazer em te conhecer, Nicholas!</Texto>
+                    <Texto style={[estiloGlobal.label, estilos.label]}>Seu cadastro está concluído. Agora você pode cadastrar mercados e produtos e informar os preços que você encontrar.</Texto>
+                    <Texto style={[estiloGlobal.label, estilos.label]}>Se você precisar modificar alguma informação do seu cadastro, vá até as configurações da conta.</Texto>
                 </View>
                 <TouchableOpacity style={estiloGlobal.botaoPrincipalGrande} onPress={e => proximo(e)}>
-                    <Text style={estiloGlobal.botaoPrincipalGrandeTexto}>Comece a economizar!</Text>
+                    <Texto style={estiloGlobal.botaoPrincipalGrandeTexto}>Comece a economizar!</Texto>
                     <Feather style={estiloGlobal.botaoPrincipalGrandeIcone} name="arrow-right" />
                 </TouchableOpacity>
             </View>

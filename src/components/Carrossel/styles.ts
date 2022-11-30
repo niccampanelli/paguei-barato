@@ -16,43 +16,50 @@ export const useEstilos = () => {
         },
 
         container: {
-            paddingHorizontal: propriedadesTema.layout.paddingHorizontal
+            paddingHorizontal: propriedadesTema.layout.paddingHorizontal,
+            paddingVertical: 10
         },
 
         item: {
-            width: 130,
-            position: "relative"
+            width: 160,
+            padding: 10,
+            position: "relative",
+            backgroundColor: propriedadesTema.cores.fundoPrincipal,
+            borderColor: propriedadesTema.cores.fundoSecundario,
+            borderWidth: 2,
+            borderStyle: "solid",
+            borderRadius: propriedadesTema.layout.raioBorda,
         },
 
         itemBadge: {
             position: "absolute",
-            right: 5,
-            top: 5,
+            right: 15,
+            top: 15,
             zIndex: 1
         },
 
         itemImagem: {
-            width: 130,
-            height: 130,
-            marginBottom: 10
+            width: "100%",
+            height: 140,
+            marginBottom: 20,
+            borderRadius: 5,
         },
 
         itemPreco: {
+            marginTop: "auto",
             fontSize: propriedadesTema.tamanhoTextos.subtitulo,
-            fontWeight: "800",
             color: propriedadesTema.cores.secundaria
         },
 
         itemNome: {
             fontSize: propriedadesTema.tamanhoTextos.texto,
-            fontWeight: "800",
             color: propriedadesTema.cores.textoEscuro
         },
 
         itemMercado: {
             fontSize: propriedadesTema.tamanhoTextos.observacao,
-            fontWeight: "400",
-            color: propriedadesTema.cores.textoClaro
+            color: propriedadesTema.cores.textoClaro,
+            marginBottom: 10,
         }
     });
 

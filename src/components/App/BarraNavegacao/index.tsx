@@ -1,7 +1,8 @@
 import { Feather } from "@expo/vector-icons";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { Route } from "@react-navigation/native";
-import { Text, TouchableOpacity, View } from "react-native";
+import {  TouchableOpacity, View } from "react-native";
+import Texto from "../../Texto";
 import { useEstilos } from "./styles";
 
 export default function BarraNavegacao({ descriptors, state, navigation }: BottomTabBarProps) {
@@ -51,7 +52,7 @@ export default function BarraNavegacao({ descriptors, state, navigation }: Botto
                 style={selecionado ? estilos.botaoSelecionado : estilos.botaoNormal}
             >
                 { icone }
-                <Text style={selecionado ? estilos.botaoSelecionadoTexto : estilos.botaoNormalTexto}>{label}</Text>
+                <Texto peso="800ExtraBold" style={selecionado ? estilos.botaoSelecionadoTexto : estilos.botaoNormalTexto}>{label}</Texto>
             </TouchableOpacity>
         );
     }

@@ -1,7 +1,7 @@
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useRef } from "react";
-import { Image, ListRenderItemInfo, Text, TouchableOpacity, View } from "react-native";
+import { Image, ListRenderItemInfo,  TouchableOpacity, View } from "react-native";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { useEstiloGlobal } from "../../../../estiloGlobal";
@@ -11,6 +11,7 @@ import Toast from "../../../Toast";
 import LevantamentoPrecos, { DadoLevantamentoPrecos } from "./LevantamentoPrecos";
 import dummyimagem from "./dummyimagem.json";
 import { useEstilos } from "./styles";
+import Texto from "../../../Texto";
 
 export default function DetalhesProduto() {
 
@@ -119,10 +120,10 @@ export default function DetalhesProduto() {
             <TouchableOpacity style={estilos.listaItem} onPress={() => navigation.navigate('detalhesEstoque' as never)}>
                 <Image style={estilos.listaItemImagem} source={item.imagem} />
                 <View style={estilos.listaItemInfos}>
-                    <Text style={estilos.listaItemTexto} numberOfLines={1}>{item.nome}</Text>
-                    <Text style={estilos.listaItemMercado} numberOfLines={1}>{item.endereco}</Text>
+                    <Texto style={estilos.listaItemTexto} numberOfLines={1}>{item.nome}</Texto>
+                    <Texto style={estilos.listaItemMercado} numberOfLines={1}>{item.endereco}</Texto>
                 </View>
-                <Text style={estilos.listaItemPreco} numberOfLines={1}>{Formatador.formatarMoeda(item.preco)}</Text>
+                <Texto style={estilos.listaItemPreco} numberOfLines={1}>{Formatador.formatarMoeda(item.preco)}</Texto>
             </TouchableOpacity>
         );
     };
@@ -131,7 +132,7 @@ export default function DetalhesProduto() {
         <View style={estilos.main}>
             <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.voltar]} onPress={() => navigation.goBack()}>
                 <Feather name="arrow-left" style={estiloGlobal.tagPequenaNormalTexto} />
-                <Text style={estiloGlobal.tagPequenaNormalTexto}>Voltar</Text>
+                <Texto style={estiloGlobal.tagPequenaNormalTexto}>Voltar</Texto>
             </TouchableOpacity>
             <ScrollView>
                 <View style={estilos.cabecalho}>
@@ -140,47 +141,47 @@ export default function DetalhesProduto() {
                 <View style={estilos.container}>
                     <View style={estilos.tags}>
                         <View style={estiloGlobal.tagPequenaDestaque}>
-                            <Text style={estiloGlobal.tagPequenaDestaqueTexto}>Molhos e Condimentos</Text>
+                            <Texto style={estiloGlobal.tagPequenaDestaqueTexto}>Molhos e Condimentos</Texto>
                         </View>
                         <View style={[estiloGlobal.tagPequenaNormal, { marginLeft: 10 }]}>
-                            <Text style={estiloGlobal.tagPequenaNormalTexto}>Sugerido há 2h e 10min</Text>
+                            <Texto style={estiloGlobal.tagPequenaNormalTexto}>Sugerido há 2h e 10min</Texto>
                         </View>
                     </View>
-                    <Text style={[estiloGlobal.titulo, estilos.titulo]}>Molho De Tomate Tradicional 450g Melhore</Text>
+                    <Texto style={[estiloGlobal.titulo, estilos.titulo]}>Molho De Tomate Tradicional 450g Melhore</Texto>
                     <View style={estilos.secao}>
-                        <Text style={[estiloGlobal.subtitulo, estilos.titulo]}>Detalhes do produto</Text>
+                        <Texto style={[estiloGlobal.subtitulo, estilos.titulo]}>Detalhes do produto</Texto>
                         <View style={estilos.informacao}>
-                            <Text style={estilos.informacaoTitulo}>Marca: </Text>
-                            <Text style={estilos.informacaoTexto}>Melhore</Text>
+                            <Texto style={estilos.informacaoTitulo}>Marca: </Texto>
+                            <Texto style={estilos.informacaoTexto}>Melhore</Texto>
                         </View>
                         <View style={estilos.informacao}>
-                            <Text style={estilos.informacaoTitulo}>Variação/Cor: </Text>
-                            <Text style={estilos.informacaoTexto}>Tradicional</Text>
+                            <Texto style={estilos.informacaoTitulo}>Variação/Cor: </Texto>
+                            <Texto style={estilos.informacaoTexto}>Tradicional</Texto>
                         </View>
                         <View style={estilos.informacao}>
-                            <Text style={estilos.informacaoTitulo}>Tamanho: </Text>
-                            <Text style={estilos.informacaoTexto}>450g</Text>
+                            <Texto style={estilos.informacaoTitulo}>Tamanho: </Texto>
+                            <Texto style={estilos.informacaoTexto}>450g</Texto>
                         </View>
                         <View style={estilos.informacao}>
-                            <Text style={estilos.informacaoTitulo}>Categoria: </Text>
-                            <Text style={estilos.informacaoTexto}>Molhos e Condimentos</Text>
+                            <Texto style={estilos.informacaoTitulo}>Categoria: </Texto>
+                            <Texto style={estilos.informacaoTexto}>Molhos e Condimentos</Texto>
                         </View>
                     </View>
                     <View style={estilos.secao}>
-                        <Text style={[estiloGlobal.subtitulo, estilos.titulo]}>Levantamento de preços</Text>
-                        <Text style={[estilos.informacaoTexto, estilos.informacao]}>Informações sobre a variação de preços desse produto em todos os mercados nos quais ele foi cadastrado.</Text>
+                        <Texto style={[estiloGlobal.subtitulo, estilos.titulo]}>Levantamento de preços</Texto>
+                        <Texto style={[estilos.informacaoTexto, estilos.informacao]}>Informações sobre a variação de preços desse produto em todos os mercados nos quais ele foi cadastrado.</Texto>
                         <LevantamentoPrecos dados={dummyLevantamento} />
                         <Toast icone="clock" texto="Data da última sugestão de preço: 23/07/2022 às 17:53" style={{ marginTop: 20 }} estilo="normal" />
                     </View>
                     <View style={estilos.secao}>
-                        <Text style={[estiloGlobal.subtitulo, estilos.titulo]}>Onde encontrar esse produto</Text>
+                        <Texto style={[estiloGlobal.subtitulo, estilos.titulo]}>Onde encontrar esse produto</Texto>
                         <ScrollView style={estilos.lista} nestedScrollEnabled={true}>
                             {dummydata.map((elem, i) => (
                                 <ItemLista key={i} item={elem} />
                             ))}
                         </ScrollView>
                     </View>
-                    <Text style={estilos.listaObservacao}>As informações de estoque podem estar desatualizadas</Text>
+                    <Texto style={estilos.listaObservacao}>As informações de estoque podem estar desatualizadas</Texto>
                 </View>
             </ScrollView>
         </View>

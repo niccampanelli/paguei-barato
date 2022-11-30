@@ -26,7 +26,7 @@ interface TemaPropriedadesTamanhoTextos {
 interface TemaPropriedadesLayout {
     raioBorda: number,
     paddingVertical: number,
-    paddingHorizontal: number
+    paddingHorizontal: number,
 }
 
 interface TemaPropriedadesModal {

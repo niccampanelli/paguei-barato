@@ -1,8 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
-import { Text, View, ViewProps, TouchableOpacity } from "react-native";
+import {  View, ViewProps, TouchableOpacity } from "react-native";
 import { useEstiloGlobal } from "../../../../../estiloGlobal";
 import { useTemaContext } from "../../../../../util/context/providers/temaProvider";
 import Formatador from "../../../../../util/Formatador";
+import Texto from "../../../../Texto";
 import { useEstilos } from "./styles";
 
 export interface DadoLevantamentoPrecos {
@@ -34,26 +35,26 @@ export default function LevantamentoPrecos({
     return (
         <View style={estilos.main} {...props}>
             <View style={[estiloGlobal.tagPequenaDestaque, estilos.quantidade]}>
-                <Text style={estiloGlobal.tagPequenaDestaqueTexto}>{dados.quantidade} {dados.quantidade === 1 ? "sugestão" : "sugestões"} </Text>
+                <Texto style={estiloGlobal.tagPequenaDestaqueTexto}>{dados.quantidade} {dados.quantidade === 1 ? "sugestão" : "sugestões"} </Texto>
             </View>
             <TouchableOpacity style={estilos.coluna} onPress={navegar}>
-                <Text style={estilos.label}>Menor preco</Text>
+                <Texto style={estilos.label}>Menor preco</Texto>
                 <View style={[estiloGlobal.tagPequenaDestaque, estilos.tagPreco]}>
-                    <Text style={estiloGlobal.tagPequenaDestaqueTexto}>{Formatador.formatarMoeda(dados.menor)}</Text>
+                    <Texto style={estiloGlobal.tagPequenaDestaqueTexto}>{Formatador.formatarMoeda(dados.menor)}</Texto>
                 </View>
                 <View style={[estilos.barra, { backgroundColor: propriedadesTema.cores.destaque, flex: (dados.menor * 1) / dados.maior }]} />
             </TouchableOpacity>
             <TouchableOpacity style={estilos.coluna} onPress={navegar}>
-                <Text style={estilos.label}>Preço médio</Text>
+                <Texto style={estilos.label}>Preço médio</Texto>
                 <View style={[estiloGlobal.tagPequenaSecundaria, estilos.tagPreco]}>
-                    <Text style={estiloGlobal.tagPequenaSecundariaTexto}>{Formatador.formatarMoeda(dados.medio)}</Text>
+                    <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>{Formatador.formatarMoeda(dados.medio)}</Texto>
                 </View>
                 <View style={[estilos.barra, { backgroundColor: propriedadesTema.cores.secundaria, flex: (dados.medio * 1) / dados.maior }]} />
             </TouchableOpacity>
             <TouchableOpacity style={estilos.coluna} onPress={navegar}>
-                <Text style={estilos.label}>Maior preco</Text>
+                <Texto style={estilos.label}>Maior preco</Texto>
                 <View style={[estiloGlobal.tagPequenaEscura, estilos.tagPreco]}>
-                    <Text style={estiloGlobal.tagPequenaEscuraTexto}>{Formatador.formatarMoeda(dados.maior)}</Text>
+                    <Texto style={estiloGlobal.tagPequenaEscuraTexto}>{Formatador.formatarMoeda(dados.maior)}</Texto>
                 </View>
                 <View style={[estilos.barra, { backgroundColor: propriedadesTema.cores.fundoTerciario, flex: 1 }]} />
             </TouchableOpacity>

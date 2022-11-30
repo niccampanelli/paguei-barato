@@ -1,15 +1,17 @@
-import { Image, ListRenderItemInfo, Text, TouchableOpacity, View, ViewProps } from "react-native";
+import { Image, ListRenderItemInfo,  TouchableOpacity, View, ViewProps } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { useEstiloGlobal } from "../../estiloGlobal";
 import Formatador from "../../util/Formatador";
+import Texto from "../Texto";
 import { useEstilos } from "./styles";
 
 interface CarrosselProps extends ViewProps {
     titulo: string,
-    dados: ReadonlyArray<any>
+    dados: any[],
+    onItemPress?: (item: any) => void
 }
 
-export default function Carrossel({titulo, dados, ...props}: CarrosselProps) {
+export default function Carrossel({ titulo, dados, onItemPress, ...props }: CarrosselProps) {
 
     const { estilos } = useEstilos();
     const { estiloGlobal } = useEstiloGlobal();
@@ -17,26 +19,27 @@ export default function Carrossel({titulo, dados, ...props}: CarrosselProps) {
     const ItemCarrossel = (props: ListRenderItemInfo<any>) => {
 
         return (
-            <TouchableOpacity style={[estilos.item, (props.index === dados.length-1) ? { marginRight: 0 } : { marginRight: 40 }]}>
-                { props.item.desconto ?
+            <TouchableOpacity onPress={() => onItemPress?.(props.item)} style={[estilos.item, (props.index === dados.length - 1) ? { marginRight: 0 } : { marginRight: 10 }]}>
+                {props.item.desconto ?
                     <View style={[estilos.itemBadge, estiloGlobal.tagPequenaDestaque]}>
-                        <Text style={estiloGlobal.tagPequenaDestaqueTexto}>- {props.item.desconto}%</Text>
+                        <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaDestaqueTexto}>- {props.item.desconto}%</Texto>
                     </View>
                     :
                     null
                 }
-                <Image style={estilos.itemImagem} source={props.item.imagem}/>
-                <Text style={estilos.itemPreco}>{Formatador.formatarMoeda(props.item.preco)}</Text>
-                <Text style={estilos.itemNome} numberOfLines={3}>{props.item.nome}</Text>
-                <Text style={estilos.itemMercado} numberOfLines={2}>{props.item.mercado}</Text>
+                <Image style={estilos.itemImagem} source={props.item.imagem} />
+                <Texto peso="700Bold" style={estilos.itemNome} numberOfLines={3}>{props.item.nome}</Texto>
+                <Texto style={estilos.itemMercado} numberOfLines={2}>{props.item.mercado}</Texto>
+                <Texto style={estilos.itemMercado}>{props.item.desconto ? Formatador.formatarMoeda((props.item.preco)/(1-(props.item.desconto/100))) : ""}</Texto>
+                <Texto peso="900Black" style={estilos.itemPreco}>{Formatador.formatarMoeda(props.item.preco)}</Texto>
             </TouchableOpacity>
         );
     }
 
     return (
         <View style={estilos.corpo} {...props}>
-            <Text style={[estiloGlobal.subtitulo, estilos.titulo]}>{titulo}</Text>
-            <FlatList showsHorizontalScrollIndicator={false} horizontal data={dados} contentContainerStyle={estilos.container} renderItem={(props) => <ItemCarrossel {...props}/>}/>
+            <Texto peso="800ExtraBold" style={[estiloGlobal.subtitulo, estilos.titulo]}>{titulo}</Texto>
+            <FlatList showsHorizontalScrollIndicator={false} horizontal data={dados} contentContainerStyle={estilos.container} renderItem={(props) => <ItemCarrossel {...props} />} />
         </View>
     );
 }

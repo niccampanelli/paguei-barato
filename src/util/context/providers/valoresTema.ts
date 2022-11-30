@@ -78,7 +78,7 @@ const valoresTemaEscuro: TemaPropriedades = {
     layout: {
         raioBorda: 16,
         paddingVertical: 34,
-        paddingHorizontal: 24,
+        paddingHorizontal: 24
     },
     modal: {
         paddingVerticalHandle: 20,

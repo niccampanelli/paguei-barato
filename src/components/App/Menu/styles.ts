@@ -31,7 +31,6 @@ export const useEstilos = () => {
             borderRadius: 100,
             color: "#000000",
             fontSize: propriedadesTema.tamanhoTextos.subtitulo,
-            fontWeight: "bold",
         },
 
         usuarioInfo: {
