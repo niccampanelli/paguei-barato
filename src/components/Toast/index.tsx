@@ -30,7 +30,7 @@ export default function Toast(props: ToastProps) {
             </View>
             {props.possuiBotao ?
                 <TouchableOpacity style={estilos[props.estilo].botao} onPress={props.aoPressionarBotao}>
-                    <Texto style={estilos[props.estilo].botaoTexto}>{props.labelBotao}</Texto>
+                    <Texto peso="700Bold" style={estilos[props.estilo].botaoTexto}>{props.labelBotao}</Texto>
                 </TouchableOpacity>
                 :
                 null

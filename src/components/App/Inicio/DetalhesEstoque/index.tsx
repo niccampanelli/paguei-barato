@@ -54,27 +54,27 @@ export default function DetalhesEstoque() {
         <View style={estilos.main}>
             <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.voltar]} onPress={() => navigation.goBack()}>
                 <Feather name="arrow-left" style={estiloGlobal.tagPequenaNormalTexto} />
-                <Texto style={estiloGlobal.tagPequenaNormalTexto}>Voltar</Texto>
+                <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaNormalTexto}>Voltar</Texto>
             </TouchableOpacity>
             <ScrollView>
                 <View style={estilos.cabecalho}>
                     <Image style={estilos.itemImagem} source={{ uri: "https://a-static.mlcdn.com.br/800x560/molho-de-tomate-fugini-sache-300g-caixa-com-36-unidades/calcadosdmais/308d194e1d5211ecb8da4201ac185013/032bae61bf039c555f62d1ed00a2ecaa.jpeg" }} />
                 </View>
                 <View style={estilos.container}>
-                    <Texto style={estilos.preco}>R$ 1,55</Texto>
+                    <Texto peso="900Black" style={estilos.preco}>R$ 1,55</Texto>
                     <TouchableOpacity onPress={() => navigation.navigate("detalhesProduto" as never)}>
-                        <Texto style={[estiloGlobal.titulo, estilos.titulo]}>Molho De Tomate Tradicional 450g Melhore <Feather name="arrow-right" style={estilos.tituloIcone} /></Texto>
+                        <Texto peso="800ExtraBold" style={[estiloGlobal.titulo, estilos.titulo]}>Molho De Tomate Tradicional 450g Melhore <Feather name="arrow-right" style={estilos.tituloIcone} /></Texto>
                     </TouchableOpacity>
                     <TouchableOpacity style={estilos.mercadoCard} onPress={() => navigation.navigate("detalhesMercado" as never)} >
                         <Image style={estilos.mercadoCardImagem} source={{ uri: "https://i.pinimg.com/originals/b1/f0/93/b1f093fb7e294260afe1cae34996eb33.jpg" }} />
                         <View>
                             <Texto style={estiloGlobal.texto} >Esse item se encontra em:</Texto>
-                            <Texto style={estiloGlobal.label} >Sonda Supermercados Carrão</Texto>
+                            <Texto peso="800ExtraBold" style={estiloGlobal.label} >Sonda Supermercados Carrão</Texto>
                         </View>
                         <Feather style={estilos.mercadoCardIcone} name="arrow-right" />
                     </TouchableOpacity>
                     <View style={estilos.secao}>
-                        <Texto style={[estiloGlobal.subtitulo, estilos.titulo]}>Histórico de preços</Texto>
+                        <Texto peso="700Bold" style={[estiloGlobal.subtitulo, estilos.titulo]}>Histórico de preços</Texto>
                         <Texto style={estiloGlobal.texto}>Preços registrados desse item desde que foi cadastrado pela primeira vez nesse mercado.</Texto>
                     </View>
                     <HistoricoPrecos dados={dummyLevantamento} />

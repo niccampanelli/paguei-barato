@@ -60,6 +60,11 @@ export const useEstilos = () => {
             fontSize: propriedadesTema.tamanhoTextos.observacao,
             color: propriedadesTema.cores.textoClaro,
             marginBottom: 10,
+        },
+
+        itemPrecoAnterior: {
+            fontSize: propriedadesTema.tamanhoTextos.observacao,
+            color: propriedadesTema.cores.textoEscuro,
         }
     });
 

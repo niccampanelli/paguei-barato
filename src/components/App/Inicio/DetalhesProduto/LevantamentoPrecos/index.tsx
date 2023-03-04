@@ -35,26 +35,26 @@ export default function LevantamentoPrecos({
     return (
         <View style={estilos.main} {...props}>
             <View style={[estiloGlobal.tagPequenaDestaque, estilos.quantidade]}>
-                <Texto style={estiloGlobal.tagPequenaDestaqueTexto}>{dados.quantidade} {dados.quantidade === 1 ? "sugestão" : "sugestões"} </Texto>
+                <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaDestaqueTexto}>{dados.quantidade} {dados.quantidade === 1 ? "sugestão" : "sugestões"} </Texto>
             </View>
             <TouchableOpacity style={estilos.coluna} onPress={navegar}>
                 <Texto style={estilos.label}>Menor preco</Texto>
                 <View style={[estiloGlobal.tagPequenaDestaque, estilos.tagPreco]}>
-                    <Texto style={estiloGlobal.tagPequenaDestaqueTexto}>{Formatador.formatarMoeda(dados.menor)}</Texto>
+                    <Texto peso="700Bold" style={estiloGlobal.tagPequenaDestaqueTexto}>{Formatador.formatarMoeda(dados.menor)}</Texto>
                 </View>
                 <View style={[estilos.barra, { backgroundColor: propriedadesTema.cores.destaque, flex: (dados.menor * 1) / dados.maior }]} />
             </TouchableOpacity>
             <TouchableOpacity style={estilos.coluna} onPress={navegar}>
                 <Texto style={estilos.label}>Preço médio</Texto>
                 <View style={[estiloGlobal.tagPequenaSecundaria, estilos.tagPreco]}>
-                    <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>{Formatador.formatarMoeda(dados.medio)}</Texto>
+                    <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>{Formatador.formatarMoeda(dados.medio)}</Texto>
                 </View>
                 <View style={[estilos.barra, { backgroundColor: propriedadesTema.cores.secundaria, flex: (dados.medio * 1) / dados.maior }]} />
             </TouchableOpacity>
             <TouchableOpacity style={estilos.coluna} onPress={navegar}>
                 <Texto style={estilos.label}>Maior preco</Texto>
                 <View style={[estiloGlobal.tagPequenaEscura, estilos.tagPreco]}>
-                    <Texto style={estiloGlobal.tagPequenaEscuraTexto}>{Formatador.formatarMoeda(dados.maior)}</Texto>
+                    <Texto peso="700Bold" style={estiloGlobal.tagPequenaEscuraTexto}>{Formatador.formatarMoeda(dados.maior)}</Texto>
                 </View>
                 <View style={[estilos.barra, { backgroundColor: propriedadesTema.cores.fundoTerciario, flex: 1 }]} />
             </TouchableOpacity>

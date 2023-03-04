@@ -36,10 +36,10 @@ export default function Login() {
             <Image style={estilos.banner} source={require("../../../../assets/fundo_autenticacao.png")} />
             <KeyboardAvoidingView behavior="padding" style={estilos.container}>
                 <Image style={estilos.logo} resizeMode="contain" source={require("../../../../assets/logo.png")} />
-                <Texto style={[estiloGlobal.subtitulo, estilos.titulo]}>Que tal fazer login?</Texto>
+                <Texto peso="700Bold" style={[estiloGlobal.subtitulo, estilos.titulo]}>Que tal fazer login?</Texto>
                 <View style={estilos.form}>
                     <View style={estilos.grupoForm}>
-                        <Texto style={[estiloGlobal.label, estilos.label]}>E-mail</Texto>
+                        <Texto peso="700Bold" style={[estiloGlobal.label, estilos.label]}>E-mail</Texto>
                         <Input
                             icone={<Feather name="at-sign" style={estiloGlobal.inputIcone}/>}
                             keyboardType="email-address"
@@ -52,7 +52,7 @@ export default function Login() {
                         />
                     </View>
                     <View style={estilos.grupoForm}>
-                        <Texto style={[estiloGlobal.label, estilos.label]}>Senha</Texto>
+                        <Texto peso="700Bold" style={[estiloGlobal.label, estilos.label]}>Senha</Texto>
                         <Input
                             icone={<Feather name="lock" style={estiloGlobal.inputIcone}/>}
                             returnKeyType="done"

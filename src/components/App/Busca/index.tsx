@@ -99,7 +99,7 @@ export default function Busca() {
         return (
             <ScrollView showsVerticalScrollIndicator={false} overScrollMode={"never"} style={estilos.modalScrollview} contentContainerStyle={estilos.modalScrollContent}>
                 <TouchableOpacity style={[estiloGlobal.tagPequenaSecundaria, estilos.modalOpcao]}>
-                    <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Sem filtros</Texto>
+                    <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Sem filtros</Texto>
                 </TouchableOpacity>
                 <View style={estilos.modalSecao}>
                     <Texto peso="700Bold" style={[estiloGlobal.subtitulo, estilos.modalSubtitulo]}>Marca</Texto>
@@ -158,13 +158,13 @@ export default function Busca() {
         return (
             <ScrollView showsVerticalScrollIndicator={false} overScrollMode={"never"} style={estilos.modalScrollview} contentContainerStyle={estilos.modalScrollContent}>
                 <TouchableOpacity style={[estiloGlobal.tagPequenaSecundaria, estilos.modalOpcao]}>
-                    <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Não ordenar</Texto>
+                    <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Não ordenar</Texto>
                 </TouchableOpacity>
                 <View style={estilos.modalSecao}>
                     <Texto peso="700Bold" style={[estiloGlobal.subtitulo, estilos.modalSubtitulo]}>Nome</Texto>
                     <View style={estilos.modalOpcoes}>
                         <TouchableOpacity style={[estiloGlobal.tagPequenaSecundaria, estilos.modalOpcao]}>
-                            <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Alfabética crescente</Texto>
+                            <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Alfabética crescente</Texto>
                         </TouchableOpacity>
                         <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.modalOpcao]}>
                             <Texto style={estiloGlobal.tagPequenaNormalTexto}>Alfabética decrescente</Texto>
@@ -251,29 +251,29 @@ export default function Busca() {
                 </View>
                 <ScrollView showsHorizontalScrollIndicator={false} horizontal style={estilos.listaFiltros}>
                     <TouchableOpacity onPress={() => abrirModal("filtrar")} style={[estiloGlobal.tagPequenaDestaque, estilos.filtro]}>
-                        <Texto peso="700Bold" style={estiloGlobal.tagPequenaDestaqueTexto}>Filtros</Texto>
-                        <Texto peso="700Bold" style={estilos.filtroContador}>2</Texto>
+                        <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaDestaqueTexto}>Filtros</Texto>
+                        <Texto peso="800ExtraBold" style={estilos.filtroContador}>2</Texto>
                     </TouchableOpacity>
                     <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                        <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
+                        <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
                     </View>
                     <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                        <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
+                        <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
                     </View>
                     <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                        <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
+                        <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
                     </View>
                     <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                        <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
+                        <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
                     </View>
                     <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                        <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
+                        <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
                     </View>
                     <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                        <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
+                        <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
                     </View>
                     <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                        <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
+                        <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
                     </View>
                 </ScrollView>
             </View>

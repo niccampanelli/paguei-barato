@@ -108,8 +108,8 @@ export default function DetalhesMercado() {
             <TouchableOpacity {...props} style={[estilos.listaItem, props.style]} onPress={() => navigation.navigate('detalhesEstoque' as never)}>
                 <Image style={estilos.listaItemImagem} source={item.imagem} />
                 <View style={estilos.listaItemInfos}>
-                    <Texto style={estilos.listaItemPreco} numberOfLines={1}>{Formatador.formatarMoeda(item.preco)}</Texto>
-                    <Texto style={estilos.listaItemTexto}>{item.nome}</Texto>
+                    <Texto peso="900Black" style={estilos.listaItemPreco} numberOfLines={1}>{Formatador.formatarMoeda(item.preco)}</Texto>
+                    <Texto peso="800ExtraBold" style={estilos.listaItemTexto}>{item.nome}</Texto>
                 </View>
             </TouchableOpacity>
         );
@@ -119,7 +119,7 @@ export default function DetalhesMercado() {
         <View style={estilos.main}>
             <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.voltar]} onPress={() => navigation.goBack()}>
                 <Feather name="arrow-left" style={estiloGlobal.tagPequenaNormalTexto} />
-                <Texto style={estiloGlobal.tagPequenaNormalTexto}>Voltar</Texto>
+                <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaNormalTexto}>Voltar</Texto>
             </TouchableOpacity>
             <ScrollView>
                 <View style={estilos.cabecalho}>
@@ -128,18 +128,18 @@ export default function DetalhesMercado() {
                 <View style={estilos.container}>
                     <View style={estilos.tags}>
                         <View style={estiloGlobal.tagPequenaDestaque}>
-                            <Texto style={estiloGlobal.tagPequenaDestaqueTexto}>Minimercado</Texto>
+                            <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaDestaqueTexto}>Minimercado</Texto>
                         </View>
                     </View>
-                    <Texto style={[estiloGlobal.titulo, estilos.titulo]}>Minimercado Extra Artur Alvim</Texto>
+                    <Texto peso="800ExtraBold" style={[estiloGlobal.titulo, estilos.titulo]}>Minimercado Extra Artur Alvim</Texto>
                     <View style={estilos.secao}>
-                        <Texto style={[estiloGlobal.subtitulo, estilos.titulo]}>Informações do mercado</Texto>
+                        <Texto peso="700Bold" style={[estiloGlobal.subtitulo, estilos.titulo]}>Informações do mercado</Texto>
                         <View style={estilos.informacao}>
-                            <Texto style={estilos.informacaoTitulo}>Ramo: </Texto>
+                            <Texto peso="700Bold" style={estilos.informacaoTitulo}>Ramo: </Texto>
                             <Texto style={estilos.informacaoTexto}>Minimercado</Texto>
                         </View>
                         <View style={estilos.informacao}>
-                            <Texto style={estilos.informacaoTitulo}>Localização: </Texto>
+                            <Texto peso="700Bold" style={estilos.informacaoTitulo}>Localização: </Texto>
                         </View>
                         <View style={estilos.informacao}>
                             <Texto style={estilos.informacaoTexto}>Rua Doutor Campos Moura, 98 - Parque Artur Alvim, São Paulo - SP, 03568-010.</Texto>
@@ -151,7 +151,7 @@ export default function DetalhesMercado() {
                         </ScrollView>
                     </View>
                     <View style={estilos.secao}>
-                        <Texto style={[estiloGlobal.subtitulo, estilos.titulo]}>Nas prateleiras desse mercado</Texto>
+                        <Texto peso="700Bold" style={[estiloGlobal.subtitulo, estilos.titulo]}>Nas prateleiras desse mercado</Texto>
                         <ScrollView style={estilos.lista} contentContainerStyle={estilos.listaConteudo} nestedScrollEnabled>
                             {dummydata.map((elem, i) => (
                                 <ItemLista key={i} item={elem} style={(i%2 === 0) ? {marginRight: "4%"} : {marginLeft: "4%"}} />

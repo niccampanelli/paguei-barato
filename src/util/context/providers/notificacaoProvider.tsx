@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import { ContextNotificacaoToast } from "../../../interfaces/ContextNotificacaoToast";
+import { GestureResponderEvent } from "react-native";
 import NotificacaoToast from "../../../interfaces/NotificacaoToast";
 
 const NotificacaoContext = createContext<ContextNotificacaoToast>({ notificacoes: [], notificar: () => { } });
@@ -14,6 +15,14 @@ export default function NotificacaoProvider(props: any) {
             setNotificacoes((oldNotificacoes) => {
                 return oldNotificacoes.filter((oldNotificacao) => oldNotificacao !== notificacao);
             });
+        };
+
+        const aoPressionar = notificacao.aoPressionarBotao;
+        notificacao.aoPressionarBotao = (evento: GestureResponderEvent) => {
+            setNotificacoes((oldNotificacoes) => {
+                return oldNotificacoes.filter((oldNotificacao) => oldNotificacao !== notificacao);
+            });
+            aoPressionar?.(evento);
         };
         let notificacoesTemp = notificacoes as NotificacaoToast[];
         setNotificacoes([...notificacoesTemp, notificacao]);

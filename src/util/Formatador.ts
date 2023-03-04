@@ -9,7 +9,6 @@ export default class Formatador {
         valorFormatado = valorFormatado.replace(',', '.');
         let expSubstituiCent = new RegExp(/([.](?=\d{2}$))/);
         valorFormatado = valorFormatado.replace(expSubstituiCent, ',');
-        valorFormatado = valorFormatado.replace("\$", '$ ');
         return valorFormatado;
     }
 

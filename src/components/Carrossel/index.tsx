@@ -28,9 +28,11 @@ export default function Carrossel({ titulo, dados, onItemPress, ...props }: Carr
                     null
                 }
                 <Image style={estilos.itemImagem} source={props.item.imagem} />
-                <Texto peso="700Bold" style={estilos.itemNome} numberOfLines={3}>{props.item.nome}</Texto>
+                <Texto peso="800ExtraBold" style={estilos.itemNome} numberOfLines={3}>{props.item.nome}</Texto>
                 <Texto style={estilos.itemMercado} numberOfLines={2}>{props.item.mercado}</Texto>
-                <Texto style={estilos.itemMercado}>{props.item.desconto ? Formatador.formatarMoeda((props.item.preco)/(1-(props.item.desconto/100))) : ""}</Texto>
+                { props.item.desconto &&
+                    <Texto style={estilos.itemPrecoAnterior}>era {Formatador.formatarMoeda((props.item.preco)/(1-(props.item.desconto/100)))}</Texto>
+                }
                 <Texto peso="900Black" style={estilos.itemPreco}>{Formatador.formatarMoeda(props.item.preco)}</Texto>
             </TouchableOpacity>
         );

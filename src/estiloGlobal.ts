@@ -55,13 +55,13 @@ export const useEstiloGlobal = () => {
 
         autocomplete: {
             position: "relative",
-            flex: 1
+            zIndex: 100,
         },
 
         autocompleteLista: {
             position: "absolute",
-            zIndex: 1,
-            elevation: 1,
+            zIndex: 100,
+            elevation: 2,
             top: "100%",
             left: 0,
             right: 0,
@@ -148,6 +148,7 @@ export const useEstiloGlobal = () => {
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
+            gap: 5,
             backgroundColor: propriedadesTema.cores.fundoSecundario,
             borderRadius: propriedadesTema.layout.raioBorda,
             paddingVertical: propriedadesTema.botoes.paddingVertical,

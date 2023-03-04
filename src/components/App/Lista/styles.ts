@@ -26,7 +26,8 @@ export const useEstilos = () => {
 
         listaFiltros: {
             display: "flex",
-            paddingVertical: 16
+            paddingVertical: 16,
+            backgroundColor: propriedadesTema.cores.fundoPrincipal,
         },
 
         filtro: {
@@ -74,6 +75,10 @@ export const useEstilos = () => {
             width: 30
         },
 
+        listaItemInfos: {
+            flex: 1
+        },
+
         listaItemTexto: {
             flex: 1,
             fontSize: propriedadesTema.tamanhoTextos.texto,
@@ -84,6 +89,13 @@ export const useEstilos = () => {
             flex: 1,
             fontSize: propriedadesTema.tamanhoTextos.texto,
             color: propriedadesTema.cores.textoClaro
+        },
+
+        listaItemPreco: {
+            alignSelf: "flex-start",
+            textAlign: "right",
+            fontSize: propriedadesTema.tamanhoTextos.texto,
+            color: propriedadesTema.cores.textoEscuro
         },
 
         listaFooter: {
@@ -112,18 +124,18 @@ export const useEstilos = () => {
             textAlign: "center"
         },
 
-        modalScrollview: {
+        modalContainer: {
             flex: 1,
-        },
-
-        modalScrollContent: {
+            marginBottom: (propriedadesTema.layout.paddingVertical * -1) + 10,
         },
 
         modalSecao: {
-            marginBottom: 16
+            display: "flex",
+            marginBottom: 10
         },
 
         modalBusca: {
+            flex: 1,
             display: "flex",
             width: "100%",
             flexDirection: "row",
@@ -157,11 +169,7 @@ export const useEstilos = () => {
 
         modalLista: {
             flex: 1,
-            maxHeight: 300,
-        },
-
-        modalBotaoAdicionar: {
-            paddingVertical: 10,
+            marginBottom: 10,
         },
 
         modalBotaoAdicionarPreco: {

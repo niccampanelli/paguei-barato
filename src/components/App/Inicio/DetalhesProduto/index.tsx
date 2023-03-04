@@ -120,10 +120,10 @@ export default function DetalhesProduto() {
             <TouchableOpacity style={estilos.listaItem} onPress={() => navigation.navigate('detalhesEstoque' as never)}>
                 <Image style={estilos.listaItemImagem} source={item.imagem} />
                 <View style={estilos.listaItemInfos}>
-                    <Texto style={estilos.listaItemTexto} numberOfLines={1}>{item.nome}</Texto>
+                    <Texto peso="800ExtraBold" style={estilos.listaItemTexto} numberOfLines={1}>{item.nome}</Texto>
                     <Texto style={estilos.listaItemMercado} numberOfLines={1}>{item.endereco}</Texto>
                 </View>
-                <Texto style={estilos.listaItemPreco} numberOfLines={1}>{Formatador.formatarMoeda(item.preco)}</Texto>
+                <Texto peso="700Bold" style={estilos.listaItemPreco} numberOfLines={1}>{Formatador.formatarMoeda(item.preco)}</Texto>
             </TouchableOpacity>
         );
     };
@@ -132,7 +132,7 @@ export default function DetalhesProduto() {
         <View style={estilos.main}>
             <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.voltar]} onPress={() => navigation.goBack()}>
                 <Feather name="arrow-left" style={estiloGlobal.tagPequenaNormalTexto} />
-                <Texto style={estiloGlobal.tagPequenaNormalTexto}>Voltar</Texto>
+                <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaNormalTexto}>Voltar</Texto>
             </TouchableOpacity>
             <ScrollView>
                 <View style={estilos.cabecalho}>
@@ -141,40 +141,40 @@ export default function DetalhesProduto() {
                 <View style={estilos.container}>
                     <View style={estilos.tags}>
                         <View style={estiloGlobal.tagPequenaDestaque}>
-                            <Texto style={estiloGlobal.tagPequenaDestaqueTexto}>Molhos e Condimentos</Texto>
+                            <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaDestaqueTexto}>Molhos e Condimentos</Texto>
                         </View>
                         <View style={[estiloGlobal.tagPequenaNormal, { marginLeft: 10 }]}>
                             <Texto style={estiloGlobal.tagPequenaNormalTexto}>Sugerido há 2h e 10min</Texto>
                         </View>
                     </View>
-                    <Texto style={[estiloGlobal.titulo, estilos.titulo]}>Molho De Tomate Tradicional 450g Melhore</Texto>
+                    <Texto peso="800ExtraBold" style={[estiloGlobal.titulo, estilos.titulo]}>Molho De Tomate Tradicional 450g Melhore</Texto>
                     <View style={estilos.secao}>
-                        <Texto style={[estiloGlobal.subtitulo, estilos.titulo]}>Detalhes do produto</Texto>
+                        <Texto peso="700Bold" style={[estiloGlobal.subtitulo, estilos.titulo]}>Detalhes do produto</Texto>
                         <View style={estilos.informacao}>
-                            <Texto style={estilos.informacaoTitulo}>Marca: </Texto>
+                            <Texto peso="700Bold" style={estilos.informacaoTitulo}>Marca: </Texto>
                             <Texto style={estilos.informacaoTexto}>Melhore</Texto>
                         </View>
                         <View style={estilos.informacao}>
-                            <Texto style={estilos.informacaoTitulo}>Variação/Cor: </Texto>
+                            <Texto peso="700Bold" style={estilos.informacaoTitulo}>Variação/Cor: </Texto>
                             <Texto style={estilos.informacaoTexto}>Tradicional</Texto>
                         </View>
                         <View style={estilos.informacao}>
-                            <Texto style={estilos.informacaoTitulo}>Tamanho: </Texto>
+                            <Texto peso="700Bold" style={estilos.informacaoTitulo}>Tamanho: </Texto>
                             <Texto style={estilos.informacaoTexto}>450g</Texto>
                         </View>
                         <View style={estilos.informacao}>
-                            <Texto style={estilos.informacaoTitulo}>Categoria: </Texto>
+                            <Texto peso="700Bold" style={estilos.informacaoTitulo}>Categoria: </Texto>
                             <Texto style={estilos.informacaoTexto}>Molhos e Condimentos</Texto>
                         </View>
                     </View>
                     <View style={estilos.secao}>
-                        <Texto style={[estiloGlobal.subtitulo, estilos.titulo]}>Levantamento de preços</Texto>
+                        <Texto peso="700Bold" style={[estiloGlobal.subtitulo, estilos.titulo]}>Levantamento de preços</Texto>
                         <Texto style={[estilos.informacaoTexto, estilos.informacao]}>Informações sobre a variação de preços desse produto em todos os mercados nos quais ele foi cadastrado.</Texto>
                         <LevantamentoPrecos dados={dummyLevantamento} />
                         <Toast icone="clock" texto="Data da última sugestão de preço: 23/07/2022 às 17:53" style={{ marginTop: 20 }} estilo="normal" />
                     </View>
                     <View style={estilos.secao}>
-                        <Texto style={[estiloGlobal.subtitulo, estilos.titulo]}>Onde encontrar esse produto</Texto>
+                        <Texto peso="700Bold" style={[estiloGlobal.subtitulo, estilos.titulo]}>Onde encontrar esse produto</Texto>
                         <ScrollView style={estilos.lista} nestedScrollEnabled={true}>
                             {dummydata.map((elem, i) => (
                                 <ItemLista key={i} item={elem} />
