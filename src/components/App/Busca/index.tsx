@@ -8,6 +8,7 @@ import Modal from "../../Modal";
 import { useTemaContext } from "../../../util/context/providers/temaProvider";
 import { useEstilos } from "./styles";
 import Texto from "../../Texto";
+import Input from "../../Input";
 
 export default function Busca() {
 
@@ -244,11 +245,8 @@ export default function Busca() {
                 { componentesModal[modalAtual].componente }
             </Modal>
             <View style={estilos.cabecalho}>
-                <Texto peso="800ExtraBold" style={estiloGlobal.titulo}>Buscar</Texto>
-                <View style={estilos.barraBusca}>
-                    <TextInput placeholderTextColor={propriedadesTema.cores.textoClaro} style={estilos.barraBuscaCampo} placeholder="Escreva aqui sua pesquisa..."/>
-                    <Feather style={estilos.barraBuscaIcone} name="search"/>
-                </View>
+                <Texto peso="800ExtraBold" style={[estiloGlobal.titulo, { marginBottom: 16 }]}>Buscar</Texto>
+                <Input placeholder="Escreva aqui sua pesquisa..." icone={<Feather name="search" style={estiloGlobal.inputIcone}/>} />
                 <ScrollView showsHorizontalScrollIndicator={false} horizontal style={estilos.listaFiltros}>
                     <TouchableOpacity onPress={() => abrirModal("filtrar")} style={[estiloGlobal.tagPequenaDestaque, estilos.filtro]}>
                         <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaDestaqueTexto}>Filtros</Texto>

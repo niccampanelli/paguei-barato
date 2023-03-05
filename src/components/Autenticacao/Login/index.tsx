@@ -6,8 +6,9 @@ import { Feather } from "@expo/vector-icons"; "@expo/vector-icons/Feather";
 import { useEstiloGlobal } from "../../../estiloGlobal";
 import Input from "../../Input";
 import { useEstilos } from "./styles";
-import { TextInput } from "react-native-gesture-handler";
+import { ScrollView, TextInput } from "react-native-gesture-handler";
 import Texto from "../../Texto";
+import Botao from "../../Botao";
 
 export default function Login() {
 
@@ -34,11 +35,11 @@ export default function Login() {
         <View style={estilos.main}>
             <StatusBar hidden />
             <Image style={estilos.banner} source={require("../../../../assets/fundo_autenticacao.png")} />
-            <KeyboardAvoidingView behavior="padding" style={estilos.container}>
+            <View style={estilos.container}>
                 <Image style={estilos.logo} resizeMode="contain" source={require("../../../../assets/logo.png")} />
                 <Texto peso="700Bold" style={[estiloGlobal.subtitulo, estilos.titulo]}>Que tal fazer login?</Texto>
-                <View style={estilos.form}>
-                    <View style={estilos.grupoForm}>
+                <KeyboardAvoidingView behavior="height" style={estilos.form}>
+                    <View>
                         <Texto peso="700Bold" style={[estiloGlobal.label, estilos.label]}>E-mail</Texto>
                         <Input
                             icone={<Feather name="at-sign" style={estiloGlobal.inputIcone}/>}
@@ -51,7 +52,7 @@ export default function Login() {
                             placeholder="Insira seu e-mail"
                         />
                     </View>
-                    <View style={estilos.grupoForm}>
+                    <View>
                         <Texto peso="700Bold" style={[estiloGlobal.label, estilos.label]}>Senha</Texto>
                         <Input
                             icone={<Feather name="lock" style={estiloGlobal.inputIcone}/>}
@@ -63,22 +64,20 @@ export default function Login() {
                             placeholder="Digite sua senha"
                         />
                     </View>
-                </View>
+                </KeyboardAvoidingView>
                 <View>
-                    <View style={estilos.opcoesLoginCima}>
-                        <TouchableOpacity style={estiloGlobal.botaoSecundarioGrande} onPress={e => cadastrar(e)}>
-                            <Texto style={estiloGlobal.botaoSecundarioGrandeTexto}>Cadastre-se</Texto>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[estiloGlobal.botaoPrincipalGrande, estilos.opcoesLoginPrincipal]}>
-                            <Texto style={estiloGlobal.botaoPrincipalGrandeTexto}>Fazer login</Texto>
-                        </TouchableOpacity>
+                    <View style={estilos.viewBotaoLogin}>
+                        <View>
+                            <Botao titulo="Cadastre-se" tipo="secundario" onPress={e => cadastrar(e)}/>
+                        </View>
+                        <Botao titulo="Fazer login" style={{ flex: 1 }}/>
                     </View>
                     <Texto style={estilos.opcoesLoginLabel}>ou</Texto>
-                    <TouchableOpacity style={estiloGlobal.botaoSecundarioGrande} onPress={e => continuarSemLogin(e)}>
-                        <Texto style={estiloGlobal.botaoSecundarioGrandeTexto}>Continuar sem login</Texto>
-                    </TouchableOpacity>
+                    <View style={estilos.viewBotaoLogin}>
+                        <Botao titulo="Continuar sem login" tipo="secundario" style={{ flex: 1 }} onPress={e => continuarSemLogin(e)}/>
+                    </View>
                 </View>
-            </KeyboardAvoidingView>
+            </View>
         </View>
     );
 }

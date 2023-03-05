@@ -25,13 +25,13 @@ export const useEstilos = () => {
         },
 
         listaFiltros: {
-            display: "flex",
             paddingVertical: 16,
             backgroundColor: propriedadesTema.cores.fundoPrincipal,
         },
 
-        filtro: {
-            marginRight: 10
+        listaFiltrosContainer: {
+            display: "flex",
+            gap: 5,
         },
 
         filtroContador: {
@@ -47,19 +47,22 @@ export const useEstilos = () => {
         },
 
         lista: {
-            flex: 1
+            flex: 1,
+            marginHorizontal: -propriedadesTema.layout.paddingHorizontal,
         },
 
         listaItemSwipe: {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            paddingLeft: 8,
-            paddingRight: 16,
+            paddingHorizontal: propriedadesTema.layout.paddingHorizontal,
+            backgroundColor: propriedadesTema.cores.destaque,
         },
 
         listaItem: {
             backgroundColor: propriedadesTema.cores.fundoPrincipal,
+            paddingVertical: 4,
+            paddingHorizontal: propriedadesTema.layout.paddingHorizontal,
         },
 
         listaItemConteudo: {
@@ -109,7 +112,8 @@ export const useEstilos = () => {
             padding: 10,
             borderRadius: propriedadesTema.layout.raioBorda,
             zIndex: 1,
-            right: 10,
+            elevation: 2,
+            right: 0,
             top: "-220%"
         },
 

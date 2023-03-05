@@ -167,17 +167,6 @@ export const useEstilos = () => {
             paddingHorizontal: propriedadesTema.layout.paddingHorizontal,
             backgroundColor: propriedadesTema.cores.fundoPrincipal,
         },
-
-        botaoAdicionarPreco: {
-            flexDirection: "row",
-            alignItems: "center",
-        },
-
-        botaoAdicionarPrecoTexto: {
-            fontSize: propriedadesTema.botoesGrandes.texto,
-            color: "#000000",
-            marginRight: 16
-        }
     });
 
     return { estilos };

@@ -12,11 +12,14 @@ export const useEstilos = () => {
         },
 
         banner: {
-            flex: 1,
+            flex: 0.5,
             width: "100%",
         },
 
         container: {
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
             paddingVertical: propriedadesTema.layout.paddingVertical,
             paddingHorizontal: propriedadesTema.layout.paddingHorizontal
         },
@@ -32,24 +35,17 @@ export const useEstilos = () => {
         },
 
         form: {
-            marginBottom: 60
-        },
-
-        grupoForm: {
-            marginBottom: 10
+            flex: 1,
+            gap: 16
         },
 
         label: {
-            marginBottom: 10
+            marginBottom: 5
         },
 
-        opcoesLoginCima: {
-            flexDirection: "row"
-        },
-
-        opcoesLoginPrincipal: {
-            flex: 1,
-            marginLeft: 16
+        viewBotaoLogin: {
+            flexDirection: "row",
+            gap: 16,
         },
 
         opcoesLoginLabel: {

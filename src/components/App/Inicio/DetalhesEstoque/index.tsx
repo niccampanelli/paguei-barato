@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { Image,  TouchableOpacity, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useEstiloGlobal } from "../../../../estiloGlobal";
+import Botao from "../../../Botao";
 import Texto from "../../../Texto";
 import HistoricoPrecos, { DadoHistoricoPrecos } from "./HistoricoPrecos";
 import { useEstilos } from "./styles";
@@ -81,13 +82,7 @@ export default function DetalhesEstoque() {
                 </View>
             </ScrollView>
             <View style={estilos.botaoAdicionarView}>
-                <TouchableOpacity style={estiloGlobal.botaoPrincipalGrande} onPress={() => navigation.navigate("lista" as never)}>
-                    <Texto style={estiloGlobal.botaoPrincipalGrandeTexto}>Adicionar à lista</Texto>
-                    <View style={estilos.botaoAdicionarPreco}>
-                        <Texto style={estilos.botaoAdicionarPrecoTexto}>R$ 1,55</Texto>
-                        <Feather name="shopping-bag" style={estiloGlobal.botaoPrincipalGrandeIcone} />
-                    </View>
-                </TouchableOpacity>
+                <Botao disabled titulo="Adicionar à lista" subtitulo="R$1,55" icone="shopping-bag" onPress={() => navigation.navigate("lista" as never)}/>
             </View>
         </View>
     );

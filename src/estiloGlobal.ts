@@ -81,6 +81,9 @@ export const useEstiloGlobal = () => {
         },
     
         botaoPrincipal: {
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
             backgroundColor: propriedadesTema.cores.destaque,
             borderRadius: propriedadesTema.layout.raioBorda,
             paddingVertical: propriedadesTema.botoes.paddingVertical,
@@ -93,6 +96,9 @@ export const useEstiloGlobal = () => {
         },
     
         botaoSecundario: {
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
             backgroundColor: propriedadesTema.cores.fundoSecundario,
             borderRadius: propriedadesTema.layout.raioBorda,
             paddingVertical: propriedadesTema.botoes.paddingVertical,
@@ -142,6 +148,12 @@ export const useEstiloGlobal = () => {
         botaoSecundarioGrandeIcone: {
             fontSize: propriedadesTema.botoesGrandes.texto,
             color: propriedadesTema.cores.textoEscuro
+        },
+
+        botaoContainerDireita: {
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 10
         },
     
         tagPequenaNormal: {

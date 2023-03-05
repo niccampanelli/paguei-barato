@@ -19,12 +19,14 @@ export const useEstilos = () => {
 
         container: {
             flex: 1,
+            display: "flex",
+            flexDirection: "column",
             paddingVertical: propriedadesTema.layout.paddingVertical,
             paddingHorizontal: propriedadesTema.layout.paddingHorizontal
         },
 
         cadastro: {
-            flex: 1
+            flex: 1,
         },
 
         logo: {
@@ -46,7 +48,7 @@ export const useEstilos = () => {
         },
 
         label: {
-            marginBottom: 10
+            marginBottom: 5
         },
 
         containerFim: {

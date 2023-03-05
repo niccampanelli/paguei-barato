@@ -15,6 +15,7 @@ import AutoComplete from "../../AutoComplete";
 import Produto from "../../../interfaces/Produto";
 import { useCacheContext } from "../../../util/context/providers/cacheProvider";
 import Texto from "../../Texto";
+import Botao from "../../Botao";
 
 export default function Lista() {
 
@@ -310,30 +311,30 @@ export default function Lista() {
                         data={[{ opcoes: true }, ...dados]}
                         nestedScrollEnabled={true}
                         renderItem={(props: ListRenderItemInfo<any>) => props.item.opcoes === true ?
-                            <ScrollView showsHorizontalScrollIndicator={false} nestedScrollEnabled horizontal style={estilos.listaFiltros}>
-                                <TouchableOpacity onPress={() => { }} style={[estiloGlobal.tagPequenaDestaque, estilos.filtro]}>
+                            <ScrollView showsHorizontalScrollIndicator={false} nestedScrollEnabled horizontal style={estilos.listaFiltros} contentContainerStyle={estilos.listaFiltrosContainer}>
+                                <TouchableOpacity onPress={() => { }} style={estiloGlobal.tagPequenaDestaque}>
                                     <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaDestaqueTexto}>Filtros</Texto>
                                     <Texto peso="800ExtraBold" style={estilos.filtroContador}>2</Texto>
                                 </TouchableOpacity>
-                                <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
+                                <View style={estiloGlobal.tagPequenaSecundaria}>
                                     <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
                                 </View>
-                                <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
+                                <View style={estiloGlobal.tagPequenaSecundaria}>
                                     <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
                                 </View>
-                                <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
+                                <View style={estiloGlobal.tagPequenaSecundaria}>
                                     <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
                                 </View>
-                                <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
+                                <View style={estiloGlobal.tagPequenaSecundaria}>
                                     <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
                                 </View>
-                                <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
+                                <View style={estiloGlobal.tagPequenaSecundaria}>
                                     <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
                                 </View>
-                                <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
+                                <View style={estiloGlobal.tagPequenaSecundaria}>
                                     <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
                                 </View>
-                                <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
+                                <View style={estiloGlobal.tagPequenaSecundaria}>
                                     <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
                                 </View>
                             </ScrollView>
@@ -348,13 +349,7 @@ export default function Lista() {
                         stickyHeaderIndices={[1]}
                         keyExtractor={(item, index) => index.toString()}
                     />
-                    <TouchableOpacity style={estiloGlobal.botaoPrincipalGrande} onPress={() => modalRef.current?.open()}>
-                        <Texto style={estiloGlobal.botaoPrincipalGrandeTexto}>Adicionar à lista</Texto>
-                        <View style={estilos.modalBotaoAdicionarPreco}>
-                            <Texto style={estilos.modalBotaoAdicionarPrecoTexto}>R$ 2,38</Texto>
-                            <Feather style={estiloGlobal.botaoPrincipalGrandeIcone} name="shopping-bag" />
-                        </View>
-                    </TouchableOpacity>
+                    <Botao titulo="Adicionar à lista" subtitulo="R$2,99" icone="shopping-bag"/>
                 </View>
             </Modal>
             <View style={estilos.cabecalho}>
@@ -367,31 +362,31 @@ export default function Lista() {
                         <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaDestaqueTexto}>{Formatador.formatarMoeda(valorTotal)}</Texto>
                     </View>
                 </View>
-                <ScrollView showsHorizontalScrollIndicator={false} horizontal style={estilos.listaFiltros}>
-                    <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
+                <ScrollView showsHorizontalScrollIndicator={false} horizontal style={estilos.listaFiltros} contentContainerStyle={estilos.listaFiltrosContainer}>
+                    <View style={estiloGlobal.tagPequenaSecundaria}>
                         <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Extra</Texto>
                     </View>
-                    <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
+                    <View style={estiloGlobal.tagPequenaSecundaria}>
                         <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Dia</Texto>
                     </View>
-                    <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
+                    <View style={estiloGlobal.tagPequenaSecundaria}>
                         <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Kawahara</Texto>
                     </View>
-                    <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
+                    <View style={estiloGlobal.tagPequenaSecundaria}>
                         <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Nova Estação</Texto>
                     </View>
-                    <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
+                    <View style={estiloGlobal.tagPequenaSecundaria}>
                         <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Dovale</Texto>
                     </View>
-                    <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
+                    <View style={estiloGlobal.tagPequenaSecundaria}>
                         <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
                     </View>
-                    <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
+                    <View style={estiloGlobal.tagPequenaSecundaria}>
                         <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
                     </View>
                 </ScrollView>
             </View>
-            <FlatList style={estilos.lista} scrollEnabled={listaScrollEnabled} contentContainerStyle={{ paddingBottom: 60 }} data={dados} renderItem={(props: ListRenderItemInfo<any>) => <ItemLista {...props} />} />
+            <FlatList style={estilos.lista} scrollEnabled={listaScrollEnabled} contentContainerStyle={{ paddingBottom: 80 }} data={dados} renderItem={(props: ListRenderItemInfo<any>) => <ItemLista {...props} />} />
             <View style={estilos.listaFooter}>
                 <TouchableOpacity onPress={() => modalRef.current?.open()} style={estilos.adicionarFlutuante}>
                     <Feather name="plus" style={estilos.adicionarFlutuanteIcone} />
