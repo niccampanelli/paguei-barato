@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Text } from "react-native";
-import TextoProps from "../../interfaces/TextoProps";
+import TextoProps from "../../interfaces/components/TextoProps";
 
 export default function Texto({
     style,

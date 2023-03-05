@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import ParametrosOrdem from "../interfaces/ParametrosOrdem";
 import ParametrosPagina from "../interfaces/ParametrosPagina";
-import Produto from "../interfaces/Produto";
+import Produto from "../interfaces/models/Produto";
 import ResponsePagina from "../interfaces/ResponsePagina";
 import api from "./api";
 

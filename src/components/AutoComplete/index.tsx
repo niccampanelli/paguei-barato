@@ -3,7 +3,7 @@ import { useState } from "react";
 import { View,  TouchableOpacity } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import Formatador from "../../util/Formatador";
-import AutocompleteProps from "../../interfaces/AutocompleteProps";
+import AutocompleteProps from "../../interfaces/components/AutocompleteProps";
 import Input from "../Input";
 import { useEstiloGlobal } from "../../estiloGlobal";
 import buscaObjeto from "../../services/buscaObjeto";

@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import Produto from "../../../interfaces/Produto";
+import Produto from "../../../interfaces/models/Produto";
 import produtoServices from "../../../services/produtoServices";
 
 const CacheContext = createContext({ produtosCache: [] as Produto[] });

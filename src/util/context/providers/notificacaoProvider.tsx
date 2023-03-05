@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react";
-import { ContextNotificacaoToast } from "../../../interfaces/ContextNotificacaoToast";
+import { ContextNotificacaoToast } from "../../../interfaces/context/ContextNotificacaoToast";
 import { GestureResponderEvent } from "react-native";
-import NotificacaoToast from "../../../interfaces/NotificacaoToast";
+import NotificacaoToast from "../../../interfaces/context/NotificacaoToast";
 
 const NotificacaoContext = createContext<ContextNotificacaoToast>({ notificacoes: [], notificar: () => { } });
 

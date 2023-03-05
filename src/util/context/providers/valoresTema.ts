@@ -1,4 +1,4 @@
-import TemaPropriedades from "../../../interfaces/TemaPropriedades";
+import TemaPropriedades from "../../../interfaces/context/TemaPropriedades";
 
 const valoresTemaClaro: TemaPropriedades = {
     cores: {

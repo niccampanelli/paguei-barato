@@ -1,7 +1,7 @@
 import { Feather } from "@expo/vector-icons";
 import { TouchableOpacity, View } from "react-native";
 import { useEstiloGlobal } from "../../estiloGlobal";
-import BotaoProps from "../../interfaces/BotaoProps";
+import BotaoProps from "../../interfaces/components/BotaoProps";
 import Texto from "../Texto";
 
 export default function Botao({

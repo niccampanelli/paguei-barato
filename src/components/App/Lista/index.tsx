@@ -12,7 +12,7 @@ import { useNotificacaoToast } from "../../../util/context/providers/notificacao
 import Formatador from "../../../util/Formatador";
 import { useTemaContext } from "../../../util/context/providers/temaProvider";
 import AutoComplete from "../../AutoComplete";
-import Produto from "../../../interfaces/Produto";
+import Produto from "../../../interfaces/models/Produto";
 import { useCacheContext } from "../../../util/context/providers/cacheProvider";
 import Texto from "../../Texto";
 import Botao from "../../Botao";

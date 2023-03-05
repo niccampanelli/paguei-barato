@@ -1,5 +1,5 @@
 import { TouchableOpacityProps } from 'react-native';
-import { IconeType } from './IconeType';
+import { IconeType } from '../IconeType';
 import { TextoPesos } from './TextoProps';
 
 export default interface BotaoProps extends TouchableOpacityProps {

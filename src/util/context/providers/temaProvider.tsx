@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import ContextTema from "../../../interfaces/ContextTema";
-import TemaPropriedades from "../../../interfaces/TemaPropriedades";
+import ContextTema from "../../../interfaces/context/ContextTema";
+import TemaPropriedades from "../../../interfaces/context/TemaPropriedades";
 import valoresTema from "./valoresTema";
 import * as NavigationBar from "expo-navigation-bar";
 import { useColorScheme } from "react-native";

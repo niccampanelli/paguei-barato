@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import ParametrosOrdem from "../interfaces/ParametrosOrdem";
 import ParametrosPagina from "../interfaces/ParametrosPagina";
-import Sugestao from "../interfaces/Sugestao";
+import Sugestao from "../interfaces/models/Sugestao";
 import ResponsePagina from "../interfaces/ResponsePagina";
 import api from "./api";
 
