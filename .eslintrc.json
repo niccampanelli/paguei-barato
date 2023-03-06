@@ -37,6 +37,7 @@
             "error",
             "always"
         ],
+        "no-unused-styles": "on",
         "react/react-in-jsx-scope": "off"
     }
 }

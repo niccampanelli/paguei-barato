@@ -1,14 +1,12 @@
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useRef } from "react";
-import { Image, ListRenderItemInfo,  TouchableOpacity, View, ViewProps } from "react-native";
-import { FlatList, ScrollView } from "react-native-gesture-handler";
+import { Image, TouchableOpacity, View, ViewProps } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { useEstiloGlobal } from "../../../../estiloGlobal";
 import Formatador from "../../../../util/Formatador";
-import Modal from "../../../Modal";
 import Texto from "../../../Texto";
-import Toast from "../../../Toast";
 import { useEstilos } from "./styles";
 
 interface Estoque {

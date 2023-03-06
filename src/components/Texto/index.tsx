@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Text } from "react-native";
 import TextoProps from "../../interfaces/components/TextoProps";
 

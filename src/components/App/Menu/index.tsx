@@ -1,7 +1,7 @@
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useRef } from "react";
-import {  TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { useEstiloGlobal } from "../../../estiloGlobal";
 import { useTemaContext } from "../../../util/context/providers/temaProvider";
@@ -41,7 +41,7 @@ export default function Menu() {
                 <Texto peso="800ExtraBold" style={estiloGlobal.titulo}>Menu</Texto>
                 <View style={estilos.usuario}>
                     <Texto peso="900Black" style={[estiloGlobal.subtitulo, estilos.usuarioIcone]}>NC</Texto>
-                    <View style={estilos.usuarioInfo}>
+                    <View>
                         <Texto peso="700Bold" style={estiloGlobal.subtitulo}>Nicholas Campanelli</Texto>
                         <Texto style={estiloGlobal.observacao}>nicholasoucampanelli@hotmail.com</Texto>
                     </View>

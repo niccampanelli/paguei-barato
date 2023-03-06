@@ -1,6 +1,6 @@
 import { Feather } from "@expo/vector-icons"
 import { useEffect, useRef, useState } from "react";
-import { Image, ListRenderItemInfo, ScrollView, TextInput, TouchableOpacity, useWindowDimensions, View } from "react-native";
+import { Image, ListRenderItemInfo, ScrollView, TouchableOpacity, useWindowDimensions, View } from "react-native";
 import { FlatList, Gesture, GestureDetector, GestureHandlerRootView, Swipeable } from "react-native-gesture-handler";
 import Animated, { runOnJS, useAnimatedReaction, useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
 import RBSheet from "react-native-raw-bottom-sheet";
@@ -12,7 +12,6 @@ import { useNotificacaoToast } from "../../../util/context/providers/notificacao
 import Formatador from "../../../util/Formatador";
 import { useTemaContext } from "../../../util/context/providers/temaProvider";
 import AutoComplete from "../../AutoComplete";
-import Produto from "../../../interfaces/models/Produto";
 import { useCacheContext } from "../../../util/context/providers/cacheProvider";
 import Texto from "../../Texto";
 import Botao from "../../Botao";
@@ -297,10 +296,6 @@ export default function Lista() {
                 <View style={estilos.modalContainer}>
                     <View style={estilos.modalSecao}>
                         <Texto peso="700Bold" style={estiloGlobal.subtitulo}>Selecione o produto</Texto>
-                        {/* <View style={estilos.modalBusca}>
-                                        <TextInput style={estilos.modalBuscaCampo} placeholderTextColor={propriedadesTema.cores.textoClaro} placeholder="Pesquise um produto..." />
-                                        <Feather style={estilos.modalBuscaIcone} name="shopping-bag" />
-                                    </View> */}
                         <AutoComplete dados={produtosTeste} onChangeText={() => console.log("asd")} placeholder="Escolha um produto..." icone="shopping-cart" />
                     </View>
                     <View style={estilos.modalSecao}>
@@ -352,7 +347,7 @@ export default function Lista() {
                     <Botao titulo="Adicionar à lista" subtitulo="R$2,99" icone="shopping-bag"/>
                 </View>
             </Modal>
-            <View style={estilos.cabecalho}>
+            <View>
                 <Texto peso="800ExtraBold" style={estiloGlobal.titulo}>Lista de compras</Texto>
                 <View style={estilos.resumo}>
                     <View style={estiloGlobal.tagPequenaNormal}>

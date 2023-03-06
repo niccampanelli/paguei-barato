@@ -1,7 +1,6 @@
 import { Feather } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
 import { useEffect, useRef, useState } from "react";
-import { FlatList, Image, ListRenderItemInfo, ScrollView,  TextInput, TouchableOpacity, useWindowDimensions, View } from "react-native";
+import { FlatList, Image, ListRenderItemInfo, ScrollView, TouchableOpacity, useWindowDimensions, View } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { useEstiloGlobal } from "../../../estiloGlobal";
 import Modal from "../../Modal";
@@ -15,9 +14,7 @@ export default function Busca() {
     const { estilos } = useEstilos();
     const { estiloGlobal } = useEstiloGlobal();
 
-    const navigation = useNavigation();
     const modalRef = useRef<RBSheet>(null);
-    const { propriedadesTema } = useTemaContext();
 
     const dimensoesTela = useWindowDimensions();
     const [alturaModal, setAlturaModal] = useState(0);
@@ -98,7 +95,7 @@ export default function Busca() {
     const ModalFiltrar = () => {
 
         return (
-            <ScrollView showsVerticalScrollIndicator={false} overScrollMode={"never"} style={estilos.modalScrollview} contentContainerStyle={estilos.modalScrollContent}>
+            <ScrollView showsVerticalScrollIndicator={false} overScrollMode={"never"} style={estilos.modalScrollview}>
                 <TouchableOpacity style={[estiloGlobal.tagPequenaSecundaria, estilos.modalOpcao]}>
                     <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Sem filtros</Texto>
                 </TouchableOpacity>
@@ -157,7 +154,7 @@ export default function Busca() {
     const ModalOrdenar = () => {
 
         return (
-            <ScrollView showsVerticalScrollIndicator={false} overScrollMode={"never"} style={estilos.modalScrollview} contentContainerStyle={estilos.modalScrollContent}>
+            <ScrollView showsVerticalScrollIndicator={false} overScrollMode={"never"} style={estilos.modalScrollview}>
                 <TouchableOpacity style={[estiloGlobal.tagPequenaSecundaria, estilos.modalOpcao]}>
                     <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Não ordenar</Texto>
                 </TouchableOpacity>
@@ -244,7 +241,7 @@ export default function Busca() {
             >
                 { componentesModal[modalAtual].componente }
             </Modal>
-            <View style={estilos.cabecalho}>
+            <View>
                 <Texto peso="800ExtraBold" style={[estiloGlobal.titulo, { marginBottom: 16 }]}>Buscar</Texto>
                 <Input placeholder="Escreva aqui sua pesquisa..." icone={<Feather name="search" style={estiloGlobal.inputIcone}/>} />
                 <ScrollView showsHorizontalScrollIndicator={false} horizontal style={estilos.listaFiltros}>

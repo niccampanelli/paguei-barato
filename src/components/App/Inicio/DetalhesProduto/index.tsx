@@ -1,12 +1,11 @@
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useRef } from "react";
-import { Image, ListRenderItemInfo,  TouchableOpacity, View } from "react-native";
-import { FlatList, ScrollView } from "react-native-gesture-handler";
+import { Image, TouchableOpacity, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { useEstiloGlobal } from "../../../../estiloGlobal";
 import Formatador from "../../../../util/Formatador";
-import Modal from "../../../Modal";
 import Toast from "../../../Toast";
 import LevantamentoPrecos, { DadoLevantamentoPrecos } from "./LevantamentoPrecos";
 import dummyimagem from "./dummyimagem.json";
@@ -19,12 +18,6 @@ export default function DetalhesProduto() {
     const { estiloGlobal } = useEstiloGlobal();
 
     const navigation = useNavigation();
-    const modalRef = useRef<RBSheet>(null);
-
-    const sair = () => {
-        modalRef.current?.close();
-        navigation.getParent()?.navigate("login");
-    };
 
     const dummyLevantamento: DadoLevantamentoPrecos = {
         quantidade: 36,

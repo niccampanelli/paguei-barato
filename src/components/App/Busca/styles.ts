@@ -13,34 +13,6 @@ export const useEstilos = () => {
             paddingHorizontal: propriedadesTema.layout.paddingHorizontal
         },
 
-        cabecalho: {
-        },
-
-        barraBusca: {
-            display: "flex",
-            width: "100%",
-            flexDirection: "row",
-            alignItems: "center",
-            marginTop: 16,
-            borderRadius: propriedadesTema.layout.raioBorda,
-            backgroundColor: propriedadesTema.cores.fundoSecundario,
-            paddingVertical: propriedadesTema.botoesGrandes.paddingVertical,
-            paddingHorizontal: propriedadesTema.botoesGrandes.paddingHorizontal
-        },
-
-        barraBuscaCampo: {
-            flex: 1,
-            fontSize: propriedadesTema.botoesGrandes.texto,
-            marginRight: propriedadesTema.botoesGrandes.espacamento,
-            color: propriedadesTema.cores.textoEscuro,
-            height: "100%",
-        },
-
-        barraBuscaIcone: {
-            fontSize: propriedadesTema.botoesGrandes.texto,
-            color: propriedadesTema.cores.textoClaro
-        },
-
         listaFiltros: {
             display: "flex",
             paddingVertical: 16
@@ -87,9 +59,6 @@ export const useEstilos = () => {
 
         modalScrollview: {
             flex: 1,
-        },
-
-        modalScrollContent: {
         },
 
         modalSubtitulo: {

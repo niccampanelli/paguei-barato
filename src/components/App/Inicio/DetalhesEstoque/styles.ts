@@ -40,24 +40,6 @@ export const useEstilos = () => {
             paddingBottom: 16
         },
 
-        secaoBotao: {
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            paddingHorizontal: propriedadesTema.layout.paddingHorizontal,
-            marginBottom: propriedadesTema.layout.paddingHorizontal,
-        },
-
-        tags: {
-            flex: 1,
-            flexDirection: "row",
-            marginBottom: 16,
-        },
-
-        tag: {
-        },
-
         preco: {
             fontSize: propriedadesTema.tamanhoTextos.titulo,
             color: propriedadesTema.cores.secundaria,
@@ -94,68 +76,6 @@ export const useEstilos = () => {
             marginLeft: "auto",
             fontSize: propriedadesTema.tamanhoTextos.subtitulo,
             color: propriedadesTema.cores.textoEscuro,
-        },
-
-        informacao: {
-            flex: 1,
-            flexDirection: "row",
-            marginBottom: 10,
-        },
-
-        informacaoTitulo: {
-            fontSize: propriedadesTema.tamanhoTextos.texto,
-            color: propriedadesTema.cores.textoEscuro
-        },
-
-        informacaoTexto: {
-            fontSize: propriedadesTema.tamanhoTextos.texto,
-            color: propriedadesTema.cores.textoEscuro
-        },
-
-        lista: {
-            maxHeight: 400
-        },
-
-        listaItem: {
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            paddingBottom: 16
-        },
-
-        listaItemImagem: {
-            marginRight: 20,
-            height: 30,
-            width: 30
-        },
-
-        listaItemInfos: {
-            flex: 1,
-        },
-
-        listaItemTexto: {
-            flex: 1,
-            fontSize: propriedadesTema.tamanhoTextos.texto,
-            color: propriedadesTema.cores.textoEscuro
-        },
-
-        listaItemPreco: {
-            alignSelf: "flex-start",
-            textAlign: "right",
-            fontSize: propriedadesTema.tamanhoTextos.texto,
-            color: propriedadesTema.cores.textoEscuro
-        },
-
-        listaItemMercado: {
-            flex: 1,
-            fontSize: propriedadesTema.tamanhoTextos.texto,
-            color: propriedadesTema.cores.textoClaro
-        },
-
-        listaObservacao: {
-            fontSize: propriedadesTema.tamanhoTextos.observacao,
-            color: propriedadesTema.cores.textoClaro,
-            textAlign: "center"
         },
 
         botaoAdicionarView: {

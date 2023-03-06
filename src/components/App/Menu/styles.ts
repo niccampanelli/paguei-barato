@@ -33,10 +33,6 @@ export const useEstilos = () => {
             fontSize: propriedadesTema.tamanhoTextos.subtitulo,
         },
 
-        usuarioInfo: {
-
-        },
-
         opcoes: {
             marginBottom: 0
         },

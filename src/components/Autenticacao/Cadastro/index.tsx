@@ -1,8 +1,8 @@
-import { NavigationProp, NavigatorScreenParams, useNavigation } from "@react-navigation/native";
-import { createNativeStackNavigator, NativeStackScreenProps } from "@react-navigation/native-stack";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useRef, useState } from "react";
-import { GestureResponderEvent, Image, KeyboardAvoidingView,  TouchableOpacity, View, } from "react-native";
+import { GestureResponderEvent, Image, KeyboardAvoidingView, View } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useEstiloGlobal } from "../../../estiloGlobal";
 import Input from "../../Input";

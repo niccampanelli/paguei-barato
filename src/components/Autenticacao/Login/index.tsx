@@ -1,12 +1,12 @@
 import { useRef } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
-import { GestureResponderEvent, Image, KeyboardAvoidingView,  TouchableOpacity, View, } from "react-native";
+import { GestureResponderEvent, Image, KeyboardAvoidingView, View, } from "react-native";
 import { Feather } from "@expo/vector-icons"; "@expo/vector-icons/Feather";
 import { useEstiloGlobal } from "../../../estiloGlobal";
 import Input from "../../Input";
 import { useEstilos } from "./styles";
-import { ScrollView, TextInput } from "react-native-gesture-handler";
+import { TextInput } from "react-native-gesture-handler";
 import Texto from "../../Texto";
 import Botao from "../../Botao";
 

@@ -1,6 +1,5 @@
 import { Feather } from "@expo/vector-icons";
-import { ReactNode } from "react";
-import { GestureResponderEvent, ViewProps,  TouchableOpacity, View } from "react-native";
+import { ViewProps,  TouchableOpacity, View } from "react-native";
 import NotificacaoToast from "../../interfaces/context/NotificacaoToast";
 import Texto from "../Texto";
 import { useEstilos, estiloNotificacao } from "./styles";

@@ -45,9 +45,6 @@ export const useEstilos = () => {
             marginBottom: 16,
         },
 
-        tag: {
-        },
-
         titulo: {
             paddingBottom: 16,
         },

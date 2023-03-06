@@ -1,4 +1,4 @@
-import { Image, ListRenderItemInfo,  TouchableOpacity, View, ViewProps } from "react-native";
+import { Image, ListRenderItemInfo, TouchableOpacity, View, ViewProps } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { useEstiloGlobal } from "../../estiloGlobal";
 import Formatador from "../../util/Formatador";

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import {  View, ViewProps, ScrollView } from "react-native";
-import Animated, { useAnimatedReaction, useAnimatedStyle, useSharedValue, withDelay, withSpring, withTiming } from "react-native-reanimated";
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { useEstiloGlobal } from "../../../../../estiloGlobal";
 import { useTemaContext } from "../../../../../util/context/providers/temaProvider";
 import Formatador from "../../../../../util/Formatador";

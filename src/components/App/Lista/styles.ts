@@ -13,9 +13,6 @@ export const useEstilos = () => {
             paddingHorizontal: propriedadesTema.layout.paddingHorizontal
         },
 
-        cabecalho: {
-        },
-
         resumo: {
             display: "flex",
             flexDirection: "row",

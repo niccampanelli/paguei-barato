@@ -1,7 +1,7 @@
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
-import { Image, ScrollView,  View, TouchableOpacity } from "react-native";
+import { Image, ScrollView,  View } from "react-native";
 import { useEstiloGlobal } from "../../../estiloGlobal";
 import { useEstilos } from "./styles";
 import Carrossel from "../../Carrossel";
@@ -20,10 +20,6 @@ export default function Inicio() {
     const navigation = useNavigation();
 
     const Principal = () => {
-
-        useEffect(() => {
-            
-        }, []);
 
         const dummydata = [
             {
