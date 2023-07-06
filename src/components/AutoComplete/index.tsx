@@ -5,7 +5,7 @@ import { FlatList } from "react-native-gesture-handler";
 import AutocompleteProps from "../../interfaces/components/AutocompleteProps";
 import Input from "../Input";
 import { useEstiloGlobal } from "../../estiloGlobal";
-import buscaObjeto from "../../services/buscaObjeto";
+import buscaObjeto from "../../util/buscaObjeto";
 import Texto from "../Texto";
 
 export default function AutoComplete({

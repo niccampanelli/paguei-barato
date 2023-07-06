@@ -8,10 +8,25 @@ import { useEstilos } from "./styles";
 interface CarrosselProps extends ViewProps {
     titulo: string,
     dados: any[],
-    onItemPress?: (item: any) => void
+    onItemPress?: (item: any) => void,
+    tituloItem: (item: any) => string,
+    subtituloItem: (item: any) => string,
+    imagemItem: (item: any) => any,
+    precoItem: (item: any) => number,
+    descontoItem?: (item: any) => number,
 }
 
-export default function Carrossel({ titulo, dados, onItemPress, ...props }: CarrosselProps) {
+export default function Carrossel({
+    titulo,
+    dados,
+    onItemPress,
+    tituloItem,
+    subtituloItem,
+    imagemItem,
+    precoItem,
+    descontoItem,
+    ...props
+}: CarrosselProps) {
 
     const { estilos } = useEstilos();
     const { estiloGlobal } = useEstiloGlobal();
@@ -19,21 +34,21 @@ export default function Carrossel({ titulo, dados, onItemPress, ...props }: Carr
     const ItemCarrossel = (props: ListRenderItemInfo<any>) => {
 
         return (
-            <TouchableOpacity onPress={() => onItemPress?.(props.item)} style={[estilos.item, (props.index === dados.length - 1) ? { marginRight: 0 } : { marginRight: 10 }]}>
-                {props.item.desconto ?
+            <TouchableOpacity onPress={() => onItemPress?.(props.item)} style={estilos.item}>
+                {descontoItem?.(props.item) ?
                     <View style={[estilos.itemBadge, estiloGlobal.tagPequenaDestaque]}>
-                        <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaDestaqueTexto}>- {props.item.desconto}%</Texto>
+                        <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaDestaqueTexto}>- {descontoItem?.(props.item)}%</Texto>
                     </View>
                     :
                     null
                 }
-                <Image style={estilos.itemImagem} source={props.item.imagem} />
-                <Texto peso="800ExtraBold" style={estilos.itemNome} numberOfLines={3}>{props.item.nome}</Texto>
-                <Texto style={estilos.itemMercado} numberOfLines={2}>{props.item.mercado}</Texto>
-                { props.item.desconto &&
-                    <Texto style={estilos.itemPrecoAnterior}>era {Formatador.formatarMoeda((props.item.preco)/(1-(props.item.desconto/100)))}</Texto>
+                <Image style={estilos.itemImagem} source={imagemItem?.(props.item) || { uri: "https://apoioentrega.vteximg.com.br/arquivos/ids/464205/2149.jpg?v=637685996252730000" }} />
+                <Texto peso="800ExtraBold" style={estilos.itemNome} numberOfLines={3}>{tituloItem?.(props.item)}</Texto>
+                <Texto style={estilos.itemMercado} numberOfLines={2}>{subtituloItem?.(props.item)}</Texto>
+                {descontoItem?.(props.item) &&
+                    <Texto style={estilos.itemPrecoAnterior}>era {Formatador.formatarMoeda((precoItem?.(props.item)) / (1 - (descontoItem?.(props.item) / 100)))}</Texto>
                 }
-                <Texto peso="900Black" style={estilos.itemPreco}>{Formatador.formatarMoeda(props.item.preco)}</Texto>
+                <Texto peso="900Black" style={estilos.itemPreco}>{Formatador.formatarMoeda(precoItem?.(props.item))}</Texto>
             </TouchableOpacity>
         );
     }

@@ -17,6 +17,7 @@ export const useEstilos = () => {
         },
 
         container: {
+            position: "relative",
             flex: 1,
             display: "flex",
             flexDirection: "column",

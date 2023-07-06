@@ -5,6 +5,8 @@ export default interface NotificacaoToast {
     texto: string,
     icone?: IconeType,
     dispensavel?: boolean,
+    autoDispensar?: boolean,
+    tempoDispensar?: number,
     notificacao?: boolean,
     possuiBotao?: boolean,
     labelBotao?: string,

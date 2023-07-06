@@ -8,9 +8,16 @@ import { useEstilos } from "./BarraNavegacao/styles";
 import { Feather } from "@expo/vector-icons";
 import { useTemaContext } from "../../util/context/providers/temaProvider";
 
+export type NavegacaoAppRoutesParams = {
+	inicio: undefined;
+	buscar: undefined;
+	lista: undefined;
+	menu: undefined;
+}
+
 export default function NavegacaoApp() {
 
-	const Tabs = createBottomTabNavigator();
+	const Tabs = createBottomTabNavigator<NavegacaoAppRoutesParams>();
 	const { propriedadesTema } = useTemaContext();
 	const { estilos } = useEstilos();
 

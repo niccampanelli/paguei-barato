@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useRef } from "react";
@@ -8,6 +9,8 @@ import { useTemaContext } from "../../../util/context/providers/temaProvider";
 import Modal from "../../Modal";
 import Texto from "../../Texto";
 import { useEstilos } from "./styles";
+import authServices from "../../../services/authServices";
+import CarregandoOverlay from "../../CarregandoOverlay";
 
 export default function Menu() {
 
@@ -17,20 +20,29 @@ export default function Menu() {
     const navigation = useNavigation();
     const modalRef = useRef<RBSheet>(null);
 
+    const [carregando, setCarregando] = useState<boolean>(false);
+
     const { alterarTema, temaAtivo } = useTemaContext();
 
-    const sair = () => {
+    const sair = async () => {
         modalRef.current?.close();
+
+        setCarregando(true);
+        await authServices.logout();
+
+        setCarregando(false);
+
         navigation.getParent()?.navigate("login");
     };
 
     return (
         <View style={estilos.container}>
-            <Modal 
+            {carregando && <CarregandoOverlay />}
+            <Modal
                 titulo="Tem certeza?"
-                possuiBotoes 
-                refSheet={modalRef} 
-                labelBotaoPrincipal="Sim, sair." 
+                possuiBotoes
+                refSheet={modalRef}
+                labelBotaoPrincipal="Sim, sair."
                 labelBotaoSecundario="Não, permanecer conectado."
                 aoPressionarBotaoPrincipal={sair}
                 aoPressionarBotaoSecundario={() => modalRef.current?.close()}

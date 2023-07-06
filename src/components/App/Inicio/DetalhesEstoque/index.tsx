@@ -1,19 +1,29 @@
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Image,  TouchableOpacity, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useEstiloGlobal } from "../../../../estiloGlobal";
+import Sugestao from "../../../../interfaces/models/Sugestao";
+import { StackExternaRoutesParams } from "../../../../StackExterna";
 import Botao from "../../../Botao";
 import Texto from "../../../Texto";
 import HistoricoPrecos, { DadoHistoricoPrecos } from "./HistoricoPrecos";
 import { useEstilos } from "./styles";
+import Formatador from "../../../../util/Formatador";
 
-export default function DetalhesEstoque() {
+export interface DetalhesEstoqueParams {
+    item: Sugestao
+}
+
+type DetalhesEstoqueProps = NativeStackScreenProps<StackExternaRoutesParams, "detalhesEstoque">;
+
+export default function DetalhesEstoque({ navigation, route }: DetalhesEstoqueProps) {
 
     const { estilos } = useEstilos();
     const { estiloGlobal } = useEstiloGlobal();
 
-    const navigation = useNavigation();
+    const { item } = route.params;
 
     const dummyLevantamento: DadoHistoricoPrecos[] = [
         {
@@ -61,15 +71,17 @@ export default function DetalhesEstoque() {
                     <Image style={estilos.itemImagem} source={{ uri: "https://a-static.mlcdn.com.br/800x560/molho-de-tomate-fugini-sache-300g-caixa-com-36-unidades/calcadosdmais/308d194e1d5211ecb8da4201ac185013/032bae61bf039c555f62d1ed00a2ecaa.jpeg" }} />
                 </View>
                 <View style={estilos.container}>
-                    <Texto peso="900Black" style={estilos.preco}>R$ 1,55</Texto>
+                    <Texto peso="900Black" style={estilos.preco}>{Formatador.formatarMoeda(item.preco)}</Texto>
                     <TouchableOpacity onPress={() => navigation.navigate("detalhesProduto" as never)}>
-                        <Texto peso="800ExtraBold" style={[estiloGlobal.titulo, estilos.titulo]}>Molho De Tomate Tradicional 450g Melhore <Feather name="arrow-right" style={estilos.tituloIcone} /></Texto>
+                        <Texto peso="800ExtraBold" style={[estiloGlobal.titulo, estilos.titulo]}>{item.estoque?.produto.nome} <Feather name="arrow-right" style={estilos.tituloIcone} /></Texto>
                     </TouchableOpacity>
                     <TouchableOpacity style={estilos.mercadoCard} onPress={() => navigation.navigate("detalhesMercado" as never)} >
                         <Image style={estilos.mercadoCardImagem} source={{ uri: "https://i.pinimg.com/originals/b1/f0/93/b1f093fb7e294260afe1cae34996eb33.jpg" }} />
                         <View>
                             <Texto style={estiloGlobal.texto} >Esse item se encontra em:</Texto>
-                            <Texto peso="800ExtraBold" style={estiloGlobal.label} >Sonda Supermercados Carrão</Texto>
+                            <Texto peso="800ExtraBold" style={estiloGlobal.label} >
+                                {item.estoque?.mercado?.nome}
+                            </Texto>
                         </View>
                         <Feather style={estilos.mercadoCardIcone} name="arrow-right" />
                     </TouchableOpacity>

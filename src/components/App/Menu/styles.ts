@@ -9,6 +9,7 @@ export const useEstilos = () => {
 
         container: {
             flex: 1,
+            position: "relative",
             paddingVertical: Constants.statusBarHeight + propriedadesTema.layout.paddingVertical,
             paddingHorizontal: propriedadesTema.layout.paddingHorizontal
         },

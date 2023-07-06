@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { GestureResponderEvent, Image, KeyboardAvoidingView, View, } from "react-native";
@@ -9,13 +9,24 @@ import { useEstilos } from "./styles";
 import { TextInput } from "react-native-gesture-handler";
 import Texto from "../../Texto";
 import Botao from "../../Botao";
+import authServices from "../../../services/authServices";
+import { useNotificacaoToast } from "../../../util/context/providers/notificacaoProvider";
+import CarregandoOverlay from "../../CarregandoOverlay";
+import { useTemaContext } from "../../../util/context/providers/temaProvider";
+import Logo from "../../Logo";
 
 export default function Login() {
 
     const { estilos } = useEstilos();
     const { estiloGlobal } = useEstiloGlobal();
+    const { temaAtivo } = useTemaContext();
 
     const navigation = useNavigation();
+    const { notificar } = useNotificacaoToast();
+
+    const [email, setEmail] = useState<string>("");
+    const [senha, setSenha] = useState<string>("");
+    const [carregando, setCarregando] = useState<boolean>(false);
 
     const inputSenhaRef = useRef<TextInput>(null);
 
@@ -24,7 +35,25 @@ export default function Login() {
         navigation.navigate("cadastro" as never);
     };
     
-    const fazerLogin = () => {};
+    const fazerLogin = async () => {
+        
+        if (carregando) return;
+        setCarregando(true);
+
+        try {
+            await authServices.login(email, senha);
+            navigation.navigate("app" as never);
+        } catch (error: any) {
+            notificar({
+                estilo: "vermelho",
+                texto: JSON.stringify(error),
+                icone: "x-octagon",
+                dispensavel: true,
+            });
+        } finally {
+            setCarregando(false);
+        }
+    };
 
     const continuarSemLogin = (e: GestureResponderEvent) => {
         e.preventDefault();
@@ -36,7 +65,8 @@ export default function Login() {
             <StatusBar hidden />
             <Image style={estilos.banner} source={require("../../../../assets/fundo_autenticacao.png")} />
             <View style={estilos.container}>
-                <Image style={estilos.logo} resizeMode="contain" source={require("../../../../assets/logo.png")} />
+                {carregando && <CarregandoOverlay/>}
+                <Logo style={estilos.logo} />
                 <Texto peso="700Bold" style={[estiloGlobal.subtitulo, estilos.titulo]}>Que tal fazer login?</Texto>
                 <KeyboardAvoidingView behavior="height" style={estilos.form}>
                     <View>
@@ -50,6 +80,8 @@ export default function Login() {
                             autoCapitalize="none"
                             autoCorrect={false}
                             placeholder="Insira seu e-mail"
+                            value={email}
+                            onChangeText={setEmail}
                         />
                     </View>
                     <View>
@@ -62,6 +94,8 @@ export default function Login() {
                             secureTextEntry
                             autoCorrect={false}
                             placeholder="Digite sua senha"
+                            value={senha}
+                            onChangeText={setSenha}
                         />
                     </View>
                 </KeyboardAvoidingView>
@@ -70,7 +104,7 @@ export default function Login() {
                         <View>
                             <Botao titulo="Cadastre-se" tipo="secundario" onPress={e => cadastrar(e)}/>
                         </View>
-                        <Botao titulo="Fazer login" style={{ flex: 1 }}/>
+                        <Botao titulo="Fazer login" style={{ flex: 1 }} onPress={fazerLogin}/>
                     </View>
                     <Texto style={estilos.opcoesLoginLabel}>ou</Texto>
                     <View style={estilos.viewBotaoLogin}>

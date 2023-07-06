@@ -186,6 +186,7 @@ export default function Lista() {
             texto: "Item removido da lista de compras.",
             icone: "trash",
             dispensavel: true,
+            autoDispensar: true,
             possuiBotao: true,
             labelBotao: "Desfazer",
             aoPressionarBotao: () => {
@@ -391,4 +392,4 @@ export default function Lista() {
             </View>
         </View>
     );
-}
+};

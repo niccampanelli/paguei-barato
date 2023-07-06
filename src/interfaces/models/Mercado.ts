@@ -1,3 +1,4 @@
+import Ramo from "./Ramo"
 import UF from "./UF"
 
 export default interface Mercado {
@@ -10,5 +11,6 @@ export default interface Mercado {
     cidade: string,
     uf: UF,
     cep: string,
-    ramoId: number
+    ramoId: number,
+    ramo?: Ramo
 }

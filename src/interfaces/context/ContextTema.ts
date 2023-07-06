@@ -1,7 +1,8 @@
 import TemaPropriedades from "./TemaPropriedades";
+import { TemaType } from "./TemaType";
 
 export default interface ContextTema {
     propriedadesTema: TemaPropriedades,
-    temaAtivo: "claro" | "escuro",
-    alterarTema: (tema?: "claro" | "escuro") => void
+    temaAtivo: TemaType,
+    alterarTema: (tema?: TemaType) => void
 }

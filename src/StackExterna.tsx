@@ -1,16 +1,26 @@
-import { NavigationContainer } from "@react-navigation/native";
+import { memo } from "react";
+import { NavigationContainer, NavigatorScreenParams } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Login from "./components/Autenticacao/Login";
 import Cadastro from "./components/Autenticacao/Cadastro";
-import NavegacaoApp from "./components/App/NavegacaoApp";
+import NavegacaoApp, { NavegacaoAppRoutesParams } from "./components/App/NavegacaoApp";
 import DetalhesProduto from "./components/App/Inicio/DetalhesProduto";
 import DetalhesMercado from "./components/App/Inicio/DetalhesMercado";
-import DetalhesEstoque from "./components/App/Inicio/DetalhesEstoque";
+import DetalhesEstoque, { DetalhesEstoqueParams } from "./components/App/Inicio/DetalhesEstoque";
 import { useTemaContext } from "./util/context/providers/temaProvider";
+
+export type StackExternaRoutesParams = {
+	login: undefined;
+	cadastro: undefined;
+	app: NavigatorScreenParams<NavegacaoAppRoutesParams>;
+	detalhesProduto: undefined;
+	detalhesMercado: undefined;
+	detalhesEstoque: DetalhesEstoqueParams;
+};
 
 export default function StackExterna() {
 
-	const Stack = createNativeStackNavigator();
+	const Stack = createNativeStackNavigator<StackExternaRoutesParams>();
 	const { propriedadesTema } = useTemaContext();
 
 	return (

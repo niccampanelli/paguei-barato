@@ -46,6 +46,7 @@ export const useEstiloGlobal = () => {
         },
     
         inputCampo: {
+            flex: 1,
             fontSize: propriedadesTema.botoesGrandes.texto,
             marginLeft: propriedadesTema.botoesGrandes.espacamento,
             color: propriedadesTema.cores.textoEscuro,
@@ -247,6 +248,26 @@ export const useEstiloGlobal = () => {
         modalOpcaoSecundaria: {
             flex: 1,
             marginLeft: 16
+        },
+
+        carregandoOverlay: {
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 999,
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "#000000aa",
+        },
+
+        carregandoTexto: {
+            color: "#ffffff",
+            fontSize: 28,
         }
     });
 

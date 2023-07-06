@@ -1,4 +1,4 @@
-import Formatador from "../util/Formatador";
+import Formatador from "./Formatador";
 
 const buscaObjeto = {
 

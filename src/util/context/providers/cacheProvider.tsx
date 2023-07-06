@@ -9,12 +9,6 @@ export default function CacheProvider(props: any) {
     const [produtosCache, setProdutosCache] = useState<Produto[]>([]);
 
     useEffect(() => {
-        produtoServices.getProdutos({})
-            .then(produtos => {
-                setProdutosCache(produtos.data);
-                console.log(produtos.data);
-                
-            })
     }, []);
 
     return (

@@ -7,7 +7,7 @@ import TemaProvider from "./util/context/providers/temaProvider";
 export default function AppIndex() {
     return (
         <TemaProvider>
-            <NotificacaoProvider>
+            <NotificacaoProvider tempoDispensar={2000}>
                 <CacheProvider>
                     <StackExterna />
                     <NotificacaoToast />

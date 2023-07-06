@@ -16,6 +16,10 @@ export const useEstilos = () => {
         },
 
         container: {
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 10,
             paddingHorizontal: propriedadesTema.layout.paddingHorizontal,
             paddingVertical: 10
         },
