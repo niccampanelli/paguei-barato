@@ -1,20 +1,21 @@
-import { memo } from "react";
+import { useEffect, useState } from "react";
 import { NavigationContainer, NavigatorScreenParams } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Login from "./components/Autenticacao/Login";
 import Cadastro from "./components/Autenticacao/Cadastro";
 import NavegacaoApp, { NavegacaoAppRoutesParams } from "./components/App/NavegacaoApp";
-import DetalhesProduto from "./components/App/Inicio/DetalhesProduto";
-import DetalhesMercado from "./components/App/Inicio/DetalhesMercado";
+import DetalhesProduto, { DetalhesProdutoParams } from "./components/App/Inicio/DetalhesProduto";
+import DetalhesMercado, { DetalhesMercadoParams } from "./components/App/Inicio/DetalhesMercado";
 import DetalhesEstoque, { DetalhesEstoqueParams } from "./components/App/Inicio/DetalhesEstoque";
 import { useTemaContext } from "./util/context/providers/temaProvider";
+import { useAuthContext } from "./util/context/providers/authProvider";
 
 export type StackExternaRoutesParams = {
 	login: undefined;
 	cadastro: undefined;
 	app: NavigatorScreenParams<NavegacaoAppRoutesParams>;
-	detalhesProduto: undefined;
-	detalhesMercado: undefined;
+	detalhesProduto: DetalhesProdutoParams;
+	detalhesMercado: DetalhesMercadoParams;
 	detalhesEstoque: DetalhesEstoqueParams;
 };
 
@@ -22,10 +23,11 @@ export default function StackExterna() {
 
 	const Stack = createNativeStackNavigator<StackExternaRoutesParams>();
 	const { propriedadesTema } = useTemaContext();
+	const { usuarioLogado } = useAuthContext();
 
 	return (
 		<NavigationContainer>
-			<Stack.Navigator initialRouteName="login" screenOptions={{ headerShown: false, contentStyle: { backgroundColor: propriedadesTema.cores.fundoPrincipal } }}>
+			<Stack.Navigator initialRouteName={usuarioLogado ? "app" : "login"} screenOptions={{ headerShown: false, contentStyle: { backgroundColor: propriedadesTema.cores.fundoPrincipal } }}>
 				<Stack.Group>
 					<Stack.Screen name="login" component={Login} />
 					<Stack.Screen name="cadastro" options={{ animation: "slide_from_left" }} component={Cadastro} />

@@ -15,11 +15,13 @@ import Botao from "../../Botao";
 import authServices from "../../../services/authServices";
 import UF from "../../../interfaces/models/UF";
 import Logo from "../../Logo";
+import { useAuthContext } from "../../../util/context/providers/authProvider";
 
 export default function Cadastro() {
 
     const { estilos } = useEstilos();
     const { estiloGlobal } = useEstiloGlobal();
+    const { cadastrarUsuario } = useAuthContext();
 
     const FluxoCadastro = createNativeStackNavigator();
     const { propriedadesTema, temaAtivo } = useTemaContext();
@@ -47,7 +49,7 @@ export default function Cadastro() {
 
     const enviarDadosCadastro = async () => {
         try {
-            const data = await authServices.cadastrarUsuario(dadosCadastro);
+            await cadastrarUsuario(dadosCadastro);
         } catch (error) {
             console.table(error);
         }

@@ -14,15 +14,16 @@ import { useNotificacaoToast } from "../../../util/context/providers/notificacao
 import CarregandoOverlay from "../../CarregandoOverlay";
 import { useTemaContext } from "../../../util/context/providers/temaProvider";
 import Logo from "../../Logo";
+import { useAuthContext } from "../../../util/context/providers/authProvider";
 
 export default function Login() {
 
     const { estilos } = useEstilos();
     const { estiloGlobal } = useEstiloGlobal();
-    const { temaAtivo } = useTemaContext();
 
     const navigation = useNavigation();
     const { notificar } = useNotificacaoToast();
+    const { fazerLogin } = useAuthContext();
 
     const [email, setEmail] = useState<string>("");
     const [senha, setSenha] = useState<string>("");
@@ -35,14 +36,18 @@ export default function Login() {
         navigation.navigate("cadastro" as never);
     };
     
-    const fazerLogin = async () => {
+    const login = async () => {
         
         if (carregando) return;
         setCarregando(true);
 
         try {
-            await authServices.login(email, senha);
-            navigation.navigate("app" as never);
+            console.log("chamou o método na tela");
+            
+            await fazerLogin(email, senha);
+            setTimeout(() => {
+                navigation.navigate("app" as never);
+            }, 50);
         } catch (error: any) {
             notificar({
                 estilo: "vermelho",
@@ -89,6 +94,7 @@ export default function Login() {
                         <Input
                             icone={<Feather name="lock" style={estiloGlobal.inputIcone}/>}
                             returnKeyType="done"
+                            onSubmitEditing={login}
                             forwardRef={inputSenhaRef}
                             textContentType="password"
                             secureTextEntry
@@ -104,7 +110,7 @@ export default function Login() {
                         <View>
                             <Botao titulo="Cadastre-se" tipo="secundario" onPress={e => cadastrar(e)}/>
                         </View>
-                        <Botao titulo="Fazer login" style={{ flex: 1 }} onPress={fazerLogin}/>
+                        <Botao titulo="Fazer login" style={{ flex: 1 }} onPress={login}/>
                     </View>
                     <Texto style={estilos.opcoesLoginLabel}>ou</Texto>
                     <View style={estilos.viewBotaoLogin}>

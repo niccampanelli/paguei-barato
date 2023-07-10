@@ -15,7 +15,7 @@ export const useEstilos = () => {
         },
 
         cabecalho: {
-            marginBottom: 30
+            marginBottom: 20
         },
 
         usuario: {
@@ -26,7 +26,10 @@ export const useEstilos = () => {
         },
 
         usuarioIcone: {
-            padding: 10,
+            width: 45,
+            height: 45,
+            textAlign: "center",
+            verticalAlign: "middle",
             marginRight: 10,
             backgroundColor: propriedadesTema.cores.destaque,
             borderRadius: 100,
@@ -42,7 +45,7 @@ export const useEstilos = () => {
             display: "flex",
             alignItems: "center",
             flexDirection: "row",
-            marginBottom: 20
+            paddingVertical: 10,
         },
 
         opcaoIcone: {

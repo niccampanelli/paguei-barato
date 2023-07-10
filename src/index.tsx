@@ -1,5 +1,6 @@
 import NotificacaoToast from "./components/NotificacaoToast";
 import StackExterna from "./StackExterna";
+import AuthProvider from "./util/context/providers/authProvider";
 import CacheProvider from "./util/context/providers/cacheProvider";
 import NotificacaoProvider from "./util/context/providers/notificacaoProvider";
 import TemaProvider from "./util/context/providers/temaProvider";
@@ -8,10 +9,12 @@ export default function AppIndex() {
     return (
         <TemaProvider>
             <NotificacaoProvider tempoDispensar={2000}>
-                <CacheProvider>
-                    <StackExterna />
-                    <NotificacaoToast />
-                </CacheProvider>
+                <AuthProvider>
+                    <CacheProvider>
+                        <StackExterna />
+                        <NotificacaoToast />
+                    </CacheProvider>
+                </AuthProvider>
             </NotificacaoProvider>
         </TemaProvider>
     );

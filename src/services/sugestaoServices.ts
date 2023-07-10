@@ -27,14 +27,12 @@ const sugestaoServices = {
     async getSugestoes(params?: GetSugestaoParams): Promise<AxiosResponse<Sugestao[]>> {
         const api = await API.obterInstanciaAxios();
 
-        const data = await api.get<Sugestao[]>("/sugestao", { params: { ...params?.filtros, ...params?.ordenado } });
+        const data = await api.get<Sugestao[]>("/sugestao");
         const sugestoes = data.data || [];
-        
+
         for(let i = 0; i < sugestoes.length; i++) {
             sugestoes[i] = await this.buscarRelacoesSugestao(sugestoes[i]);
         };
-
-        console.log("passou pela busca");
 
         return data;
     },

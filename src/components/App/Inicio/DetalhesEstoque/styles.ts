@@ -46,13 +46,13 @@ export const useEstilos = () => {
         },
 
         titulo: {
-            marginBottom: 16
+            marginBottom: 16,
         },
 
         tituloIcone: {
             fontSize: propriedadesTema.tamanhoTextos.titulo,
             color: propriedadesTema.cores.textoEscuro,
-            alignSelf: "baseline"
+            paddingLeft: 10,
         },
 
         mercadoCard: {

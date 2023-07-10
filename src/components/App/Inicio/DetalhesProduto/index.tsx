@@ -11,13 +11,22 @@ import LevantamentoPrecos, { DadoLevantamentoPrecos } from "./LevantamentoPrecos
 import dummyimagem from "./dummyimagem.json";
 import { useEstilos } from "./styles";
 import Texto from "../../../Texto";
+import Produto from "../../../../interfaces/models/Produto";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { StackExternaRoutesParams } from "../../../../StackExterna";
 
-export default function DetalhesProduto() {
+export interface DetalhesProdutoParams {
+    item: Produto
+}
+
+type DetalhesProdutoProps = NativeStackScreenProps<StackExternaRoutesParams, "detalhesProduto">;
+
+export default function DetalhesProduto({ navigation, route }: DetalhesProdutoProps) {
 
     const { estilos } = useEstilos();
     const { estiloGlobal } = useEstiloGlobal();
-
-    const navigation = useNavigation();
+    
+    const { item } = route.params;
 
     const dummyLevantamento: DadoLevantamentoPrecos = {
         quantidade: 36,
@@ -134,30 +143,34 @@ export default function DetalhesProduto() {
                 <View style={estilos.container}>
                     <View style={estilos.tags}>
                         <View style={estiloGlobal.tagPequenaDestaque}>
-                            <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaDestaqueTexto}>Molhos e Condimentos</Texto>
+                            <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaDestaqueTexto}>
+                                {item.categoria?.nome}
+                            </Texto>
                         </View>
                         <View style={[estiloGlobal.tagPequenaNormal, { marginLeft: 10 }]}>
                             <Texto style={estiloGlobal.tagPequenaNormalTexto}>Sugerido há 2h e 10min</Texto>
                         </View>
                     </View>
-                    <Texto peso="800ExtraBold" style={[estiloGlobal.titulo, estilos.titulo]}>Molho De Tomate Tradicional 450g Melhore</Texto>
+                    <Texto peso="800ExtraBold" style={[estiloGlobal.titulo, estilos.titulo]}>
+                        {Formatador.formatarNomeProduto(item)}
+                    </Texto>
                     <View style={estilos.secao}>
                         <Texto peso="700Bold" style={[estiloGlobal.subtitulo, estilos.titulo]}>Detalhes do produto</Texto>
                         <View style={estilos.informacao}>
                             <Texto peso="700Bold" style={estilos.informacaoTitulo}>Marca: </Texto>
-                            <Texto style={estilos.informacaoTexto}>Melhore</Texto>
+                            <Texto style={estilos.informacaoTexto}>{item.marca || "Sem marca"}</Texto>
                         </View>
                         <View style={estilos.informacao}>
                             <Texto peso="700Bold" style={estilos.informacaoTitulo}>Variação/Cor: </Texto>
-                            <Texto style={estilos.informacaoTexto}>Tradicional</Texto>
+                            <Texto style={estilos.informacaoTexto}>{item.cor || "Não especificado"}</Texto>
                         </View>
                         <View style={estilos.informacao}>
                             <Texto peso="700Bold" style={estilos.informacaoTitulo}>Tamanho: </Texto>
-                            <Texto style={estilos.informacaoTexto}>450g</Texto>
+                            <Texto style={estilos.informacaoTexto}>{item.tamanho || "Não especificado"}</Texto>
                         </View>
                         <View style={estilos.informacao}>
                             <Texto peso="700Bold" style={estilos.informacaoTitulo}>Categoria: </Texto>
-                            <Texto style={estilos.informacaoTexto}>Molhos e Condimentos</Texto>
+                            <Texto style={estilos.informacaoTexto}>{item.categoria?.nome || "Não categorizado"}</Texto>
                         </View>
                     </View>
                     <View style={estilos.secao}>

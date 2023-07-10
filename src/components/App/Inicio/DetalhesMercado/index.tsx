@@ -1,6 +1,5 @@
 import { Feather } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Image, TouchableOpacity, View, ViewProps } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import RBSheet from "react-native-raw-bottom-sheet";
@@ -8,6 +7,11 @@ import { useEstiloGlobal } from "../../../../estiloGlobal";
 import Formatador from "../../../../util/Formatador";
 import Texto from "../../../Texto";
 import { useEstilos } from "./styles";
+import Mercado from "../../../../interfaces/models/Mercado";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { StackExternaRoutesParams } from "../../../../StackExterna";
+import Sugestao from "../../../../interfaces/models/Sugestao";
+// import mercadoServices from "../../../../services/mercadoServices";
 
 interface Estoque {
     imagem: any,
@@ -19,18 +23,34 @@ interface EstoqueProp extends ViewProps {
     item: Estoque,
 }
 
-export default function DetalhesMercado() {
+export interface DetalhesMercadoParams {
+    item: Mercado
+}
+
+type DetalhesMercadoProps = NativeStackScreenProps<StackExternaRoutesParams, "detalhesMercado">;
+
+export default function DetalhesMercado({ navigation, route }: DetalhesMercadoProps) {
 
     const { estilos } = useEstilos();
     const { estiloGlobal } = useEstiloGlobal();
 
-    const navigation = useNavigation();
     const modalRef = useRef<RBSheet>(null);
+    const { item } = route.params;
+    const [sugestoes, setSugestoes] = useState<Sugestao[]>([]);
 
-    const sair = () => {
-        modalRef.current?.close();
-        navigation.getParent()?.navigate("login");
+    const obterSugestoes = async () => {
+        try {
+            // const resposta = await mercadoServices.getSugestoes(item.id);
+            // setSugestoes(resposta.data);
+        }
+        catch (erro) {
+            console.log(erro);
+        }
     };
+
+    useEffect(() => {
+        
+    }, []);
 
     const dummydata: Estoque[] = [
         {
@@ -126,21 +146,25 @@ export default function DetalhesMercado() {
                 <View style={estilos.container}>
                     <View style={estilos.tags}>
                         <View style={estiloGlobal.tagPequenaDestaque}>
-                            <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaDestaqueTexto}>Minimercado</Texto>
+                            <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaDestaqueTexto}>
+                                {item.ramo?.nome}
+                            </Texto>
                         </View>
                     </View>
-                    <Texto peso="800ExtraBold" style={[estiloGlobal.titulo, estilos.titulo]}>Minimercado Extra Artur Alvim</Texto>
+                    <Texto peso="800ExtraBold" style={[estiloGlobal.titulo, estilos.titulo]}>
+                        {item.nome}
+                    </Texto>
                     <View style={estilos.secao}>
                         <Texto peso="700Bold" style={[estiloGlobal.subtitulo, estilos.titulo]}>Informações do mercado</Texto>
                         <View style={estilos.informacao}>
                             <Texto peso="700Bold" style={estilos.informacaoTitulo}>Ramo: </Texto>
-                            <Texto style={estilos.informacaoTexto}>Minimercado</Texto>
+                            <Texto style={estilos.informacaoTexto}>{item.ramo?.nome || "Não categorizado"}</Texto>
                         </View>
                         <View style={estilos.informacao}>
                             <Texto peso="700Bold" style={estilos.informacaoTitulo}>Localização: </Texto>
                         </View>
                         <View style={estilos.informacao}>
-                            <Texto style={estilos.informacaoTexto}>Rua Doutor Campos Moura, 98 - Parque Artur Alvim, São Paulo - SP, 03568-010.</Texto>
+                            <Texto style={estilos.informacaoTexto}>{Formatador.formatarEnderecoMercado(item)}</Texto>
                         </View>
                         <ScrollView nestedScrollEnabled style={{ height: 400, width: "100%", flex: 1, borderRadius: 50 }}>
                             <ScrollView nestedScrollEnabled horizontal style={{ flex: 1, borderRadius: 20 }}>

@@ -4,6 +4,7 @@ import Usuario from "../interfaces/models/Usuario";
 import API from "./api";
 
 const authServices = {
+
     async cadastrarUsuario(usuario: Usuario): Promise<Usuario> {
         const api = await API.obterInstanciaAxios();
         return await api.post('/usuario', {
@@ -19,8 +20,11 @@ const authServices = {
             cep: usuario.cep
         });
     },
-    async login(email: string, senha: string): Promise<void> {
+
+    async fazerLogin(email: string, senha: string): Promise<string> {
         try {
+            console.log("chamou no authServices");
+            
             const api = await API.obterInstanciaAxios();
             const response = await api.post('/login', {
                 email,
@@ -31,6 +35,9 @@ const authServices = {
 
             if (token) {
                 await AsyncStorage.setItem("bearerToken", token);
+                console.log("salvou o token");
+                
+                return token;
             }
             else {
                 const erro: Erro<any> = {
@@ -51,7 +58,8 @@ const authServices = {
             throw erro;
         }
     },
-    async logout() {
+
+    async fazerLogout() {
         await AsyncStorage.removeItem("bearerToken");
     }
 }

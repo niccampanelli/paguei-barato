@@ -11,13 +11,19 @@ import Texto from "../../Texto";
 import { useEstilos } from "./styles";
 import authServices from "../../../services/authServices";
 import CarregandoOverlay from "../../CarregandoOverlay";
+import { useAuthContext } from "../../../util/context/providers/authProvider";
+import Formatador from "../../../util/Formatador";
+import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import { NavegacaoAppRoutesParams } from "../NavegacaoApp";
 
-export default function Menu() {
+type MenuProps = BottomTabScreenProps<NavegacaoAppRoutesParams, "menu">;
+
+export default function Menu({ navigation, route }: MenuProps) {
 
     const { estilos } = useEstilos();
     const { estiloGlobal } = useEstiloGlobal();
+    const { usuarioLogado, fazerLogout } = useAuthContext();
 
-    const navigation = useNavigation();
     const modalRef = useRef<RBSheet>(null);
 
     const [carregando, setCarregando] = useState<boolean>(false);
@@ -28,7 +34,7 @@ export default function Menu() {
         modalRef.current?.close();
 
         setCarregando(true);
-        await authServices.logout();
+        fazerLogout();
 
         setCarregando(false);
 
@@ -38,32 +44,57 @@ export default function Menu() {
     return (
         <View style={estilos.container}>
             {carregando && <CarregandoOverlay />}
-            <Modal
-                titulo="Tem certeza?"
-                possuiBotoes
-                refSheet={modalRef}
-                labelBotaoPrincipal="Sim, sair."
-                labelBotaoSecundario="Não, permanecer conectado."
-                aoPressionarBotaoPrincipal={sair}
-                aoPressionarBotaoSecundario={() => modalRef.current?.close()}
-            >
-                <Texto style={estiloGlobal.texto}>Deseja mesmo sair da sua conta?</Texto>
-            </Modal>
+            {usuarioLogado &&
+                <Modal
+                    titulo="Tem certeza?"
+                    possuiBotoes
+                    refSheet={modalRef}
+                    labelBotaoPrincipal="Sim, sair."
+                    labelBotaoSecundario="Não, permanecer conectado."
+                    aoPressionarBotaoPrincipal={sair}
+                    aoPressionarBotaoSecundario={() => modalRef.current?.close()}
+                >
+                    <Texto style={estiloGlobal.texto}>Deseja mesmo sair da sua conta?</Texto>
+                </Modal>
+            }
             <View style={estilos.cabecalho}>
                 <Texto peso="800ExtraBold" style={estiloGlobal.titulo}>Menu</Texto>
-                <View style={estilos.usuario}>
-                    <Texto peso="900Black" style={[estiloGlobal.subtitulo, estilos.usuarioIcone]}>NC</Texto>
+                <TouchableOpacity
+                    style={estilos.usuario}
+                    onPress={
+                        usuarioLogado ?
+                            () => { }
+                            :
+                            () => {
+                                fazerLogout();
+                                navigation.getParent()?.navigate("login");
+                            }
+                    }
+                >
+                    <Texto peso="900Black" style={[estiloGlobal.subtitulo, estilos.usuarioIcone]}>
+                        {usuarioLogado ?
+                            Formatador.obterIniciaisNome(usuarioLogado.nome)
+                            :
+                            "?"
+                        }
+                    </Texto>
                     <View>
-                        <Texto peso="700Bold" style={estiloGlobal.subtitulo}>Nicholas Campanelli</Texto>
-                        <Texto style={estiloGlobal.observacao}>nicholasoucampanelli@hotmail.com</Texto>
+                        <Texto peso="700Bold" style={estiloGlobal.subtitulo}>
+                            {usuarioLogado ? usuarioLogado.nome : "Fazer login"}
+                        </Texto>
+                        <Texto style={estiloGlobal.observacao}>
+                            {usuarioLogado ? usuarioLogado.email : "Faça login para usar todas as funções do app."}
+                        </Texto>
                     </View>
-                </View>
+                </TouchableOpacity>
             </View>
             <View style={estilos.opcoes}>
-                <TouchableOpacity style={estilos.opcao}>
-                    <Feather name="user" style={estilos.opcaoIcone} />
-                    <Texto peso="700Bold" style={estilos.opcaoTexto}>Conta</Texto>
-                </TouchableOpacity>
+                {usuarioLogado &&
+                    <TouchableOpacity style={estilos.opcao}>
+                        <Feather name="user" style={estilos.opcaoIcone} />
+                        <Texto peso="700Bold" style={estilos.opcaoTexto}>Conta</Texto>
+                    </TouchableOpacity>
+                }
                 <TouchableOpacity style={estilos.opcao}>
                     <Feather name="bell" style={estilos.opcaoIcone} />
                     <Texto peso="700Bold" style={estilos.opcaoTexto}>Notificações</Texto>
@@ -76,10 +107,12 @@ export default function Menu() {
                     <Feather name={temaAtivo === "claro" ? "moon" : "sun"} style={estilos.opcaoIcone} />
                     <Texto peso="700Bold" style={estilos.opcaoTexto}>Alternar tema</Texto>
                 </TouchableOpacity>
-                <TouchableOpacity style={estilos.opcao} onPress={() => modalRef.current?.open()}>
-                    <Feather name="log-out" style={estilos.opcaoIconeVermelho} />
-                    <Texto peso="700Bold" style={estilos.opcaoTextoVermelho}>Sair</Texto>
-                </TouchableOpacity>
+                {usuarioLogado &&
+                    <TouchableOpacity style={estilos.opcao} onPress={() => modalRef.current?.open()}>
+                        <Feather name="log-out" style={estilos.opcaoIconeVermelho} />
+                        <Texto peso="700Bold" style={estilos.opcaoTextoVermelho}>Sair</Texto>
+                    </TouchableOpacity>
+                }
             </View>
         </View>
     );
