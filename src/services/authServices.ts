@@ -32,6 +32,8 @@ const authServices = {
             });
 
             const token = response.data;
+            console.log("token: ", token);
+            
 
             if (token) {
                 await AsyncStorage.setItem("bearerToken", token);

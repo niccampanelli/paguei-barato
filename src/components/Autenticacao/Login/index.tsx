@@ -12,16 +12,18 @@ import Botao from "../../Botao";
 import authServices from "../../../services/authServices";
 import { useNotificacaoToast } from "../../../util/context/providers/notificacaoProvider";
 import CarregandoOverlay from "../../CarregandoOverlay";
-import { useTemaContext } from "../../../util/context/providers/temaProvider";
 import Logo from "../../Logo";
 import { useAuthContext } from "../../../util/context/providers/authProvider";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { StackExternaRoutesParams } from "../../../StackExterna";
 
-export default function Login() {
+type LoginProps = NativeStackScreenProps<StackExternaRoutesParams, "login">;
+
+export default function Login({ navigation, route }: LoginProps) {
 
     const { estilos } = useEstilos();
     const { estiloGlobal } = useEstiloGlobal();
 
-    const navigation = useNavigation();
     const { notificar } = useNotificacaoToast();
     const { fazerLogin } = useAuthContext();
 
@@ -46,7 +48,7 @@ export default function Login() {
             
             await fazerLogin(email, senha);
             setTimeout(() => {
-                navigation.navigate("app" as never);
+                navigation.replace("app", {} as any);
             }, 50);
         } catch (error: any) {
             notificar({
@@ -73,7 +75,7 @@ export default function Login() {
                 {carregando && <CarregandoOverlay/>}
                 <Logo style={estilos.logo} />
                 <Texto peso="700Bold" style={[estiloGlobal.subtitulo, estilos.titulo]}>Que tal fazer login?</Texto>
-                <KeyboardAvoidingView behavior="height" style={estilos.form}>
+                <KeyboardAvoidingView behavior="padding" style={estilos.form}>
                     <View>
                         <Texto peso="700Bold" style={[estiloGlobal.label, estilos.label]}>E-mail</Texto>
                         <Input

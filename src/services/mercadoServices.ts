@@ -86,7 +86,26 @@ const mercadoServices = {
         }
 
         return mercado;
-    }
+    },
+
+    async criarMercado(mercado: Mercado): Promise<AxiosResponse<Mercado>> {
+        const api = await API.obterInstanciaAxios();
+
+        const data = await api.post<Mercado>("/mercado", {
+            nome: mercado.nome,
+            logradouro: mercado.logradouro,
+            numero: mercado.numero,
+            complemento: mercado.complemento,
+            bairro: mercado.bairro,
+            cidade: mercado.cidade,
+            cep: mercado.cep,
+            uf: mercado.uf,
+            ramoId: 1,
+            criadoPor: 1,
+        });
+
+        return data;
+    },
 }
 
 export default mercadoServices;

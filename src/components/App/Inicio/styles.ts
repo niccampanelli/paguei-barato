@@ -9,8 +9,9 @@ export const useEstilos = () => {
 
         main: {
             flex: 1,
-            paddingTop: Constants.statusBarHeight,
-            paddingHorizontal: 0
+            paddingTop: Constants.statusBarHeight + 2,
+            paddingHorizontal: 0,
+            position: "relative"
         },
 
         container: {
@@ -52,6 +53,29 @@ export const useEstilos = () => {
 
         carrossel: {
             marginBottom: 24
+        },
+
+        adicionarFlutuante: {
+            position: "absolute",
+            backgroundColor: propriedadesTema.cores.secundaria,
+            padding: 10,
+            borderRadius: propriedadesTema.layout.raioBorda,
+            zIndex: 1,
+            elevation: 2,
+            right: propriedadesTema.layout.paddingHorizontal,
+            bottom: 10,
+        },
+
+        adicionarFlutuanteIcone: {
+            fontSize: 34,
+            color: "#ffffff"
+        },
+
+        modalAdicionarBotoes: {
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "stretch",
+            gap: 10
         }
     });
 

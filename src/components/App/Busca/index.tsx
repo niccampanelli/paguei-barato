@@ -8,11 +8,22 @@ import { useTemaContext } from "../../../util/context/providers/temaProvider";
 import { useEstilos } from "./styles";
 import Texto from "../../Texto";
 import Input from "../../Input";
+import produtoServices from "../../../services/produtoServices";
+import Produto from "../../../interfaces/models/Produto";
+import { useNotificacaoToast } from "../../../util/context/providers/notificacaoProvider";
+import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import { NavegacaoAppRoutesParams } from "../NavegacaoApp";
+import CarregandoOverlay from "../../CarregandoOverlay";
+import Mercado from "../../../interfaces/models/Mercado";
+import mercadoServices from "../../../services/mercadoServices";
 
-export default function Busca() {
+type BuscaProps = BottomTabScreenProps<NavegacaoAppRoutesParams, "buscar">;
+
+export default function Busca({ navigation, route }: BuscaProps) {
 
     const { estilos } = useEstilos();
     const { estiloGlobal } = useEstiloGlobal();
+    const { notificar } = useNotificacaoToast();
 
     const modalRef = useRef<RBSheet>(null);
 
@@ -21,76 +32,64 @@ export default function Busca() {
 
     const [modalAtual, setModalAtual] = useState<"filtrar" | "ordenar">("filtrar");
 
+    const [carregando, setCarregando] = useState<boolean>(false);
+
+    const [itens, setItens] = useState<Produto[] | Mercado[]>([]);
+    const [produtos, setProdutos] = useState<Produto[]>([]);
+    const [mercados, setMercados] = useState<Mercado[]>([]);
+
+    const obterProdutos = async () => {
+        setCarregando(true);
+
+        try {
+            const resposta = await produtoServices.getProdutos();
+
+            setProdutos(resposta.data);
+        }
+        catch (erro: any) {
+            notificar({
+                estilo: "vermelho",
+                texto: erro.response?.data?.erro || "Erro ao obter produtos",
+                autoDispensar: true,
+                dispensavel: true,
+            });
+        }
+        finally {
+            setCarregando(false);
+        }
+    }
+
+    const obterMercados = async () => {
+        setCarregando(true);
+
+        try {
+            const resposta = await mercadoServices.getMercados();
+
+            setMercados(resposta.data);
+        }
+        catch (erro: any) {
+            notificar({
+                estilo: "vermelho",
+                texto: erro.response?.data?.erro || "Erro ao obter mercados",
+                autoDispensar: true,
+                dispensavel: true,
+            });
+        }
+        finally {
+            setCarregando(false);
+        }
+    }
+
     useEffect(() => {
-        setAlturaModal(dimensoesTela.height*0.65);
+        setAlturaModal(dimensoesTela.height * 0.65);
+
+        obterProdutos();
+        obterMercados();
     }, [dimensoesTela]);
 
-    const dummydata = [
-        {
-            imagem: require("../../../../assets/favicon.png"),
-            nome: "Sabão Em Pó Lavanda Ipê 500g"
-        },
-        {
-            imagem: require("../../../../assets/favicon.png"),
-            nome: "Sabão Em Pó Coco ÉBomMesmo 1kg"
-        },
-        {
-            imagem: require("../../../../assets/favicon.png"),
-            nome: "Detergente Neutro Clear LavaMais 250ml"
-        },
-        {
-            imagem: require("../../../../assets/favicon.png"),
-            nome: "Sabão Em Pó Lavanda ÉBomMesmo 250g"
-        },
-        {
-            imagem: require("../../../../assets/favicon.png"),
-            nome: "Sabão Em Pó Lavanda Ipê"
-        },
-        {
-            imagem: require("../../../../assets/favicon.png"),
-            nome: "Sabão Em Pó Lavanda Ipê"
-        },
-        {
-            imagem: require("../../../../assets/favicon.png"),
-            nome: "Sabão Em Pó Lavanda Ipê"
-        },
-        {
-            imagem: require("../../../../assets/favicon.png"),
-            nome: "Sabão Em Pó Lavanda Ipê"
-        },
-        {
-            imagem: require("../../../../assets/favicon.png"),
-            nome: "Sabão Em Pó Lavanda Ipê"
-        },
-        {
-            imagem: require("../../../../assets/favicon.png"),
-            nome: "Sabão Em Pó Lavanda Ipê"
-        },
-        {
-            imagem: require("../../../../assets/favicon.png"),
-            nome: "Sabão Em Pó Lavanda Ipê aa aa aa aa aa aa aa aa aa aa aa aa aa aa aa aa aa aa aa"
-        },
-        {
-            imagem: require("../../../../assets/favicon.png"),
-            nome: "Sabão Em Pó Lavanda Ipê"
-        },
-        {
-            imagem: require("../../../../assets/favicon.png"),
-            nome: "Sabão Em Pó Lavanda Ipê"
-        },
-        {
-            imagem: require("../../../../assets/favicon.png"),
-            nome: "Sabão Em Pó Lavanda Ipê"
-        },
-        {
-            imagem: require("../../../../assets/favicon.png"),
-            nome: "Sabão Em Pó Lavanda Ipê"
-        },
-        {
-            imagem: require("../../../../assets/favicon.png"),
-            nome: "Sabão Em Pó Lavanda Ipê"
-        },
-    ];
+    useEffect(() => {
+        setItens([...produtos, ...mercados]);
+    }, [produtos, mercados]);
 
     const ModalFiltrar = () => {
 
@@ -209,11 +208,11 @@ export default function Busca() {
     const componentesModal = {
         "filtrar": {
             titulo: "Filtrar resultados",
-            componente: <ModalFiltrar/>
+            componente: <ModalFiltrar />
         },
         "ordenar": {
             titulo: "Ordenar resultados",
-            componente: <ModalOrdenar/>
+            componente: <ModalOrdenar />
         }
     }
 
@@ -222,28 +221,39 @@ export default function Busca() {
         modalRef.current?.open();
     }
 
-    const ItemLista = ({item}: ListRenderItemInfo<any>) => {
+    const ItemLista = ({ item }: ListRenderItemInfo<any>) => {
 
         return (
-            <TouchableOpacity style={estilos.listaItem}>
-                <Image style={estilos.listaItemImagem} source={item.imagem}/>
+            <TouchableOpacity
+                style={estilos.listaItem}
+                onPress={
+                    () => navigation.getParent()?.navigate(
+                        item.cep ? "detalhesMercado" : "detalhesProduto",
+                        { item }
+                    )
+                }
+            >
+                <Image style={estilos.listaItemImagem} source={require("../../../../assets/favicon.png")} />
                 <Texto peso="700Bold" style={estilos.listaItemTexto} numberOfLines={1}>{item.nome}</Texto>
-            </TouchableOpacity>
+            </TouchableOpacity >
         );
     };
-    
+
     return (
         <View style={estilos.container}>
-            <Modal 
+            {carregando &&
+                <CarregandoOverlay />
+            }
+            <Modal
                 titulo={componentesModal[modalAtual].titulo}
                 refSheet={modalRef}
                 height={alturaModal}
             >
-                { componentesModal[modalAtual].componente }
+                {componentesModal[modalAtual].componente}
             </Modal>
             <View>
                 <Texto peso="800ExtraBold" style={[estiloGlobal.titulo, { marginBottom: 16 }]}>Buscar</Texto>
-                <Input placeholder="Escreva aqui sua pesquisa..." icone={<Feather name="search" style={estiloGlobal.inputIcone}/>} />
+                <Input placeholder="Escreva aqui sua pesquisa..." icone={<Feather name="search" style={estiloGlobal.inputIcone} />} />
                 <ScrollView showsHorizontalScrollIndicator={false} horizontal style={estilos.listaFiltros}>
                     <TouchableOpacity onPress={() => abrirModal("filtrar")} style={[estiloGlobal.tagPequenaDestaque, estilos.filtro]}>
                         <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaDestaqueTexto}>Filtros</Texto>
@@ -273,13 +283,13 @@ export default function Busca() {
                 </ScrollView>
             </View>
             <View style={estilos.listaCabecalho}>
-                <Texto peso="700Bold" style={estiloGlobal.subtitulo}>3 Resultados</Texto>
+                <Texto peso="700Bold" style={estiloGlobal.subtitulo}>{produtos.length} {produtos.length === 1 ? "Resultado" : "Resultados"}</Texto>
                 <TouchableOpacity onPress={() => abrirModal("ordenar")} style={estiloGlobal.tagPequenaNormal}>
                     <Texto style={estiloGlobal.tagPequenaNormalTexto}>Ordenar</Texto>
-                    <Feather name="bar-chart" style={estiloGlobal.tagPequenaNormalTexto}/>
+                    <Feather name="bar-chart" style={estiloGlobal.tagPequenaNormalTexto} />
                 </TouchableOpacity>
             </View>
-            <FlatList style={estilos.lista} data={dummydata} renderItem={ItemLista}/>
+            <FlatList style={estilos.lista} data={itens} renderItem={ItemLista} />
         </View>
     );
 }
