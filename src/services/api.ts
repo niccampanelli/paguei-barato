@@ -1,5 +1,4 @@
 import axios, { AxiosInstance } from "axios";
-import { API_ENDERECO } from "@env";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default class API {
@@ -14,7 +13,7 @@ export default class API {
             const token = await AsyncStorage.getItem('bearerToken');
     
             API.instancia = axios.create({
-                baseURL: "http://192.168.0.4:8080",
+                baseURL: "url",
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -30,10 +29,10 @@ export default class API {
 
         if(!API.instanciaCustomSearch) {
             API.instanciaCustomSearch = axios.create({
-                baseURL: "https://customsearch.googleapis.com/customsearch/v1",
+                baseURL: "url",
                 params: {
-                    key: "AIzaSyA8rvlyuiQbufUlv9VB99D6D_4tkOOZJtc",
-                    cx: "443df3b9759194259",
+                    key: "key",
+                    cx: "cx",
                     searchType: "image",
                     cr: "countryBR",
                     hl: "pt-BR",
