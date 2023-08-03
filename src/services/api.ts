@@ -13,7 +13,7 @@ export default class API {
             const token = await AsyncStorage.getItem('bearerToken');
     
             API.instancia = axios.create({
-                baseURL: "url",
+                baseURL: process.env.EXPO_PUBLIC_API_URL,
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -29,10 +29,10 @@ export default class API {
 
         if(!API.instanciaCustomSearch) {
             API.instanciaCustomSearch = axios.create({
-                baseURL: "url",
+                baseURL: process.env.EXPO_PUBLIC_CUSTOMSEARCH_URL,
                 params: {
-                    key: "key",
-                    cx: "cx",
+                    key: process.env.EXPO_PUBLIC_CUSTOMSEARCH_API_KEY,
+                    cx: process.env.EXPO_PUBLIC_CUSTOMSEARCH_CX,
                     searchType: "image",
                     cr: "countryBR",
                     hl: "pt-BR",
