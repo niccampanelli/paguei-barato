@@ -1,5 +1,4 @@
 import axios, { AxiosInstance } from "axios";
-import { API_ENDERECO } from "@env";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default class API {
