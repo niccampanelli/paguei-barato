@@ -71,7 +71,22 @@ const produtoServices = {
         }
 
         return produto;
-    }
+    },
+
+    async criarProduto(produto: Produto): Promise<AxiosResponse<Produto>> {
+        const api = await API.obterInstanciaAxios();
+
+        const data = await api.post<Produto>("/produto", {
+            nome: produto.nome,
+            marca: produto.marca,
+            tamanho: produto.tamanho,
+            cor: produto.cor,
+            categoriaId: 1,
+            criadoPor: 1
+        });
+        
+        return data;
+    },
 }
 
 export default produtoServices;

@@ -7,5 +7,6 @@ export default interface Produto {
     tamanho?: string,
     cor?: string,
     categoriaId?: number,
-    categoria?: Categoria
+    categoria?: Categoria,
+    criadoPor?: number
 }

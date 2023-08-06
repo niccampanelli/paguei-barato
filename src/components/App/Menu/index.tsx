@@ -39,6 +39,10 @@ export default function Menu({ navigation, route }: MenuProps) {
         setCarregando(false);
 
         navigation.getParent()?.navigate("login");
+        navigation.getParent()?.reset({
+            index: 0,
+            routes: [{ name: "login" }],
+        });
     };
 
     return (

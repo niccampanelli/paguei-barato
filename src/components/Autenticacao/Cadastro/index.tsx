@@ -2,13 +2,12 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useRef, useState } from "react";
-import { GestureResponderEvent, Image, KeyboardAvoidingView, View } from "react-native";
+import { GestureResponderEvent, Image, KeyboardAvoidingView, View, TextInput } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { useEstiloGlobal } from "../../../estiloGlobal";
 import Input from "../../Input";
 import { useEstilos } from "./styles";
 import Animated, { useAnimatedStyle, useSharedValue, withDelay, withSpring } from "react-native-reanimated";
-import { TextInput } from "react-native-gesture-handler";
 import { useTemaContext } from "../../../util/context/providers/temaProvider";
 import Texto from "../../Texto";
 import Botao from "../../Botao";
@@ -55,9 +54,9 @@ export default function Cadastro() {
         }
     };
 
-    const CadastroTela1 = ({ setDados }: any) => {
+    const CadastroTela1 = ({ dados, setDados }: any) => {
 
-        const [nome, setNome] = useState("");
+        const [nome, setNome] = useState<string>(dados.nome);
         const cadastroNavigation = useNavigation();
 
         const proximo = (e: GestureResponderEvent) => {
@@ -99,9 +98,9 @@ export default function Cadastro() {
         );
     };
 
-    const CadastroTela2 = ({ setDados }: any) => {
+    const CadastroTela2 = ({ dados, setDados }: any) => {
 
-        const [sobrenome, setSobrenome] = useState("");
+        const [sobrenome, setSobrenome] = useState<string>(dados.sobrenome);
         const cadastroNavigation = useNavigation();
 
         const proximo = (e: GestureResponderEvent) => {
@@ -143,9 +142,9 @@ export default function Cadastro() {
         );
     };
 
-    const CadastroTela3 = ({ setDados }: any) => {
+    const CadastroTela3 = ({ dados, setDados }: any) => {
 
-        const [email, setEmail] = useState("");
+        const [email, setEmail] = useState<string>(dados.email);
         const cadastroNavigation = useNavigation();
 
         const proximo = (e: GestureResponderEvent) => {
@@ -188,10 +187,10 @@ export default function Cadastro() {
         );
     };
 
-    const CadastroTela4 = ({ setDados }: any) => {
+    const CadastroTela4 = ({ dados, setDados }: any) => {
         
-        const [senha, setSenha] = useState("");
-        const [senhaConfirma, setSenhaConfirma] = useState("");
+        const [senha, setSenha] = useState<string>(dados.senha);
+        const [senhaConfirma, setSenhaConfirma] = useState<string>(dados.senhaConfirma);
     
         const cadastroNavigation = useNavigation();
         const confirmaSenhaRef = useRef<TextInput>(null);
@@ -253,9 +252,9 @@ export default function Cadastro() {
         );
     };
 
-    const CadastroTela5 = ({ setDados }: any) => {
+    const CadastroTela5 = ({ dados, setDados }: any) => {
 
-        const [cep, setCep] = useState("");
+        const [cep, setCep] = useState<string>(dados.cep);
         const cadastroNavigation = useNavigation();
 
         const proximo = (e: GestureResponderEvent) => {
@@ -280,7 +279,7 @@ export default function Cadastro() {
                             <Texto style={[estiloGlobal.label, estilos.label]}>Preencha nos campos a seguir o seu endereço para recomendarmos os melhores preços e ofertas nas lojas próximas de você.</Texto>
                             <Texto peso="700Bold" style={[estiloGlobal.label, estilos.label]}>Nos informe seu CEP:</Texto>
                             <Input
-                                icone={<Feather name="map-pin" style={estiloGlobal.inputIcone} />}
+                                icone={<Feather name="hash" style={estiloGlobal.inputIcone} />}
                                 returnKeyType="next"
                                 onSubmitEditing={e => proximo(e as any)}
                                 keyboardType="numeric"
@@ -297,16 +296,18 @@ export default function Cadastro() {
         );
     };
 
-    const CadastroTela6 = ({ setDados }: any) => {
+    const CadastroTela6 = ({ dados, setDados }: any) => {
 
-        const [logradouro, setLogradouro] = useState("");
-        const [numero, setNumero] = useState("");
-        const [complemento, setComplemento] = useState("");
-        const [bairro, setBairro] = useState("");
-        const [cidade, setCidade] = useState("");
-        const [uf, setUf] = useState("");
+        const [logradouro, setLogradouro] = useState<string>(dados.logradouro);
+        const [numero, setNumero] = useState<number>(dados.numero);
+        const [complemento, setComplemento] = useState<string>(dados.complemento);
+        const [bairro, setBairro] = useState<string>(dados.bairro);
+        const [cidade, setCidade] = useState<string>(dados.cidade);
+        const [uf, setUf] = useState<string>(dados.uf);
     
         const cadastroNavigation = useNavigation();
+        const numeroInputRef = useRef<TextInput>(null);
+        const complementoInputRef = useRef<TextInput>(null);
         const bairroInputRef = useRef<TextInput>(null);
         const cidadeInputRef = useRef<TextInput>(null);
         const estadoInputRef = useRef<TextInput>(null);
@@ -334,35 +335,42 @@ export default function Cadastro() {
                 <View style={estilos.cadastro}>
                     <Texto peso="800ExtraBold" style={[estiloGlobal.subtitulo, estilos.titulo]}>Este é seu endereço?</Texto>
                     <View style={estilos.form}>
-                        <View style={estilos.grupoForm}>
-                            <Texto peso="700Bold" style={[estiloGlobal.label, estilos.label]}>Logradouro</Texto>
-                            <Input
-                                icone={<Feather name="map-pin" style={estiloGlobal.inputIcone} />}
-                                returnKeyType="next"
-                                onSubmitEditing={() => bairroInputRef.current?.focus()}
-                                blurOnSubmit={false}
-                                textContentType="streetAddressLine1"
-                                autoCapitalize="words"
-                                autoCorrect={true}
-                                placeholder="Nome da rua ou avenida"
-                                value={logradouro}
-                                onChangeText={setLogradouro}
-                            />
-                        </View>
-                        <View style={estilos.grupoForm}>
-                            <Texto peso="700Bold" style={[estiloGlobal.label, estilos.label]}>Número</Texto>
-                            <Input
-                                icone={<Feather name="map-pin" style={estiloGlobal.inputIcone} />}
-                                returnKeyType="next"
-                                onSubmitEditing={() => bairroInputRef.current?.focus()}
-                                blurOnSubmit={false}
-                                textContentType="streetAddressLine2"
-                                autoCapitalize="words"
-                                autoCorrect={true}
-                                placeholder="Numero do imóvel"
-                                value={numero}
-                                onChangeText={setNumero}
-                            />
+                        <View style={estilos.grupoForm2}>
+                            <View style={[estilos.grupoForm, { flex: 2 }]}>
+                                <Texto peso="700Bold" style={[estiloGlobal.label, estilos.label]}>Logradouro</Texto>
+                                <Input
+                                    icone={<Feather name="map-pin" style={estiloGlobal.inputIcone} />}
+                                    returnKeyType="next"
+                                    onSubmitEditing={() => numeroInputRef.current?.focus()}
+                                    blurOnSubmit={false}
+                                    textContentType="streetAddressLine1"
+                                    autoCapitalize="words"
+                                    autoCorrect={true}
+                                    placeholder="Nome da rua ou avenida"
+                                    value={logradouro}
+                                    onChangeText={setLogradouro}
+                                />
+                            </View>
+                            <View style={[estilos.grupoForm, { flex: 1 }]}>
+                                <Texto peso="700Bold" style={[estiloGlobal.label, estilos.label]}>Número</Texto>
+                                <Input
+                                    icone={<Feather name="map-pin" style={estiloGlobal.inputIcone} />}
+                                    returnKeyType="next"
+                                    onSubmitEditing={() => complementoInputRef.current?.focus()}
+                                    forwardRef={numeroInputRef}
+                                    blurOnSubmit={false}
+                                    keyboardType="number-pad"
+                                    textContentType="streetAddressLine2"
+                                    autoCapitalize="words"
+                                    autoCorrect={true}
+                                    placeholder="Numero do imóvel"
+                                    value={numero.toString()}
+                                    onChangeText={(texto) => {
+                                        const numero = parseInt(texto) || 0;
+                                        setNumero(numero);
+                                    }}
+                                />
+                            </View>
                         </View>
                         <View style={estilos.grupoForm}>
                             <Texto peso="700Bold" style={[estiloGlobal.label, estilos.label]}>Complemento</Texto>
@@ -370,6 +378,7 @@ export default function Cadastro() {
                                 icone={<Feather name="map-pin" style={estiloGlobal.inputIcone} />}
                                 returnKeyType="next"
                                 onSubmitEditing={() => bairroInputRef.current?.focus()}
+                                forwardRef={complementoInputRef}
                                 blurOnSubmit={false}
                                 textContentType="streetAddressLine1"
                                 autoCapitalize="words"
@@ -395,35 +404,37 @@ export default function Cadastro() {
                                 onChangeText={setBairro}
                             />
                         </View>
-                        <View style={estilos.grupoForm}>
-                            <Texto peso="700Bold" style={[estiloGlobal.label, estilos.label]}>Cidade</Texto>
-                            <Input
-                                icone={<Feather name="map-pin" style={estiloGlobal.inputIcone} />}
-                                returnKeyType="next"
-                                forwardRef={cidadeInputRef}
-                                onSubmitEditing={() => estadoInputRef.current?.focus()}
-                                blurOnSubmit={false}
-                                textContentType="addressCity"
-                                autoCapitalize="words"
-                                autoCorrect={true}
-                                placeholder="Cidade ou município"
-                                value={cidade}
-                                onChangeText={setCidade}
-                            />
-                        </View>
-                        <View style={estilos.grupoForm}>
-                            <Texto peso="700Bold" style={[estiloGlobal.label, estilos.label]}>Estado</Texto>
-                            <Input
-                                icone={<Feather name="map-pin" style={estiloGlobal.inputIcone} />}
-                                returnKeyType="done"
-                                forwardRef={estadoInputRef}
-                                onSubmitEditing={e => proximo(e as any)}
-                                textContentType="addressState"
-                                autoCapitalize="characters"
-                                placeholder="UF"
-                                value={uf}
-                                onChangeText={setUf}
-                            />
+                        <View style={estilos.grupoForm2}>
+                            <View style={[estilos.grupoForm, { flex: 2 }]}>
+                                <Texto peso="700Bold" style={[estiloGlobal.label, estilos.label]}>Cidade</Texto>
+                                <Input
+                                    icone={<Feather name="map-pin" style={estiloGlobal.inputIcone} />}
+                                    returnKeyType="next"
+                                    forwardRef={cidadeInputRef}
+                                    onSubmitEditing={() => estadoInputRef.current?.focus()}
+                                    blurOnSubmit={false}
+                                    textContentType="addressCity"
+                                    autoCapitalize="words"
+                                    autoCorrect={true}
+                                    placeholder="Cidade ou município"
+                                    value={cidade}
+                                    onChangeText={setCidade}
+                                />
+                            </View>
+                            <View style={[estilos.grupoForm, { flex: 1 }]}>
+                                <Texto peso="700Bold" style={[estiloGlobal.label, estilos.label]}>Estado</Texto>
+                                <Input
+                                    icone={<Feather name="map-pin" style={estiloGlobal.inputIcone} />}
+                                    returnKeyType="done"
+                                    forwardRef={estadoInputRef}
+                                    onSubmitEditing={e => proximo(e as any)}
+                                    textContentType="addressState"
+                                    autoCapitalize="characters"
+                                    placeholder="UF"
+                                    value={uf}
+                                    onChangeText={setUf}
+                                />
+                            </View>
                         </View>
                     </View>
                 </View>
@@ -432,14 +443,14 @@ export default function Cadastro() {
         );
     };
 
-    const CadastroTela7 = ({ aoCadastrar }: any) => {
+    const CadastroTela7 = ({ nome, aoCadastrar }: any) => {
 
         const navigation = useNavigation();
 
-        const proximo = (e: GestureResponderEvent) => {
+        const proximo = async (e: GestureResponderEvent) => {
             e.preventDefault();
+            await aoCadastrar();
             navegarProximo(navigation.getParent(), "app");
-            aoCadastrar();
         };
 
         useEffect(() => {
@@ -477,7 +488,7 @@ export default function Cadastro() {
                 </Animated.View>
                 <View style={estilos.cadastro}>
                     <Texto peso="800ExtraBold" style={[estiloGlobal.titulo, estilos.titulo]}>Tudo pronto!</Texto>
-                    <Texto peso="700Bold" style={[estiloGlobal.subtitulo, estilos.titulo]}>Prazer em te conhecer, Nicholas!</Texto>
+                    <Texto peso="700Bold" style={[estiloGlobal.subtitulo, estilos.titulo]}>Prazer em te conhecer, {nome}!</Texto>
                     <Texto style={[estiloGlobal.label, estilos.label]}>Seu cadastro está concluído. Agora você pode cadastrar mercados e produtos e informar os preços que você encontrar.</Texto>
                     <Texto style={[estiloGlobal.label, estilos.label]}>Se você precisar modificar alguma informação do seu cadastro, vá até as configurações da conta.</Texto>
                 </View>
@@ -502,31 +513,31 @@ export default function Cadastro() {
                 <FluxoCadastro.Screen
                     name="fluxoCadastro1"
                     options={{ animation: "slide_from_right" }}
-                    children={(props) => <CadastroTela1 setDados={setDadosCadastro} {...props} />} />
+                    children={(props) => <CadastroTela1 dados={dadosCadastro} setDados={setDadosCadastro} {...props} />} />
                 <FluxoCadastro.Screen
                     name="fluxoCadastro2"
                     options={{ animation: "slide_from_right" }}
-                    children={(props) => <CadastroTela2 setDados={setDadosCadastro} {...props} />} />
+                    children={(props) => <CadastroTela2 dados={dadosCadastro} setDados={setDadosCadastro} {...props} />} />
                 <FluxoCadastro.Screen
                     name="fluxoCadastro3"
                     options={{ animation: "slide_from_right" }}
-                    children={(props) => <CadastroTela3 setDados={setDadosCadastro} {...props} />} />
+                    children={(props) => <CadastroTela3 dados={dadosCadastro} setDados={setDadosCadastro} {...props} />} />
                 <FluxoCadastro.Screen
                     name="fluxoCadastro4"
                     options={{ animation: "slide_from_right" }}
-                    children={(props) => <CadastroTela4 setDados={setDadosCadastro} {...props} />} />
+                    children={(props) => <CadastroTela4 dados={dadosCadastro} setDados={setDadosCadastro} {...props} />} />
                 <FluxoCadastro.Screen
                     name="fluxoCadastro5"
                     options={{ animation: "slide_from_right" }}
-                    children={(props) => <CadastroTela5 setDados={setDadosCadastro} {...props} />} />
+                    children={(props) => <CadastroTela5 dados={dadosCadastro} setDados={setDadosCadastro} {...props} />} />
                 <FluxoCadastro.Screen
                     name="fluxoCadastro6"
                     options={{ animation: "slide_from_right" }}
-                    children={(props) => <CadastroTela6 setDados={setDadosCadastro} aoCadastrar={enviarDadosCadastro} {...props} />} />
+                    children={(props) => <CadastroTela6 dados={dadosCadastro} setDados={setDadosCadastro} aoCadastrar={enviarDadosCadastro} {...props} />} />
                 <FluxoCadastro.Screen
                     name="fluxoCadastro7"
                     options={{ animation: "slide_from_bottom", gestureEnabled: false }}
-                    children={(props) => <CadastroTela7 aoCadastrar={enviarDadosCadastro} {...props} />} />
+                    children={(props) => <CadastroTela7 nome={dadosCadastro.nome} aoCadastrar={enviarDadosCadastro} {...props} />} />
             </FluxoCadastro.Navigator>
         </View>
     );

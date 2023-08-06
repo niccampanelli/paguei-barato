@@ -4,15 +4,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default class API {
 
     public static instancia: AxiosInstance;
+    public static instanciaCustomSearch: AxiosInstance;
 
     public static async obterInstanciaAxios(): Promise<AxiosInstance> {
 
         if(!API.instancia) {
 
-            const token = await AsyncStorage.getItem('token');
+            const token = await AsyncStorage.getItem('bearerToken');
     
             API.instancia = axios.create({
-                baseURL: "http://192.168.0.4:8080",
+                baseURL: process.env.EXPO_PUBLIC_API_URL,
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
@@ -22,5 +23,28 @@ export default class API {
         }
 
         return API.instancia;
+    }
+
+    public static async obterInstanciaCustomSearch(): Promise<AxiosInstance> {
+
+        if(!API.instanciaCustomSearch) {
+            API.instanciaCustomSearch = axios.create({
+                baseURL: process.env.EXPO_PUBLIC_CUSTOMSEARCH_URL,
+                params: {
+                    key: process.env.EXPO_PUBLIC_CUSTOMSEARCH_API_KEY,
+                    cx: process.env.EXPO_PUBLIC_CUSTOMSEARCH_CX,
+                    searchType: "image",
+                    cr: "countryBR",
+                    hl: "pt-BR",
+                    lr: "lang_pt"
+                },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                }
+            });
+        }
+
+        return API.instanciaCustomSearch;
     }
 }

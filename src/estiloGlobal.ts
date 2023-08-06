@@ -36,7 +36,6 @@ export const useEstiloGlobal = () => {
             alignItems: "center",
             borderRadius: propriedadesTema.layout.raioBorda,
             backgroundColor: propriedadesTema.cores.fundoSecundario,
-            paddingVertical: propriedadesTema.botoesGrandes.paddingVertical,
             paddingHorizontal: propriedadesTema.botoesGrandes.paddingHorizontal
         },
     
@@ -48,15 +47,39 @@ export const useEstiloGlobal = () => {
         inputCampo: {
             flex: 1,
             fontSize: propriedadesTema.botoesGrandes.texto,
-            marginLeft: propriedadesTema.botoesGrandes.espacamento,
+            paddingVertical: propriedadesTema.botoesGrandes.paddingVertical,
+            marginLeft: propriedadesTema.botoesGrandes.espacamento/2,
+            paddingLeft: propriedadesTema.botoesGrandes.espacamento/2,
             color: propriedadesTema.cores.textoEscuro,
             height: "100%",
             width: "100%"
         },
 
+        inputImagem: {
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: propriedadesTema.layout.raioBorda,
+            paddingVertical: propriedadesTema.botoesGrandes.paddingVertical,
+            paddingHorizontal: propriedadesTema.botoesGrandes.paddingHorizontal,
+            borderColor: propriedadesTema.cores.fundoSecundario,
+            borderWidth: 2,
+            borderStyle: "solid",
+        },
+
+        inputImagemGrupo: {
+            flexDirection: "column",
+            alignItems: "center",
+            rowGap: propriedadesTema.botoesGrandes.espacamento,
+        },
+
+        inputImagemTexto: {
+            fontSize: propriedadesTema.botoesGrandes.texto,
+            color: propriedadesTema.cores.textoClaro,
+        },
+
         autocomplete: {
             position: "relative",
-            zIndex: 100,
         },
 
         autocompleteLista: {
@@ -262,11 +285,12 @@ export const useEstiloGlobal = () => {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: "#000000aa",
+            backgroundColor: propriedadesTema.cores.fundoPrincipal,
+            opacity: 0.8
         },
 
         carregandoTexto: {
-            color: "#ffffff",
+            color: propriedadesTema.cores.textoEscuro,
             fontSize: 28,
         }
     });
