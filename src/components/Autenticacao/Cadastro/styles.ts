@@ -36,7 +36,7 @@ export const useEstilos = () => {
         },
 
         titulo: {
-            marginBottom: 32
+            marginBottom: 16
         },
 
         form: {
