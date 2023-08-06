@@ -1,8 +1,7 @@
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Image, TouchableOpacity, View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { Image, TouchableOpacity, View, ScrollView } from "react-native";
 import { useEstiloGlobal } from "../../../../estiloGlobal";
 import Sugestao from "../../../../interfaces/models/Sugestao";
 import { StackExternaRoutesParams } from "../../../../StackExterna";

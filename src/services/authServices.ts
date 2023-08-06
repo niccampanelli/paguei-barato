@@ -38,7 +38,7 @@ const authServices = {
             if (token) {
                 await AsyncStorage.setItem("bearerToken", token);
                 console.log("salvou o token");
-                
+
                 return token;
             }
             else {
@@ -63,6 +63,11 @@ const authServices = {
 
     async fazerLogout() {
         await AsyncStorage.removeItem("bearerToken");
+    },
+
+    async obterUsuario(id: number): Promise<Usuario> {
+        const api = await API.obterInstanciaAxios();
+        return await api.get(`/usuario/${id}`);
     }
 }
 

@@ -1,7 +1,6 @@
 import { Feather } from "@expo/vector-icons";
 import { useRef, useEffect, useState } from "react";
-import { Image, TouchableOpacity, View, ViewProps } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { Image, TouchableOpacity, View, ViewProps, ScrollView } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { useEstiloGlobal } from "../../../../estiloGlobal";
 import Formatador from "../../../../util/Formatador";

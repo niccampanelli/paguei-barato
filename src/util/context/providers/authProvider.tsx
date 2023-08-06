@@ -43,8 +43,17 @@ export default function AuthProvider(props: any) {
 
     const cadastrarUsuario = async (usuario: Usuario) => {
         try {
-            await authServices.cadastrarUsuario(usuario);
-            fazerLogin(usuario.email, usuario.senha);
+            
+            usuario.numero = Number(usuario.numero);
+
+            console.log("cadastrando");
+            console.log(JSON.stringify(usuario, null, 2));
+            console.log(typeof usuario.numero);
+            
+            const data = await authServices.cadastrarUsuario(usuario);
+            console.log("cadastro: ", data);
+            const token = await fazerLogin(usuario.email, usuario.senha);
+            console.log("token: ", token);
         } catch (error) {
             throw error;
         }

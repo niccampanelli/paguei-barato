@@ -40,11 +40,22 @@ export const useEstilos = () => {
         },
 
         form: {
-            marginBottom: 24
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            rowGap: 10,
         },
 
         grupoForm: {
-            marginBottom: 10
+            display: "flex",
+            flexDirection: "column",
+            rowGap: 5,
+        },
+
+        grupoForm2: {
+            display: "flex",
+            flexDirection: "row",
+            columnGap: 5,
         },
 
         label: {

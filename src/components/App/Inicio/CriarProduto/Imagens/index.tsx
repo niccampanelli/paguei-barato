@@ -1,6 +1,6 @@
 import { Feather } from '@expo/vector-icons';
 import { useRef, useState, useEffect } from 'react';
-import { View, TextInput, KeyboardAvoidingView, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { View, TextInput, KeyboardAvoidingView, TouchableOpacity, ScrollView, Image, FlatList } from 'react-native';
 import Texto from '../../../../Texto';
 import Input from '../../../../Input';
 import Botao from '../../../../Botao';
@@ -14,7 +14,6 @@ import CarregandoOverlay from '../../../../CarregandoOverlay';
 import { useNotificacaoToast } from '../../../../../util/context/providers/notificacaoProvider';
 import customSearchServices from '../../../../../services/customSearchServices';
 import { ItensPesquisaImagens } from '../../../../../interfaces/models/PesquisaImagens';
-import { FlatList } from 'react-native-gesture-handler';
 
 export interface ImagensParams {
     produto: Produto

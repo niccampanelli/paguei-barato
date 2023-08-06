@@ -1,7 +1,6 @@
 import { Feather } from "@expo/vector-icons";
 import { useState } from "react";
-import { View, TouchableOpacity } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
+import { View, TouchableOpacity, FlatList } from "react-native";
 import AutocompleteProps from "../../interfaces/components/AutocompleteProps";
 import Input from "../Input";
 import { useEstiloGlobal } from "../../estiloGlobal";

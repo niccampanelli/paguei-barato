@@ -285,11 +285,12 @@ export const useEstiloGlobal = () => {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: "#000000aa",
+            backgroundColor: propriedadesTema.cores.fundoPrincipal,
+            opacity: 0.8
         },
 
         carregandoTexto: {
-            color: "#ffffff",
+            color: propriedadesTema.cores.textoEscuro,
             fontSize: 28,
         }
     });
