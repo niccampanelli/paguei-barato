@@ -149,7 +149,6 @@ export default function Lista() {
     const { notificar } = useNotificacaoToast();
 
     const modalRef = useRef<RBSheet>(null);
-    const [listaScrollEnabled, setListaScrollEnabled] = useState(true);
 
     const dimensoesTela = useWindowDimensions();
     const [alturaModal, setAlturaModal] = useState(0);
@@ -259,35 +258,33 @@ export default function Lista() {
         };
 
         return (
-            <GestureHandlerRootView>
-                <Swipeable
-                    ref={swipeableRef}
-                    childrenContainerStyle={estilos.listaItem}
-                    renderLeftActions={IconeSwipeConcluido}
-                    renderRightActions={IconeSwipeRemover}
-                    onSwipeableOpen={() => {
-                        swipeableRef.current?.close();
-                    }}
-                    onSwipeableLeftOpen={() => {
+            <Swipeable
+                ref={swipeableRef}
+                childrenContainerStyle={estilos.listaItem}
+                renderLeftActions={IconeSwipeConcluido}
+                renderRightActions={IconeSwipeRemover}
+                onSwipeableOpen={(dir) => {
+                    swipeableRef.current?.close();
+                    if (dir === "left") {
                         desativado.value = !desativado.value;
                         item.riscado = !item.riscado;
-                    }}
-                    onSwipeableRightOpen={() => {
+                    }
+                    else {
                         removido.value = true;
-                    }}
-                >
-                    <GestureDetector gesture={gestoPressionar}>
-                        <Animated.View onTouchEnd={irParaDetalhes} style={[estilos.listaItemConteudo, estiloAnimado, estiloOpacidade]}>
-                            <Image style={estilos.listaItemImagem} source={item.imagem} />
-                            <View style={estilos.listaItemInfos}>
-                                <Texto peso="800ExtraBold" style={estilos.listaItemTexto} numberOfLines={1}>{item.nome}</Texto>
-                                <Texto style={estilos.listaItemMercado} numberOfLines={1}>{item.mercado}</Texto>
-                            </View>
-                            <Texto peso="700Bold" style={estilos.listaItemPreco} numberOfLines={1}>{Formatador.formatarMoeda(item.preco)}</Texto>
-                        </Animated.View>
-                    </GestureDetector>
-                </Swipeable>
-            </GestureHandlerRootView>
+                    }
+                }}
+            >
+                <GestureDetector gesture={gestoPressionar}>
+                    <Animated.View onTouchEnd={irParaDetalhes} style={[estilos.listaItemConteudo, estiloAnimado, estiloOpacidade]}>
+                        <Image style={estilos.listaItemImagem} source={item.imagem} />
+                        <View style={estilos.listaItemInfos}>
+                            <Texto peso="800ExtraBold" style={estilos.listaItemTexto} numberOfLines={1}>{item.nome}</Texto>
+                            <Texto style={estilos.listaItemMercado} numberOfLines={1}>{item.mercado}</Texto>
+                        </View>
+                        <Texto peso="700Bold" style={estilos.listaItemPreco} numberOfLines={1}>{Formatador.formatarMoeda(item.preco)}</Texto>
+                    </Animated.View>
+                </GestureDetector>
+            </Swipeable>
         );
     };
 
@@ -345,7 +342,7 @@ export default function Lista() {
                         stickyHeaderIndices={[1]}
                         keyExtractor={(item, index) => index.toString()}
                     />
-                    <Botao titulo="Adicionar à lista" subtitulo="R$2,99" icone="shopping-bag"/>
+                    <Botao titulo="Adicionar à lista" subtitulo="R$2,99" icone="shopping-bag" />
                 </View>
             </Modal>
             <View>
@@ -382,7 +379,14 @@ export default function Lista() {
                     </View>
                 </ScrollView>
             </View>
-            <FlatList style={estilos.lista} scrollEnabled={listaScrollEnabled} contentContainerStyle={{ paddingBottom: 80 }} data={dados} renderItem={(props: ListRenderItemInfo<any>) => <ItemLista {...props} />} />
+            <GestureHandlerRootView>
+                <FlatList
+                    style={estilos.lista}
+                    contentContainerStyle={{ paddingBottom: 80 }}
+                    data={dados}
+                    renderItem={(props: ListRenderItemInfo<any>) => <ItemLista {...props} />}
+                />
+            </GestureHandlerRootView>
             <View style={estilos.listaFooter}>
                 <TouchableOpacity onPress={() => modalRef.current?.open()} style={estilos.adicionarFlutuante}>
                     <Feather name="plus" style={estilos.adicionarFlutuanteIcone} />

@@ -15,6 +15,9 @@ import authServices from "../../../services/authServices";
 import UF from "../../../interfaces/models/UF";
 import Logo from "../../Logo";
 import { useAuthContext } from "../../../util/context/providers/authProvider";
+import enderecoServices from "../../../services/enderecoServices";
+import CarregandoOverlay from "../../CarregandoOverlay";
+import { useNotificacaoToast } from "../../../util/context/providers/notificacaoProvider";
 
 export default function Cadastro() {
 
@@ -93,7 +96,7 @@ export default function Cadastro() {
                         </View>
                     </View>
                 </View>
-                <Botao titulo="Próxima etapa" icone="arrow-right" onPress={e => proximo(e)}/>
+                <Botao titulo="Próxima etapa" icone="arrow-right" onPress={e => proximo(e)} />
             </KeyboardAvoidingView>
         );
     };
@@ -137,7 +140,7 @@ export default function Cadastro() {
                         </View>
                     </View>
                 </View>
-                <Botao titulo="Próxima etapa" icone="arrow-right" onPress={e => proximo(e)}/>
+                <Botao titulo="Próxima etapa" icone="arrow-right" onPress={e => proximo(e)} />
             </KeyboardAvoidingView>
         );
     };
@@ -182,16 +185,16 @@ export default function Cadastro() {
                         </View>
                     </View>
                 </View>
-                <Botao titulo="Próxima etapa" icone="arrow-right" onPress={e => proximo(e)}/>
+                <Botao titulo="Próxima etapa" icone="arrow-right" onPress={e => proximo(e)} />
             </KeyboardAvoidingView>
         );
     };
 
     const CadastroTela4 = ({ dados, setDados }: any) => {
-        
+
         const [senha, setSenha] = useState<string>(dados.senha);
         const [senhaConfirma, setSenhaConfirma] = useState<string>(dados.senhaConfirma);
-    
+
         const cadastroNavigation = useNavigation();
         const confirmaSenhaRef = useRef<TextInput>(null);
 
@@ -247,7 +250,7 @@ export default function Cadastro() {
                         </View>
                     </View>
                 </View>
-                <Botao titulo="Próxima etapa" icone="arrow-right" onPress={e => proximo(e)}/>
+                <Botao titulo="Próxima etapa" icone="arrow-right" onPress={e => proximo(e)} />
             </KeyboardAvoidingView>
         );
     };
@@ -255,11 +258,37 @@ export default function Cadastro() {
     const CadastroTela5 = ({ dados, setDados }: any) => {
 
         const [cep, setCep] = useState<string>(dados.cep);
+        const [carregando, setCarregando] = useState<boolean>(false);
         const cadastroNavigation = useNavigation();
 
-        const proximo = (e: GestureResponderEvent) => {
+        const obterEndereco = async () => {
+            setCarregando(true);
+
+            try {
+                const { data } = await enderecoServices.getEnderecoViaCep(cep);
+
+                if (data.logradouro) {
+                    setDados((dados: any) => ({
+                        ...dados,
+                        logradouro: data.logradouro,
+                        bairro: data.bairro,
+                        cidade: data.localidade,
+                        uf: data.uf
+                    }));
+                }
+            }
+            catch (error) {
+                console.log(error);
+            }
+            finally {
+                setCarregando(false);
+            }
+        };
+
+        const proximo = async (e: GestureResponderEvent) => {
             e.preventDefault();
-            navegarProximo(cadastroNavigation, "fluxoCadastro6");
+
+            await obterEndereco();
 
             setDados((dados: any) => (
                 {
@@ -267,16 +296,21 @@ export default function Cadastro() {
                     cep
                 }
             ));
+
+            navegarProximo(cadastroNavigation, "fluxoCadastro6");
         };
 
         return (
             <KeyboardAvoidingView style={estilos.container}>
+                {carregando &&
+                    <CarregandoOverlay />
+                }
                 <Logo style={estilos.logo} />
                 <View style={estilos.cadastro}>
                     <Texto peso="800ExtraBold" style={[estiloGlobal.subtitulo, estilos.titulo]}>Não precisa ir muito longe!</Texto>
                     <View style={estilos.form}>
                         <View style={estilos.grupoForm}>
-                            <Texto style={[estiloGlobal.label, estilos.label]}>Preencha nos campos a seguir o seu endereço para recomendarmos os melhores preços e ofertas nas lojas próximas de você.</Texto>
+                            <Texto style={[estiloGlobal.label, estilos.label]}>Com base no seu endereço, te recomendaremos os melhores preços e ofertas em lojas, mercados e farmácias pertinho de você.</Texto>
                             <Texto peso="700Bold" style={[estiloGlobal.label, estilos.label]}>Nos informe seu CEP:</Texto>
                             <Input
                                 icone={<Feather name="hash" style={estiloGlobal.inputIcone} />}
@@ -291,7 +325,7 @@ export default function Cadastro() {
                         </View>
                     </View>
                 </View>
-                <Botao titulo="Próxima etapa" icone="arrow-right" onPress={e => proximo(e)}/>
+                <Botao titulo="Próxima etapa" icone="arrow-right" onPress={e => proximo(e)} />
             </KeyboardAvoidingView>
         );
     };
@@ -304,7 +338,7 @@ export default function Cadastro() {
         const [bairro, setBairro] = useState<string>(dados.bairro);
         const [cidade, setCidade] = useState<string>(dados.cidade);
         const [uf, setUf] = useState<string>(dados.uf);
-    
+
         const cadastroNavigation = useNavigation();
         const numeroInputRef = useRef<TextInput>(null);
         const complementoInputRef = useRef<TextInput>(null);
@@ -335,6 +369,13 @@ export default function Cadastro() {
                 <View style={estilos.cadastro}>
                     <Texto peso="800ExtraBold" style={[estiloGlobal.subtitulo, estilos.titulo]}>Este é seu endereço?</Texto>
                     <View style={estilos.form}>
+                        <Texto style={[estiloGlobal.label, estilos.label]}>
+                            {dados.logradouro ?
+                                "O endereço abaixo foi encontrado com base no CEP que você digitou. Confirme está tudo certo e corriga o que precisar."
+                                :
+                                "Não encontramos seu endereço com base no CEP que você digitou. Por favor, preencha os campos abaixo."
+                            }
+                        </Texto>
                         <View style={estilos.grupoForm2}>
                             <View style={[estilos.grupoForm, { flex: 2 }]}>
                                 <Texto peso="700Bold" style={[estiloGlobal.label, estilos.label]}>Logradouro</Texto>
@@ -359,7 +400,7 @@ export default function Cadastro() {
                                     onSubmitEditing={() => complementoInputRef.current?.focus()}
                                     forwardRef={numeroInputRef}
                                     blurOnSubmit={false}
-                                    keyboardType="number-pad"
+                                    keyboardType="numeric"
                                     textContentType="streetAddressLine2"
                                     autoCapitalize="words"
                                     autoCorrect={true}
@@ -383,7 +424,7 @@ export default function Cadastro() {
                                 textContentType="streetAddressLine1"
                                 autoCapitalize="words"
                                 autoCorrect={true}
-                                placeholder="Complemento do imóvel"
+                                placeholder="Bloco, número do apartamento, portão, etc."
                                 value={complemento}
                                 onChangeText={setComplemento}
                             />
@@ -438,23 +479,45 @@ export default function Cadastro() {
                         </View>
                     </View>
                 </View>
-                <Botao titulo="Finalizar cadastro" icone="check-circle" onPress={e => proximo(e)}/>
+                <Botao titulo="Finalizar cadastro" icone="check-circle" onPress={e => proximo(e)} />
             </KeyboardAvoidingView>
         );
     };
 
     const CadastroTela7 = ({ nome, aoCadastrar }: any) => {
 
+        const [carregando, setCarregando] = useState<boolean>(true);
         const navigation = useNavigation();
+        const { notificar } = useNotificacaoToast();
+
+        const finalizarCadastro = async () => {
+            setCarregando(true);
+
+            try {
+                await aoCadastrar();
+            }
+            catch (erro) {
+                notificar({
+                    estilo: "vermelho",
+                    texto: `Erro ao finalizar o cadastro: ${erro}`,
+                    autoDispensar: true,
+                    dispensavel: true
+                });
+                navegarProximo(navigation.getParent(), "login");
+            }
+            finally {
+                setCarregando(false);
+            }
+        }
 
         const proximo = async (e: GestureResponderEvent) => {
             e.preventDefault();
-            await aoCadastrar();
             navegarProximo(navigation.getParent(), "app");
         };
 
         useEffect(() => {
             setMostraBanner(false);
+            finalizarCadastro();
 
             navigation.addListener('beforeRemove', e => {
                 if (e.data.action.type === "GO_BACK")
@@ -492,7 +555,7 @@ export default function Cadastro() {
                     <Texto style={[estiloGlobal.label, estilos.label]}>Seu cadastro está concluído. Agora você pode cadastrar mercados e produtos e informar os preços que você encontrar.</Texto>
                     <Texto style={[estiloGlobal.label, estilos.label]}>Se você precisar modificar alguma informação do seu cadastro, vá até as configurações da conta.</Texto>
                 </View>
-                <Botao titulo="Comece à economizar!" icone="arrow-right" onPress={e => proximo(e)}/>
+                <Botao titulo={carregando ? "Preparando sua economia..." : "Comece à economizar!"} disabled={carregando} icone="arrow-right" onPress={e => proximo(e)} />
             </View>
         );
     };
@@ -506,7 +569,7 @@ export default function Cadastro() {
                 </>
                 :
                 <>
-                    <StatusBar style={ temaAtivo === "claro" ? "dark" : "light" } backgroundColor={propriedadesTema.cores.fundoPrincipal} hidden={false} />
+                    <StatusBar style={temaAtivo === "claro" ? "dark" : "light"} backgroundColor={propriedadesTema.cores.fundoPrincipal} hidden={false} />
                 </>
             }
             <FluxoCadastro.Navigator screenOptions={{ headerShown: false, contentStyle: { backgroundColor: propriedadesTema.cores.fundoPrincipal } }}>

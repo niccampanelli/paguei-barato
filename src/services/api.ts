@@ -5,19 +5,20 @@ export default class API {
 
     public static instancia: AxiosInstance;
     public static instanciaCustomSearch: AxiosInstance;
+    public static instanciaViaCep: AxiosInstance;
 
     public static async obterInstanciaAxios(): Promise<AxiosInstance> {
 
-        if(!API.instancia) {
+        if (!API.instancia) {
 
             const token = await AsyncStorage.getItem('bearerToken');
-    
+
             API.instancia = axios.create({
                 baseURL: process.env.EXPO_PUBLIC_API_URL,
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
-                    ...(token ? {"Authorization": "Bearer " + token} : {})
+                    ...(token ? { "Authorization": "Bearer " + token } : {})
                 }
             });
         }
@@ -27,7 +28,7 @@ export default class API {
 
     public static async obterInstanciaCustomSearch(): Promise<AxiosInstance> {
 
-        if(!API.instanciaCustomSearch) {
+        if (!API.instanciaCustomSearch) {
             API.instanciaCustomSearch = axios.create({
                 baseURL: process.env.EXPO_PUBLIC_CUSTOMSEARCH_URL,
                 params: {
@@ -46,5 +47,20 @@ export default class API {
         }
 
         return API.instanciaCustomSearch;
+    }
+
+    public static async obterInstanciaViaCep(): Promise<AxiosInstance> {
+
+        if (!API.instanciaViaCep) {
+            API.instanciaViaCep = axios.create({
+                baseURL: process.env.EXPO_PUBLIC_VIACEP_URL,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                }
+            });
+        }
+
+        return API.instanciaViaCep;
     }
 }
