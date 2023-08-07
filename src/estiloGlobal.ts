@@ -91,7 +91,7 @@ export const useEstiloGlobal = () => {
             right: 0,
             backgroundColor: propriedadesTema.cores.fundoSecundario,
             borderRadius: propriedadesTema.layout.raioBorda,
-            marginTop: 10,
+            marginTop: 5,
             paddingHorizontal: propriedadesTema.botoesGrandes.paddingHorizontal
         },
 

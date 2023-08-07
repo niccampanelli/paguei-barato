@@ -11,6 +11,7 @@ import { StackExternaRoutesParams } from '../../../../StackExterna';
 import Sugestao from '../../../../interfaces/models/Sugestao';
 import Produto from '../../../../interfaces/models/Produto';
 import Mercado from '../../../../interfaces/models/Mercado';
+import AutoComplete from '../../../AutoComplete';
 
 type CriarSugestaoProps = NativeStackScreenProps<StackExternaRoutesParams, "criarSugestao">;
 
@@ -18,7 +19,7 @@ export default function CriarSugestao({ navigation, route }: CriarSugestaoProps)
 
     const { estilos } = useEstilos();
     const { estiloGlobal } = useEstiloGlobal();
-    
+
     const [produto, setProduto] = useState<Produto>({});
     const [mercado, setMercado] = useState<Mercado>({} as any);
     const [preco, setPreco] = useState<number>(0);
@@ -55,19 +56,23 @@ export default function CriarSugestao({ navigation, route }: CriarSugestaoProps)
                     </View>
                     <View style={[estilos.grupoForm, { marginBottom: 16 }]}>
                         <Texto peso="700Bold" style={estiloGlobal.label}>Em qual mercado se encontra o produto que irá sugerir o preço?</Texto>
-                        <Input
-                            icone={<Feather name="shopping-cart" style={estiloGlobal.inputIcone} />}
+                        <AutoComplete
+                            icone="shopping-cart"
                             returnKeyType="next"
-                            blurOnSubmit={false}
-                            onSubmitEditing={() => precoInputRef.current?.focus()}
-                            forwardRef={mercadoInputRef}
-                            textContentType="givenName"
-                            autoCapitalize="words"
-                            autoCorrect={false}
-                            value={mercado?.nome}
-                            onChangeText={(texto) => setMercado({ ...mercado, nome: texto })}
-                            placeholder="Minimercado MenorPreço"
+                            extrairChave={(nome) => nome}
+                            aoSelecionar={(selecionado) => setMercado({ ...mercado, nome: selecionado })}
+                            dados={[
+                                "Mercadinho do João",
+                                "Mercado do Zé",
+                                "Carrefour",
+                                "Extra",
+                                "Pão de Açucar",
+                                "Dia",
+                                "Atacadão",
+                                "Assaí",
+                            ]}
                         />
+
                     </View>
                     <View style={estilos.grupoForm}>
                         <Texto peso="700Bold" style={estiloGlobal.label}>Qual o preço do produto que está sugerindo?</Texto>

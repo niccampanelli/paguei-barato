@@ -1,5 +1,5 @@
 import { Feather } from '@expo/vector-icons';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { View, TextInput, KeyboardAvoidingView, TouchableOpacity, ScrollView } from 'react-native';
 import Texto from '../../../../Texto';
 import Input from '../../../../Input';
@@ -10,6 +10,9 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FluxoCriarMercadoParams } from '..';
 import Mercado from '../../../../../interfaces/models/Mercado';
 import UF from '../../../../../interfaces/models/UF';
+import ramoServices from '../../../../../services/ramoServices';
+import Ramo from '../../../../../interfaces/models/Ramo';
+import AutoComplete from '../../../../AutoComplete';
 
 type InformacoesProps = NativeStackScreenProps<FluxoCriarMercadoParams, "informacoes">;
 
@@ -18,7 +21,9 @@ export default function EtapaInformacoes({ navigation, route }: InformacoesProps
     const { estilos } = useEstilos();
     const { estiloGlobal } = useEstiloGlobal();
 
+    const [ramos, setRamos] = useState<Ramo[]>([]);
     const [mercado, setMercado] = useState<Mercado>({} as any);
+    const [carregando, setCarregando] = useState<boolean>(false);
 
     const nomeInputRef = useRef<TextInput>(null);
     const cepInputRef = useRef<TextInput>(null);
@@ -32,6 +37,25 @@ export default function EtapaInformacoes({ navigation, route }: InformacoesProps
     const proximo = () => {
         navigation.navigate("imagens", { mercado });
     }
+
+    const obterRamos = async () => {
+        setCarregando(false);
+
+        try {
+            const { data } = await ramoServices.getRamos();
+            setRamos(data);
+        }
+        catch (erro) {
+            console.log(erro);
+        }
+        finally {
+            setCarregando(false);
+        }
+    };
+
+    useEffect(() => {
+        obterRamos();
+    }, []);
 
     return (
         <View style={estilos.main}>
@@ -47,17 +71,18 @@ export default function EtapaInformacoes({ navigation, route }: InformacoesProps
                 <KeyboardAvoidingView behavior="padding" style={estilos.form}>
                     <View style={estilos.grupoForm}>
                         <Texto peso="700Bold" style={estiloGlobal.label}>Ramo</Texto>
-                        <Input
-                            icone={<Feather name="tag" style={estiloGlobal.inputIcone} />}
-                            returnKeyType="next"
+                        <AutoComplete
+                            icone="tag"
+                            returnKeyType='next'
                             blurOnSubmit={false}
                             onSubmitEditing={() => nomeInputRef.current?.focus()}
-                            textContentType="none"
-                            autoCapitalize="words"
+                            textContentType='givenName'
+                            autoCapitalize='words'
                             autoCorrect={true}
-                            value={mercado?.ramo?.nome}
-                            onChangeText={(texto) => setMercado({ ...mercado, ramo: { nome: texto } })}
-                            placeholder="Minimercado"
+                            placeholder="Supermercado, farmácia, padaria..."
+                            extrairChave={(ramo) => ramo.nome}
+                            aoSelecionar={(ramo) => setMercado({ ...mercado, ramo })}
+                            dados={ramos}
                         />
                     </View>
                     <View style={[estilos.grupoForm, { marginBottom: 16 }]}>
@@ -68,12 +93,12 @@ export default function EtapaInformacoes({ navigation, route }: InformacoesProps
                             blurOnSubmit={false}
                             onSubmitEditing={() => cepInputRef.current?.focus()}
                             forwardRef={nomeInputRef}
-                            textContentType="givenName"
+                            textContentType="organizationName"
                             autoCapitalize="words"
                             autoCorrect={false}
                             value={mercado?.nome}
                             onChangeText={(texto) => setMercado({ ...mercado, nome: texto })}
-                            placeholder="Minimercado MenorPreço"
+                            placeholder="Nome do estabelecimento"
                         />
                     </View>
                     <Texto peso="700Bold" style={estiloGlobal.subtitulo}>
@@ -109,7 +134,7 @@ export default function EtapaInformacoes({ navigation, route }: InformacoesProps
                                 autoCorrect={true}
                                 value={mercado?.logradouro}
                                 onChangeText={(texto) => setMercado({ ...mercado, logradouro: texto })}
-                                placeholder="Avenida Paulista"
+                                placeholder="Nome da rua ou avenida"
                             />
                         </View>
                         <View style={[estilos.grupoForm, { flex: 1 }]}>
@@ -140,7 +165,7 @@ export default function EtapaInformacoes({ navigation, route }: InformacoesProps
                             autoCorrect={true}
                             value={mercado?.complemento}
                             onChangeText={(texto) => setMercado({ ...mercado, complemento: texto })}
-                            placeholder="Portão 2"
+                            placeholder="Bloco, portão, quadra, etc."
                         />
                     </View>
                     <View style={estilos.grupoForm}>

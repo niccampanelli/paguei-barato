@@ -7,53 +7,82 @@ import { useEstiloGlobal } from "../../estiloGlobal";
 import buscaObjeto from "../../util/buscaObjeto";
 import Texto from "../Texto";
 
-export default function AutoComplete({
+export default function AutoComplete<TipoItem>({
     dados,
     icone,
     alturaLista,
-    onChangeText,
+    aoSelecionar,
+    extrairChave,
+    onSubmitEditing,
     ...props
-}: AutocompleteProps) {
+}: AutocompleteProps<TipoItem>) {
 
     const { estiloGlobal } = useEstiloGlobal();
-    const [valorInput, setValorInput] = useState("");
-    const [valorSelecionado, setValorSelecionado] = useState("");
-    const [correspondencias, setCorrespondencias] = useState<string[]>(dados);
+    const [valorInput, setValorInput] = useState<string>("");
+    const [mostrarLista, setMostrarLista] = useState<boolean>(false);
+    const [correspondencias, setCorrespondencias] = useState<TipoItem[]>([]);
 
-    const aoModificarInput = (texto: string) => {
+    const aoModificarInput = (texto: string) => {        
         setValorInput(texto);
-        let valores = buscaObjeto.corresponder(dados, texto);
+        let valores = [];
+        
+        if (texto !== "")
+            valores = buscaObjeto.corresponder(dados, texto, extrairChave);
+        
         setCorrespondencias(valores);
     };
 
-    const selecionarItem = (valor: string) => {
-        setCorrespondencias(dados);
-        setValorInput(valor);
-        setValorSelecionado(valor);
+    const selecionarItem = (valor: TipoItem) => {
+        setValorInput(extrairChave(valor));
+        aoSelecionar(valor);
+        setMostrarLista(false);
     };
 
     const ItemLista = ({ item }: any) => {
         return (
             <TouchableOpacity style={estiloGlobal.autocompleteListaItem} onPress={() => selecionarItem(item)}>
-                <Texto style={estiloGlobal.autocompleteListaItemTexto}>{item}</Texto>
+                <Texto style={estiloGlobal.autocompleteListaItemTexto}>{extrairChave(item)}</Texto>
             </TouchableOpacity>
         );
     };
 
     const ListaVazia = () => {
-        
+
         return (
             <View style={estiloGlobal.autocompleteListaItem}>
-                <Texto style={estiloGlobal.autocompleteListaItemTexto}>Nenhum resultado encontrado.</Texto>
+                <Texto style={estiloGlobal.autocompleteListaItemTexto}>
+                    {valorInput.length > 0 ? "Nenhum resultado encontrado" : "Escreva para buscar"}
+                </Texto>
             </View>
         );
     }
 
     return (
         <View style={estiloGlobal.autocomplete}>
-            <Input icone={<Feather name={icone} style={estiloGlobal.inputIcone} />} value={valorInput} onChangeText={t => {aoModificarInput(t); onChangeText?.(t)}} {...props} />
-            { valorSelecionado === valorInput ? null :
-                <FlatList data={correspondencias} nestedScrollEnabled style={[estiloGlobal.autocompleteLista, { maxHeight: alturaLista ?? 200 }]} renderItem={(props) => <ItemLista {...props} />} ListEmptyComponent={ListaVazia} />
+            <Input
+                icone={<Feather name={icone} style={estiloGlobal.inputIcone} />}
+                value={valorInput}
+                onChangeText={aoModificarInput}
+                onSubmitEditing={(e) => {
+                    if (correspondencias.length > 0)
+                        selecionarItem(correspondencias[0]);
+                    onSubmitEditing?.(e);
+                    setMostrarLista(false);
+                }}
+                onFocus={() => setMostrarLista(true)}
+                {...props}
+            />
+            {mostrarLista &&
+                <FlatList
+                    data={correspondencias}
+                    nestedScrollEnabled
+                    style={[
+                        estiloGlobal.autocompleteLista,
+                        { maxHeight: alturaLista ?? 200 }
+                    ]}
+                    renderItem={(props) => <ItemLista {...props} />}
+                    ListEmptyComponent={ListaVazia}
+                />
             }
         </View>
     );
