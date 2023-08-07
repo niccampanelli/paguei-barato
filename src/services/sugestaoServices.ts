@@ -71,7 +71,19 @@ const sugestaoServices = {
         }
 
         return sugestao;
-    }
+    },
+    
+    async criarSugestao(sugestao: Sugestao): Promise<AxiosResponse<Sugestao>> {
+        const api = await API.obterInstanciaAxios();
+
+        const data = await api.post<Sugestao>("/sugestao", {
+            estoqueId: sugestao.estoqueId,
+            preco: sugestao.preco,
+            criadoPor: 1
+        });
+        
+        return data;
+    },
 }
 
 export default sugestaoServices;
