@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import { useEstiloGlobal } from "../../estiloGlobal";
-import Texto from "../Texto";
+import LogoAnim from './PagueiBaratoIcone';
 
 export default function CarregandoOverlay() {
 
@@ -8,7 +8,8 @@ export default function CarregandoOverlay() {
 
     return (
         <View style={estiloGlobal.carregandoOverlay}>
-            <Texto peso="700Bold" style={estiloGlobal.carregandoTexto}>Carregando...</Texto>
+            <View style={estiloGlobal.carregandoOverlayFundo} />
+            <LogoAnim />
         </View>
     );
 }

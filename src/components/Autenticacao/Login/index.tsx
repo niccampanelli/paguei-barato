@@ -61,7 +61,12 @@ export default function Login({ navigation, route }: LoginProps) {
 
     const continuarSemLogin = (e: GestureResponderEvent) => {
         e.preventDefault();
-        navigation.navigate("app" as never);
+        setCarregando(true);
+
+        setTimeout(() => {
+            setCarregando(false);
+            navigation.navigate("app" as never);
+        }, 10000);
     };
 
     return (
