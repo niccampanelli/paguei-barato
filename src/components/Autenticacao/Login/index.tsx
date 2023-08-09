@@ -34,15 +34,15 @@ export default function Login({ navigation, route }: LoginProps) {
         e.preventDefault();
         navigation.navigate("cadastro" as never);
     };
-    
+
     const login = async () => {
-        
+
         if (carregando) return;
         setCarregando(true);
 
         try {
             console.log("chamou o método na tela");
-            
+
             await fazerLogin(email, senha);
             setTimeout(() => {
                 navigation.replace("app", {} as any);
@@ -69,14 +69,14 @@ export default function Login({ navigation, route }: LoginProps) {
             <StatusBar hidden />
             <Image style={estilos.banner} source={require("../../../../assets/fundo_autenticacao.png")} />
             <View style={estilos.container}>
-                {carregando && <CarregandoOverlay/>}
+                {carregando && <CarregandoOverlay />}
                 <Logo style={estilos.logo} />
                 <Texto peso="700Bold" style={[estiloGlobal.subtitulo, estilos.titulo]}>Que tal fazer login?</Texto>
                 <KeyboardAvoidingView behavior="padding" style={estilos.form}>
                     <View>
                         <Texto peso="700Bold" style={[estiloGlobal.label, estilos.label]}>E-mail</Texto>
                         <Input
-                            icone={<Feather name="at-sign" style={estiloGlobal.inputIcone}/>}
+                            icone={<Feather name="at-sign" style={estiloGlobal.inputIcone} />}
                             keyboardType="email-address"
                             onSubmitEditing={() => inputSenhaRef.current?.focus()}
                             blurOnSubmit={false}
@@ -91,7 +91,7 @@ export default function Login({ navigation, route }: LoginProps) {
                     <View>
                         <Texto peso="700Bold" style={[estiloGlobal.label, estilos.label]}>Senha</Texto>
                         <Input
-                            icone={<Feather name="lock" style={estiloGlobal.inputIcone}/>}
+                            icone={<Feather name="lock" style={estiloGlobal.inputIcone} />}
                             returnKeyType="done"
                             onSubmitEditing={login}
                             forwardRef={inputSenhaRef}
@@ -107,13 +107,13 @@ export default function Login({ navigation, route }: LoginProps) {
                 <View>
                     <View style={estilos.viewBotaoLogin}>
                         <View>
-                            <Botao titulo="Cadastre-se" tipo="secundario" onPress={e => cadastrar(e)}/>
+                            <Botao titulo="Cadastre-se" tipo="secundario" onPress={e => cadastrar(e)} />
                         </View>
-                        <Botao titulo="Fazer login" style={{ flex: 1 }} onPress={login}/>
+                        <Botao titulo="Fazer login" style={{ flex: 1 }} onPress={login} />
                     </View>
                     <Texto style={estilos.opcoesLoginLabel}>ou</Texto>
                     <View style={estilos.viewBotaoLogin}>
-                        <Botao titulo="Continuar sem login" tipo="secundario" style={{ flex: 1 }} onPress={e => continuarSemLogin(e)}/>
+                        <Botao titulo="Continuar sem login" tipo="secundario" style={{ flex: 1 }} onPress={e => continuarSemLogin(e)} />
                     </View>
                 </View>
             </View>

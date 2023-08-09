@@ -285,8 +285,14 @@ export const useEstiloGlobal = () => {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
+        },
+
+        carregandoOverlayFundo: {
+            position: "absolute",
+            width: "100%",
+            height: "100%",
             backgroundColor: propriedadesTema.cores.fundoPrincipal,
-            opacity: 0.8
+            opacity: 0.9
         },
 
         carregandoTexto: {
