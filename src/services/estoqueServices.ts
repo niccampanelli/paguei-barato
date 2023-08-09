@@ -79,7 +79,19 @@ const estoqueServices = {
         }
 
         return estoque;
-    }
+    },
+    
+    async criarEstoque(produtoId: number, mercadoId: number): Promise<AxiosResponse<Estoque>> {
+        const api = await API.obterInstanciaAxios();
+
+        const data = await api.post<Estoque>("/estoque", {
+            produtoId,
+            mercadoId,
+            criadoPor: 1
+        });
+        
+        return data;
+    },
 }
 
 export default estoqueServices;

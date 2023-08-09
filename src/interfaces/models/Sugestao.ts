@@ -5,5 +5,6 @@ export default interface Sugestao {
     preco?: number,
     timestamp?: Date,
     estoqueId?: number,
-    estoque?: Estoque
+    estoque?: Estoque,
+    criadoPor?: number,
 }

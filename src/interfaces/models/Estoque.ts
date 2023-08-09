@@ -3,9 +3,9 @@ import Produto from "./Produto";
 
 export default interface Estoque {
     id?: number,
-    criadoPor: number,
+    criadoPor?: number,
     produtoId: number,
-    produto: Produto,
+    produto?: Produto,
     mercadoId: number,
     mercado?: Mercado
 }

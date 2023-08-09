@@ -14,6 +14,7 @@ export default function AutoComplete<TipoItem>({
     aoSelecionar,
     extrairChave,
     onSubmitEditing,
+    forwardRef,
     ...props
 }: AutocompleteProps<TipoItem>) {
 
@@ -62,6 +63,7 @@ export default function AutoComplete<TipoItem>({
             <Input
                 icone={<Feather name={icone} style={estiloGlobal.inputIcone} />}
                 value={valorInput}
+                forwardRef={forwardRef}
                 onChangeText={aoModificarInput}
                 onSubmitEditing={(e) => {
                     if (correspondencias.length > 0)
