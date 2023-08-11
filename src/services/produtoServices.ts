@@ -5,6 +5,8 @@ import Produto from "../interfaces/models/Produto";
 import ResponsePagina from "../interfaces/ResponsePagina";
 import API from "./api";
 import categoriaServices from "./categoriaServices";
+import Mercado from "../interfaces/models/Mercado";
+import mercadoServices from "./mercadoServices";
 
 interface GetProdutosParams {
     filtros?: Produto,
@@ -57,6 +59,19 @@ const produtoServices = {
         const produto = data.data;
 
         data.data = await this.buscarRelacoesProduto(produto);
+
+        return data;
+    },
+
+    async listarMercados(id: number): Promise<AxiosResponse<Mercado[]>> {
+        const api = await API.obterInstanciaAxios();
+
+        const data = await api.get<Mercado[]>(`/produto/${id}/mercado`);
+        const mercados = data.data;
+        
+        for(let i = 0; i < mercados.length; i++) {
+            mercados[i] = await mercadoServices.buscarRelacoesMercado(mercados[i]);
+        };
 
         return data;
     },

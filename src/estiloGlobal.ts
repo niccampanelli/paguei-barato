@@ -292,7 +292,7 @@ export const useEstiloGlobal = () => {
             width: "100%",
             height: "100%",
             backgroundColor: propriedadesTema.cores.fundoPrincipal,
-            opacity: 0.9
+            opacity: 0.92
         },
 
         carregandoTexto: {

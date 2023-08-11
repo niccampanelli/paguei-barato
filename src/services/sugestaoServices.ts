@@ -27,10 +27,10 @@ const sugestaoServices = {
     async getSugestoes(params?: GetSugestaoParams): Promise<AxiosResponse<Sugestao[]>> {
         const api = await API.obterInstanciaAxios();
 
-        const data = await api.get<Sugestao[]>("/sugestao");
+        const data = await api.get<Sugestao[]>("/sugestao", { params: { ...params?.filtros, ...params?.ordenado } });
         const sugestoes = data.data || [];
 
-        for(let i = 0; i < sugestoes.length; i++) {
+        for (let i = 0; i < sugestoes.length; i++) {
             sugestoes[i] = await this.buscarRelacoesSugestao(sugestoes[i]);
         };
 
@@ -39,11 +39,11 @@ const sugestaoServices = {
 
     async getSugestoesPaginado(params?: GetSugestaoPaginadoParams): Promise<AxiosResponse<ResponsePagina<Sugestao>>> {
         const api = await API.obterInstanciaAxios();
-        
+
         const data = await api.get<ResponsePagina<Sugestao>>("/sugestao", { params: { ...params?.filtros, ...params?.paginado, ...params?.ordenado } });
         const sugestoes = data.data.itens;
 
-        for(let i = 0; i < sugestoes.length; i++) {
+        for (let i = 0; i < sugestoes.length; i++) {
             sugestoes[i] = await this.buscarRelacoesSugestao(sugestoes[i]);
         };
 
@@ -56,7 +56,7 @@ const sugestaoServices = {
         const data = await api.get<Sugestao>(`/sugestao/${id}`);
         const sugestao = data.data;
 
-        data.data = await this.buscarRelacoesSugestao(sugestao);        
+        data.data = await this.buscarRelacoesSugestao(sugestao);
 
         return data;
     },
@@ -65,14 +65,14 @@ const sugestaoServices = {
         const estoqueIdSugestao = sugestao.estoqueId;
         const estoqueSugestao = sugestao.estoque;
 
-        if(!estoqueSugestao && typeof estoqueIdSugestao === "number") {
+        if (!estoqueSugestao && typeof estoqueIdSugestao === "number") {
             const estoque = await estoqueServices.getEstoque(estoqueIdSugestao);
             sugestao.estoque = estoque.data;
         }
 
         return sugestao;
     },
-    
+
     async criarSugestao(sugestao: Sugestao): Promise<AxiosResponse<Sugestao>> {
         const api = await API.obterInstanciaAxios();
 
@@ -81,7 +81,7 @@ const sugestaoServices = {
             preco: sugestao.preco,
             criadoPor: 1
         });
-        
+
         return data;
     },
 }

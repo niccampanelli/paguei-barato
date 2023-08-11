@@ -6,11 +6,7 @@ import { useTemaContext } from "../../../../../util/context/providers/temaProvid
 import Formatador from "../../../../../util/Formatador";
 import Texto from "../../../../Texto";
 import { useEstilos } from "./styles";
-
-export interface DadoHistoricoPrecos {
-    data: Date,
-    preco: number
-}
+import Sugestao from "../../../../../interfaces/models/Sugestao";
 
 interface RetornoEstiloPreco {
     barra: string,
@@ -19,7 +15,7 @@ interface RetornoEstiloPreco {
 }
 
 interface HistoricoPrecosProps extends ViewProps {
-    dados: DadoHistoricoPrecos[]
+    dados: Sugestao[]
 }
 
 export default function HistoricoPrecos({
@@ -40,10 +36,15 @@ export default function HistoricoPrecos({
     const scrollViewRef = useRef<ScrollView>(null);
 
     useEffect(() => {
-        let valores = dados.map((dado) => dado.preco);
+        let valores = dados.map((dado) => dado.preco!);
         setMaiorValor(Math.max(...valores));
 
-        let datas = dados.map((dado) => dado.data.getTime());
+        let datas = dados.map((dado) => new Date(dado.timestamp!)?.getTime());
+
+        console.log('datas', datas);
+        console.log('maiordata', Math.max(...datas));
+        console.log('menordata', Math.min(...datas));
+
         setMaiorData(Math.max(...datas));
         setMenorData(Math.min(...datas));
     }, []);
@@ -88,7 +89,7 @@ export default function HistoricoPrecos({
     return (
         <View style={estilos.main} {...props}>
             <View style={[estiloGlobal.tagPequenaDestaque, estilos.quantidade]}>
-                <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaDestaqueTexto}>{dados.length} {dados.length === 1 ? "sugestão" : "sugestões"} em {Math.round((periodoData / 86400000) / 365)} anos</Texto>
+                <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaDestaqueTexto}>{dados.length} {dados.length === 1 ? "sugestão" : "sugestões"} em {Formatador.formatarPeriodoData(new Date(menorData), true, new Date(maiorData))}</Texto>
             </View>
             <ScrollView nestedScrollEnabled onContentSizeChange={() => { scrollViewRef.current?.scrollToEnd({ animated: false }) }} ref={scrollViewRef} horizontal style={estilos.scroll} contentContainerStyle={estilos.conteudo}>
                 {dados ?
@@ -97,7 +98,7 @@ export default function HistoricoPrecos({
                         const valorAltura = useSharedValue(0);
 
                         const alturaBarraEstilo = useAnimatedStyle(() => {
-                            valorAltura.value = (dado.preco * 1) / maiorValor;
+                            valorAltura.value = (dado.preco! * 1) / maiorValor;
 
                             return {
                                 flex: withTiming(valorAltura.value, { duration: 800 })
@@ -105,12 +106,12 @@ export default function HistoricoPrecos({
                         });
 
                         return (
-                            <View key={indice} style={[estilos.coluna, (indice < dados.length - 1 ? { marginRight: 40 } : undefined)]}>
-                                <View style={[obterEstiloPreco(dado.preco).tag, estilos.tagPreco]}>
-                                    <Texto peso="700Bold" style={obterEstiloPreco(dado.preco).tagTexto}>{Formatador.formatarMoeda(dado.preco)}</Texto>
+                            <View key={indice} style={[estilos.coluna, (indice < dados.length - 1 ? { marginRight: 16 } : undefined)]}>
+                                <View style={[obterEstiloPreco(dado.preco!).tag, estilos.tagPreco]}>
+                                    <Texto peso="700Bold" style={obterEstiloPreco(dado.preco!).tagTexto}>{Formatador.formatarMoeda(dado.preco!)}</Texto>
                                 </View>
-                                <Animated.View style={[estilos.barra, { backgroundColor: obterEstiloPreco(dado.preco).barra }, alturaBarraEstilo]} />
-                                <Texto style={estilos.label}>{dado.data.toLocaleDateString('pt-BR')}</Texto>
+                                <Animated.View style={[estilos.barra, { backgroundColor: obterEstiloPreco(dado.preco!).barra }, alturaBarraEstilo]} />
+                                <Texto style={estilos.label}>{new Date(dado.timestamp!).toLocaleDateString('pt-BR')}</Texto>
                             </View>
                         );
                     })

@@ -1,5 +1,5 @@
+import { useState, useEffect } from 'react';
 import { Feather } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Image, TouchableOpacity, View, ScrollView } from "react-native";
 import { useEstiloGlobal } from "../../../../estiloGlobal";
@@ -7,9 +7,11 @@ import Sugestao from "../../../../interfaces/models/Sugestao";
 import { StackExternaRoutesParams } from "../../../../StackExterna";
 import Botao from "../../../Botao";
 import Texto from "../../../Texto";
-import HistoricoPrecos, { DadoHistoricoPrecos } from "./HistoricoPrecos";
+import HistoricoPrecos from "./HistoricoPrecos";
 import { useEstilos } from "./styles";
 import Formatador from "../../../../util/Formatador";
+import CarregandoOverlay from '../../../CarregandoOverlay';
+import sugestaoServices from '../../../../services/sugestaoServices';
 
 export interface DetalhesEstoqueParams {
     item: Sugestao
@@ -22,45 +24,40 @@ export default function DetalhesEstoque({ navigation, route }: DetalhesEstoquePr
     const { estilos } = useEstilos();
     const { estiloGlobal } = useEstiloGlobal();
 
+    const [sugestoes, setSugestoes] = useState<Sugestao[]>([]);
+    const [carregando, setCarregando] = useState<boolean>(false);
+
     const { item } = route.params;
 
-    const dummyLevantamento: DadoHistoricoPrecos[] = [
-        {
-            preco: Math.random() * 4,
-            data: new Date(Math.random() * 1600000000000)
-        },
-        {
-            preco: Math.random() * 4,
-            data: new Date(Math.random() * 1600000000000)
-        },
-        {
-            preco: Math.random() * 4,
-            data: new Date(Math.random() * 1600000000000)
-        },
-        {
-            preco: Math.random() * 4,
-            data: new Date(Math.random() * 1600000000000)
-        },
-        {
-            preco: Math.random() * 4,
-            data: new Date(Math.random() * 1600000000000)
-        },
-        {
-            preco: Math.random() * 4,
-            data: new Date(Math.random() * 1600000000000)
-        },
-        {
-            preco: Math.random() * 4,
-            data: new Date(Math.random() * 1600000000000)
-        },
-        {
-            preco: Math.random() * 4,
-            data: new Date(Math.random() * 1600000000000)
-        },
-    ]
+    const obterSugestoes = async () => {
+        setCarregando(true);
+
+        try {
+            const { data: sugestoesData } = await sugestaoServices.getSugestoes({
+                filtros: {
+                    estoqueId: item.estoqueId || 0
+                }
+            });
+
+            setSugestoes(sugestoesData);
+        }
+        catch (erro) {
+            console.log(erro);
+        }
+        finally {
+            setCarregando(false);
+        }
+    };
+
+    useEffect(() => {
+        obterSugestoes();
+    }, []);
 
     return (
         <View style={estilos.main}>
+            {carregando &&
+                <CarregandoOverlay />
+            }
             <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.voltar]} onPress={() => navigation.goBack()}>
                 <Feather name="arrow-left" style={estiloGlobal.tagPequenaNormalTexto} />
                 <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaNormalTexto}>Voltar</Texto>
@@ -71,7 +68,7 @@ export default function DetalhesEstoque({ navigation, route }: DetalhesEstoquePr
                 </View>
                 <View style={estilos.container}>
                     <Texto peso="900Black" style={estilos.preco}>
-                        {Formatador.formatarMoeda(item.preco)}
+                        {Formatador.formatarMoeda(item.preco || 0)}
                     </Texto>
                     <TouchableOpacity style={estilos.titulo} onPress={() => navigation.navigate("detalhesProduto", { item: item.estoque?.produto || {} })}>
                         <Texto peso="800ExtraBold" style={estiloGlobal.titulo}>
@@ -93,11 +90,13 @@ export default function DetalhesEstoque({ navigation, route }: DetalhesEstoquePr
                         <Texto peso="700Bold" style={[estiloGlobal.subtitulo, estilos.titulo]}>Histórico de preços</Texto>
                         <Texto style={estiloGlobal.texto}>Preços registrados desse item desde que foi cadastrado pela primeira vez nesse mercado.</Texto>
                     </View>
-                    <HistoricoPrecos dados={dummyLevantamento} />
+                    {!carregando &&
+                        <HistoricoPrecos dados={sugestoes} />
+                    }
                 </View>
             </ScrollView>
             <View style={estilos.botaoAdicionarView}>
-                <Botao disabled titulo="Adicionar à lista" subtitulo={Formatador.formatarMoeda(item.preco)} icone="shopping-bag" onPress={() => navigation.navigate("lista" as never)} />
+                <Botao disabled titulo="Adicionar à lista" subtitulo={Formatador.formatarMoeda(item.preco || 0)} icone="shopping-bag" onPress={() => navigation.navigate("lista" as never)} />
             </View>
         </View>
     );

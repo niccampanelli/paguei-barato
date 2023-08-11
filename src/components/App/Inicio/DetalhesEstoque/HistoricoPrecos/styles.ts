@@ -33,7 +33,7 @@ export const useEstilos = () => {
         },
 
         coluna: {
-            width: 70,
+            width: 100,
             height: "100%",
             display: "flex",
             flex: 1,

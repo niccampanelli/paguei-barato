@@ -1,7 +1,6 @@
 import { Feather } from "@expo/vector-icons";
-import { useRef, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Image, TouchableOpacity, View, ViewProps, ScrollView } from "react-native";
-import RBSheet from "react-native-raw-bottom-sheet";
 import { useEstiloGlobal } from "../../../../estiloGlobal";
 import Formatador from "../../../../util/Formatador";
 import Texto from "../../../Texto";
@@ -10,16 +9,13 @@ import Mercado from "../../../../interfaces/models/Mercado";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { StackExternaRoutesParams } from "../../../../StackExterna";
 import Sugestao from "../../../../interfaces/models/Sugestao";
-// import mercadoServices from "../../../../services/mercadoServices";
+import mercadoServices from "../../../../services/mercadoServices";
+import estoqueServices from "../../../../services/estoqueServices";
+import sugestaoServices from "../../../../services/sugestaoServices";
+import CarregandoOverlay from "../../../CarregandoOverlay";
 
-interface Estoque {
-    imagem: any,
-    nome: string,
-    preco: number
-}
-
-interface EstoqueProp extends ViewProps {
-    item: Estoque,
+interface SugestaoProp extends ViewProps {
+    item: Sugestao,
 }
 
 export interface DetalhesMercadoParams {
@@ -33,100 +29,62 @@ export default function DetalhesMercado({ navigation, route }: DetalhesMercadoPr
     const { estilos } = useEstilos();
     const { estiloGlobal } = useEstiloGlobal();
 
-    const modalRef = useRef<RBSheet>(null);
-    const { item } = route.params;
     const [sugestoes, setSugestoes] = useState<Sugestao[]>([]);
+    const [carregando, setCarregando] = useState<boolean>(false);
+
+    const { item } = route.params;
 
     const obterSugestoes = async () => {
+        setCarregando(true);
+
         try {
-            // const resposta = await mercadoServices.getSugestoes(item.id);
-            // setSugestoes(resposta.data);
+            const { data: produtos } = await mercadoServices.listarProdutos(item.id || 0);
+
+            for (const produto of produtos) {
+                const { data: estoqueData } = await estoqueServices.getEstoques({
+                    filtros: {
+                        mercadoId: item.id || 0,
+                        produtoId: produto.id || 0
+                    }
+                });
+
+                const estoque = estoqueData[0];
+
+                if (estoque) {
+                    const { data: sugestaoData } = await sugestaoServices.getSugestoes({
+                        filtros: {
+                            estoqueId: estoque.id || 0
+                        },
+                        ordenado: {
+                            ordenarPor: "timestamp",
+                            ordem: "desc"
+                        }
+                    });
+
+                    setSugestoes((sugestoes) => [...sugestoes, sugestaoData[0]]);
+                }
+            };
         }
         catch (erro) {
             console.log(erro);
         }
+        finally {
+            setCarregando(false);
+        }
     };
 
     useEffect(() => {
-        
+        obterSugestoes();
     }, []);
 
-    const dummydata: Estoque[] = [
-        {
-            imagem: { uri: "https://a-static.mlcdn.com.br/800x560/molho-de-tomate-fugini-sache-300g-caixa-com-36-unidades/calcadosdmais/308d194e1d5211ecb8da4201ac185013/032bae61bf039c555f62d1ed00a2ecaa.jpeg" },
-            nome: "Molho De Tomate Tradicional Melhore 450g",
-            preco: 2.52
-        },
-        {
-            imagem: { uri: "https://a-static.mlcdn.com.br/800x560/molho-de-tomate-fugini-sache-300g-caixa-com-36-unidades/calcadosdmais/308d194e1d5211ecb8da4201ac185013/032bae61bf039c555f62d1ed00a2ecaa.jpeg" },
-            nome: "Molho De Tomate Tradicional Melhore 450g",
-            preco: 2.52
-        },
-        {
-            imagem: { uri: "https://a-static.mlcdn.com.br/800x560/molho-de-tomate-fugini-sache-300g-caixa-com-36-unidades/calcadosdmais/308d194e1d5211ecb8da4201ac185013/032bae61bf039c555f62d1ed00a2ecaa.jpeg" },
-            nome: "Molho De Tomate Tradicional Melhore 450g",
-            preco: 2.52
-        },
-        {
-            imagem: { uri: "https://a-static.mlcdn.com.br/800x560/molho-de-tomate-fugini-sache-300g-caixa-com-36-unidades/calcadosdmais/308d194e1d5211ecb8da4201ac185013/032bae61bf039c555f62d1ed00a2ecaa.jpeg" },
-            nome: "Molho De Tomate Tradicional Melhore 450g",
-            preco: 2.52
-        },
-        {
-            imagem: { uri: "https://a-static.mlcdn.com.br/800x560/molho-de-tomate-fugini-sache-300g-caixa-com-36-unidades/calcadosdmais/308d194e1d5211ecb8da4201ac185013/032bae61bf039c555f62d1ed00a2ecaa.jpeg" },
-            nome: "Molho De Tomate Tradicional Melhore 450g",
-            preco: 2.52
-        },
-        {
-            imagem: { uri: "https://a-static.mlcdn.com.br/800x560/molho-de-tomate-fugini-sache-300g-caixa-com-36-unidades/calcadosdmais/308d194e1d5211ecb8da4201ac185013/032bae61bf039c555f62d1ed00a2ecaa.jpeg" },
-            nome: "Molho De Tomate Tradicional Melhore 450g",
-            preco: 2.52
-        },
-        {
-            imagem: { uri: "https://a-static.mlcdn.com.br/800x560/molho-de-tomate-fugini-sache-300g-caixa-com-36-unidades/calcadosdmais/308d194e1d5211ecb8da4201ac185013/032bae61bf039c555f62d1ed00a2ecaa.jpeg" },
-            nome: "Molho De Tomate Tradicional Melhore 450g",
-            preco: 2.52
-        },
-        {
-            imagem: { uri: "https://a-static.mlcdn.com.br/800x560/molho-de-tomate-fugini-sache-300g-caixa-com-36-unidades/calcadosdmais/308d194e1d5211ecb8da4201ac185013/032bae61bf039c555f62d1ed00a2ecaa.jpeg" },
-            nome: "Molho De Tomate Tradicional Melhore 450g",
-            preco: 2.52
-        },
-        {
-            imagem: { uri: "https://a-static.mlcdn.com.br/800x560/molho-de-tomate-fugini-sache-300g-caixa-com-36-unidades/calcadosdmais/308d194e1d5211ecb8da4201ac185013/032bae61bf039c555f62d1ed00a2ecaa.jpeg" },
-            nome: "Molho De Tomate Tradicional Melhore 450g",
-            preco: 2.52
-        },
-        {
-            imagem: { uri: "https://a-static.mlcdn.com.br/800x560/molho-de-tomate-fugini-sache-300g-caixa-com-36-unidades/calcadosdmais/308d194e1d5211ecb8da4201ac185013/032bae61bf039c555f62d1ed00a2ecaa.jpeg" },
-            nome: "Molho De Tomate Tradicional Melhore 450g",
-            preco: 2.52
-        },
-        {
-            imagem: { uri: "https://a-static.mlcdn.com.br/800x560/molho-de-tomate-fugini-sache-300g-caixa-com-36-unidades/calcadosdmais/308d194e1d5211ecb8da4201ac185013/032bae61bf039c555f62d1ed00a2ecaa.jpeg" },
-            nome: "Molho De Tomate Tradicional Melhore 450g",
-            preco: 2.52
-        },
-        {
-            imagem: { uri: "https://a-static.mlcdn.com.br/800x560/molho-de-tomate-fugini-sache-300g-caixa-com-36-unidades/calcadosdmais/308d194e1d5211ecb8da4201ac185013/032bae61bf039c555f62d1ed00a2ecaa.jpeg" },
-            nome: "Molho De Tomate Tradicional Melhore 450g",
-            preco: 2.52
-        },
-        {
-            imagem: { uri: "https://a-static.mlcdn.com.br/800x560/molho-de-tomate-fugini-sache-300g-caixa-com-36-unidades/calcadosdmais/308d194e1d5211ecb8da4201ac185013/032bae61bf039c555f62d1ed00a2ecaa.jpeg" },
-            nome: "Molho De Tomate Tradicional Melhore 450g",
-            preco: 20505
-        },
-    ];
-
-    const ItemLista = ({item, ...props}: EstoqueProp) => {
+    const ItemLista = ({ item, ...props }: SugestaoProp) => {
 
         return (
-            <TouchableOpacity {...props} style={[estilos.listaItem, props.style]} onPress={() => navigation.navigate('detalhesEstoque' as never)}>
-                <Image style={estilos.listaItemImagem} source={item.imagem} />
+            <TouchableOpacity {...props} style={[estilos.listaItem, props.style]} onPress={() => navigation.navigate('detalhesEstoque', { item })}>
+                <Image style={estilos.listaItemImagem} source={{ uri: "https://a-static.mlcdn.com.br/800x560/molho-de-tomate-fugini-sache-300g-caixa-com-36-unidades/calcadosdmais/308d194e1d5211ecb8da4201ac185013/032bae61bf039c555f62d1ed00a2ecaa.jpeg" }} />
                 <View style={estilos.listaItemInfos}>
-                    <Texto peso="900Black" style={estilos.listaItemPreco} numberOfLines={1}>{Formatador.formatarMoeda(item.preco)}</Texto>
-                    <Texto peso="800ExtraBold" style={estilos.listaItemTexto}>{item.nome}</Texto>
+                    <Texto peso="900Black" style={estilos.listaItemPreco} numberOfLines={1}>{Formatador.formatarMoeda(item.preco!)}</Texto>
+                    <Texto peso="800ExtraBold" style={estilos.listaItemTexto}>{item.estoque?.produto?.nome}</Texto>
                 </View>
             </TouchableOpacity>
         );
@@ -134,6 +92,9 @@ export default function DetalhesMercado({ navigation, route }: DetalhesMercadoPr
 
     return (
         <View style={estilos.main}>
+            {carregando &&
+                <CarregandoOverlay />
+            }
             <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.voltar]} onPress={() => navigation.goBack()}>
                 <Feather name="arrow-left" style={estiloGlobal.tagPequenaNormalTexto} />
                 <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaNormalTexto}>Voltar</Texto>
@@ -174,8 +135,8 @@ export default function DetalhesMercado({ navigation, route }: DetalhesMercadoPr
                     <View style={estilos.secao}>
                         <Texto peso="700Bold" style={[estiloGlobal.subtitulo, estilos.titulo]}>Nas prateleiras desse mercado</Texto>
                         <ScrollView style={estilos.lista} contentContainerStyle={estilos.listaConteudo} nestedScrollEnabled>
-                            {dummydata.map((elem, i) => (
-                                <ItemLista key={i} item={elem} style={(i%2 === 0) ? {marginRight: "4%"} : {marginLeft: "4%"}} />
+                            {sugestoes.map((sugestao, i) => (
+                                <ItemLista key={i} item={sugestao} style={(i % 2 === 0) ? { marginRight: "4%" } : { marginLeft: "4%" }} />
                             ))}
                         </ScrollView>
                     </View>

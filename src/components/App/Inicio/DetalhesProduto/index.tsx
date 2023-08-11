@@ -1,6 +1,6 @@
 import { Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Image, TouchableOpacity, View, ScrollView } from "react-native";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { useEstiloGlobal } from "../../../../estiloGlobal";
@@ -13,6 +13,12 @@ import Texto from "../../../Texto";
 import Produto from "../../../../interfaces/models/Produto";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { StackExternaRoutesParams } from "../../../../StackExterna";
+import sugestaoServices from "../../../../services/sugestaoServices";
+import produtoServices from "../../../../services/produtoServices";
+import Mercado from "../../../../interfaces/models/Mercado";
+import CarregandoOverlay from "../../../CarregandoOverlay";
+import Sugestao from "../../../../interfaces/models/Sugestao";
+import estoqueServices from "../../../../services/estoqueServices";
 
 export interface DetalhesProdutoParams {
     item: Produto
@@ -24,8 +30,63 @@ export default function DetalhesProduto({ navigation, route }: DetalhesProdutoPr
 
     const { estilos } = useEstilos();
     const { estiloGlobal } = useEstiloGlobal();
-    
+
+    const [sugestoes, setSugestoes] = useState<Sugestao[]>([]);
+    const [dataUltimaSugestao, setDataUltimaSugestao] = useState<Date>(new Date());
+    const [carregando, setCarregando] = useState<boolean>(false);
+
     const { item } = route.params;
+
+    const obterSugestoes = async () => {
+        setCarregando(true);
+
+        try {
+            const { data: mercados } = await produtoServices.listarMercados(item.id || 0);
+
+            for (const mercado of mercados) {
+                const { data: estoqueData } = await estoqueServices.getEstoques({
+                    filtros: {
+                        mercadoId: mercado.id || 0,
+                        produtoId: item.id || 0
+                    }
+                });
+
+                const estoque = estoqueData[0];
+
+                if (estoque) {
+                    const { data: sugestaoData } = await sugestaoServices.getSugestoes({
+                        filtros: {
+                            estoqueId: estoque.id || 0
+                        },
+                        ordenado: {
+                            ordenarPor: "timestamp",
+                            ordem: "desc"
+                        }
+                    });
+
+                    setSugestoes((sugestao) => [...sugestao, sugestaoData[0]]);
+                }
+            };
+        }
+        catch (erro) {
+            console.log(erro);
+        }
+        finally {
+            setCarregando(false);
+        }
+    };
+
+    const obterDataUltimaSugestao = () => {
+        let data = new Date().getTime();
+
+        for (const sugestao of sugestoes) {
+            const dataSugestaoTime = new Date(sugestao.timestamp || '').getTime();
+            if (dataSugestaoTime < data)
+                data = dataSugestaoTime;
+        }
+
+        return new Date(data);
+    };
 
     const dummyLevantamento: DadoLevantamentoPrecos = {
         quantidade: 36,
@@ -34,103 +95,36 @@ export default function DetalhesProduto({ navigation, route }: DetalhesProdutoPr
         maior: 8.60
     }
 
-    const dummydata = [
-        {
-            imagem: { uri: dummyimagem.imagem },
-            nome: "Minimercado Extra Artur Alvim",
-            endereco: "Rua Doutor Campos Moura, 234",
-            preco: 2.52
-        },
-        {
-            imagem: { uri: dummyimagem.imagem },
-            nome: "Dovale LTDA",
-            endereco: "Av. Aldeia Manuel Antônio, 385",
-            preco: 2.52
-        },
-        {
-            imagem: { uri: dummyimagem.imagem },
-            nome: "Dovale LTDA",
-            endereco: "Av. Aldeia Manuel Antônio, 385",
-            preco: 2.52
-        },
-        {
-            imagem: { uri: dummyimagem.imagem },
-            nome: "Dovale LTDA",
-            endereco: "Av. Aldeia Manuel Antônio, 385",
-            preco: 2.52
-        },
-        {
-            imagem: { uri: dummyimagem.imagem },
-            nome: "Dovale LTDA",
-            endereco: "Av. Aldeia Manuel Antônio, 385",
-            preco: 2.52
-        },
-        {
-            imagem: { uri: dummyimagem.imagem },
-            nome: "Dovale LTDA",
-            endereco: "Av. Aldeia Manuel Antônio, 385",
-            preco: 2.52
-        },
-        {
-            imagem: { uri: dummyimagem.imagem },
-            nome: "Dovale LTDA",
-            endereco: "Av. Aldeia Manuel Antônio, 385",
-            preco: 2.52
-        },
-        {
-            imagem: { uri: dummyimagem.imagem },
-            nome: "Dovale LTDA",
-            endereco: "Av. Aldeia Manuel Antônio, 385",
-            preco: 2.52
-        },
-        {
-            imagem: { uri: dummyimagem.imagem },
-            nome: "Dovale LTDA",
-            endereco: "Av. Aldeia Manuel Antônio, 385",
-            preco: 2.52
-        },
-        {
-            imagem: { uri: dummyimagem.imagem },
-            nome: "Dovale LTDA",
-            endereco: "Av. Aldeia Manuel Antônio, 385",
-            preco: 2.52
-        },
-        {
-            imagem: { uri: dummyimagem.imagem },
-            nome: "Dovale LTDA",
-            endereco: "Av. Aldeia Manuel Antônio, 385",
-            preco: 2.52
-        },
-        {
-            imagem: { uri: dummyimagem.imagem },
-            nome: "Dovale LTDA",
-            endereco: "Av. Aldeia Manuel Antônio, 385",
-            preco: 2.52
-        },
-        {
-            imagem: { uri: dummyimagem.imagem },
-            nome: "Dovale LTDA",
-            endereco: "Av. Aldeia Manuel Antônio, 385",
-            preco: 20505
-        },
-    ];
-
-    const ItemLista = ({ item }: any) => {
+    const ItemLista = ({ item }: { item: Sugestao }) => {
 
         return (
-            <TouchableOpacity style={estilos.listaItem} onPress={() => navigation.navigate('detalhesEstoque' as never)}>
-                <Image style={estilos.listaItemImagem} source={item.imagem} />
-                <View style={estilos.listaItemInfos}>
-                    <Texto peso="800ExtraBold" style={estilos.listaItemTexto} numberOfLines={1}>{item.nome}</Texto>
-                    <Texto style={estilos.listaItemMercado} numberOfLines={1}>{item.endereco}</Texto>
+            <TouchableOpacity style={estilos.listaItem} onPress={() => navigation.navigate('detalhesEstoque', { item })}>
+                <View style={estilos.listaItemImagemContainer}>
+                    <Image style={estilos.listaItemImagem} source={{ uri: dummyimagem.imagem }} />
                 </View>
-                <Texto peso="700Bold" style={estilos.listaItemPreco} numberOfLines={1}>{Formatador.formatarMoeda(item.preco)}</Texto>
+                <View style={estilos.listaItemInfos}>
+                    <Texto peso="800ExtraBold" style={estilos.listaItemTexto} numberOfLines={1}>{item.estoque?.mercado?.nome}</Texto>
+                    <Texto style={estilos.listaItemMercado} numberOfLines={1}>{item.estoque?.mercado?.logradouro}, {item.estoque?.mercado?.numero}</Texto>
+                </View>
+                <Texto peso="700Bold" style={estilos.listaItemPreco} numberOfLines={1}>{Formatador.formatarMoeda(item.preco || 0)}</Texto>
             </TouchableOpacity>
         );
     };
 
+    useEffect(() => {
+        obterSugestoes();
+    }, []);
+
+    useEffect(() => {
+        if (sugestoes.length > 0)
+            setDataUltimaSugestao(obterDataUltimaSugestao());
+    }, [sugestoes]);
+
     return (
         <View style={estilos.main}>
+            {carregando &&
+                <CarregandoOverlay />
+            }
             <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.voltar]} onPress={() => navigation.goBack()}>
                 <Feather name="arrow-left" style={estiloGlobal.tagPequenaNormalTexto} />
                 <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaNormalTexto}>Voltar</Texto>
@@ -147,7 +141,7 @@ export default function DetalhesProduto({ navigation, route }: DetalhesProdutoPr
                             </Texto>
                         </View>
                         <View style={[estiloGlobal.tagPequenaNormal, { marginLeft: 10 }]}>
-                            <Texto style={estiloGlobal.tagPequenaNormalTexto}>Sugerido há 2h e 10min</Texto>
+                            <Texto style={estiloGlobal.tagPequenaNormalTexto}>Sugerido há {Formatador.formatarPeriodoData(dataUltimaSugestao)}.</Texto>
                         </View>
                     </View>
                     <Texto peso="800ExtraBold" style={[estiloGlobal.titulo, estilos.titulo]}>
@@ -176,15 +170,15 @@ export default function DetalhesProduto({ navigation, route }: DetalhesProdutoPr
                         <Texto peso="700Bold" style={[estiloGlobal.subtitulo, estilos.titulo]}>Levantamento de preços</Texto>
                         <Texto style={[estilos.informacaoTexto, estilos.informacao]}>Informações sobre a variação de preços desse produto em todos os mercados nos quais ele foi cadastrado.</Texto>
                         <LevantamentoPrecos dados={dummyLevantamento} />
-                        <Toast icone="clock" texto="Data da última sugestão de preço: 23/07/2022 às 17:53" style={{ marginTop: 20 }} estilo="normal" />
+                        <Toast icone="clock" texto={`Data da última sugestão: ${Formatador.formatarDataHora(dataUltimaSugestao)}`} style={{ marginTop: 20 }} estilo="normal" />
                     </View>
                     <View style={estilos.secao}>
                         <Texto peso="700Bold" style={[estiloGlobal.subtitulo, estilos.titulo]}>Onde encontrar esse produto</Texto>
-                        <ScrollView style={estilos.lista} nestedScrollEnabled={true}>
-                            {dummydata.map((elem, i) => (
+                        <View style={estilos.lista}>
+                            {sugestoes.map((elem, i) => (
                                 <ItemLista key={i} item={elem} />
                             ))}
-                        </ScrollView>
+                        </View>
                     </View>
                     <Texto style={estilos.listaObservacao}>As informações de estoque podem estar desatualizadas</Texto>
                 </View>

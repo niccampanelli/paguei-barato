@@ -66,7 +66,8 @@ export const useEstilos = () => {
         },
 
         lista: {
-            maxHeight: 400
+            display: "flex",
+            flex: 1
         },
 
         listaItem: {
@@ -76,10 +77,20 @@ export const useEstilos = () => {
             paddingBottom: 16
         },
 
+        listaItemImagemContainer: {
+            backgroundColor: "#ffffff",
+            padding: 8,
+            borderRadius: 8,
+            marginRight: 8,
+            borderColor: propriedadesTema.cores.fundoSecundario,
+            borderWidth: 2,
+            borderStyle: "solid",
+        },
+
         listaItemImagem: {
-            marginRight: 20,
             height: 30,
-            width: 30
+            width: 30,
+            borderRadius: 8,
         },
 
         listaItemInfos: {

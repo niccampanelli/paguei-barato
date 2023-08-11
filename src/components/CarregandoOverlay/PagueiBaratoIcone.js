@@ -179,6 +179,7 @@ const SVGatorComponent = React.forwardRef((props, ref) => {
             source={{html}}
             containerStyle={styles.container}
             style={styles.style}
+            scrollEnabled={false}
         />
     );
 });

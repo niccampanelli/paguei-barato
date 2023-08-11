@@ -70,4 +70,68 @@ export default class Formatador {
 
         return iniciais;
     }
+
+    static formatarDataHora(data: Date, incluirHora: boolean = true): string {
+        if (!data)
+            return "Data inválida";
+
+        const dataFormatada = Intl.DateTimeFormat('pt-BR', { dateStyle: "short" }).format(data);
+
+        if (incluirHora) {
+            const horas = data.getHours() < 10 ? "0" + data.getHours() : data.getHours();
+            const minutos = data.getMinutes() < 10 ? "0" + data.getMinutes() : data.getMinutes();
+            const horaFormatada = `${horas}:${minutos}`;
+            return dataFormatada + " às " + horaFormatada;
+        }
+
+        return dataFormatada;
+    }
+
+    static formatarPeriodoData(data: Date, porExtenso: boolean = false, agora: Date = new Date()): string {
+        if (!data)
+            return "Data inválida";
+        
+        const diferenca = agora.getTime() - data.getTime();
+
+        const msAno = 1000 * 60 * 60 * 24 * 365;
+        const msMes = 1000 * 60 * 60 * 24 * 30;
+        const msDia = 1000 * 60 * 60 * 24;
+        const msHora = 1000 * 60 * 60;
+        const msMinutos = 1000 * 60;
+
+        const anos = Math.floor(diferenca / msAno);
+        const meses = Math.floor((diferenca % msAno) / msMes);
+        const dias = Math.floor((diferenca % msMes) / msDia);
+        const horas = Math.floor((diferenca % msDia) / msHora);
+        const minutos = Math.floor((diferenca % msHora) / msMinutos);
+
+        if (anos > 0) {
+            if (meses > 0)
+                return `${anos}${porExtenso ? anos > 1 ? " anos" : " ano" : "a"} e ${meses}${porExtenso ? meses > 1 ? " meses" : " mês" : "m"}`;
+            else
+                return `${anos}${porExtenso ? anos > 1 ? " anos" : " ano" : "a"}`;
+        }
+        else if (meses > 0) {
+            if (dias > 0)
+                return `${meses}${porExtenso ? meses > 1 ? " meses" : " mês" : "m"} e ${dias}${porExtenso ? dias > 1 ? " dias" : " dia" : "d"}`;
+            else
+                return `${meses}${porExtenso ? meses > 1 ? " meses" : " mês" : "m"}`;
+        }
+        else if (dias > 0) {
+            if (horas > 0)
+                return `${dias}${porExtenso ? dias > 1 ? " dias" : " dia" : "d"} e ${horas}${porExtenso ? horas > 1 ? " horas" : " hora" : "h"}`;
+            else
+                return `${dias}${porExtenso ? dias > 1 ? " dias" : " dia" : "d"}`;
+        }
+        else if (horas > 0) {
+            if (minutos > 0)
+                return `${horas}${porExtenso ? horas > 1 ? " horas" : " hora" : "h"} e ${minutos}${porExtenso ? minutos > 1 ? " minutos" : " minuto" : "min"}`;
+            else
+                return `${horas}${porExtenso ? horas > 1 ? " horas" : " hora" : "h"}`;
+        }
+        else if (minutos > 0)
+            return `${minutos}${porExtenso ? minutos > 1 ? " minutos" : " minuto" : "min"}`;
+        
+        return "alguns segundos";
+    }
 }

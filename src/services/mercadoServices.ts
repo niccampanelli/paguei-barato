@@ -6,6 +6,8 @@ import ResponsePagina from "../interfaces/ResponsePagina";
 import API from "./api";
 import ramoServices from "./ramoServices";
 import Sugestao from "../interfaces/models/Sugestao";
+import Produto from "../interfaces/models/Produto";
+import produtoServices from "./produtoServices";
 // import sugestaoServices from "./sugestaoServices";
 
 interface GetMercadoParams {
@@ -75,6 +77,19 @@ const mercadoServices = {
 
     //     return data;
     // },
+
+    async listarProdutos(id: number): Promise<AxiosResponse<Produto[]>> {
+        const api = await API.obterInstanciaAxios();
+
+        const data = await api.get<Produto[]>(`/mercado/${id}/produto`);
+        const produtos = data.data || [];
+        
+        for(let i = 0; i < produtos.length; i++) {
+            produtos[i] = await produtoServices.buscarRelacoesProduto(produtos[i]);
+        };
+
+        return data;
+    },
 
     async buscarRelacoesMercado(mercado: Mercado): Promise<Mercado> {
         const ramoIdMercado = mercado.ramoId;

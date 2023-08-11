@@ -162,6 +162,7 @@ export default function CriarSugestao({ navigation, route }: CriarSugestaoProps)
                             icone={<Texto style={estiloGlobal.inputIcone}>R$</Texto>}
                             returnKeyType="done"
                             blurOnSubmit={true}
+                            onSubmitEditing={concluir}
                             forwardRef={precoInputRef}
                             keyboardType="numeric"
                             value={preco.toString()}
