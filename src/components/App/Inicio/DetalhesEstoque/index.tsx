@@ -12,6 +12,7 @@ import { useEstilos } from "./styles";
 import Formatador from "../../../../util/Formatador";
 import CarregandoOverlay from '../../../CarregandoOverlay';
 import sugestaoServices from '../../../../services/sugestaoServices';
+import { useListaContext } from '../../../../util/context/providers/listaProvider';
 
 export interface DetalhesEstoqueParams {
     item: Sugestao
@@ -23,6 +24,7 @@ export default function DetalhesEstoque({ navigation, route }: DetalhesEstoquePr
 
     const { estilos } = useEstilos();
     const { estiloGlobal } = useEstiloGlobal();
+    const { adicionarSugestaoLista } = useListaContext();
 
     const [sugestoes, setSugestoes] = useState<Sugestao[]>([]);
     const [carregando, setCarregando] = useState<boolean>(false);
@@ -49,9 +51,14 @@ export default function DetalhesEstoque({ navigation, route }: DetalhesEstoquePr
         }
     };
 
+    const adicionarLista = () => {
+        adicionarSugestaoLista(item);
+        navigation.navigate("app", { screen: 'lista' });
+    };
+
     useEffect(() => {
         obterSugestoes();
-    }, []);
+    }, [item]);
 
     return (
         <View style={estilos.main}>
@@ -64,7 +71,9 @@ export default function DetalhesEstoque({ navigation, route }: DetalhesEstoquePr
             </TouchableOpacity>
             <ScrollView>
                 <View style={estilos.cabecalho}>
-                    <Image style={estilos.itemImagem} source={{ uri: "https://a-static.mlcdn.com.br/800x560/molho-de-tomate-fugini-sache-300g-caixa-com-36-unidades/calcadosdmais/308d194e1d5211ecb8da4201ac185013/032bae61bf039c555f62d1ed00a2ecaa.jpeg" }} />
+                    <View style={estilos.imagem}>
+                        <Image style={estilos.itemImagem} source={{ uri: "https://a-static.mlcdn.com.br/800x560/molho-de-tomate-fugini-sache-300g-caixa-com-36-unidades/calcadosdmais/308d194e1d5211ecb8da4201ac185013/032bae61bf039c555f62d1ed00a2ecaa.jpeg" }} />
+                    </View>
                 </View>
                 <View style={estilos.container}>
                     <Texto peso="900Black" style={estilos.preco}>
@@ -96,7 +105,7 @@ export default function DetalhesEstoque({ navigation, route }: DetalhesEstoquePr
                 </View>
             </ScrollView>
             <View style={estilos.botaoAdicionarView}>
-                <Botao disabled titulo="Adicionar à lista" subtitulo={Formatador.formatarMoeda(item.preco || 0)} icone="shopping-bag" onPress={() => navigation.navigate("lista" as never)} />
+                <Botao titulo="Adicionar à lista" subtitulo={Formatador.formatarMoeda(item.preco || 0)} icone="shopping-bag" onPress={adicionarLista} />
             </View>
         </View>
     );

@@ -6,7 +6,7 @@ import RBSheet from "react-native-raw-bottom-sheet";
 import { useEstiloGlobal } from "../../../../estiloGlobal";
 import Formatador from "../../../../util/Formatador";
 import Toast from "../../../Toast";
-import LevantamentoPrecos, { DadoLevantamentoPrecos } from "./LevantamentoPrecos";
+import LevantamentoPrecos from "./LevantamentoPrecos";
 import dummyimagem from "./dummyimagem.json";
 import { useEstilos } from "./styles";
 import Texto from "../../../Texto";
@@ -19,6 +19,7 @@ import Mercado from "../../../../interfaces/models/Mercado";
 import CarregandoOverlay from "../../../CarregandoOverlay";
 import Sugestao from "../../../../interfaces/models/Sugestao";
 import estoqueServices from "../../../../services/estoqueServices";
+import LevantamentoProduto from "../../../../interfaces/models/LevantamentoProduto";
 
 export interface DetalhesProdutoParams {
     item: Produto
@@ -31,8 +32,9 @@ export default function DetalhesProduto({ navigation, route }: DetalhesProdutoPr
     const { estilos } = useEstilos();
     const { estiloGlobal } = useEstiloGlobal();
 
+    const [levantamento, setLevantamento] = useState<LevantamentoProduto>();
     const [sugestoes, setSugestoes] = useState<Sugestao[]>([]);
-    const [dataUltimaSugestao, setDataUltimaSugestao] = useState<Date>(new Date());
+    // const [dataUltimaSugestao, setDataUltimaSugestao] = useState<Date>(new Date());
     const [carregando, setCarregando] = useState<boolean>(false);
 
     const { item } = route.params;
@@ -76,24 +78,24 @@ export default function DetalhesProduto({ navigation, route }: DetalhesProdutoPr
         }
     };
 
-    const obterDataUltimaSugestao = () => {
-        let data = new Date().getTime();
-
-        for (const sugestao of sugestoes) {
-            const dataSugestaoTime = new Date(sugestao.timestamp || '').getTime();
-            if (dataSugestaoTime < data)
-                data = dataSugestaoTime;
-        }
-
-        return new Date(data);
+    const obterLevantamento = async () => {
+        const { data: levantamento } = await produtoServices.obterLevantamento(item.id!);
+        console.log(JSON.stringify(levantamento, null, 2));
+        console.log(typeof levantamento.dataUltimaSugestao);
+        setLevantamento(levantamento);
     };
 
-    const dummyLevantamento: DadoLevantamentoPrecos = {
-        quantidade: 36,
-        menor: 2,
-        medio: 5,
-        maior: 8.60
-    }
+    // const obterDataUltimaSugestao = () => {
+    //     let data = new Date().getTime();
+
+    //     for (const sugestao of sugestoes) {
+    //         const dataSugestaoTime = new Date(sugestao.timestamp || '').getTime();
+    //         if (dataSugestaoTime < data)
+    //             data = dataSugestaoTime;
+    //     }
+
+    //     return new Date(data);
+    // };
 
     const ItemLista = ({ item }: { item: Sugestao }) => {
 
@@ -113,12 +115,13 @@ export default function DetalhesProduto({ navigation, route }: DetalhesProdutoPr
 
     useEffect(() => {
         obterSugestoes();
+        obterLevantamento();
     }, []);
 
-    useEffect(() => {
-        if (sugestoes.length > 0)
-            setDataUltimaSugestao(obterDataUltimaSugestao());
-    }, [sugestoes]);
+    // useEffect(() => {
+    //     if (sugestoes.length > 0)
+    //         setDataUltimaSugestao(obterDataUltimaSugestao());
+    // }, [sugestoes]);
 
     return (
         <View style={estilos.main}>
@@ -131,7 +134,9 @@ export default function DetalhesProduto({ navigation, route }: DetalhesProdutoPr
             </TouchableOpacity>
             <ScrollView>
                 <View style={estilos.cabecalho}>
-                    <Image style={estilos.itemImagem} source={{ uri: "https://a-static.mlcdn.com.br/800x560/molho-de-tomate-fugini-sache-300g-caixa-com-36-unidades/calcadosdmais/308d194e1d5211ecb8da4201ac185013/032bae61bf039c555f62d1ed00a2ecaa.jpeg" }} />
+                    <View style={estilos.imagem}>
+                        <Image style={estilos.itemImagem} source={{ uri: "https://a-static.mlcdn.com.br/800x560/molho-de-tomate-fugini-sache-300g-caixa-com-36-unidades/calcadosdmais/308d194e1d5211ecb8da4201ac185013/032bae61bf039c555f62d1ed00a2ecaa.jpeg" }} />
+                    </View>
                 </View>
                 <View style={estilos.container}>
                     <View style={estilos.tags}>
@@ -140,9 +145,11 @@ export default function DetalhesProduto({ navigation, route }: DetalhesProdutoPr
                                 {item.categoria?.nome}
                             </Texto>
                         </View>
-                        <View style={[estiloGlobal.tagPequenaNormal, { marginLeft: 10 }]}>
-                            <Texto style={estiloGlobal.tagPequenaNormalTexto}>Sugerido há {Formatador.formatarPeriodoData(dataUltimaSugestao)}.</Texto>
-                        </View>
+                        {levantamento &&
+                            <View style={[estiloGlobal.tagPequenaNormal, { marginLeft: 10 }]}>
+                                <Texto style={estiloGlobal.tagPequenaNormalTexto}>Sugerido há {Formatador.formatarPeriodoData(new Date(levantamento.dataUltimaSugestao))}</Texto>
+                            </View>
+                        }
                     </View>
                     <Texto peso="800ExtraBold" style={[estiloGlobal.titulo, estilos.titulo]}>
                         {Formatador.formatarNomeProduto(item)}
@@ -169,8 +176,12 @@ export default function DetalhesProduto({ navigation, route }: DetalhesProdutoPr
                     <View style={estilos.secao}>
                         <Texto peso="700Bold" style={[estiloGlobal.subtitulo, estilos.titulo]}>Levantamento de preços</Texto>
                         <Texto style={[estilos.informacaoTexto, estilos.informacao]}>Informações sobre a variação de preços desse produto em todos os mercados nos quais ele foi cadastrado.</Texto>
-                        <LevantamentoPrecos dados={dummyLevantamento} />
-                        <Toast icone="clock" texto={`Data da última sugestão: ${Formatador.formatarDataHora(dataUltimaSugestao)}`} style={{ marginTop: 20 }} estilo="normal" />
+                        {levantamento &&
+                            <>
+                                <LevantamentoPrecos dados={levantamento} />
+                                <Toast icone="clock" texto={`Data da última sugestão: ${Formatador.formatarDataHora(new Date(levantamento.dataUltimaSugestao))}`} style={{ marginTop: 20 }} estilo="normal" />
+                            </>
+                        }
                     </View>
                     <View style={estilos.secao}>
                         <Texto peso="700Bold" style={[estiloGlobal.subtitulo, estilos.titulo]}>Onde encontrar esse produto</Texto>

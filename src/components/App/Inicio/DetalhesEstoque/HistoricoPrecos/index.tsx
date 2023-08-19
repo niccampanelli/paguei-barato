@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import {  View, ViewProps, ScrollView } from "react-native";
+import { View, ViewProps, ScrollView } from "react-native";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { useEstiloGlobal } from "../../../../../estiloGlobal";
 import { useTemaContext } from "../../../../../util/context/providers/temaProvider";
@@ -89,7 +89,9 @@ export default function HistoricoPrecos({
     return (
         <View style={estilos.main} {...props}>
             <View style={[estiloGlobal.tagPequenaDestaque, estilos.quantidade]}>
-                <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaDestaqueTexto}>{dados.length} {dados.length === 1 ? "sugestão" : "sugestões"} em {Formatador.formatarPeriodoData(new Date(menorData), true, new Date(maiorData))}</Texto>
+                <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaDestaqueTexto}>
+                    {dados.length} {dados.length === 1 ? "sugestão de preço" : "sugestões"} {dados.length !== 1 && `em ${Formatador.formatarPeriodoData(new Date(menorData), true, new Date(maiorData))}`}
+                </Texto>
             </View>
             <ScrollView nestedScrollEnabled onContentSizeChange={() => { scrollViewRef.current?.scrollToEnd({ animated: false }) }} ref={scrollViewRef} horizontal style={estilos.scroll} contentContainerStyle={estilos.conteudo}>
                 {dados ?

@@ -15,11 +15,19 @@ import AutoComplete from "../../AutoComplete";
 import { useCacheContext } from "../../../util/context/providers/cacheProvider";
 import Texto from "../../Texto";
 import Botao from "../../Botao";
+import { useListaContext } from "../../../util/context/providers/listaProvider";
+import ItemListaCompras from "../../../interfaces/models/ItemListaCompras";
+import Sugestao from "../../../interfaces/models/Sugestao";
+import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import { NavegacaoAppRoutesParams } from "../NavegacaoApp";
 
-export default function Lista() {
+type ListaProps = BottomTabScreenProps<NavegacaoAppRoutesParams, "lista">;
+
+export default function Lista({ navigation, route }: ListaProps) {
 
     const { estilos } = useEstilos();
     const { estiloGlobal } = useEstiloGlobal();
+    const { itensLista, removerItemLista } = useListaContext();
 
     const dummydata = [
         {
@@ -143,9 +151,7 @@ export default function Lista() {
     const { produtosCache } = useCacheContext();
     const [produtos, setProdutos] = useState<(string | undefined)[]>([]);
 
-    const navigation = useNavigation();
     const { propriedadesTema } = useTemaContext();
-
     const { notificar } = useNotificacaoToast();
 
     const modalRef = useRef<RBSheet>(null);
@@ -161,11 +167,11 @@ export default function Lista() {
 
     useEffect(() => {
         let valor = 0;
-        dados.forEach((item) => {
-            valor += item.preco;
+        itensLista.forEach((item) => {
+            valor += item.sugestao.preco!;
         });
         setValorTotal(valor);
-    }, [dados]);
+    }, [itensLista]);
 
     useEffect(() => {
         produtosCache.forEach((item) => {
@@ -173,13 +179,12 @@ export default function Lista() {
         });
     }, [])
 
-    const irParaDetalhes = () => {
-        navigation.navigate("detalhesEstoque" as never);
+    const irParaDetalhes = (item: Sugestao) => {
+        navigation.getParent()?.navigate("detalhesEstoque", { item });
     }
 
-    const removerItem = (index: number) => {
-        const novaLista = dados.filter((_, i) => i !== index);
-        setDados(novaLista);
+    const removerItem = (item: ItemListaCompras) => {
+        removerItemLista(item);
         notificar({
             estilo: "normal",
             texto: "Item removido da lista de compras.",
@@ -194,7 +199,7 @@ export default function Lista() {
         });
     };
 
-    const ItemLista = ({ item, index }: ListRenderItemInfo<any>) => {
+    const ItemLista = ({ item, index }: ListRenderItemInfo<ItemListaCompras>) => {
 
         const desativado = useSharedValue(false);
         const removido = useSharedValue(false);
@@ -228,7 +233,7 @@ export default function Lista() {
                 height: withTiming(removido.value === true ? 0 : 50, { duration: 250 }),
                 paddingVertical: withTiming(removido.value === true ? 0 : estilos.listaItemConteudo.paddingVertical, { duration: 100 }, () => {
                     if (removido.value === true)
-                        runOnJS(removerItem)(index);
+                        runOnJS(removerItem)(item);
                 }),
             };
         });
@@ -275,13 +280,15 @@ export default function Lista() {
                 }}
             >
                 <GestureDetector gesture={gestoPressionar}>
-                    <Animated.View onTouchEnd={irParaDetalhes} style={[estilos.listaItemConteudo, estiloAnimado, estiloOpacidade]}>
-                        <Image style={estilos.listaItemImagem} source={item.imagem} />
+                    <Animated.View onTouchEnd={() => irParaDetalhes(item.sugestao)} style={[estilos.listaItemConteudo, estiloAnimado, estiloOpacidade]}>
+                        <Image style={estilos.listaItemImagem} source={require("../../../../assets/favicon.png")} />
                         <View style={estilos.listaItemInfos}>
-                            <Texto peso="800ExtraBold" style={estilos.listaItemTexto} numberOfLines={1}>{item.nome}</Texto>
-                            <Texto style={estilos.listaItemMercado} numberOfLines={1}>{item.mercado}</Texto>
+                            <Texto peso="800ExtraBold" style={estilos.listaItemTexto} numberOfLines={1}>
+                                {Formatador.formatarNomeProduto(item.sugestao.estoque?.produto)}
+                            </Texto>
+                            <Texto style={estilos.listaItemMercado} numberOfLines={1}>{item.sugestao.estoque?.mercado?.nome}</Texto>
                         </View>
-                        <Texto peso="700Bold" style={estilos.listaItemPreco} numberOfLines={1}>{Formatador.formatarMoeda(item.preco)}</Texto>
+                        <Texto peso="700Bold" style={estilos.listaItemPreco} numberOfLines={1}>{Formatador.formatarMoeda(item.sugestao.preco!)}</Texto>
                     </Animated.View>
                 </GestureDetector>
             </Swipeable>
@@ -294,7 +301,7 @@ export default function Lista() {
                 <View style={estilos.modalContainer}>
                     <View style={estilos.modalSecao}>
                         <Texto peso="700Bold" style={estiloGlobal.subtitulo}>Selecione o produto</Texto>
-                        <AutoComplete dados={produtosTeste} onChangeText={() => console.log("asd")} placeholder="Escolha um produto..." icone="shopping-cart" />
+                        <AutoComplete dados={produtosTeste} aoSelecionar={() => { }} extrairChave={(item) => item} placeholder="Escolha um produto..." icone="shopping-cart" />
                     </View>
                     <View style={estilos.modalSecao}>
                         <Texto peso="700Bold" style={estiloGlobal.subtitulo}>Escolha onde quer comprar</Texto>
@@ -349,7 +356,13 @@ export default function Lista() {
                 <Texto peso="800ExtraBold" style={estiloGlobal.titulo}>Lista de compras</Texto>
                 <View style={estilos.resumo}>
                     <View style={estiloGlobal.tagPequenaNormal}>
-                        <Texto style={estiloGlobal.tagPequenaNormalTexto}>{dados.length} produtos em 5 mercados</Texto>
+                        <Texto style={estiloGlobal.tagPequenaNormalTexto}>
+                            {itensLista.length !== 0 ?
+                                itensLista.length === 1 ? `1 produto` : `${itensLista.length} produtos`
+                                :
+                                "Nenhum produto na lista"
+                            }
+                        </Texto>
                     </View>
                     <View style={estiloGlobal.tagPequenaDestaque}>
                         <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaDestaqueTexto}>{Formatador.formatarMoeda(valorTotal)}</Texto>
@@ -379,12 +392,13 @@ export default function Lista() {
                     </View>
                 </ScrollView>
             </View>
-            <GestureHandlerRootView>
+            <GestureHandlerRootView style={{ flex: 1 }}>
                 <FlatList
                     style={estilos.lista}
                     contentContainerStyle={{ paddingBottom: 80 }}
-                    data={dados}
-                    renderItem={(props: ListRenderItemInfo<any>) => <ItemLista {...props} />}
+                    data={itensLista}
+                    renderItem={(props: ListRenderItemInfo<ItemListaCompras>) => <ItemLista {...props} />}
+                    ListEmptyComponent={<Texto peso="800ExtraBold">Nenhum item na lista de compras.</Texto>}
                 />
             </GestureHandlerRootView>
             <View style={estilos.listaFooter}>

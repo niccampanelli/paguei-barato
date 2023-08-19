@@ -11,10 +11,18 @@ export const useEstilos = () => {
             flex: 1,
         },
 
+        imagem: {
+            padding: 16,
+            alignSelf: "center",
+            backgroundColor: "#ffffff",
+            borderRadius: propriedadesTema.layout.raioBorda,
+        },
+
         itemImagem: {
-            width: "100%",
-            height: 200,
-            resizeMode: "contain"
+            height: 160,
+            aspectRatio: 1,
+            resizeMode: "contain",
+            borderRadius: propriedadesTema.layout.raioBorda,
         },
 
         voltar: {
@@ -26,7 +34,8 @@ export const useEstilos = () => {
 
         cabecalho: {
             position: "relative",
-            paddingTop: Constants.statusBarHeight + propriedadesTema.layout.paddingVertical
+            paddingTop: Constants.statusBarHeight + propriedadesTema.layout.paddingVertical,
+            width: "100%",
         },
 
         container: {
@@ -76,21 +85,30 @@ export const useEstilos = () => {
         },
 
         listaItem: {
-            width: "46%",
+            width: "48%",
             display: "flex",
             flexDirection: "column",
-            paddingBottom: 40
+            padding: 10,
+            marginBottom: 10,
+            borderColor: propriedadesTema.cores.fundoSecundario,
+            borderWidth: 2,
+            borderStyle: "solid",
+            borderRadius: propriedadesTema.layout.raioBorda
         },
 
         listaItemImagem: {
             resizeMode: "contain",
             width: "100%",
-            height: 100
+            marginBottom: 10,
+            aspectRatio: 1,
+            backgroundColor: "#ffffff",
+            borderRadius: propriedadesTema.layout.raioBorda
         },
 
         listaItemInfos: {
             flex: 1,
-            justifyContent: "center"
+            justifyContent: "flex-start",
+            marginBottom: 10,
         },
 
         listaItemTexto: {
