@@ -15,6 +15,7 @@ export default function AutoComplete<TipoItem>({
     extrairChave,
     onSubmitEditing,
     forwardRef,
+    aoSelecionarPadrao,
     ...props
 }: AutocompleteProps<TipoItem>) {
 
@@ -23,19 +24,24 @@ export default function AutoComplete<TipoItem>({
     const [mostrarLista, setMostrarLista] = useState<boolean>(false);
     const [correspondencias, setCorrespondencias] = useState<TipoItem[]>([]);
 
-    const aoModificarInput = (texto: string) => {        
+    const aoModificarInput = (texto: string) => {
         setValorInput(texto);
         let valores = [];
-        
+
         if (texto !== "")
             valores = buscaObjeto.corresponder(dados, texto, extrairChave);
-        
+
         setCorrespondencias(valores);
     };
 
     const selecionarItem = (valor: TipoItem) => {
         setValorInput(extrairChave(valor));
         aoSelecionar(valor);
+        setMostrarLista(false);
+    };
+
+    const selecionarValorPadrao = () => {
+        aoSelecionarPadrao!(valorInput);
         setMostrarLista(false);
     };
 
@@ -51,9 +57,22 @@ export default function AutoComplete<TipoItem>({
 
         return (
             <View style={estiloGlobal.autocompleteListaItem}>
-                <Texto style={estiloGlobal.autocompleteListaItemTexto}>
-                    {valorInput.length > 0 ? "Nenhum resultado encontrado" : "Escreva para buscar"}
-                </Texto>
+                {aoSelecionarPadrao && valorInput.length > 0 ?
+                    <TouchableOpacity style={estiloGlobal.autocompleteListaItem} onPress={selecionarValorPadrao}>
+                        <Texto style={estiloGlobal.autocompleteListaItemTexto}>{valorInput}</Texto>
+                    </TouchableOpacity>
+                    :
+                    <Texto style={estiloGlobal.autocompleteListaItemTexto}>
+                        {valorInput.length > 0 ?
+                            aoSelecionarPadrao ?
+                                valorInput
+                                :
+                                "Nenhum resultado encontrado"
+                            :
+                            "Escreva para buscar"
+                        }
+                    </Texto>
+                }
             </View>
         );
     }
@@ -68,6 +87,9 @@ export default function AutoComplete<TipoItem>({
                 onSubmitEditing={(e) => {
                     if (correspondencias.length > 0)
                         selecionarItem(correspondencias[0]);
+                    else if (correspondencias.length === 0 && aoSelecionarPadrao && valorInput.length > 0)
+                        selecionarValorPadrao();
+
                     onSubmitEditing?.(e);
                     setMostrarLista(false);
                 }}

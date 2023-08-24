@@ -40,6 +40,12 @@ const ramoServices = {
 
         return api.get<Ramo>(`/ramo/${id}`);
     },
+
+    async criarRamo(ramo: Ramo): Promise<AxiosResponse<Ramo>> {
+        const api = await API.obterInstanciaAxios();
+
+        return api.post<Ramo>("/ramo", ramo);
+    },
 }
 
 export default ramoServices;
