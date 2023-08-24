@@ -82,6 +82,9 @@ export default function AutoComplete<TipoItem>({
                         estiloGlobal.autocompleteLista,
                         { maxHeight: alturaLista ?? 200 }
                     ]}
+                    contentContainerStyle={{
+                        paddingVertical: 8
+                    }}
                     renderItem={(props) => <ItemLista {...props} />}
                     ListEmptyComponent={ListaVazia}
                 />

@@ -5,21 +5,17 @@ import { FlatList, Gesture, GestureDetector, GestureHandlerRootView, Swipeable }
 import Animated, { runOnJS, useAnimatedReaction, useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { useEstiloGlobal } from "../../../estiloGlobal";
-import Modal from "../../Modal";
 import { useEstilos } from "./styles";
-import { useNavigation } from "@react-navigation/native";
 import { useNotificacaoToast } from "../../../util/context/providers/notificacaoProvider";
 import Formatador from "../../../util/Formatador";
 import { useTemaContext } from "../../../util/context/providers/temaProvider";
-import AutoComplete from "../../AutoComplete";
-import { useCacheContext } from "../../../util/context/providers/cacheProvider";
 import Texto from "../../Texto";
-import Botao from "../../Botao";
 import { useListaContext } from "../../../util/context/providers/listaProvider";
 import ItemListaCompras from "../../../interfaces/models/ItemListaCompras";
 import Sugestao from "../../../interfaces/models/Sugestao";
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { NavegacaoAppRoutesParams } from "../NavegacaoApp";
+import ModalAdicionar from "./ModalAdicionar";
 
 type ListaProps = BottomTabScreenProps<NavegacaoAppRoutesParams, "lista">;
 
@@ -27,139 +23,14 @@ export default function Lista({ navigation, route }: ListaProps) {
 
     const { estilos } = useEstilos();
     const { estiloGlobal } = useEstiloGlobal();
-    const { itensLista, removerItemLista } = useListaContext();
-
-    const dummydata = [
-        {
-            imagem: require("../../../../assets/favicon.png"),
-            nome: "Sabão Em Pó Lavanda Ipê 500g",
-            mercado: "Extra",
-            preco: 2.50,
-            riscado: false,
-        },
-        {
-            imagem: require("../../../../assets/favicon.png"),
-            nome: "Sabão Em Pó Coco ÉBomMesmo 1kg",
-            mercado: "Dia",
-            preco: 2.50,
-            riscado: false,
-        },
-        {
-            imagem: require("../../../../assets/favicon.png"),
-            nome: "Detergente Neutro Clear LavaMais 250ml",
-            mercado: "Nova Estação",
-            preco: 2.50,
-            riscado: false,
-        },
-        {
-            imagem: require("../../../../assets/favicon.png"),
-            nome: "Sabão Em Pó Lavanda ÉBomMesmo 250g",
-            mercado: "Kawahara",
-            preco: 2.50,
-            riscado: false,
-        },
-        {
-            imagem: require("../../../../assets/favicon.png"),
-            nome: "Sabão Em Pó Lavanda ÉBomMesmo 250g",
-            mercado: "Kawahara",
-            preco: 2.50,
-            riscado: false,
-        },
-        {
-            imagem: require("../../../../assets/favicon.png"),
-            nome: "Sabão Em Pó Lavanda ÉBomMesmo 250g",
-            mercado: "Kawahara",
-            preco: 2.50,
-            riscado: false,
-        },
-        {
-            imagem: require("../../../../assets/favicon.png"),
-            nome: "Sabão Em Pó Lavanda ÉBomMesmo 250g",
-            mercado: "Kawahara",
-            preco: 2.50,
-            riscado: false,
-        },
-        {
-            imagem: require("../../../../assets/favicon.png"),
-            nome: "Sabão Em Pó Lavanda ÉBomMesmo 250g",
-            mercado: "Kawahara",
-            preco: 2.50,
-            riscado: false,
-        },
-        {
-            imagem: require("../../../../assets/favicon.png"),
-            nome: "Sabão Em Pó Lavanda ÉBomMesmo 250g",
-            mercado: "Kawahara",
-            preco: 2.50,
-            riscado: false,
-        },
-        {
-            imagem: require("../../../../assets/favicon.png"),
-            nome: "Sabão Em Pó Lavanda ÉBomMesmo 250g",
-            mercado: "Kawahara",
-            preco: 2.50,
-            riscado: false,
-        },
-        {
-            imagem: require("../../../../assets/favicon.png"),
-            nome: "Sabão Em Pó Lavanda ÉBomMesmo 250g",
-            mercado: "Kawahara",
-            preco: 2.50,
-            riscado: false,
-        },
-        {
-            imagem: require("../../../../assets/favicon.png"),
-            nome: "Sabão Em Pó Lavanda ÉBomMesmo 250g",
-            mercado: "Kawaharaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-            preco: 2.50,
-            riscado: false,
-        },
-    ];
-
-    const produtosTeste = [
-        "Sabão Em Pó Lavanda Ipê 500g",
-        "Sabão Em Pó Coco ÉBomMesmo 1kg",
-        "Detergente Neutro Clear LavaMais 250ml",
-        "Sabão Em Pó Lavanda ÉBomMesmo 250g",
-        "Molho De Tomate Ketchup Heinz 1kg",
-        "Creme Dental Colgate 90g",
-        "Ovos Brancos 12 Unidades",
-        "Arroz Agulhinha 5kg",
-        "Feijão Carioca 1kg",
-        "Açúcar Cristal 1kg",
-        "Óleo De Soja 1L",
-        "Leite Integral 1L",
-        "Café Solúvel 500g",
-        "Queijo Mussarela 1kg",
-        "Manteiga 250g",
-        "Pão Francês 1kg",
-        "Pão De Forma 1kg",
-        "Pão De Hambúrguer 1kg",
-        "Pão De Queijo 1kg",
-        "Pão De Milho 1kg",
-        "Pão De Ló 1kg",
-        "Pão De Mel 1kg",
-        "Pão De Açúcar 1kg",
-        "Pão De Alho 1kg",
-        "Pão De Queijo 1kg",
-        "Requeijão 1kg",
-        "Iogurte Natural 1kg",
-        "Maionese 1kg",
-        "Mostarda 1kg"
-    ];
-
-    const { produtosCache } = useCacheContext();
-    const [produtos, setProdutos] = useState<(string | undefined)[]>([]);
-
+    const { itensLista, removerItemLista, adicionarItemLista, adicionarSugestaoLista } = useListaContext();
     const { propriedadesTema } = useTemaContext();
     const { notificar } = useNotificacaoToast();
-
-    const modalRef = useRef<RBSheet>(null);
-
     const dimensoesTela = useWindowDimensions();
     const [alturaModal, setAlturaModal] = useState(0);
-    const [dados, setDados] = useState(dummydata);
     const [valorTotal, setValorTotal] = useState(0);
+
+    const modalRef = useRef<RBSheet>(null);
 
     useEffect(() => {
         setAlturaModal(dimensoesTela.height * 0.9);
@@ -173,33 +44,27 @@ export default function Lista({ navigation, route }: ListaProps) {
         setValorTotal(valor);
     }, [itensLista]);
 
-    useEffect(() => {
-        produtosCache.forEach((item) => {
-            setProdutos((produtos) => [...produtos, item.nome]);
-        });
-    }, [])
+    const obterTextoQuantidade = () => {
+        if (itensLista.length === 0)
+            return "Nenhum produto na lista";
+
+        var texto = "";
+
+        if (itensLista.length === 1)
+            texto = "1 produto"
+        else
+            texto = `${itensLista.length} produtos`;
+
+        const quantidadeMercados = new Set(itensLista.map((item) => item.sugestao.estoque?.mercado?.id)).size;
+
+        return texto + ` em ${quantidadeMercados} mercados`;
+    };
 
     const irParaDetalhes = (item: Sugestao) => {
         navigation.getParent()?.navigate("detalhesEstoque", { item });
-    }
-
-    const removerItem = (item: ItemListaCompras) => {
-        removerItemLista(item);
-        notificar({
-            estilo: "normal",
-            texto: "Item removido da lista de compras.",
-            icone: "trash",
-            dispensavel: true,
-            autoDispensar: true,
-            possuiBotao: true,
-            labelBotao: "Desfazer",
-            aoPressionarBotao: () => {
-                setDados(dados);
-            }
-        });
     };
 
-    const ItemLista = ({ item, index }: ListRenderItemInfo<ItemListaCompras>) => {
+    const ItemLista = ({ item }: ListRenderItemInfo<ItemListaCompras>) => {
 
         const desativado = useSharedValue(false);
         const removido = useSharedValue(false);
@@ -207,6 +72,22 @@ export default function Lista({ navigation, route }: ListaProps) {
         const opacidade = useSharedValue(1);
 
         const OPACIDADE_DEFAULT = useSharedValue(1);
+
+        const removerItem = (item: ItemListaCompras) => {
+            removerItemLista(item);
+            notificar({
+                estilo: "normal",
+                texto: "Item removido da lista de compras.",
+                icone: "trash",
+                dispensavel: true,
+                autoDispensar: true,
+                possuiBotao: true,
+                labelBotao: "Desfazer",
+                aoPressionarBotao: () => {
+                    adicionarItemLista(item);
+                }
+            });
+        };
 
         useAnimatedReaction(() => {
             return desativado.value;
@@ -281,7 +162,9 @@ export default function Lista({ navigation, route }: ListaProps) {
             >
                 <GestureDetector gesture={gestoPressionar}>
                     <Animated.View onTouchEnd={() => irParaDetalhes(item.sugestao)} style={[estilos.listaItemConteudo, estiloAnimado, estiloOpacidade]}>
-                        <Image style={estilos.listaItemImagem} source={require("../../../../assets/favicon.png")} />
+                        <View style={estilos.listaItemImagemContainer}>
+                            <Image style={estilos.listaItemImagem} source={require("../../../../assets/favicon.png")} />
+                        </View>
                         <View style={estilos.listaItemInfos}>
                             <Texto peso="800ExtraBold" style={estilos.listaItemTexto} numberOfLines={1}>
                                 {Formatador.formatarNomeProduto(item.sugestao.estoque?.produto)}
@@ -297,71 +180,13 @@ export default function Lista({ navigation, route }: ListaProps) {
 
     return (
         <View style={estilos.container}>
-            <Modal titulo="Adicionar item à lista" refSheet={modalRef} height={alturaModal}>
-                <View style={estilos.modalContainer}>
-                    <View style={estilos.modalSecao}>
-                        <Texto peso="700Bold" style={estiloGlobal.subtitulo}>Selecione o produto</Texto>
-                        <AutoComplete dados={produtosTeste} aoSelecionar={() => { }} extrairChave={(item) => item} placeholder="Escolha um produto..." icone="shopping-cart" />
-                    </View>
-                    <View style={estilos.modalSecao}>
-                        <Texto peso="700Bold" style={estiloGlobal.subtitulo}>Escolha onde quer comprar</Texto>
-                    </View>
-                    <FlatList
-                        style={estilos.modalLista}
-                        data={[{ opcoes: true }, ...dados]}
-                        nestedScrollEnabled={true}
-                        renderItem={(props: ListRenderItemInfo<any>) => props.item.opcoes === true ?
-                            <ScrollView showsHorizontalScrollIndicator={false} nestedScrollEnabled horizontal style={estilos.listaFiltros} contentContainerStyle={estilos.listaFiltrosContainer}>
-                                <TouchableOpacity onPress={() => { }} style={estiloGlobal.tagPequenaDestaque}>
-                                    <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaDestaqueTexto}>Filtros</Texto>
-                                    <Texto peso="800ExtraBold" style={estilos.filtroContador}>2</Texto>
-                                </TouchableOpacity>
-                                <View style={estiloGlobal.tagPequenaSecundaria}>
-                                    <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
-                                </View>
-                                <View style={estiloGlobal.tagPequenaSecundaria}>
-                                    <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
-                                </View>
-                                <View style={estiloGlobal.tagPequenaSecundaria}>
-                                    <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
-                                </View>
-                                <View style={estiloGlobal.tagPequenaSecundaria}>
-                                    <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
-                                </View>
-                                <View style={estiloGlobal.tagPequenaSecundaria}>
-                                    <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
-                                </View>
-                                <View style={estiloGlobal.tagPequenaSecundaria}>
-                                    <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
-                                </View>
-                                <View style={estiloGlobal.tagPequenaSecundaria}>
-                                    <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
-                                </View>
-                            </ScrollView>
-                            :
-                            <ItemLista {...props} />
-                        }
-                        ListHeaderComponent={() =>
-                            <View style={estilos.modalSecao}>
-                                <Image source={require("../../../../assets/mapa.png")} style={estilos.modalMapa} />
-                            </View>
-                        }
-                        stickyHeaderIndices={[1]}
-                        keyExtractor={(item, index) => index.toString()}
-                    />
-                    <Botao titulo="Adicionar à lista" subtitulo="R$2,99" icone="shopping-bag" />
-                </View>
-            </Modal>
+            <ModalAdicionar adicionarSugestao={(item) => { adicionarSugestaoLista(item); modalRef.current?.close() }} alturaModal={alturaModal} forwardRef={modalRef} />
             <View>
                 <Texto peso="800ExtraBold" style={estiloGlobal.titulo}>Lista de compras</Texto>
                 <View style={estilos.resumo}>
                     <View style={estiloGlobal.tagPequenaNormal}>
                         <Texto style={estiloGlobal.tagPequenaNormalTexto}>
-                            {itensLista.length !== 0 ?
-                                itensLista.length === 1 ? `1 produto` : `${itensLista.length} produtos`
-                                :
-                                "Nenhum produto na lista"
-                            }
+                            {obterTextoQuantidade()}
                         </Texto>
                     </View>
                     <View style={estiloGlobal.tagPequenaDestaque}>
