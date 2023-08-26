@@ -6,4 +6,5 @@ export type ContextLista = {
     adicionarItemLista: (item: ItemListaCompras) => void;
     adicionarSugestaoLista: (item: Sugestao) => void;
     removerItemLista: (item: ItemListaCompras) => void;
+    riscarItemLista: (item: ItemListaCompras) => void;
 }

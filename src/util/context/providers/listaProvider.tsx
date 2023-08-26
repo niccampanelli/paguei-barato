@@ -3,7 +3,7 @@ import { ContextLista } from "../../../interfaces/context/ContextLista";
 import ItemListaCompras from "../../../interfaces/models/ItemListaCompras";
 import Sugestao from "../../../interfaces/models/Sugestao";
 
-const ListaContext = createContext<ContextLista>({ itensLista: [], adicionarItemLista: () => { }, adicionarSugestaoLista: () => { }, removerItemLista: () => { } });
+const ListaContext = createContext<ContextLista>({ itensLista: [], adicionarItemLista: () => { }, adicionarSugestaoLista: () => { }, removerItemLista: () => { }, riscarItemLista: () => { } });
 
 export default function ListaProvider(props: any) {
 
@@ -30,8 +30,12 @@ export default function ListaProvider(props: any) {
         setItensLista((itensLista) => itensLista.filter(i => i.sugestao.id !== item.sugestao.id));
     };
 
+    const riscarItemLista = (item: ItemListaCompras) => {
+        setItensLista((itensLista) => itensLista.map(i => i.sugestao.id === item.sugestao.id ? { ...i, riscado: !i.riscado } : i))
+    };
+
     return (
-        <ListaContext.Provider value={{ itensLista, adicionarItemLista, adicionarSugestaoLista, removerItemLista }}>
+        <ListaContext.Provider value={{ itensLista, adicionarItemLista, adicionarSugestaoLista, removerItemLista, riscarItemLista }}>
             {props.children}
         </ListaContext.Provider>
     );

@@ -1,7 +1,7 @@
 import { Feather } from "@expo/vector-icons"
 import { useEffect, useRef, useState } from "react";
-import { Image, ListRenderItemInfo, ScrollView, TouchableOpacity, useWindowDimensions, View } from "react-native";
-import { FlatList, Gesture, GestureDetector, GestureHandlerRootView, Swipeable } from "react-native-gesture-handler";
+import { Image, ListRenderItemInfo, FlatList, TouchableOpacity, useWindowDimensions, View } from "react-native";
+import { Gesture, GestureDetector, GestureHandlerRootView, Swipeable } from "react-native-gesture-handler";
 import Animated, { runOnJS, useAnimatedReaction, useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
 import RBSheet from "react-native-raw-bottom-sheet";
 import { useEstiloGlobal } from "../../../estiloGlobal";
@@ -16,6 +16,7 @@ import Sugestao from "../../../interfaces/models/Sugestao";
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { NavegacaoAppRoutesParams } from "../NavegacaoApp";
 import ModalAdicionar from "./ModalAdicionar";
+import Mercado from "../../../interfaces/models/Mercado";
 
 type ListaProps = BottomTabScreenProps<NavegacaoAppRoutesParams, "lista">;
 
@@ -23,11 +24,12 @@ export default function Lista({ navigation, route }: ListaProps) {
 
     const { estilos } = useEstilos();
     const { estiloGlobal } = useEstiloGlobal();
-    const { itensLista, removerItemLista, adicionarItemLista, adicionarSugestaoLista } = useListaContext();
+    const { itensLista, removerItemLista, adicionarItemLista, adicionarSugestaoLista, riscarItemLista } = useListaContext();
     const { propriedadesTema } = useTemaContext();
     const { notificar } = useNotificacaoToast();
     const dimensoesTela = useWindowDimensions();
     const [alturaModal, setAlturaModal] = useState(0);
+    const [mercados, setMercados] = useState<Mercado[]>([]);
     const [valorTotal, setValorTotal] = useState(0);
 
     const modalRef = useRef<RBSheet>(null);
@@ -42,6 +44,10 @@ export default function Lista({ navigation, route }: ListaProps) {
             valor += item.sugestao.preco!;
         });
         setValorTotal(valor);
+
+        let mercadosLista = itensLista.map(item => item.sugestao.estoque?.mercado!);
+        let mercadosUnicos = [...new Map(mercadosLista.map(mercado => [mercado['id'], mercado])).values()];
+        setMercados(mercadosUnicos);
     }, [itensLista]);
 
     const obterTextoQuantidade = () => {
@@ -55,9 +61,7 @@ export default function Lista({ navigation, route }: ListaProps) {
         else
             texto = `${itensLista.length} produtos`;
 
-        const quantidadeMercados = new Set(itensLista.map((item) => item.sugestao.estoque?.mercado?.id)).size;
-
-        return texto + ` em ${quantidadeMercados} mercados`;
+        return texto + ` em ${mercados.length} ${mercados.length === 1 ? 'mercado' : 'mercados'}`;
     };
 
     const irParaDetalhes = (item: Sugestao) => {
@@ -75,24 +79,26 @@ export default function Lista({ navigation, route }: ListaProps) {
 
         const removerItem = (item: ItemListaCompras) => {
             removerItemLista(item);
-            notificar({
-                estilo: "normal",
-                texto: "Item removido da lista de compras.",
-                icone: "trash",
-                dispensavel: true,
-                autoDispensar: true,
-                possuiBotao: true,
-                labelBotao: "Desfazer",
-                aoPressionarBotao: () => {
-                    adicionarItemLista(item);
-                }
-            });
+            setTimeout(() => {
+                notificar({
+                    estilo: "normal",
+                    texto: "Item removido da lista de compras.",
+                    icone: "trash",
+                    dispensavel: true,
+                    autoDispensar: false,
+                    possuiBotao: true,
+                    labelBotao: "Desfazer",
+                    aoPressionarBotao: () => {
+                        adicionarItemLista(item);
+                    }
+                });
+            }, 10);
         };
 
         useAnimatedReaction(() => {
             return desativado.value;
         }, (isDesativado) => {
-            OPACIDADE_DEFAULT.value = isDesativado ? 0.5 : 1;
+            OPACIDADE_DEFAULT.value = isDesativado ? 0.3 : 1;
             opacidade.value = withTiming(OPACIDADE_DEFAULT.value, { duration: 200 });
         }, [item.riscado]);
 
@@ -111,6 +117,7 @@ export default function Lista({ navigation, route }: ListaProps) {
         const estiloAnimado = useAnimatedStyle(() => {
             return {
                 transform: [{ translateX: withSpring(offset.value, { damping: 5, mass: 0.2 }) }],
+                scaleY: withTiming(removido.value === true ? 0 : 1, { duration: 250 }),
                 height: withTiming(removido.value === true ? 0 : 50, { duration: 250 }),
                 paddingVertical: withTiming(removido.value === true ? 0 : estilos.listaItemConteudo.paddingVertical, { duration: 100 }, () => {
                     if (removido.value === true)
@@ -153,7 +160,7 @@ export default function Lista({ navigation, route }: ListaProps) {
                     swipeableRef.current?.close();
                     if (dir === "left") {
                         desativado.value = !desativado.value;
-                        item.riscado = !item.riscado;
+                        riscarItemLista(item);
                     }
                     else {
                         removido.value = true;
@@ -193,29 +200,18 @@ export default function Lista({ navigation, route }: ListaProps) {
                         <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaDestaqueTexto}>{Formatador.formatarMoeda(valorTotal)}</Texto>
                     </View>
                 </View>
-                <ScrollView showsHorizontalScrollIndicator={false} horizontal style={estilos.listaFiltros} contentContainerStyle={estilos.listaFiltrosContainer}>
-                    <View style={estiloGlobal.tagPequenaSecundaria}>
-                        <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Extra</Texto>
-                    </View>
-                    <View style={estiloGlobal.tagPequenaSecundaria}>
-                        <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Dia</Texto>
-                    </View>
-                    <View style={estiloGlobal.tagPequenaSecundaria}>
-                        <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Kawahara</Texto>
-                    </View>
-                    <View style={estiloGlobal.tagPequenaSecundaria}>
-                        <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Nova Estação</Texto>
-                    </View>
-                    <View style={estiloGlobal.tagPequenaSecundaria}>
-                        <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Dovale</Texto>
-                    </View>
-                    <View style={estiloGlobal.tagPequenaSecundaria}>
-                        <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
-                    </View>
-                    <View style={estiloGlobal.tagPequenaSecundaria}>
-                        <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
-                    </View>
-                </ScrollView>
+                <FlatList
+                    showsHorizontalScrollIndicator={false}
+                    horizontal
+                    style={estilos.listaFiltros}
+                    contentContainerStyle={estilos.listaFiltrosContainer}
+                    data={mercados}
+                    renderItem={(item) =>
+                        <View style={estiloGlobal.tagPequenaSecundaria}>
+                            <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>{item.item.nome}</Texto>
+                        </View>
+                    }
+                />
             </View>
             <GestureHandlerRootView style={{ flex: 1 }}>
                 <FlatList

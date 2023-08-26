@@ -52,7 +52,7 @@ export const useEstilos = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            paddingHorizontal: propriedadesTema.layout.paddingHorizontal,
+            paddingHorizontal: propriedadesTema.layout.paddingHorizontal + 2,
             backgroundColor: propriedadesTema.cores.destaque,
         },
 

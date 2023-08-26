@@ -57,10 +57,14 @@ export const useEstilos = () => {
             marginBottom: 16,
         },
 
+        tituloIconeContainer: {
+            justifyContent: "center",
+            paddingLeft: 4,
+        },
+
         tituloIcone: {
-            fontSize: propriedadesTema.tamanhoTextos.titulo,
+            fontSize: propriedadesTema.tamanhoTextos.subtitulo,
             color: propriedadesTema.cores.textoEscuro,
-            paddingLeft: 10,
         },
 
         mercadoCard: {

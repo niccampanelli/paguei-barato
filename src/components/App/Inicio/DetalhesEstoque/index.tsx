@@ -82,7 +82,9 @@ export default function DetalhesEstoque({ navigation, route }: DetalhesEstoquePr
                     <TouchableOpacity style={estilos.titulo} onPress={() => navigation.navigate("detalhesProduto", { item: item.estoque?.produto || {} })}>
                         <Texto peso="800ExtraBold" style={estiloGlobal.titulo}>
                             {Formatador.formatarNomeProduto(item.estoque?.produto)}
-                            <Feather name="arrow-right" style={estilos.tituloIcone} />
+                            <View style={estilos.tituloIconeContainer}>
+                                <Feather name="arrow-right" style={estilos.tituloIcone} />
+                            </View>
                         </Texto>
                     </TouchableOpacity>
                     <TouchableOpacity style={estilos.mercadoCard} onPress={() => navigation.navigate("detalhesMercado", { item: item.estoque!.mercado! })} >
