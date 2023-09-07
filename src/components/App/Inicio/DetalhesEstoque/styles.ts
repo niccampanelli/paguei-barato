@@ -11,10 +11,18 @@ export const useEstilos = () => {
             flex: 1,
         },
 
+        imagem: {
+            padding: 10,
+            alignSelf: "center",
+            backgroundColor: "#ffffff",
+            borderRadius: propriedadesTema.layout.raioBorda,
+        },
+
         itemImagem: {
-            width: "100%",
-            height: 200,
-            resizeMode: "contain"
+            height: 160,
+            aspectRatio: 1,
+            resizeMode: "contain",
+            borderRadius: propriedadesTema.layout.raioBorda,
         },
 
         voltar: {
@@ -49,10 +57,14 @@ export const useEstilos = () => {
             marginBottom: 16,
         },
 
+        tituloIconeContainer: {
+            justifyContent: "center",
+            paddingLeft: 4,
+        },
+
         tituloIcone: {
-            fontSize: propriedadesTema.tamanhoTextos.titulo,
+            fontSize: propriedadesTema.tamanhoTextos.subtitulo,
             color: propriedadesTema.cores.textoEscuro,
-            paddingLeft: 10,
         },
 
         mercadoCard: {

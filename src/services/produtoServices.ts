@@ -7,6 +7,7 @@ import API from "./api";
 import categoriaServices from "./categoriaServices";
 import Mercado from "../interfaces/models/Mercado";
 import mercadoServices from "./mercadoServices";
+import LevantamentoProduto from "../interfaces/models/LevantamentoProduto";
 
 interface GetProdutosParams {
     filtros?: Produto,
@@ -61,6 +62,12 @@ const produtoServices = {
         data.data = await this.buscarRelacoesProduto(produto);
 
         return data;
+    },
+
+    async obterLevantamento(id: number): Promise<AxiosResponse<LevantamentoProduto>> {
+        const api = await API.obterInstanciaAxios();
+
+        return await api.get<LevantamentoProduto>(`/produto/${id}/levantamento`);
     },
 
     async listarMercados(id: number): Promise<AxiosResponse<Mercado[]>> {

@@ -13,6 +13,7 @@ import customSearchServices from '../../../../../services/customSearchServices';
 import { ItensPesquisaImagens } from '../../../../../interfaces/models/PesquisaImagens';
 import Mercado from '../../../../../interfaces/models/Mercado';
 import mercadoServices from '../../../../../services/mercadoServices';
+import ramoServices from '../../../../../services/ramoServices';
 
 export interface ImagensParams {
     mercado: Mercado
@@ -88,6 +89,20 @@ export default function EtapaImagens({ navigation, route }: ImagensProps) {
         setCarregando(true);
 
         try {
+            if (!mercado.ramo?.id) {
+                const { data: ramo } = await ramoServices.criarRamo({
+                    nome: mercado.ramo?.nome || "",
+                    descricao: mercado.ramo?.descricao
+                })
+
+                if (ramo.id) {
+                    mercado.ramo!.id = ramo.id;
+                }
+                else {
+                    throw "Erro ao criar estabelecimento.";
+                }
+            }
+
             const resultado = await mercadoServices.criarMercado(mercado);
 
             if (resultado.data.id) {
@@ -106,6 +121,8 @@ export default function EtapaImagens({ navigation, route }: ImagensProps) {
             }
         }
         catch (erro: any) {
+            console.log(JSON.stringify(erro, null, 2));
+
             notificar({
                 estilo: "vermelho",
                 texto: `Erro ao criar estabelecimento: ${erro}`,

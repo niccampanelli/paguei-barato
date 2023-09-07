@@ -16,6 +16,7 @@ import { NavegacaoAppRoutesParams } from "../NavegacaoApp";
 import CarregandoOverlay from "../../CarregandoOverlay";
 import Mercado from "../../../interfaces/models/Mercado";
 import mercadoServices from "../../../services/mercadoServices";
+import Formatador from "../../../util/Formatador";
 
 type BuscaProps = BottomTabScreenProps<NavegacaoAppRoutesParams, "buscar">;
 
@@ -80,16 +81,33 @@ export default function Busca({ navigation, route }: BuscaProps) {
         }
     }
 
+    const obterItens = async () => {
+        setCarregando(true);
+
+        try {
+            const { data: mercados } = await mercadoServices.getMercados();
+            const { data: produtos } = await produtoServices.getProdutos();
+
+            setItens([...mercados, ...produtos]);
+        }
+        catch (erro) {
+            notificar({
+                estilo: "vermelho",
+                texto: "Ocorreu um erro inesperado ao buscar.",
+                icone: "x-circle",
+                dispensavel: true,
+                autoDispensar: true,
+            });
+        }
+        finally {
+            setCarregando(false);
+        }
+    };
+
     useEffect(() => {
         setAlturaModal(dimensoesTela.height * 0.65);
-
-        obterProdutos();
-        obterMercados();
+        obterItens();
     }, [dimensoesTela]);
-
-    useEffect(() => {
-        setItens([...produtos, ...mercados]);
-    }, [produtos, mercados]);
 
     const ModalFiltrar = () => {
 
@@ -234,7 +252,13 @@ export default function Busca({ navigation, route }: BuscaProps) {
                 }
             >
                 <Image style={estilos.listaItemImagem} source={require("../../../../assets/favicon.png")} />
-                <Texto peso="700Bold" style={estilos.listaItemTexto} numberOfLines={1}>{item.nome}</Texto>
+                <Texto peso="700Bold" style={estilos.listaItemTexto} numberOfLines={1}>
+                    {item.cep ?
+                        item.nome
+                        :
+                        Formatador.formatarNomeProduto(item)
+                    }
+                </Texto>
             </TouchableOpacity >
         );
     };
@@ -283,13 +307,13 @@ export default function Busca({ navigation, route }: BuscaProps) {
                 </ScrollView>
             </View>
             <View style={estilos.listaCabecalho}>
-                <Texto peso="700Bold" style={estiloGlobal.subtitulo}>{produtos.length} {produtos.length === 1 ? "Resultado" : "Resultados"}</Texto>
+                <Texto peso="700Bold" style={estiloGlobal.subtitulo}>{itens.length} {itens.length === 1 ? "Resultado" : "Resultados"}</Texto>
                 <TouchableOpacity onPress={() => abrirModal("ordenar")} style={estiloGlobal.tagPequenaNormal}>
                     <Texto style={estiloGlobal.tagPequenaNormalTexto}>Ordenar</Texto>
                     <Feather name="bar-chart" style={estiloGlobal.tagPequenaNormalTexto} />
                 </TouchableOpacity>
             </View>
-            <FlatList style={estilos.lista} data={itens} renderItem={ItemLista} />
+            <FlatList style={estilos.lista} data={itens} keyExtractor={(item, indice) => item.id + "" + indice} renderItem={ItemLista} />
         </View>
     );
 }

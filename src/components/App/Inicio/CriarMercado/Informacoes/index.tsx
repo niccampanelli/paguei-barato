@@ -25,6 +25,7 @@ export default function EtapaInformacoes({ navigation, route }: InformacoesProps
     const [mercado, setMercado] = useState<Mercado>({} as any);
     const [carregando, setCarregando] = useState<boolean>(false);
 
+    const descricaoRamoInputRef = useRef<TextInput>(null);
     const nomeInputRef = useRef<TextInput>(null);
     const cepInputRef = useRef<TextInput>(null);
     const logradouroInputRef = useRef<TextInput>(null);
@@ -75,14 +76,31 @@ export default function EtapaInformacoes({ navigation, route }: InformacoesProps
                             icone="tag"
                             returnKeyType='next'
                             blurOnSubmit={false}
-                            onSubmitEditing={() => nomeInputRef.current?.focus()}
+                            onSubmitEditing={() => descricaoRamoInputRef.current?.focus()}
                             textContentType='givenName'
                             autoCapitalize='words'
                             autoCorrect={true}
                             placeholder="Supermercado, farmácia, padaria..."
                             extrairChave={(ramo) => ramo.nome}
                             aoSelecionar={(ramo) => setMercado({ ...mercado, ramo })}
+                            aoSelecionarPadrao={(nome) => setMercado({...mercado, ramo: { nome }})}
                             dados={ramos}
+                        />
+                    </View>
+                    <View style={estilos.grupoForm}>
+                        <Texto peso="700Bold" style={estiloGlobal.label}>Descricao do ramo</Texto>
+                        <Input
+                            icone={<Feather name="tag" style={estiloGlobal.inputIcone} />}
+                            returnKeyType="next"
+                            blurOnSubmit={false}
+                            onSubmitEditing={() => nomeInputRef.current?.focus()}
+                            forwardRef={descricaoRamoInputRef}
+                            textContentType="none"
+                            autoCapitalize="sentences"
+                            autoCorrect={true}
+                            value={mercado?.ramo?.descricao}
+                            onChangeText={(texto) => setMercado({ ...mercado, ramo: { nome: mercado.ramo?.nome!, descricao: texto } })}
+                            placeholder="Descrição sobre esse tipo de loja"
                         />
                     </View>
                     <View style={[estilos.grupoForm, { marginBottom: 16 }]}>

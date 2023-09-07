@@ -8,7 +8,15 @@ export default class Formatador {
         if (typeof valor !== "number" || valor === null || valor === undefined)
             valor = 0;
 
-        let valorFormatado = Intl.NumberFormat('pt-BR', { style: "currency", currency: "BRL", minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(valor);
+        let valorFormatado = Intl.NumberFormat(
+            'pt-BR',
+            {
+                style: "currency",
+                currency: "BRL",
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        ).format(valor);
         valorFormatado = valorFormatado.replace(',', '.');
         let expSubstituiCent = new RegExp(/([.](?=\d{2}$))/);
         valorFormatado = valorFormatado.replace(expSubstituiCent, ',');
@@ -88,9 +96,10 @@ export default class Formatador {
     }
 
     static formatarPeriodoData(data: Date, porExtenso: boolean = false, agora: Date = new Date()): string {
+        
         if (!data)
             return "Data inválida";
-        
+
         const diferenca = agora.getTime() - data.getTime();
 
         const msAno = 1000 * 60 * 60 * 24 * 365;
@@ -131,7 +140,7 @@ export default class Formatador {
         }
         else if (minutos > 0)
             return `${minutos}${porExtenso ? minutos > 1 ? " minutos" : " minuto" : "min"}`;
-        
+
         return "alguns segundos";
     }
 }

@@ -24,11 +24,17 @@ export const useEstilos = () => {
             left: 20
         },
 
+        container: {
+            flex: 1,
+            display: "flex",
+            flexDirection: "row",
+            gap: 10,
+        },
+
         coluna: {
             height: "100%",
             display: "flex",
-            flexGrow: 0,
-            flexShrink: 1,
+            flexGrow: 1,
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "flex-end"

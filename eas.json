@@ -1,0 +1,18 @@
+{
+  "build": {
+    "preview": {
+      "android": {
+        "distribution": "internal",
+        "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_API_URL": "",
+        "EXPO_PUBLIC_CUSTOMSEARCH_URL": "",
+        "EXPO_PUBLIC_CUSTOMSEARCH_API_KEY": "",
+        "EXPO_PUBLIC_CUSTOMSEARCH_CX": "",
+        "EXPO_PUBLIC_VIACEP_URL": ""
+      },
+      "channel": "preview"
+    }
+  }
+}

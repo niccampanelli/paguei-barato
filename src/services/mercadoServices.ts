@@ -115,7 +115,7 @@ const mercadoServices = {
             cidade: mercado.cidade,
             cep: mercado.cep,
             uf: mercado.uf,
-            ramoId: 1,
+            ramoId: mercado.ramo?.id || mercado.ramoId,
             criadoPor: 1,
         });
 

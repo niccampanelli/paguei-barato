@@ -92,7 +92,7 @@ export const useEstiloGlobal = () => {
             backgroundColor: propriedadesTema.cores.fundoSecundario,
             borderRadius: propriedadesTema.layout.raioBorda,
             marginTop: 5,
-            paddingHorizontal: propriedadesTema.botoesGrandes.paddingHorizontal
+            paddingHorizontal: propriedadesTema.botoesGrandes.paddingHorizontal,
         },
 
         autocompleteListaItem: {

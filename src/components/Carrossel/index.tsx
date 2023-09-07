@@ -3,19 +3,24 @@ import { useEstiloGlobal } from "../../estiloGlobal";
 import Formatador from "../../util/Formatador";
 import Texto from "../Texto";
 import { useEstilos } from "./styles";
+import { MotiView } from "moti";
+import { Skeleton } from "moti/skeleton";
+import CarregandoSkeleton from "../CarregandoSkeleton";
+import { useTemaContext } from "../../util/context/providers/temaProvider";
 
-interface CarrosselProps extends ViewProps {
+interface CarrosselProps<TipoItem> extends ViewProps {
     titulo: string,
-    dados: any[],
-    onItemPress?: (item: any) => void,
-    tituloItem: (item: any) => string,
-    subtituloItem: (item: any) => string,
-    imagemItem: (item: any) => any,
-    precoItem: (item: any) => number,
-    descontoItem?: (item: any) => number,
+    dados: TipoItem[],
+    onItemPress?: (item: TipoItem) => void,
+    tituloItem: (item: TipoItem) => string,
+    subtituloItem: (item: TipoItem) => string,
+    imagemItem: (item: TipoItem) => any,
+    precoItem: (item: TipoItem) => number,
+    descontoItem?: (item: TipoItem) => number,
+    carregando?: boolean
 }
 
-export default function Carrossel({
+export default function Carrossel<TipoItem>({
     titulo,
     dados,
     onItemPress,
@@ -24,13 +29,14 @@ export default function Carrossel({
     imagemItem,
     precoItem,
     descontoItem,
+    carregando,
     ...props
-}: CarrosselProps) {
+}: CarrosselProps<TipoItem>) {
 
     const { estilos } = useEstilos();
     const { estiloGlobal } = useEstiloGlobal();
 
-    const ItemCarrossel = (props: ListRenderItemInfo<any>) => {
+    const ItemCarrossel = (props: ListRenderItemInfo<TipoItem>) => {
 
         return (
             <TouchableOpacity onPress={() => onItemPress?.(props.item)} style={estilos.item}>
@@ -50,12 +56,65 @@ export default function Carrossel({
                 <Texto peso="900Black" style={estilos.itemPreco}>{Formatador.formatarMoeda(precoItem?.(props.item))}</Texto>
             </TouchableOpacity>
         );
-    }
+    };
 
     return (
         <View style={estilos.corpo} {...props}>
             <Texto peso="800ExtraBold" style={[estiloGlobal.subtitulo, estilos.titulo]}>{titulo}</Texto>
-            <FlatList showsHorizontalScrollIndicator={false} horizontal data={dados} contentContainerStyle={estilos.container} renderItem={(props) => <ItemCarrossel {...props} />} />
+            <MotiView>
+                <FlatList
+                    showsHorizontalScrollIndicator={false}
+                    horizontal
+                    data={dados}
+                    contentContainerStyle={estilos.container}
+                    renderItem={(props) =>
+                        <ItemCarrossel {...props} />
+                    }
+                />
+            </MotiView>
+        </View>
+    );
+}
+
+export function CarrosselPlaceholder({
+    ...props
+}: ViewProps) {
+
+    const { estilos } = useEstilos();
+
+    const ItemCarrosselCarregando = () => {
+
+        return (
+            <View style={estilos.item}>
+                <Skeleton.Group show>
+                    <CarregandoSkeleton>
+                        <View style={estilos.itemImagem} />
+                    </CarregandoSkeleton>
+                    <View style={{ height: 20 }}></View>
+                    <CarregandoSkeleton width={"100%"} height={26}></CarregandoSkeleton>
+                    <View style={{ height: 8 }}></View>
+                    <CarregandoSkeleton width={"80%"} height={16}></CarregandoSkeleton>
+                    <View style={{ height: 16 }}></View>
+                    <CarregandoSkeleton width={"50%"} height={26}></CarregandoSkeleton>
+                </Skeleton.Group>
+            </View>
+        );
+    };
+
+    return (
+        <View style={estilos.corpo} {...props}>
+            <View style={estilos.titulo}>
+                <CarregandoSkeleton width={200} height={26} />
+            </View>
+            <MotiView>
+                <View style={estilos.container}>
+                    <Skeleton.Group show>
+                        <ItemCarrosselCarregando />
+                        <ItemCarrosselCarregando />
+                        <ItemCarrosselCarregando />
+                    </Skeleton.Group>
+                </View>
+            </MotiView>
         </View>
     );
 }

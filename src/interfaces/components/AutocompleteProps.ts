@@ -8,4 +8,5 @@ export default interface AutocompleteProps<TipoItem> extends Omit<TextInputProps
     aoSelecionar: (item: TipoItem) => void;
     extrairChave: (item: TipoItem) => string;
     forwardRef?: React.MutableRefObject<any>;
+    aoSelecionarPadrao?: (chave: string) => void;
 }

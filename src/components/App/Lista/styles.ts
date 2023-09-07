@@ -52,7 +52,7 @@ export const useEstilos = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            paddingHorizontal: propriedadesTema.layout.paddingHorizontal,
+            paddingHorizontal: propriedadesTema.layout.paddingHorizontal + 2,
             backgroundColor: propriedadesTema.cores.destaque,
         },
 
@@ -69,10 +69,20 @@ export const useEstilos = () => {
             paddingVertical: 8
         },
 
+        listaItemImagemContainer: {
+            backgroundColor: "#ffffff",
+            padding: 8,
+            borderRadius: 8,
+            marginRight: 8,
+            borderColor: propriedadesTema.cores.fundoSecundario,
+            borderWidth: 2,
+            borderStyle: "solid",
+        },
+
         listaItemImagem: {
-            marginRight: 20,
             height: 30,
-            width: 30
+            width: 30,
+            borderRadius: 8,
         },
 
         listaItemInfos: {
@@ -124,65 +134,6 @@ export const useEstilos = () => {
             color: propriedadesTema.cores.textoClaro,
             textAlign: "center"
         },
-
-        modalContainer: {
-            flex: 1,
-            marginBottom: (propriedadesTema.layout.paddingVertical * -1) + 10,
-        },
-
-        modalSecao: {
-            display: "flex",
-            marginBottom: 10
-        },
-
-        modalBusca: {
-            flex: 1,
-            display: "flex",
-            width: "100%",
-            flexDirection: "row",
-            alignItems: "center",
-            marginTop: 10,
-            borderRadius: propriedadesTema.layout.raioBorda,
-            backgroundColor: propriedadesTema.cores.fundoSecundario,
-            paddingVertical: propriedadesTema.botoesGrandes.paddingVertical,
-            paddingHorizontal: propriedadesTema.botoesGrandes.paddingHorizontal
-        },
-
-        modalBuscaCampo: {
-            flex: 1,
-            fontSize: propriedadesTema.botoesGrandes.texto,
-            marginRight: propriedadesTema.botoesGrandes.espacamento,
-            color: propriedadesTema.cores.textoEscuro,
-            height: "100%",
-        },
-
-        modalBuscaIcone: {
-            fontSize: propriedadesTema.botoesGrandes.texto,
-            color: propriedadesTema.cores.textoClaro
-        },
-
-        modalMapa: {
-            marginTop: 10,
-            width: "100%",
-            height: 200,
-            borderRadius: propriedadesTema.layout.raioBorda
-        },
-
-        modalLista: {
-            flex: 1,
-            marginBottom: 10,
-        },
-
-        modalBotaoAdicionarPreco: {
-            flexDirection: "row",
-            alignItems: "center",
-        },
-
-        modalBotaoAdicionarPrecoTexto: {
-            fontSize: propriedadesTema.botoesGrandes.texto,
-            color: "#000000",
-            marginRight: 16
-        }
     });
 
     return { estilos };

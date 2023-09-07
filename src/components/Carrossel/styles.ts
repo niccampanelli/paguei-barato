@@ -44,8 +44,7 @@ export const useEstilos = () => {
 
         itemImagem: {
             width: "100%",
-            height: 140,
-            marginBottom: 20,
+            aspectRatio: 1,
             borderRadius: 5,
         },
 
@@ -56,6 +55,7 @@ export const useEstilos = () => {
         },
 
         itemNome: {
+            marginTop: 20,
             fontSize: propriedadesTema.tamanhoTextos.texto,
             color: propriedadesTema.cores.textoEscuro
         },

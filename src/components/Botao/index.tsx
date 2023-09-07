@@ -12,7 +12,7 @@ export default function Botao({
     tituloPeso = (tipo === "principal" ? "800ExtraBold" : "700Bold"),
     tituloItalico = false,
     subtitulo,
-    subtituloPeso = "400Regular",
+    subtituloPeso = "700Bold",
     subtituloItalico = false,
     style,
     disabled,
