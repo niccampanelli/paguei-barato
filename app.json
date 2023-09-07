@@ -16,7 +16,8 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": ""
     },
     "assetBundlePatterns": [
       "**/*"
@@ -38,9 +39,17 @@
       [
         "./plugins/withAndroidColorEdgeEffect",
         {
-          "color": "#ff0000"
+          "color": "#3772ff"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": ""
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    }
   }
 }

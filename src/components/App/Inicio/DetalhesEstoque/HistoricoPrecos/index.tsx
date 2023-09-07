@@ -7,6 +7,8 @@ import Formatador from "../../../../../util/Formatador";
 import Texto from "../../../../Texto";
 import { useEstilos } from "./styles";
 import Sugestao from "../../../../../interfaces/models/Sugestao";
+import CarregandoSkeleton from "../../../../CarregandoSkeleton";
+import { Skeleton } from "moti/skeleton";
 
 interface RetornoEstiloPreco {
     barra: string,
@@ -31,7 +33,6 @@ export default function HistoricoPrecos({
     const [maiorValor, setMaiorValor] = useState(-0.1);
     const [maiorData, setMaiorData] = useState(0);
     const [menorData, setMenorData] = useState(0);
-    const [periodoData, setPeriodoData] = useState(0);
 
     const scrollViewRef = useRef<ScrollView>(null);
 
@@ -41,17 +42,9 @@ export default function HistoricoPrecos({
 
         let datas = dados.map((dado) => new Date(dado.timestamp!)?.getTime());
 
-        console.log('datas', datas);
-        console.log('maiordata', Math.max(...datas));
-        console.log('menordata', Math.min(...datas));
-
         setMaiorData(Math.max(...datas));
         setMenorData(Math.min(...datas));
     }, []);
-
-    useEffect(() => {
-        setPeriodoData(maiorData - menorData);
-    }, [maiorData, menorData]);
 
     const obterEstiloPreco = (valor: number): RetornoEstiloPreco => {
         if (!valor)
@@ -108,7 +101,7 @@ export default function HistoricoPrecos({
                         });
 
                         return (
-                            <View key={indice} style={[estilos.coluna, (indice < dados.length - 1 ? { marginRight: 16 } : undefined)]}>
+                            <View key={indice} style={estilos.coluna}>
                                 <View style={[obterEstiloPreco(dado.preco!).tag, estilos.tagPreco]}>
                                     <Texto peso="700Bold" style={obterEstiloPreco(dado.preco!).tagTexto}>{Formatador.formatarMoeda(dado.preco!)}</Texto>
                                 </View>
@@ -121,6 +114,48 @@ export default function HistoricoPrecos({
                     null
                 }
             </ScrollView>
+        </View>
+    );
+}
+
+export function HistoricoPrecosPlaceholder() {
+
+    const { estilos } = useEstilos();
+
+    const obterAlturaAleatoria = () => {
+        return (Math.random() * 0.9) + 0.1;
+    };
+
+    const Coluna = () => {
+        return (
+            <View style={estilos.coluna}>
+                <View style={{ marginBottom: 10 }}>
+                    <CarregandoSkeleton width={60} height={26} />
+                </View>
+                <View style={[estilos.barra, { flex: obterAlturaAleatoria() }]}>
+                    <CarregandoSkeleton width={"100%"}>
+                        <View style={{ height: "100%"}} />
+                    </CarregandoSkeleton>
+                </View>
+                <View style={{ marginTop: 10 }}>
+                    <CarregandoSkeleton width={"100%"} height={26} />
+                </View>
+            </View>
+        );
+    };
+
+    return (
+        <View style={estilos.main}>
+            <View style={estilos.quantidade}>
+                <CarregandoSkeleton width={150} height={26} />
+            </View>
+            <View style={[estilos.scroll, estilos.conteudo, { flex: 1 }]}>
+                <Skeleton.Group show>
+                    <Coluna />
+                    <Coluna />
+                    <Coluna />
+                </Skeleton.Group>
+            </View>
         </View>
     );
 }

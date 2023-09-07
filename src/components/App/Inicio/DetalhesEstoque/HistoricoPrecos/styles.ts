@@ -24,6 +24,7 @@ export const useEstilos = () => {
 
         conteudo: {
             flexDirection: "row",
+            gap: 16,
         },
 
         quantidade: {

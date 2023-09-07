@@ -13,6 +13,8 @@ import mercadoServices from "../../../../services/mercadoServices";
 import estoqueServices from "../../../../services/estoqueServices";
 import sugestaoServices from "../../../../services/sugestaoServices";
 import CarregandoOverlay from "../../../CarregandoOverlay";
+import CarregandoSkeleton from "../../../CarregandoSkeleton";
+import { Skeleton } from "moti/skeleton";
 
 interface SugestaoProp extends ViewProps {
     item: Sugestao,
@@ -30,17 +32,19 @@ export default function DetalhesMercado({ navigation, route }: DetalhesMercadoPr
     const { estiloGlobal } = useEstiloGlobal();
 
     const [sugestoes, setSugestoes] = useState<Sugestao[]>([]);
-    const [carregando, setCarregando] = useState<boolean>(false);
+    const [sugestoesCarregando, setSugestoesCarregando] = useState<boolean>(false);
 
     const { item } = route.params;
 
     const obterSugestoes = async () => {
-        setCarregando(true);
+        setSugestoesCarregando(true);
 
         try {
             const { data: produtos } = await mercadoServices.listarProdutos(item.id || 0);
 
-            for (const produto of produtos) {
+            let sugestoesTemp: Sugestao[] = [];
+
+            for await (const produto of produtos) {
                 const { data: estoqueData } = await estoqueServices.getEstoques({
                     filtros: {
                         mercadoId: item.id || 0,
@@ -61,15 +65,17 @@ export default function DetalhesMercado({ navigation, route }: DetalhesMercadoPr
                         }
                     });
 
-                    setSugestoes((sugestoes) => [...sugestoes, sugestaoData[0]]);
+                    sugestoesTemp.push(sugestaoData[0]);
                 }
             };
+
+            setSugestoes(sugestoesTemp);
         }
         catch (erro) {
             console.log(erro);
         }
         finally {
-            setCarregando(false);
+            setSugestoesCarregando(false);
         }
     };
 
@@ -90,11 +96,22 @@ export default function DetalhesMercado({ navigation, route }: DetalhesMercadoPr
         );
     };
 
+    const ItemListaPlaceholder = (props: ViewProps) => {
+
+        return (
+            <View style={[estilos.listaItem, props.style]}>
+                <CarregandoSkeleton width={"100%"} height={160} />
+                <View style={{ height: 10 }} />
+                <CarregandoSkeleton width={"50%"} height={26} />
+                <View style={{ height: 8 }} />
+                <CarregandoSkeleton width={"80%"} height={16} />
+                <View style={{ height: 10 }} />
+            </View>
+        );
+    };
+
     return (
         <View style={estilos.main}>
-            {carregando &&
-                <CarregandoOverlay />
-            }
             <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.voltar]} onPress={() => navigation.goBack()}>
                 <Feather name="arrow-left" style={estiloGlobal.tagPequenaNormalTexto} />
                 <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaNormalTexto}>Voltar</Texto>
@@ -136,10 +153,18 @@ export default function DetalhesMercado({ navigation, route }: DetalhesMercadoPr
                     </View>
                     <View style={estilos.secao}>
                         <Texto peso="700Bold" style={[estiloGlobal.subtitulo, estilos.titulo]}>Nas prateleiras desse mercado</Texto>
-                        <ScrollView style={estilos.lista} contentContainerStyle={estilos.listaConteudo} nestedScrollEnabled>
-                            {sugestoes.map((sugestao, i) => (
-                                <ItemLista key={i} item={sugestao} style={(i % 2 === 0) ? { marginRight: "1%" } : { marginLeft: "1%" }} />
-                            ))}
+                        <ScrollView scrollEnabled={!sugestoesCarregando} style={estilos.lista} contentContainerStyle={estilos.listaConteudo} nestedScrollEnabled>
+                            {sugestoesCarregando ?
+                                <>
+                                    <ItemListaPlaceholder style={{ marginRight: "1%" }} />
+                                    <ItemListaPlaceholder style={{ marginLeft: "1%" }} />
+                                    <ItemListaPlaceholder style={{ marginRight: "1%" }} />
+                                    <ItemListaPlaceholder style={{ marginLeft: "1%" }} />
+                                </>
+                                :
+                                sugestoes.map((sugestao, i) => (
+                                    <ItemLista key={i} item={sugestao} style={(i % 2 === 0) ? { marginRight: "1%" } : { marginLeft: "1%" }} />
+                                ))}
                         </ScrollView>
                     </View>
                     <Texto style={estilos.listaObservacao}>As informações de estoque podem estar desatualizadas</Texto>

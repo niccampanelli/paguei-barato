@@ -16,6 +16,7 @@ import sugestaoServices from '../../../../services/sugestaoServices';
 import estoqueServices from '../../../../services/estoqueServices';
 import Formatador from '../../../../util/Formatador';
 import { Feather } from '@expo/vector-icons';
+import CarregandoSkeleton from '../../../CarregandoSkeleton';
 
 interface ModalAdicionarProps {
     alturaModal?: number;
@@ -42,6 +43,7 @@ export default function ModalAdicionar({
     const [produtoSelecionado, selecionarProduto] = useState<Produto>();
     const [sugestaoSelecionada, selecionarSugestao] = useState<Sugestao>();
     const [carregando, setCarregando] = useState<boolean>(false);
+    const [sugestoesCarregando, setSugestoesCarregando] = useState<boolean>(false);
 
     const aoConcluir = () => {
         selecionarProduto(undefined);
@@ -73,7 +75,7 @@ export default function ModalAdicionar({
     };
 
     const obterSugestoes = async () => {
-        setCarregando(true);
+        setSugestoesCarregando(true);
         setSugestoes([]);
         selecionarSugestao(undefined);
 
@@ -119,7 +121,7 @@ export default function ModalAdicionar({
             }
         }
         finally {
-            setCarregando(false);
+            setSugestoesCarregando(false);
         }
     };
 
@@ -131,6 +133,41 @@ export default function ModalAdicionar({
         if (produtoSelecionado?.id)
             obterSugestoes();
     }, [produtoSelecionado]);
+
+    const ItemLista = (props: ListRenderItemInfo<ItensListaPropsType>) => {
+
+        return (
+            <TouchableOpacity style={estilos.listaItem} onPress={() => selecionarSugestao(props.item)}>
+                <View style={estilos.listaItemImagemContainer}>
+                    {sugestaoSelecionada?.id === props.item.id &&
+                        <View style={[estiloGlobal.tagPequenaDestaque, estilos.listaItemSelecionadoBadge]}>
+                            <Feather style={[estiloGlobal.tagPequenaDestaqueTexto, { fontSize: 24 }]} name="check-circle" />
+                        </View>
+                    }
+                    <Image style={estilos.listaItemImagem} source={{ uri: "https://i.pinimg.com/originals/b1/f0/93/b1f093fb7e294260afe1cae34996eb33.jpg" }} />
+                </View>
+                <View style={estilos.listaItemInfos}>
+                    <Texto peso="800ExtraBold" style={estilos.listaItemTexto} numberOfLines={1}>{props.item.estoque?.mercado?.nome}</Texto>
+                    <Texto style={estilos.listaItemMercado} numberOfLines={1}>{props.item.estoque?.mercado?.logradouro}, {props.item.estoque?.mercado?.numero}</Texto>
+                </View>
+                <Texto peso="700Bold" style={estilos.listaItemPreco} numberOfLines={1}>{Formatador.formatarMoeda(props.item.preco || 0)}</Texto>
+            </TouchableOpacity>
+        );
+    };
+
+    const ItemListaPlaceholder = () => {
+
+        return (
+            <View style={[estilos.listaItem, { alignItems: "flex-start" }]}>
+                <CarregandoSkeleton width={50} height={50} />
+                <View style={[estilos.listaItemInfos, { gap: 10, marginLeft: 8 }]}>
+                    <CarregandoSkeleton width={100} height={16} />
+                    <CarregandoSkeleton width={200} height={16} />
+                </View>
+                <CarregandoSkeleton width={50} height={16} />
+            </View>
+        );
+    };
 
     return (
         <Modal titulo="Adicionar item à lista" refSheet={forwardRef} height={alturaModal}>
@@ -145,30 +182,22 @@ export default function ModalAdicionar({
                 <View style={{ flex: 1 }}>
                     {produtoSelecionado &&
                         <>
-                            <Texto peso="700Bold" style={estiloGlobal.subtitulo}>Escolha onde quer comprar</Texto>
-                            <FlatList
-                                style={estilos.modalLista}
-                                data={sugestoes}
-                                renderItem={(props: ListRenderItemInfo<ItensListaPropsType>) =>
-                                    <TouchableOpacity style={estilos.listaItem} onPress={() => selecionarSugestao(props.item)}>
-                                        <View style={estilos.listaItemImagemContainer}>
-                                            {sugestaoSelecionada?.id === props.item.id &&
-                                                <View style={[estiloGlobal.tagPequenaDestaque, estilos.listaItemSelecionadoBadge]}>
-                                                    <Feather style={[estiloGlobal.tagPequenaDestaqueTexto, { fontSize: 24 }]} name="check-circle" />
-                                                </View>
-                                            }
-                                            <Image style={estilos.listaItemImagem} source={{ uri: "https://i.pinimg.com/originals/b1/f0/93/b1f093fb7e294260afe1cae34996eb33.jpg" }} />
-                                        </View>
-                                        <View style={estilos.listaItemInfos}>
-                                            <Texto peso="800ExtraBold" style={estilos.listaItemTexto} numberOfLines={1}>{props.item.estoque?.mercado?.nome}</Texto>
-                                            <Texto style={estilos.listaItemMercado} numberOfLines={1}>{props.item.estoque?.mercado?.logradouro}, {props.item.estoque?.mercado?.numero}</Texto>
-                                        </View>
-                                        <Texto peso="700Bold" style={estilos.listaItemPreco} numberOfLines={1}>{Formatador.formatarMoeda(props.item.preco || 0)}</Texto>
-                                    </TouchableOpacity>
-                                }
-                                keyExtractor={(item, index) => item.id ? item.id.toString() : index.toString()}
-                                ListEmptyComponent={<Texto style={{ color: "#aaa" }}>Este produto ainda não foi sugerido.</Texto>}
-                            />
+                            <Texto peso="700Bold" style={[estiloGlobal.subtitulo, { marginBottom: 16 }]}>Escolha onde quer comprar</Texto>
+                            {sugestoesCarregando ?
+                                <>
+                                    <ItemListaPlaceholder />
+                                    <ItemListaPlaceholder />
+                                    <ItemListaPlaceholder />
+                                </>
+                                :
+                                <FlatList
+                                    style={estilos.modalLista}
+                                    data={sugestoes}
+                                    renderItem={(props: ListRenderItemInfo<ItensListaPropsType>) => <ItemLista {...props} />}
+                                    keyExtractor={(item, index) => item.id ? item.id.toString() : index.toString()}
+                                    ListEmptyComponent={<Texto style={{ color: "#aaa" }}>Este produto ainda não foi sugerido.</Texto>}
+                                />
+                            }
                         </>
                     }
                 </View>

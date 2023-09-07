@@ -113,7 +113,6 @@ export const useEstilos = () => {
 
         modalLista: {
             flex: 1,
-            marginTop: 16,
             marginBottom: 10,
             marginHorizontal: propriedadesTema.layout.paddingHorizontal * -1,
             paddingHorizontal: propriedadesTema.layout.paddingHorizontal

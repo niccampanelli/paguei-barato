@@ -3,7 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { Image, ScrollView, TouchableOpacity, View } from "react-native";
 import { useEstiloGlobal } from "../../../estiloGlobal";
 import { useEstilos } from "./styles";
-import Carrossel from "../../Carrossel";
+import Carrossel, { CarrosselPlaceholder } from "../../Carrossel";
 import { useTemaContext } from "../../../util/context/providers/temaProvider";
 import Texto from "../../Texto";
 import sugestaoServices from "../../../services/sugestaoServices";
@@ -31,14 +31,19 @@ export default function Inicio({ navigation, route }: InicioProps) {
     const modalRef = useRef<RBSheet>(null);
 
     const [sugestoes, setSugestoes] = useState<Sugestao[]>([]);
+    const [carregando, setCarregando] = useState<boolean>(false);
 
     const obterSugestoes = async () => {
+        setCarregando(true);
         try {
             const resposta = await sugestaoServices.getSugestoes();
             setSugestoes(resposta.data);
         }
         catch (erro) {
             console.log(erro);
+        }
+        finally {
+            setCarregando(false);
         }
     };
 
@@ -93,7 +98,12 @@ export default function Inicio({ navigation, route }: InicioProps) {
                     </View>
                     <Image style={estilos.destaqueImagem} source={{ uri: "https://images.unsplash.com/5/unsplash-kitsune-4.jpg?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjEyMDd9&s=fb86e2e09fceac9b363af536b93a1275", height: 150 }} />
                 </View>
-                {sugestoes.length > 0 &&
+                {carregando ?
+                    <>
+                        <CarrosselPlaceholder style={estilos.carrossel} />
+                        <CarrosselPlaceholder style={estilos.carrossel} />
+                    </>
+                    :
                     <>
                         <Carrossel
                             style={estilos.carrossel}
@@ -104,6 +114,7 @@ export default function Inicio({ navigation, route }: InicioProps) {
                             precoItem={(item: Sugestao) => item.preco || 0}
                             titulo="Maiores descontos"
                             dados={sugestoes}
+                            carregando={carregando}
                         />
                         <Carrossel
                             style={estilos.carrossel}
@@ -114,6 +125,7 @@ export default function Inicio({ navigation, route }: InicioProps) {
                             precoItem={(item: Sugestao) => item.preco || 0}
                             titulo="Maiores descontos"
                             dados={sugestoes}
+                            carregando={carregando}
                         />
                     </>
                 }

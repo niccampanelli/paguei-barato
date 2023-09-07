@@ -313,7 +313,7 @@ export default function Busca({ navigation, route }: BuscaProps) {
                     <Feather name="bar-chart" style={estiloGlobal.tagPequenaNormalTexto} />
                 </TouchableOpacity>
             </View>
-            <FlatList style={estilos.lista} data={itens} keyExtractor={item => item.id} renderItem={ItemLista} />
+            <FlatList style={estilos.lista} data={itens} keyExtractor={(item, indice) => item.id + "" + indice} renderItem={ItemLista} />
         </View>
     );
 }

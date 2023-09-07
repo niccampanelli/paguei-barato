@@ -7,7 +7,7 @@ import Sugestao from "../../../../interfaces/models/Sugestao";
 import { StackExternaRoutesParams } from "../../../../StackExterna";
 import Botao from "../../../Botao";
 import Texto from "../../../Texto";
-import HistoricoPrecos from "./HistoricoPrecos";
+import HistoricoPrecos, { HistoricoPrecosPlaceholder } from "./HistoricoPrecos";
 import { useEstilos } from "./styles";
 import Formatador from "../../../../util/Formatador";
 import CarregandoOverlay from '../../../CarregandoOverlay';
@@ -62,9 +62,6 @@ export default function DetalhesEstoque({ navigation, route }: DetalhesEstoquePr
 
     return (
         <View style={estilos.main}>
-            {carregando &&
-                <CarregandoOverlay />
-            }
             <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.voltar]} onPress={() => navigation.goBack()}>
                 <Feather name="arrow-left" style={estiloGlobal.tagPequenaNormalTexto} />
                 <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaNormalTexto}>Voltar</Texto>
@@ -101,7 +98,9 @@ export default function DetalhesEstoque({ navigation, route }: DetalhesEstoquePr
                         <Texto peso="700Bold" style={[estiloGlobal.subtitulo, estilos.titulo]}>Histórico de preços</Texto>
                         <Texto style={estiloGlobal.texto}>Preços registrados desse item desde que foi cadastrado pela primeira vez nesse mercado.</Texto>
                     </View>
-                    {!carregando &&
+                    {carregando ?
+                        <HistoricoPrecosPlaceholder />
+                        :
                         <HistoricoPrecos dados={sugestoes} />
                     }
                 </View>
