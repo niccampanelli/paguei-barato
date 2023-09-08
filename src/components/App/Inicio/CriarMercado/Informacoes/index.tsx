@@ -133,6 +133,7 @@ export default function EtapaInformacoes({ navigation, route }: InformacoesProps
                             textContentType="postalCode"
                             keyboardType="numeric"
                             value={mercado?.cep}
+                            mascara="cep"
                             onChangeText={(texto) => setMercado({ ...mercado, cep: texto })}
                             placeholder="01310-200"
                             maxLength={9}

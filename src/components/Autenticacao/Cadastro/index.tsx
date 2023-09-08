@@ -320,7 +320,9 @@ export default function Cadastro() {
                                 textContentType="postalCode"
                                 placeholder="CEP"
                                 value={cep}
+                                mascara="cep"
                                 onChangeText={setCep}
+                                maxLength={9}
                             />
                         </View>
                     </View>

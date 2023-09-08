@@ -34,15 +34,16 @@ export default function CriarSugestao({ navigation, route }: CriarSugestaoProps)
     const [produto, setProduto] = useState<Produto>({});
     const [mercado, setMercado] = useState<Mercado>({} as any);
     const [preco, setPreco] = useState<number>(0);
+    const [precoMascara, setPrecoMascara] = useState<string>("");
 
     const mercadoInputRef = useRef<TextInput>(null);
     const precoInputRef = useRef<TextInput>(null);
 
     const concluir = async () => {
         setCarregando(true);
-        
+
         const concluirSugestao = async (estoqueId: number) => {
-        
+
             const respostaSugestao = await sugestaoServices.criarSugestao({
                 estoqueId: estoqueId,
                 preco: preco
@@ -91,7 +92,7 @@ export default function CriarSugestao({ navigation, route }: CriarSugestaoProps)
         try {
             const respostaProdutos = await produtoServices.getProdutos();
             setProdutos(respostaProdutos.data);
-            
+
             const respostaMercados = await mercadoServices.getMercados();
             setMercados(respostaMercados.data);
         }
@@ -165,8 +166,12 @@ export default function CriarSugestao({ navigation, route }: CriarSugestaoProps)
                             onSubmitEditing={concluir}
                             forwardRef={precoInputRef}
                             keyboardType="numeric"
-                            value={preco.toString()}
-                            onChangeText={(texto) => setPreco(Number(texto))}
+                            value={precoMascara}
+                            mascara="dinheiro"
+                            onChangeText={(valor, texto) => {
+                                setPrecoMascara(valor || "");
+                                setPreco(Number(texto));
+                            }}
                             placeholder="3,99"
                         />
                     </View>

@@ -3,14 +3,29 @@ import { TextInput, TextInputProps, View, TouchableOpacity } from "react-native"
 import { useEstiloGlobal } from "../../estiloGlobal";
 import { useTemaContext } from "../../util/context/providers/temaProvider";
 import { Feather } from "@expo/vector-icons";
+import mascarasInput from "../../util/mascarasInput";
 
-interface InputProps extends TextInputProps {
+type ObjetoTipoMascara = {
+    aplicar: (valor: string) => string,
+    remover: (valor: string) => string,
+}
+
+export type TiposMascara = {
+    cep: ObjetoTipoMascara,
+    dinheiro: ObjetoTipoMascara,
+};
+
+interface InputProps extends Omit<TextInputProps, "onChangeText"> {
     icone: ReactElement,
+    mascara?: keyof TiposMascara,
+    onChangeText?: ((valor: string, valorSemMascara?: string) => void)
     forwardRef?: React.MutableRefObject<any>,
 }
 
 export default function Input({
     icone,
+    mascara,
+    onChangeText,
     forwardRef,
     secureTextEntry,
     ...props
@@ -24,7 +39,23 @@ export default function Input({
     return (
         <View style={estiloGlobal.input}>
             {icone}
-            <TextInput ref={forwardRef} placeholderTextColor={propriedadesTema.cores.textoClaro} secureTextEntry={visibilidadeCampo} style={estiloGlobal.inputCampo} {...props} />
+            <TextInput
+                ref={forwardRef}
+                placeholderTextColor={propriedadesTema.cores.textoClaro}
+                secureTextEntry={visibilidadeCampo}
+                style={estiloGlobal.inputCampo}
+                onChangeText={(valor) => {
+                    if (mascara) {
+                        onChangeText?.(
+                            mascarasInput[mascara].aplicar(valor),
+                            mascarasInput[mascara].remover(valor),
+                        );
+                    } else {
+                        onChangeText?.(valor);
+                    }
+                }}
+                {...props}
+            />
             {secureTextEntry &&
                 <TouchableOpacity style={{ paddingVertical: 5, paddingLeft: 10 }} onPress={() => setVisibilidadeCampo(!visibilidadeCampo)}>
                     {visibilidadeCampo ?
