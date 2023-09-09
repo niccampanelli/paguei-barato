@@ -20,6 +20,10 @@ import Mercado from "../../../interfaces/models/Mercado";
 
 type ListaProps = BottomTabScreenProps<NavegacaoAppRoutesParams, "lista">;
 
+interface FiltrosMercados extends Mercado {
+    selecionado?: boolean;
+}
+
 export default function Lista({ navigation, route }: ListaProps) {
 
     const { estilos } = useEstilos();
@@ -29,7 +33,7 @@ export default function Lista({ navigation, route }: ListaProps) {
     const { notificar } = useNotificacaoToast();
     const dimensoesTela = useWindowDimensions();
     const [alturaModal, setAlturaModal] = useState(0);
-    const [mercados, setMercados] = useState<Mercado[]>([]);
+    const [mercados, setMercados] = useState<FiltrosMercados[]>([]);
     const [valorTotal, setValorTotal] = useState(0);
 
     const modalRef = useRef<RBSheet>(null);
@@ -47,8 +51,9 @@ export default function Lista({ navigation, route }: ListaProps) {
 
         let mercadosLista = itensLista.map(item => item.sugestao.estoque?.mercado!);
         let mercadosUnicos = [...new Map(mercadosLista.map(mercado => [mercado['id'], mercado])).values()];
+        mercadosUnicos = mercadosUnicos.map(mercado => ({ ...mercado, selecionado: true }));
         setMercados(mercadosUnicos);
-    }, [itensLista]);
+    }, [itensLista.length]);
 
     const obterTextoQuantidade = () => {
         if (itensLista.length === 0)
@@ -66,6 +71,12 @@ export default function Lista({ navigation, route }: ListaProps) {
 
     const irParaDetalhes = (item: Sugestao) => {
         navigation.getParent()?.navigate("detalhesEstoque", { item });
+    };
+
+    const selecionarFiltroMercado = (index: number) => {
+        let mercadosAtualizados = [...mercados];
+        mercadosAtualizados[index].selecionado = !mercadosAtualizados[index].selecionado;
+        setMercados(mercadosAtualizados);
     };
 
     const ItemLista = ({ item }: ListRenderItemInfo<ItemListaCompras>) => {
@@ -185,6 +196,8 @@ export default function Lista({ navigation, route }: ListaProps) {
         );
     };
 
+    const renderizarItemLista = (props: ListRenderItemInfo<ItemListaCompras>) => (<ItemLista key={props.item.sugestao.id} {...props} />);
+
     return (
         <View style={estilos.container}>
             <ModalAdicionar adicionarSugestao={(item) => { adicionarSugestaoLista(item); modalRef.current?.close() }} alturaModal={alturaModal} forwardRef={modalRef} />
@@ -207,9 +220,11 @@ export default function Lista({ navigation, route }: ListaProps) {
                     contentContainerStyle={estilos.listaFiltrosContainer}
                     data={mercados}
                     renderItem={(item) =>
-                        <View style={estiloGlobal.tagPequenaSecundaria}>
-                            <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>{item.item.nome}</Texto>
-                        </View>
+                        <TouchableOpacity onPress={() => selecionarFiltroMercado(item.index)} style={item.item.selecionado ? estiloGlobal.tagPequenaSecundaria : estiloGlobal.tagPequenaNormal}>
+                            <Texto peso={item.item.selecionado ? "700Bold" : "400Regular"} style={item.item.selecionado ? estiloGlobal.tagPequenaSecundariaTexto : estiloGlobal.tagPequenaNormalTexto}>
+                                {item.item.nome}
+                            </Texto>
+                        </TouchableOpacity>
                     }
                 />
             </View>
@@ -217,8 +232,15 @@ export default function Lista({ navigation, route }: ListaProps) {
                 <FlatList
                     style={estilos.lista}
                     contentContainerStyle={{ paddingBottom: 80 }}
-                    data={itensLista}
-                    renderItem={(props: ListRenderItemInfo<ItemListaCompras>) => <ItemLista {...props} />}
+                    data={
+                        itensLista.filter(item => {
+                            let mercado = item.sugestao.estoque?.mercado;
+                            if (mercado === undefined)
+                                return false;
+                            return mercados.find(m => m.id === mercado?.id)?.selecionado === true;
+                        })
+                    }
+                    renderItem={renderizarItemLista}
                     ListEmptyComponent={<Texto peso="800ExtraBold">Nenhum item na lista de compras.</Texto>}
                 />
             </GestureHandlerRootView>
