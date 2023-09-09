@@ -18,6 +18,7 @@ export type TiposMascara = {
 interface InputProps extends Omit<TextInputProps, "onChangeText"> {
     icone: ReactElement,
     mascara?: keyof TiposMascara,
+    desativado?: boolean,
     onChangeText?: ((valor: string, valorSemMascara?: string) => void)
     forwardRef?: React.MutableRefObject<any>,
 }
@@ -25,6 +26,7 @@ interface InputProps extends Omit<TextInputProps, "onChangeText"> {
 export default function Input({
     icone,
     mascara,
+    desativado,
     onChangeText,
     forwardRef,
     secureTextEntry,
@@ -38,12 +40,15 @@ export default function Input({
 
     return (
         <View style={estiloGlobal.input}>
-            {icone}
+            <View style={desativado && { opacity: 0.3 }}>
+                {icone}
+            </View>
             <TextInput
                 ref={forwardRef}
                 placeholderTextColor={propriedadesTema.cores.textoClaro}
                 secureTextEntry={visibilidadeCampo}
-                style={estiloGlobal.inputCampo}
+                style={[estiloGlobal.inputCampo, desativado && { opacity: 0.3 }]}
+                editable={!desativado}
                 onChangeText={(valor) => {
                     if (mascara) {
                         onChangeText?.(
@@ -57,7 +62,7 @@ export default function Input({
                 {...props}
             />
             {secureTextEntry &&
-                <TouchableOpacity style={{ paddingVertical: 5, paddingLeft: 10 }} onPress={() => setVisibilidadeCampo(!visibilidadeCampo)}>
+                <TouchableOpacity style={[{ paddingVertical: 5, paddingLeft: 10 }, desativado && [{ opacity: 0.3 }]]} onPress={() => setVisibilidadeCampo(!visibilidadeCampo)}>
                     {visibilidadeCampo ?
                         <Feather name="eye" size={20} color={propriedadesTema.cores.textoClaro} />
                         :
@@ -65,6 +70,6 @@ export default function Input({
                     }
                 </TouchableOpacity>
             }
-        </View>
+        </View >
     );
 }

@@ -13,6 +13,8 @@ import UF from '../../../../../interfaces/models/UF';
 import ramoServices from '../../../../../services/ramoServices';
 import Ramo from '../../../../../interfaces/models/Ramo';
 import AutoComplete from '../../../../AutoComplete';
+import CarregandoOverlay from '../../../../CarregandoOverlay';
+import enderecoServices from '../../../../../services/enderecoServices';
 
 type InformacoesProps = NativeStackScreenProps<FluxoCriarMercadoParams, "informacoes">;
 
@@ -24,6 +26,7 @@ export default function EtapaInformacoes({ navigation, route }: InformacoesProps
     const [ramos, setRamos] = useState<Ramo[]>([]);
     const [mercado, setMercado] = useState<Mercado>({} as any);
     const [carregando, setCarregando] = useState<boolean>(false);
+    const [cepPreenchido, setCepPreenchido] = useState<boolean>(false);
 
     const descricaoRamoInputRef = useRef<TextInput>(null);
     const nomeInputRef = useRef<TextInput>(null);
@@ -54,12 +57,48 @@ export default function EtapaInformacoes({ navigation, route }: InformacoesProps
         }
     };
 
+    const obterEndereco = async () => {
+        setCarregando(true);
+
+        try {
+            const { data } = await enderecoServices.getEnderecoViaCep(mercado.cep);
+            setMercado({
+                ...mercado,
+                logradouro: data.logradouro,
+                bairro: data.bairro,
+                cidade: data.localidade,
+                uf: data.uf
+            });
+
+            numeroInputRef.current?.focus();
+        }
+        catch (erro) {
+            console.log(erro);
+        }
+        finally {
+            setCarregando(false);
+        }
+    };
+
     useEffect(() => {
         obterRamos();
     }, []);
 
+    useEffect(() => {
+        if (mercado.cep?.length === 9) {
+            obterEndereco();
+            setCepPreenchido(true);
+        }
+        else {
+            setCepPreenchido(false);
+        }
+    }, [mercado.cep]);
+
     return (
         <View style={estilos.main}>
+            {carregando &&
+                <CarregandoOverlay />
+            }
             <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.voltar]} onPress={() => navigation.goBack()}>
                 <Feather name="arrow-left" style={estiloGlobal.tagPequenaNormalTexto} />
                 <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaNormalTexto}>Voltar</Texto>
@@ -83,7 +122,7 @@ export default function EtapaInformacoes({ navigation, route }: InformacoesProps
                             placeholder="Supermercado, farmácia, padaria..."
                             extrairChave={(ramo) => ramo.nome}
                             aoSelecionar={(ramo) => setMercado({ ...mercado, ramo })}
-                            aoSelecionarPadrao={(nome) => setMercado({...mercado, ramo: { nome }})}
+                            aoSelecionarPadrao={(nome) => setMercado({ ...mercado, ramo: { nome } })}
                             dados={ramos}
                         />
                     </View>
@@ -154,6 +193,7 @@ export default function EtapaInformacoes({ navigation, route }: InformacoesProps
                                 value={mercado?.logradouro}
                                 onChangeText={(texto) => setMercado({ ...mercado, logradouro: texto })}
                                 placeholder="Nome da rua ou avenida"
+                                desativado={!cepPreenchido}
                             />
                         </View>
                         <View style={[estilos.grupoForm, { flex: 1 }]}>
@@ -168,6 +208,7 @@ export default function EtapaInformacoes({ navigation, route }: InformacoesProps
                                 value={mercado?.numero?.toString()}
                                 onChangeText={(texto) => setMercado({ ...mercado, numero: parseInt(texto) })}
                                 placeholder="26"
+                                desativado={!cepPreenchido}
                             />
                         </View>
                     </View>
@@ -185,6 +226,7 @@ export default function EtapaInformacoes({ navigation, route }: InformacoesProps
                             value={mercado?.complemento}
                             onChangeText={(texto) => setMercado({ ...mercado, complemento: texto })}
                             placeholder="Bloco, portão, quadra, etc."
+                            desativado={!cepPreenchido}
                         />
                     </View>
                     <View style={estilos.grupoForm}>
@@ -201,6 +243,7 @@ export default function EtapaInformacoes({ navigation, route }: InformacoesProps
                             value={mercado?.bairro}
                             onChangeText={(texto) => setMercado({ ...mercado, bairro: texto })}
                             placeholder="Bela Vista"
+                            desativado={!cepPreenchido}
                         />
                     </View>
                     <View style={estilos.grupoForm2}>
@@ -218,6 +261,7 @@ export default function EtapaInformacoes({ navigation, route }: InformacoesProps
                                 value={mercado?.cidade}
                                 onChangeText={(texto) => setMercado({ ...mercado, cidade: texto })}
                                 placeholder="São Paulo"
+                                desativado={!cepPreenchido}
                             />
                         </View>
                         <View style={[estilos.grupoForm, { flex: 1 }]}>
@@ -234,6 +278,7 @@ export default function EtapaInformacoes({ navigation, route }: InformacoesProps
                                 value={mercado?.uf}
                                 onChangeText={(texto) => setMercado({ ...mercado, uf: texto as UF })}
                                 placeholder="SP"
+                                desativado={!cepPreenchido}
                             />
                         </View>
                     </View>
