@@ -61,30 +61,23 @@ export default function AuthProvider(props: any) {
 
     const fazerLogin = async (email: string, senha: string) => {
         try {
-            console.log("chamou o método no provider");
-            
-            await authServices.fazerLogin(email, senha);
+            const response = await authServices.fazerLogin(email, senha);
 
             const usuario: Usuario = {
-                id: 1,
-                nome: "Teste",
-                email: "teste@email.com",
-                senha: "123456",
-                bairro: "Centro",
-                cidade: "São Paulo",
-                uf: "SP",
-                cep: "12345678",
-                logradouro: "Rua Teste",
-                numero: 23,
-                complemento: "Casa 2",
+                id: response.id,
+                nome: response.nome,
+                email: response.email,
+                senha: response.senha,
+                bairro: response.bairro,
+                cidade: response.cidade,
+                uf: response.uf,
+                cep: response.cep,
+                logradouro: response.logradouro,
+                numero: response.numero,
+                complemento: response.complemento,
             }
 
             setUsuarioLogado(usuario);
-
-            console.log("salvou o usuário no provider");
-            console.log(JSON.stringify(usuario, null, 2));
-            
-
         } catch (error) {
             throw error;
         }

@@ -36,13 +36,10 @@ export default function Login({ navigation, route }: LoginProps) {
     };
 
     const login = async () => {
-
         if (carregando) return;
         setCarregando(true);
 
         try {
-            console.log("chamou o método na tela");
-
             await fazerLogin(email, senha);
             setTimeout(() => {
                 navigation.replace("app", {} as any);
