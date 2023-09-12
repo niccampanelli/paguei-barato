@@ -87,9 +87,7 @@ export default function Inicio({ navigation, route }: InicioProps) {
                 <View style={estilos.cabecalho}>
                     <Logo style={estilos.logo} />
                     <Texto peso="800ExtraBold" style={estiloGlobal.subtitulo}>
-                        {obterSaudacao(
-                            usuarioLogado ? usuarioLogado.nome : "visitante"
-                        )}
+                        {obterSaudacao(usuarioLogado?.nome?.split(" ")[0])}
                     </Texto>
                 </View>
                 <View style={estilos.destaque}>
