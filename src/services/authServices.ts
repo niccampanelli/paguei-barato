@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Erro from "../interfaces/Erro";
 import Usuario from "../interfaces/models/Usuario";
 import API from "./api";
+import RespostaLogin from "../interfaces/models/RespostaLogin";
 
 const authServices = {
 
@@ -21,25 +22,20 @@ const authServices = {
         });
     },
 
-    async fazerLogin(email: string, senha: string): Promise<string> {
+    async fazerLogin(email: string, senha: string): Promise<RespostaLogin> {
         try {
-            console.log("chamou no authServices");
-            
             const api = await API.obterInstanciaAxios();
             const response = await api.post('/login', {
                 email,
                 senha
             });
 
-            const token = response.data;
-            console.log("token: ", token);
-            
+            const token = response.data.token;
 
             if (token) {
                 await AsyncStorage.setItem("bearerToken", token);
-                console.log("salvou o token");
-
-                return token;
+                API.definirTokenInstanciaAxios(token);
+                return response.data;
             }
             else {
                 const erro: Erro<any> = {
