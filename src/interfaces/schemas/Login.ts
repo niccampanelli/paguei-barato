@@ -10,7 +10,6 @@ const loginSchema: yup.ObjectSchema<Login> = yup.object().shape({
     senha: yup
         .string()
         .required("Informe a senha")
-        .min(6, "A senha deve ter no mínimo 6 caracteres")
         .defined("Informe a senha")
 });
 

@@ -1,17 +1,13 @@
 import * as yup from 'yup';
-import Usuario from '../models/Usuario';
 import UF from '../models/UF';
+import Cadastro from '../models/Cadastro';
 
-const usuarioSchema: yup.ObjectSchema<Usuario> = yup.object().shape({
+const cadastroSchema: yup.ObjectSchema<Cadastro> = yup.object().shape({
     id: yup
         .number(),
     nome: yup
         .string()
         .required("Informe o nome")
-        .defined(),
-    sobrenome: yup
-        .string()
-        .required("Informe o sobrenome")
         .defined(),
     email: yup
         .string()
@@ -23,7 +19,7 @@ const usuarioSchema: yup.ObjectSchema<Usuario> = yup.object().shape({
         .required("Informe a senha")
         .min(8, "A senha deve ter no mínimo 8 caracteres")
         .defined(),
-    confirmacaoSenha: yup
+    senhaConfirma: yup
         .string()
         .required("Confirme a senha")
         .oneOf([yup.ref("senha")], "A confirmação deve ser igual à senha")
@@ -60,4 +56,4 @@ const usuarioSchema: yup.ObjectSchema<Usuario> = yup.object().shape({
         .defined()
 });
 
-export default usuarioSchema;
+export default cadastroSchema;

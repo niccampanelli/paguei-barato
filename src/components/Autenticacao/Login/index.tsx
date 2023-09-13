@@ -34,7 +34,7 @@ export default function Login({ navigation, route }: LoginProps) {
         formState: { isValid, errors },
     } = useForm({
         resolver: yupResolver(loginSchema),
-        mode: "onBlur"
+        mode: "onChange"
     });
 
     const senhaInputRef = useRef<TextInput>(null);
@@ -46,8 +46,6 @@ export default function Login({ navigation, route }: LoginProps) {
     };
 
     const login = async ({ email, senha }: LoginInterface) => {
-        console.log(email, senha);
-
         if (carregando) return;
         setCarregando(true);
 
