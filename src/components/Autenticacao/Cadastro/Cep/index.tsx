@@ -10,7 +10,7 @@ import Botao from "../../../Botao";
 import { useEstilos } from "../styles";
 import { useEstiloGlobal } from "../../../../estiloGlobal";
 import CarregandoOverlay from "../../../CarregandoOverlay";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import enderecoServices from "../../../../services/enderecoServices";
 import { useCadastroContext } from "../../../../util/context/providers/cadastroProvider";
 
@@ -20,7 +20,7 @@ export default function EtapaCep({ navigation, route }: EtapaCepProps) {
 
     const { estilos } = useEstilos();
     const { estiloGlobal } = useEstiloGlobal();
-    const { control, errors, setValue, getValues } = useCadastroContext();
+    const { control, errors, setValue, getValues, etapaCepValida } = useCadastroContext();
 
     const [carregando, setCarregando] = useState<boolean>(false);
 
@@ -31,10 +31,10 @@ export default function EtapaCep({ navigation, route }: EtapaCepProps) {
             const { data } = await enderecoServices.getEnderecoViaCep(getValues!().cep);
 
             if (data.logradouro) {
-                setValue!("logradouro", data.logradouro);
-                setValue!("bairro", data.bairro);
-                setValue!("cidade", data.localidade);
-                setValue!("uf", data.uf);
+                setValue!("logradouro", data.logradouro, { shouldDirty: true });
+                setValue!("bairro", data.bairro, { shouldDirty: true });
+                setValue!("cidade", data.localidade, { shouldDirty: true });
+                setValue!("uf", data.uf, { shouldDirty: true });
             }
         }
         catch (error) {
@@ -47,6 +47,7 @@ export default function EtapaCep({ navigation, route }: EtapaCepProps) {
 
     const proximo = async (e: GestureResponderEvent) => {
         e.preventDefault();
+        if (!etapaCepValida) return;
 
         await obterEndereco();
 
@@ -87,7 +88,7 @@ export default function EtapaCep({ navigation, route }: EtapaCepProps) {
                     </View>
                 </View>
             </View>
-            <Botao titulo="Próxima etapa" icone="arrow-right" onPress={proximo} />
+            <Botao disabled={!etapaCepValida} titulo="Próxima etapa" icone="arrow-right" onPress={proximo} />
         </KeyboardAvoidingView>
     );
 };

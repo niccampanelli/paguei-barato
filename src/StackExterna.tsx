@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { NavigationContainer, NavigatorScreenParams } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Login from "./components/Autenticacao/Login";
@@ -12,7 +11,6 @@ import { useAuthContext } from "./util/context/providers/authProvider";
 import CriarProduto from "./components/App/Inicio/CriarProduto";
 import CriarMercado from "./components/App/Inicio/CriarMercado";
 import CriarSugestao from "./components/App/Inicio/CriarSugestao";
-import CadastroProvider from "./util/context/providers/cadastroProvider";
 
 export type StackExternaRoutesParams = {
 	login: undefined;

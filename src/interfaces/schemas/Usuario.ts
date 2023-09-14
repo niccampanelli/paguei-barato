@@ -22,6 +22,10 @@ const usuarioSchema: yup.ObjectSchema<Usuario> = yup.object().shape({
         .string()
         .required("Informe a senha")
         .min(8, "A senha deve ter no mínimo 8 caracteres")
+        .matches(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+            "A senha deve conter pelo menos uma letra maiúscula, uma minúscula, um número e um caractere especial"
+        )
         .defined(),
     confirmacaoSenha: yup
         .string()

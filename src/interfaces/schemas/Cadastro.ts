@@ -18,6 +18,10 @@ const cadastroSchema: yup.ObjectSchema<Cadastro> = yup.object().shape({
         .string()
         .required("Informe a senha")
         .min(8, "A senha deve ter no mínimo 8 caracteres")
+        .matches(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+            "A senha deve conter pelo menos uma letra maiúscula, uma minúscula, um número e um caractere especial"
+        )
         .defined(),
     senhaConfirma: yup
         .string()
@@ -46,6 +50,8 @@ const cadastroSchema: yup.ObjectSchema<Cadastro> = yup.object().shape({
         .defined(),
     uf: yup
         .mixed<UF>()
+        .oneOf(["AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"],
+            "Informe um estado válido")
         .required("Informe o estado")
         .defined(),
     cep: yup

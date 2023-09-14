@@ -7,7 +7,7 @@ import { Feather } from "@expo/vector-icons";
 import Botao from "../../../Botao";
 import { useEstilos } from "../styles";
 import { useEstiloGlobal } from "../../../../estiloGlobal";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Animated, { useAnimatedStyle, useSharedValue, withDelay, withSpring } from "react-native-reanimated";
 import { useCadastroContext } from "../../../../util/context/providers/cadastroProvider";
 
@@ -15,10 +15,12 @@ type EtapaFinalProps = NativeStackScreenProps<FluxoCadastroParams, "etapaFinal">
 
 export default function EtapaFinal({ navigation, route }: EtapaFinalProps) {
 
-    const { getValues, setMostraBanner, finalizarCadastro, carregando } = useCadastroContext();
+    const { getValues, setMostraBanner, finalizarCadastro } = useCadastroContext();
 
     const { estilos } = useEstilos();
     const { estiloGlobal } = useEstiloGlobal();
+
+    const [carregando, setCarregando] = useState<boolean>(true);
 
     const proximo = (e: GestureResponderEvent) => {
         e.preventDefault();
@@ -27,9 +29,13 @@ export default function EtapaFinal({ navigation, route }: EtapaFinalProps) {
     };
 
     const concluir = async () => {
-        await finalizarCadastro!().catch(() => {
-            navigation.getParent()?.navigate("login");
-        });
+        await finalizarCadastro!()
+            .then(() => {
+                setCarregando(false);
+            })
+            .catch(() => {
+                navigation.getParent()?.navigate("login");
+            });
     };
 
     useEffect(() => {

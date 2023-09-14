@@ -11,49 +11,43 @@ export default function AuthProvider(props: any) {
     
     const [usuarioLogado, setUsuarioLogado] = useState<Usuario>();
 
-    // const verificarUsuarioLogado = async () => {
-    //     try {
-    //         const token = AsyncStorage.getItem("bearerToken");
+    const verificarUsuarioLogado = async () => {
+        try {
+            const token = AsyncStorage.getItem("bearerToken");
 
-    //         if(!token) {
-    //             setUsuarioLogado(undefined);
-    //             return;
-    //         }
+            if(!token) {
+                setUsuarioLogado(undefined);
+                return;
+            }
 
-    //         const usuario: Usuario = {
-    //             id: 1,
-    //             nome: "Teste",
-    //             email: "teste@email.com",
-    //             senha: "123456",
-    //             bairro: "Centro",
-    //             cidade: "São Paulo",
-    //             uf: "SP",
-    //             cep: "12345678",
-    //             logradouro: "Rua Teste",
-    //             numero: 23,
-    //             complemento: "Casa 2",
-    //         }
+            const usuario: Usuario = {
+                id: 1,
+                nome: "Teste",
+                email: "teste@email.com",
+                senha: "123456",
+                bairro: "Centro",
+                cidade: "São Paulo",
+                uf: "SP",
+                cep: "12345678",
+                logradouro: "Rua Teste",
+                numero: 23,
+                complemento: "Casa 2",
+            }
 
-    //         setUsuarioLogado(usuario);
+            setUsuarioLogado(usuario);
 
-    //     } catch (error) {
-    //         console.log(error);            
-    //     }
-    // };
+        } catch (error) {
+            console.log(error);            
+        }
+    };
 
     const cadastrarUsuario = async (usuario: Usuario) => {
         try {
             
             usuario.numero = Number(usuario.numero);
-
-            console.log("cadastrando");
-            console.log(JSON.stringify(usuario, null, 2));
-            console.log(typeof usuario.numero);
             
-            const data = await authServices.cadastrarUsuario(usuario);
-            console.log("cadastro: ", data);
-            const token = await fazerLogin(usuario.email, usuario.senha);
-            console.log("token: ", token);
+            await authServices.cadastrarUsuario(usuario);
+            await fazerLogin(usuario.email, usuario.senha);
         } catch (error) {
             throw error;
         }
@@ -94,9 +88,9 @@ export default function AuthProvider(props: any) {
         }
     };
 
-    // useEffect(() => {
-    //     verificarUsuarioLogado();
-    // }, []);
+    useEffect(() => {
+        verificarUsuarioLogado();
+    }, []);
 
     return (
         <AuthContext.Provider value={{

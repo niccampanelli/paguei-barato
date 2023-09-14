@@ -9,7 +9,7 @@ import { Feather } from "@expo/vector-icons";
 import Botao from "../../../Botao";
 import { useEstilos } from "../styles";
 import { useEstiloGlobal } from "../../../../estiloGlobal";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useCadastroContext } from "../../../../util/context/providers/cadastroProvider";
 
 type EtapaSenhaProps = NativeStackScreenProps<FluxoCadastroParams, "etapaSenha">;
@@ -18,12 +18,13 @@ export default function EtapaSenha({ navigation, route }: EtapaSenhaProps) {
 
     const { estilos } = useEstilos();
     const { estiloGlobal } = useEstiloGlobal();
-    const { control, errors } = useCadastroContext();
+    const { control, errors, etapaSenhaValida } = useCadastroContext();
 
     const confirmaSenhaRef = useRef<TextInput>(null);
 
     const proximo = (e: GestureResponderEvent) => {
         e.preventDefault();
+        if (!etapaSenhaValida) return;
 
         navigation.navigate("etapaCep");
     };
@@ -81,7 +82,7 @@ export default function EtapaSenha({ navigation, route }: EtapaSenhaProps) {
                     </View>
                 </View>
             </View>
-            <Botao titulo="Próxima etapa" icone="arrow-right" onPress={proximo} />
+            <Botao disabled={!etapaSenhaValida} titulo="Próxima etapa" icone="arrow-right" onPress={proximo} />
         </KeyboardAvoidingView>
     );
 };

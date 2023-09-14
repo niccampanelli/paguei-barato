@@ -9,7 +9,16 @@ export type ContextCadastro = {
     finalizarCadastro?: () => Promise<void>;
     getValues?: UseFormGetValues<Cadastro>;
     setValue?: UseFormSetValue<Cadastro>;
-    carregando?: boolean;
     mostraBanner?: boolean;
     setMostraBanner?: Dispatch<SetStateAction<boolean>>;
+    etapaNomeValida?: boolean;
+    etapaEmailValida?: boolean;
+    etapaSenhaValida?: boolean;
+    etapaCepValida?: boolean;
+    etapaEnderecoValida?: boolean;
+    verificarValidadeEtapaNome?: () => void;
+    verificarValidadeEtapaEmail?: () => void;
+    verificarValidadeEtapaSenha?: () => void;
+    verificarValidadeEtapaCep?: () => void;
+    verificarValidadeEtapaEndereco?: () => void;
 }

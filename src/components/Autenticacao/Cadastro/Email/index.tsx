@@ -10,6 +10,7 @@ import Botao from "../../../Botao";
 import { useEstilos } from "../styles";
 import { useEstiloGlobal } from "../../../../estiloGlobal";
 import { useCadastroContext } from "../../../../util/context/providers/cadastroProvider";
+import { useEffect, useState } from "react";
 
 type EtapaEmailProps = NativeStackScreenProps<FluxoCadastroParams, "etapaEmail">;
 
@@ -17,10 +18,11 @@ export default function EtapaEmail({ navigation, route }: EtapaEmailProps) {
     
     const { estilos } = useEstilos();
     const { estiloGlobal } = useEstiloGlobal();
-    const { control, errors } = useCadastroContext();
+    const { control, errors, etapaEmailValida } = useCadastroContext();
 
     const proximo = (e: GestureResponderEvent) => {
         e.preventDefault();
+        if (!etapaEmailValida) return;
 
         navigation.navigate("etapaSenha");
     };
@@ -55,7 +57,7 @@ export default function EtapaEmail({ navigation, route }: EtapaEmailProps) {
                     </View>
                 </View>
             </View>
-            <Botao titulo="Próxima etapa" icone="arrow-right" onPress={proximo} />
+            <Botao disabled={!etapaEmailValida} titulo="Próxima etapa" icone="arrow-right" onPress={proximo} />
         </KeyboardAvoidingView>
     );
 };

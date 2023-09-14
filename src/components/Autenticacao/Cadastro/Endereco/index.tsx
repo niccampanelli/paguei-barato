@@ -9,7 +9,7 @@ import { Feather } from "@expo/vector-icons";
 import Botao from "../../../Botao";
 import { useEstilos } from "../styles";
 import { useEstiloGlobal } from "../../../../estiloGlobal";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useCadastroContext } from "../../../../util/context/providers/cadastroProvider";
 
 type EtapaEnderecoProps = NativeStackScreenProps<FluxoCadastroParams, "etapaEndereco">;
@@ -18,7 +18,7 @@ export default function EtapaEndereco({ navigation, route }: EtapaEnderecoProps)
 
     const { estilos } = useEstilos();
     const { estiloGlobal } = useEstiloGlobal();
-    const { control, errors, getValues } = useCadastroContext();
+    const { control, errors, getValues, etapaEnderecoValida, verificarValidadeEtapaEndereco } = useCadastroContext();
 
     const numeroInputRef = useRef<TextInput>(null);
     const complementoInputRef = useRef<TextInput>(null);
@@ -28,6 +28,7 @@ export default function EtapaEndereco({ navigation, route }: EtapaEnderecoProps)
 
     const proximo = (e: GestureResponderEvent) => {
         e.preventDefault();
+        if (!etapaEnderecoValida) return;
 
         navigation.navigate("etapaFinal");
     };
@@ -190,7 +191,7 @@ export default function EtapaEndereco({ navigation, route }: EtapaEnderecoProps)
                     </View>
                 </View>
             </View>
-            <Botao titulo="Finalizar cadastro" icone="check-circle" onPress={proximo} />
+            <Botao disabled={!etapaEnderecoValida} titulo="Finalizar cadastro" icone="check-circle" onPress={proximo} />
         </KeyboardAvoidingView>
     );
 };

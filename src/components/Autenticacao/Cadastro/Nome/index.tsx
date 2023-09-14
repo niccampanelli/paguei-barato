@@ -10,6 +10,7 @@ import Botao from "../../../Botao";
 import { useEstilos } from "../styles";
 import { useEstiloGlobal } from "../../../../estiloGlobal";
 import { useCadastroContext } from "../../../../util/context/providers/cadastroProvider";
+import { useEffect, useState } from "react";
 
 type EtapaNomeProps = NativeStackScreenProps<FluxoCadastroParams, "etapaNome">;
 
@@ -17,10 +18,11 @@ export default function EtapaNome({ navigation, route }: EtapaNomeProps) {
 
     const { estilos } = useEstilos();
     const { estiloGlobal } = useEstiloGlobal();
-    const { control, errors } = useCadastroContext();
+    const { control, errors, etapaNomeValida } = useCadastroContext();
 
     const proximo = (e: GestureResponderEvent) => {
         e.preventDefault();
+        if (!etapaNomeValida) return;
 
         navigation.navigate("etapaEmail");
     };
@@ -54,7 +56,7 @@ export default function EtapaNome({ navigation, route }: EtapaNomeProps) {
                     </View>
                 </View>
             </View>
-            <Botao titulo="Próxima etapa" icone="arrow-right" onPress={proximo} />
+            <Botao disabled={!etapaNomeValida} titulo="Próxima etapa" icone="arrow-right" onPress={proximo} />
         </KeyboardAvoidingView>
     );
 };
