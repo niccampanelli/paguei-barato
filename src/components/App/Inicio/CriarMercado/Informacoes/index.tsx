@@ -15,16 +15,47 @@ import Ramo from '../../../../../interfaces/models/Ramo';
 import AutoComplete from '../../../../AutoComplete';
 import CarregandoOverlay from '../../../../CarregandoOverlay';
 import enderecoServices from '../../../../../services/enderecoServices';
+import { Controller, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import mercadoSchema from '../../../../../interfaces/schemas/Mercado';
 
 type InformacoesProps = NativeStackScreenProps<FluxoCriarMercadoParams, "informacoes">;
+
+const valoresIniciais: Mercado = {
+    nome: "",
+    cep: "",
+    logradouro: "",
+    numero: 0,
+    complemento: undefined,
+    bairro: "",
+    cidade: "",
+    uf: "AC",
+    ramoId: 0,
+    ramo: {
+        nome: "",
+        descricao: ""
+    }
+}
 
 export default function EtapaInformacoes({ navigation, route }: InformacoesProps) {
 
     const { estilos } = useEstilos();
     const { estiloGlobal } = useEstiloGlobal();
 
+    const {
+        control,
+        handleSubmit,
+        formState: { isValid, errors },
+        watch,
+        getValues,
+        setValue,
+    } = useForm({
+        resolver: yupResolver(mercadoSchema),
+        mode: "all",
+        defaultValues: valoresIniciais
+    });
+
     const [ramos, setRamos] = useState<Ramo[]>([]);
-    const [mercado, setMercado] = useState<Mercado>({} as any);
     const [carregando, setCarregando] = useState<boolean>(false);
     const [cepPreenchido, setCepPreenchido] = useState<boolean>(false);
 
@@ -38,7 +69,9 @@ export default function EtapaInformacoes({ navigation, route }: InformacoesProps
     const cidadeInputRef = useRef<TextInput>(null);
     const ufInputRef = useRef<TextInput>(null);
 
-    const proximo = () => {
+    const proximo = (mercado: Mercado) => {
+        if (!isValid || !cepPreenchido || carregando) return;
+        console.log(mercado);
         navigation.navigate("imagens", { mercado });
     }
 
@@ -61,14 +94,11 @@ export default function EtapaInformacoes({ navigation, route }: InformacoesProps
         setCarregando(true);
 
         try {
-            const { data } = await enderecoServices.getEnderecoViaCep(mercado.cep);
-            setMercado({
-                ...mercado,
-                logradouro: data.logradouro,
-                bairro: data.bairro,
-                cidade: data.localidade,
-                uf: data.uf
-            });
+            const { data } = await enderecoServices.getEnderecoViaCep(getValues().cep);
+            setValue("logradouro", data.logradouro as never, { shouldValidate: true, shouldDirty: true });
+            setValue("bairro", data.bairro as never, { shouldValidate: true, shouldDirty: true });
+            setValue("cidade", data.localidade as never, { shouldValidate: true, shouldDirty: true });
+            setValue("uf", data.uf as never, { shouldValidate: true, shouldDirty: true });
 
             numeroInputRef.current?.focus();
         }
@@ -85,14 +115,14 @@ export default function EtapaInformacoes({ navigation, route }: InformacoesProps
     }, []);
 
     useEffect(() => {
-        if (mercado.cep?.length === 9) {
+        if (getValues().cep.length === 9) {
             obterEndereco();
             setCepPreenchido(true);
         }
         else {
             setCepPreenchido(false);
         }
-    }, [mercado.cep]);
+    }, [watch("cep")]);
 
     return (
         <View style={estilos.main}>
@@ -111,51 +141,74 @@ export default function EtapaInformacoes({ navigation, route }: InformacoesProps
                 <KeyboardAvoidingView behavior="padding" style={estilos.form}>
                     <View style={estilos.grupoForm}>
                         <Texto peso="700Bold" style={estiloGlobal.label}>Ramo</Texto>
-                        <AutoComplete
-                            icone="tag"
-                            returnKeyType='next'
-                            blurOnSubmit={false}
-                            onSubmitEditing={() => descricaoRamoInputRef.current?.focus()}
-                            textContentType='givenName'
-                            autoCapitalize='words'
-                            autoCorrect={true}
-                            placeholder="Supermercado, farmácia, padaria..."
-                            extrairChave={(ramo) => ramo.nome}
-                            aoSelecionar={(ramo) => setMercado({ ...mercado, ramo })}
-                            aoSelecionarPadrao={(nome) => setMercado({ ...mercado, ramo: { nome } })}
-                            dados={ramos}
+                        <Controller
+                            control={control}
+                            name="ramo"
+                            render={({ field: { onChange } }) => (
+                                <AutoComplete
+                                    icone="tag"
+                                    returnKeyType='next'
+                                    blurOnSubmit={false}
+                                    onSubmitEditing={() => descricaoRamoInputRef.current?.focus()}
+                                    textContentType='givenName'
+                                    autoCapitalize='words'
+                                    autoCorrect={true}
+                                    placeholder="Supermercado, farmácia, padaria..."
+                                    extrairChave={(ramo) => ramo.nome}
+                                    aoSelecionar={(ramo) => onChange(ramo)}
+                                    aoSelecionarPadrao={(nome) => {
+                                        onChange({ nome, descricao: "" });
+                                        setValue("ramoId", 0 as never, { shouldValidate: true, shouldDirty: true });
+                                    }}
+                                    dados={ramos}
+                                />
+                            )}
                         />
                     </View>
                     <View style={estilos.grupoForm}>
                         <Texto peso="700Bold" style={estiloGlobal.label}>Descricao do ramo</Texto>
-                        <Input
-                            icone={<Feather name="tag" style={estiloGlobal.inputIcone} />}
-                            returnKeyType="next"
-                            blurOnSubmit={false}
-                            onSubmitEditing={() => nomeInputRef.current?.focus()}
-                            forwardRef={descricaoRamoInputRef}
-                            textContentType="none"
-                            autoCapitalize="sentences"
-                            autoCorrect={true}
-                            value={mercado?.ramo?.descricao}
-                            onChangeText={(texto) => setMercado({ ...mercado, ramo: { nome: mercado.ramo?.nome!, descricao: texto } })}
-                            placeholder="Descrição sobre esse tipo de loja"
+                        <Controller
+                            control={control}
+                            name="ramo"
+                            render={({ field: { onChange, value } }) => (
+                                <Input
+                                    icone={<Feather name="tag" style={estiloGlobal.inputIcone} />}
+                                    returnKeyType="next"
+                                    blurOnSubmit={false}
+                                    onSubmitEditing={() => nomeInputRef.current?.focus()}
+                                    forwardRef={descricaoRamoInputRef}
+                                    textContentType="none"
+                                    autoCapitalize="sentences"
+                                    autoCorrect={true}
+                                    value={value?.descricao}
+                                    onChangeText={(texto) => onChange({ ...value, descricao: texto })}
+                                    placeholder="Descrição sobre esse tipo de loja"
+                                    erro={errors?.ramo?.descricao?.message}
+                                />
+                            )}
                         />
                     </View>
                     <View style={[estilos.grupoForm, { marginBottom: 16 }]}>
                         <Texto peso="700Bold" style={estiloGlobal.label}>Nome</Texto>
-                        <Input
-                            icone={<Feather name="shopping-cart" style={estiloGlobal.inputIcone} />}
-                            returnKeyType="next"
-                            blurOnSubmit={false}
-                            onSubmitEditing={() => cepInputRef.current?.focus()}
-                            forwardRef={nomeInputRef}
-                            textContentType="organizationName"
-                            autoCapitalize="words"
-                            autoCorrect={false}
-                            value={mercado?.nome}
-                            onChangeText={(texto) => setMercado({ ...mercado, nome: texto })}
-                            placeholder="Nome do estabelecimento"
+                        <Controller
+                            control={control}
+                            name="nome"
+                            render={({ field: { onChange, value } }) => (
+                                <Input
+                                    icone={<Feather name="shopping-cart" style={estiloGlobal.inputIcone} />}
+                                    returnKeyType="next"
+                                    blurOnSubmit={false}
+                                    onSubmitEditing={() => cepInputRef.current?.focus()}
+                                    forwardRef={nomeInputRef}
+                                    textContentType="organizationName"
+                                    autoCapitalize="words"
+                                    autoCorrect={false}
+                                    value={value}
+                                    onChangeText={onChange}
+                                    placeholder="Nome do estabelecimento"
+                                    erro={errors?.nome?.message}
+                                />
+                            )}
                         />
                     </View>
                     <Texto peso="700Bold" style={estiloGlobal.subtitulo}>
@@ -163,122 +216,174 @@ export default function EtapaInformacoes({ navigation, route }: InformacoesProps
                     </Texto>
                     <View style={estilos.grupoForm}>
                         <Texto peso="700Bold" style={estiloGlobal.label}>CEP</Texto>
-                        <Input
-                            icone={<Feather name="hash" style={estiloGlobal.inputIcone} />}
-                            returnKeyType="next"
-                            blurOnSubmit={false}
-                            onSubmitEditing={() => logradouroInputRef.current?.focus()}
-                            forwardRef={cepInputRef}
-                            textContentType="postalCode"
-                            keyboardType="numeric"
-                            value={mercado?.cep}
-                            mascara="cep"
-                            onChangeText={(texto) => setMercado({ ...mercado, cep: texto })}
-                            placeholder="01310-200"
-                            maxLength={9}
+                        <Controller
+                            control={control}
+                            name="cep"
+                            render={({ field: { onChange, value } }) => (
+                                <Input
+                                    icone={<Feather name="hash" style={estiloGlobal.inputIcone} />}
+                                    returnKeyType="next"
+                                    blurOnSubmit={false}
+                                    onSubmitEditing={() => logradouroInputRef.current?.focus()}
+                                    forwardRef={cepInputRef}
+                                    textContentType="postalCode"
+                                    keyboardType="numeric"
+                                    value={value}
+                                    mascara="cep"
+                                    onChangeText={onChange}
+                                    placeholder="01310-200"
+                                    maxLength={9}
+                                    erro={errors?.cep?.message}
+                                />
+                            )}
                         />
                     </View>
                     <View style={estilos.grupoForm2}>
                         <View style={[estilos.grupoForm, { flex: 2 }]}>
                             <Texto peso="700Bold" style={estiloGlobal.label}>Logradouro</Texto>
-                            <Input
-                                icone={<Feather name="map-pin" style={estiloGlobal.inputIcone} />}
-                                returnKeyType="next"
-                                blurOnSubmit={false}
-                                onSubmitEditing={() => numeroInputRef.current?.focus()}
-                                forwardRef={logradouroInputRef}
-                                textContentType="streetAddressLine1"
-                                autoCapitalize="words"
-                                autoCorrect={true}
-                                value={mercado?.logradouro}
-                                onChangeText={(texto) => setMercado({ ...mercado, logradouro: texto })}
-                                placeholder="Nome da rua ou avenida"
-                                desativado={!cepPreenchido}
+                            <Controller
+                                control={control}
+                                name="logradouro"
+                                render={({ field: { onChange, value } }) => (
+                                    <Input
+                                        icone={<Feather name="map-pin" style={estiloGlobal.inputIcone} />}
+                                        returnKeyType="next"
+                                        blurOnSubmit={false}
+                                        onSubmitEditing={() => numeroInputRef.current?.focus()}
+                                        forwardRef={logradouroInputRef}
+                                        textContentType="streetAddressLine1"
+                                        autoCapitalize="words"
+                                        autoCorrect={true}
+                                        value={value}
+                                        onChangeText={onChange}
+                                        placeholder="Nome da rua ou avenida"
+                                        desativado={!cepPreenchido}
+                                        erro={errors?.logradouro?.message}
+                                    />
+                                )}
                             />
                         </View>
                         <View style={[estilos.grupoForm, { flex: 1 }]}>
                             <Texto peso="700Bold" style={estiloGlobal.label}>Número</Texto>
-                            <Input
-                                icone={<Feather name="hash" style={estiloGlobal.inputIcone} />}
-                                returnKeyType="next"
-                                blurOnSubmit={false}
-                                onSubmitEditing={() => complementoInputRef.current?.focus()}
-                                forwardRef={numeroInputRef}
-                                keyboardType="numeric"
-                                value={mercado?.numero?.toString()}
-                                onChangeText={(texto) => setMercado({ ...mercado, numero: parseInt(texto) })}
-                                placeholder="26"
-                                desativado={!cepPreenchido}
+                            <Controller
+                                control={control}
+                                name="numero"
+                                render={({ field: { onChange, value } }) => (
+                                    <Input
+                                        icone={<Feather name="hash" style={estiloGlobal.inputIcone} />}
+                                        returnKeyType="next"
+                                        blurOnSubmit={false}
+                                        onSubmitEditing={() => complementoInputRef.current?.focus()}
+                                        forwardRef={numeroInputRef}
+                                        keyboardType="numeric"
+                                        value={value?.toString() || ""}
+                                        onChangeText={(texto) => {
+                                            const numero = parseInt(texto) || 0;
+                                            onChange(numero);
+                                        }}
+                                        placeholder="26"
+                                        desativado={!cepPreenchido}
+                                        erro={errors?.numero?.message}
+                                    />
+                                )}
                             />
                         </View>
                     </View>
                     <View style={estilos.grupoForm}>
                         <Texto peso="700Bold" style={estiloGlobal.label}>Complemento</Texto>
-                        <Input
-                            icone={<Feather name="home" style={estiloGlobal.inputIcone} />}
-                            returnKeyType="next"
-                            blurOnSubmit={false}
-                            onSubmitEditing={() => bairroInputRef.current?.focus()}
-                            forwardRef={complementoInputRef}
-                            textContentType="streetAddressLine2"
-                            autoCapitalize="words"
-                            autoCorrect={true}
-                            value={mercado?.complemento}
-                            onChangeText={(texto) => setMercado({ ...mercado, complemento: texto })}
-                            placeholder="Bloco, portão, quadra, etc."
-                            desativado={!cepPreenchido}
+                        <Controller
+                            control={control}
+                            name="complemento"
+                            render={({ field: { onChange, value } }) => (
+                                <Input
+                                    icone={<Feather name="home" style={estiloGlobal.inputIcone} />}
+                                    returnKeyType="next"
+                                    blurOnSubmit={false}
+                                    onSubmitEditing={() => bairroInputRef.current?.focus()}
+                                    forwardRef={complementoInputRef}
+                                    textContentType="streetAddressLine2"
+                                    autoCapitalize="words"
+                                    autoCorrect={true}
+                                    value={value}
+                                    onChangeText={onChange}
+                                    placeholder="Bloco, portão, quadra, etc."
+                                    desativado={!cepPreenchido}
+                                    erro={errors?.complemento?.message}
+                                />
+                            )}
                         />
                     </View>
                     <View style={estilos.grupoForm}>
                         <Texto peso="700Bold" style={estiloGlobal.label}>Bairro</Texto>
-                        <Input
-                            icone={<Feather name="map-pin" style={estiloGlobal.inputIcone} />}
-                            returnKeyType="next"
-                            blurOnSubmit={false}
-                            onSubmitEditing={() => cidadeInputRef.current?.focus()}
-                            forwardRef={bairroInputRef}
-                            textContentType="sublocality"
-                            autoCapitalize="words"
-                            autoCorrect={true}
-                            value={mercado?.bairro}
-                            onChangeText={(texto) => setMercado({ ...mercado, bairro: texto })}
-                            placeholder="Bela Vista"
-                            desativado={!cepPreenchido}
+                        <Controller
+                            control={control}
+                            name="bairro"
+                            render={({ field: { onChange, value } }) => (
+                                <Input
+                                    icone={<Feather name="map-pin" style={estiloGlobal.inputIcone} />}
+                                    returnKeyType="next"
+                                    blurOnSubmit={false}
+                                    onSubmitEditing={() => cidadeInputRef.current?.focus()}
+                                    forwardRef={bairroInputRef}
+                                    textContentType="sublocality"
+                                    autoCapitalize="words"
+                                    autoCorrect={true}
+                                    value={value}
+                                    onChangeText={onChange}
+                                    placeholder="Bela Vista"
+                                    desativado={!cepPreenchido}
+                                    erro={errors?.bairro?.message}
+                                />
+                            )}
                         />
                     </View>
                     <View style={estilos.grupoForm2}>
                         <View style={[estilos.grupoForm, { flex: 2 }]}>
                             <Texto peso="700Bold" style={estiloGlobal.label}>Cidade</Texto>
-                            <Input
-                                icone={<Feather name="map" style={estiloGlobal.inputIcone} />}
-                                returnKeyType="next"
-                                blurOnSubmit={false}
-                                onSubmitEditing={() => ufInputRef.current?.focus()}
-                                forwardRef={cidadeInputRef}
-                                textContentType="addressCity"
-                                autoCapitalize="words"
-                                autoCorrect={true}
-                                value={mercado?.cidade}
-                                onChangeText={(texto) => setMercado({ ...mercado, cidade: texto })}
-                                placeholder="São Paulo"
-                                desativado={!cepPreenchido}
+                            <Controller
+                                control={control}
+                                name="cidade"
+                                render={({ field: { onChange, value } }) => (
+                                    <Input
+                                        icone={<Feather name="map" style={estiloGlobal.inputIcone} />}
+                                        returnKeyType="next"
+                                        blurOnSubmit={false}
+                                        onSubmitEditing={() => ufInputRef.current?.focus()}
+                                        forwardRef={cidadeInputRef}
+                                        textContentType="addressCity"
+                                        autoCapitalize="words"
+                                        autoCorrect={true}
+                                        value={value}
+                                        onChangeText={onChange}
+                                        placeholder="São Paulo"
+                                        desativado={!cepPreenchido}
+                                        erro={errors?.cidade?.message}
+                                    />
+                                )}
                             />
                         </View>
                         <View style={[estilos.grupoForm, { flex: 1 }]}>
                             <Texto peso="700Bold" style={estiloGlobal.label}>Estado</Texto>
-                            <Input
-                                icone={<Feather name="map" style={estiloGlobal.inputIcone} />}
-                                returnKeyType="done"
-                                blurOnSubmit={true}
-                                onSubmitEditing={proximo}
-                                forwardRef={ufInputRef}
-                                textContentType="addressState"
-                                autoCapitalize="characters"
-                                autoCorrect={false}
-                                value={mercado?.uf}
-                                onChangeText={(texto) => setMercado({ ...mercado, uf: texto as UF })}
-                                placeholder="SP"
-                                desativado={!cepPreenchido}
+                            <Controller
+                                control={control}
+                                name="uf"
+                                render={({ field: { onChange, value } }) => (
+                                    <Input
+                                        icone={<Feather name="map" style={estiloGlobal.inputIcone} />}
+                                        returnKeyType="done"
+                                        blurOnSubmit={true}
+                                        onSubmitEditing={handleSubmit(proximo)}
+                                        forwardRef={ufInputRef}
+                                        textContentType="addressState"
+                                        autoCapitalize="characters"
+                                        autoCorrect={false}
+                                        value={value}
+                                        onChangeText={onChange}
+                                        placeholder="SP"
+                                        desativado={!cepPreenchido}
+                                        erro={errors?.uf?.message}
+                                    />
+                                )}
                             />
                         </View>
                     </View>
@@ -288,7 +393,8 @@ export default function EtapaInformacoes({ navigation, route }: InformacoesProps
                 <Botao
                     titulo={"Próxima etapa"}
                     icone="arrow-right"
-                    onPress={proximo}
+                    onPress={handleSubmit(proximo)}
+                    disabled={!isValid || carregando}
                 />
             </View>
         </View>
