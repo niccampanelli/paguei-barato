@@ -1,17 +1,18 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import ContextTema from "../../../interfaces/context/ContextTema";
 import TemaPropriedades from "../../../interfaces/context/TemaPropriedades";
-import valoresTema from "./valoresTema";
+import valoresTema, { temasMapa } from "./valoresTema";
 import * as NavigationBar from "expo-navigation-bar";
 import { useColorScheme } from "react-native";
 import { TemaType } from "../../../interfaces/context/TemaType";
 
-const TemaContext = createContext<ContextTema>({ propriedadesTema: valoresTema["claro"], temaAtivo: "claro", alterarTema: () => { } });
+const TemaContext = createContext<ContextTema>({ propriedadesTema: valoresTema["claro"], temaAtivo: "claro", temaMapa: [], alterarTema: () => { } });
 
 export default function TemaProvider(props: any) {
 
     const [propriedadesTema, setPropriedadesTema] = useState<TemaPropriedades>(valoresTema["claro"]);
     const [temaAtivo, setTemaAtivo] = useState<TemaType>("claro");
+    const [temaMapa, setTemaMapa] = useState<any>();
     const androidActiveTheme = useColorScheme();
 
     useEffect(() => {
@@ -21,12 +22,14 @@ export default function TemaProvider(props: any) {
     const alterarTema = (tema?: TemaType) => {
         if (tema) {
             setPropriedadesTema(valoresTema[tema]);
+            setTemaMapa(temasMapa[tema])
             setTemaAtivo(tema);
             NavigationBar.setBackgroundColorAsync(valoresTema[tema].cores.fundoPrincipal);
             NavigationBar.setButtonStyleAsync(tema === "claro" ? "dark" : "light");
         }
         else {
             setPropriedadesTema(valoresTema[temaAtivo === "claro" ? "escuro" : "claro"]);
+            setTemaMapa(temasMapa[temaAtivo === "claro" ? "escuro" : "claro"])
             setTemaAtivo(temaAtivo === "claro" ? "escuro" : "claro");
             NavigationBar.setBackgroundColorAsync(valoresTema[temaAtivo === "claro" ? "escuro" : "claro"].cores.fundoPrincipal);
             NavigationBar.setButtonStyleAsync(temaAtivo === "claro" ? "light" : "dark");
@@ -34,7 +37,7 @@ export default function TemaProvider(props: any) {
     }
 
     return (
-        <TemaContext.Provider value={{ propriedadesTema, temaAtivo, alterarTema }}>
+        <TemaContext.Provider value={{ propriedadesTema, temaAtivo, temaMapa, alterarTema }}>
             {props.children}
         </TemaContext.Provider>
     );

@@ -5,10 +5,13 @@ import { useTemaContext } from "../../../../util/context/providers/temaProvider"
 export const useEstilos = () => {
 
     const { propriedadesTema } = useTemaContext();
+    const alturaMapa = 280;
+
     const estilos = StyleSheet.create({
 
         main: {
             flex: 1,
+            backgroundColor: propriedadesTema.cores.fundoSecundario,
         },
 
         imagem: {
@@ -30,6 +33,29 @@ export const useEstilos = () => {
             top: Constants.statusBarHeight + propriedadesTema.layout.paddingVertical,
             left: propriedadesTema.layout.paddingHorizontal,
             zIndex: 2
+        },
+
+        mapaContainer: {
+            width: "100%",
+            height: alturaMapa,
+        },
+
+        mapa: {
+            width: "100%",
+            height: "100%",
+        },
+
+        card: {
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            zIndex: 2,
+            top: alturaMapa - 10,
+            borderTopLeftRadius: 30,
+            borderTopRightRadius: 30,
+            backgroundColor: propriedadesTema.cores.fundoPrincipal,
+            elevation: 10,
         },
 
         cabecalho: {

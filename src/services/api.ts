@@ -5,6 +5,7 @@ export default class API {
 
     public static instancia: AxiosInstance;
     public static instanciaCustomSearch: AxiosInstance;
+    public static instanciaAzureMaps: AxiosInstance;
     public static instanciaViaCep: AxiosInstance;
 
     public static async obterInstanciaAxios(): Promise<AxiosInstance> {
@@ -47,6 +48,26 @@ export default class API {
         }
 
         return API.instanciaCustomSearch;
+    }
+
+    public static async obterInstanciaAzureMaps(): Promise<AxiosInstance> {
+
+        if (!API.instanciaAzureMaps) {
+            API.instanciaAzureMaps = axios.create({
+                baseURL: process.env.EXPO_PUBLIC_AZUREMAPS_URL,
+                params: {
+                    "api-version": "1.0",
+                    language: "pt-BR",
+                    "subscription-key": process.env.EXPO_PUBLIC_AZUREMAPS_SUBSCRIPTION_KEY,
+                },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                }
+            });
+        }
+
+        return API.instanciaAzureMaps;
     }
 
     public static async obterInstanciaViaCep(): Promise<AxiosInstance> {
