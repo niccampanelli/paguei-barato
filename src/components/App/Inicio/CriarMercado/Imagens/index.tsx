@@ -52,6 +52,11 @@ export default function EtapaImagens({ navigation, route }: ImagensProps) {
                 pagina: pagina,
             });
 
+            if (resposta.data.items === undefined || resposta.data.items.length === 0) {
+                setImagens([]);
+                return;
+            }
+
             setImagens((imgs) => [...imgs, ...resposta.data.items]);
             setPagina((p) => p + 1);
         }

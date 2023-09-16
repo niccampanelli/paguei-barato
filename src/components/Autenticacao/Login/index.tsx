@@ -13,6 +13,10 @@ import Logo from "../../Logo";
 import { useAuthContext } from "../../../util/context/providers/authProvider";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { StackExternaRoutesParams } from "../../../StackExterna";
+import { Controller, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import loginSchema from "../../../interfaces/schemas/Login";
+import LoginInterface from "../../../interfaces/models/Login";
 
 type LoginProps = NativeStackScreenProps<StackExternaRoutesParams, "login">;
 
@@ -24,18 +28,24 @@ export default function Login({ navigation, route }: LoginProps) {
     const { notificar } = useNotificacaoToast();
     const { fazerLogin } = useAuthContext();
 
-    const [email, setEmail] = useState<string>("");
-    const [senha, setSenha] = useState<string>("");
-    const [carregando, setCarregando] = useState<boolean>(false);
+    const {
+        control,
+        handleSubmit,
+        formState: { isValid, errors },
+    } = useForm({
+        resolver: yupResolver(loginSchema),
+        mode: "onChange"
+    });
 
-    const inputSenhaRef = useRef<TextInput>(null);
+    const senhaInputRef = useRef<TextInput>(null);
+    const [carregando, setCarregando] = useState<boolean>(false);
 
     const cadastrar = (e: GestureResponderEvent) => {
         e.preventDefault();
         navigation.navigate("cadastro" as never);
     };
 
-    const login = async () => {
+    const login = async ({ email, senha }: LoginInterface) => {
         if (carregando) return;
         setCarregando(true);
 
@@ -72,32 +82,46 @@ export default function Login({ navigation, route }: LoginProps) {
                 <KeyboardAvoidingView behavior="padding" style={estilos.form}>
                     <View>
                         <Texto peso="700Bold" style={[estiloGlobal.label, estilos.label]}>E-mail</Texto>
-                        <Input
-                            icone={<Feather name="at-sign" style={estiloGlobal.inputIcone} />}
-                            keyboardType="email-address"
-                            onSubmitEditing={() => inputSenhaRef.current?.focus()}
-                            blurOnSubmit={false}
-                            returnKeyType="next"
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                            placeholder="Insira seu e-mail"
-                            value={email}
-                            onChangeText={setEmail}
+                        <Controller
+                            name="email"
+                            control={control}
+                            render={({ field: { onChange, value } }) => (
+                                <Input
+                                    icone={<Feather name="at-sign" style={estiloGlobal.inputIcone} />}
+                                    keyboardType="email-address"
+                                    onSubmitEditing={() => senhaInputRef.current?.focus()}
+                                    blurOnSubmit={false}
+                                    returnKeyType="next"
+                                    autoCapitalize="none"
+                                    autoCorrect={false}
+                                    placeholder="Insira seu e-mail"
+                                    value={value}
+                                    onChangeText={onChange}
+                                    erro={errors.email?.message}
+                                />
+                            )}
                         />
                     </View>
                     <View>
                         <Texto peso="700Bold" style={[estiloGlobal.label, estilos.label]}>Senha</Texto>
-                        <Input
-                            icone={<Feather name="lock" style={estiloGlobal.inputIcone} />}
-                            returnKeyType="done"
-                            onSubmitEditing={login}
-                            forwardRef={inputSenhaRef}
-                            textContentType="password"
-                            secureTextEntry
-                            autoCorrect={false}
-                            placeholder="Digite sua senha"
-                            value={senha}
-                            onChangeText={setSenha}
+                        <Controller
+                            name="senha"
+                            control={control}
+                            render={({ field: { onChange, value } }) => (
+                                <Input
+                                    icone={<Feather name="lock" style={estiloGlobal.inputIcone} />}
+                                    returnKeyType="done"
+                                    onSubmitEditing={handleSubmit(login)}
+                                    forwardRef={senhaInputRef}
+                                    textContentType="password"
+                                    secureTextEntry
+                                    autoCorrect={false}
+                                    placeholder="Digite sua senha"
+                                    value={value}
+                                    onChangeText={onChange}
+                                    erro={errors.senha?.message}
+                                />
+                            )}
                         />
                     </View>
                 </KeyboardAvoidingView>
@@ -106,7 +130,7 @@ export default function Login({ navigation, route }: LoginProps) {
                         <View>
                             <Botao titulo="Cadastre-se" tipo="secundario" onPress={e => cadastrar(e)} />
                         </View>
-                        <Botao titulo="Fazer login" style={{ flex: 1 }} onPress={login} />
+                        <Botao disabled={!isValid || carregando} titulo="Fazer login" style={{ flex: 1 }} onPress={handleSubmit(login)} />
                     </View>
                     <Texto style={estilos.opcoesLoginLabel}>ou</Texto>
                     <View style={estilos.viewBotaoLogin}>

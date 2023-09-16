@@ -14,6 +14,7 @@ import CarregandoOverlay from '../../../../CarregandoOverlay';
 import { useNotificacaoToast } from '../../../../../util/context/providers/notificacaoProvider';
 import customSearchServices from '../../../../../services/customSearchServices';
 import { ItensPesquisaImagens } from '../../../../../interfaces/models/PesquisaImagens';
+import categoriaServices from '../../../../../services/categoriaServices';
 
 export interface ImagensParams {
     produto: Produto
@@ -52,6 +53,11 @@ export default function EtapaImagens({ navigation, route }: ImagensProps) {
                 pagina: pagina,
             });
 
+            if (resposta.data.items === undefined || resposta.data.items.length === 0) {
+                setImagens([]);
+                return;
+            }
+
             setImagens((imgs) => [...imgs, ...resposta.data.items]);
             setPagina((p) => p + 1);
         }
@@ -89,6 +95,20 @@ export default function EtapaImagens({ navigation, route }: ImagensProps) {
         setCarregando(true);
 
         try {
+            if (produto.categoria?.id) {
+                const { data: categoria } = await categoriaServices.criarCategoria({
+                    nome: produto.categoria?.nome || "",
+                    descricao: produto.categoria?.descricao
+                })
+
+                if (categoria.id) {
+                    produto.categoria!.id = categoria.id;
+                }
+                else {
+                    throw "Erro ao criar estabelecimento.";
+                }
+            }
+
             const resultado = await produtoServices.criarProduto(produto);
 
             if (resultado.data.id) {

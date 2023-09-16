@@ -40,6 +40,12 @@ const categoriaServices = {
 
         return api.get<Categoria>(`/categoria/${id}`);
     },
+
+    async criarCategoria(categoria: Categoria): Promise<AxiosResponse<Categoria>> {
+        const api = await API.obterInstanciaAxios();
+
+        return api.post<Categoria>("/categoria", categoria);
+    },
 }
 
 export default categoriaServices;

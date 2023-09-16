@@ -32,6 +32,7 @@ export const useEstiloGlobal = () => {
         },
     
         input: {
+            position: "relative",
             flexDirection: "row",
             alignItems: "center",
             borderRadius: propriedadesTema.layout.raioBorda,
@@ -53,6 +54,25 @@ export const useEstiloGlobal = () => {
             color: propriedadesTema.cores.textoEscuro,
             height: "100%",
             width: "100%"
+        },
+
+        inputMensagemErro: {
+            color: propriedadesTema.cores.vermelho,
+            fontSize: propriedadesTema.botoes.texto,
+            marginTop: 5
+        },
+
+        inputOverlayErro: {
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 10,
+            borderWidth: 1,
+            borderColor: propriedadesTema.cores.vermelho,
+            borderRadius: propriedadesTema.layout.raioBorda,
+            pointerEvents: "none"
         },
 
         inputImagem: {

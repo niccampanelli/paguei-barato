@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { NavigationContainer, NavigatorScreenParams } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Login from "./components/Autenticacao/Login";
