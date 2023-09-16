@@ -45,7 +45,14 @@ export default function DetalhesProduto({ navigation, route }: DetalhesProdutoPr
         setSugestoesCarregando(true);
 
         try {
-            const { data: mercados } = await produtoServices.listarMercados(item.id || 0);
+            const data = await produtoServices.listarMercados(item.id || 0);
+
+            if (data.status !== 200) {
+                setSugestoes([]);
+                return;
+            }
+
+            const mercados: Mercado[] = data.data;
 
             for (const mercado of mercados) {
                 const { data: estoqueData } = await estoqueServices.getEstoques({
@@ -84,7 +91,20 @@ export default function DetalhesProduto({ navigation, route }: DetalhesProdutoPr
         setLevantamentoCarregando(true);
 
         try {
-            const { data: levantamento } = await produtoServices.obterLevantamento(item.id!);
+            const data = await produtoServices.obterLevantamento(item.id!);
+
+            if (data.status !== 200) {
+                setLevantamento(undefined);
+                return;
+            }
+
+            const levantamento = data.data;
+
+            if (levantamento.quantidadeSugestoes === 0) {
+                setLevantamento(undefined);
+                return;
+            }
+
             setLevantamento(levantamento);
         }
         catch (erro) {
@@ -149,13 +169,14 @@ export default function DetalhesProduto({ navigation, route }: DetalhesProdutoPr
                                 {item.categoria?.nome}
                             </Texto>
                         </View>
-                        {!levantamentoCarregando && levantamento ?
-                            <View style={[estiloGlobal.tagPequenaNormal, { marginLeft: 10 }]}>
-                                <Texto style={estiloGlobal.tagPequenaNormalTexto}>Sugerido há {Formatador.formatarPeriodoData(new Date(levantamento.dataUltimaSugestao))}</Texto>
-                            </View>
-                            :
+                        {levantamentoCarregando ?
                             <View style={{ marginLeft: 10 }}>
                                 <CarregandoSkeleton width={120} height={26} />
+                            </View>
+                            :
+                            levantamento &&
+                            <View style={[estiloGlobal.tagPequenaNormal, { marginLeft: 10 }]}>
+                                <Texto style={estiloGlobal.tagPequenaNormalTexto}>Sugerido há {Formatador.formatarPeriodoData(new Date(levantamento.dataUltimaSugestao))}</Texto>
                             </View>
                         }
                     </View>
@@ -184,17 +205,18 @@ export default function DetalhesProduto({ navigation, route }: DetalhesProdutoPr
                     <View style={estilos.secao}>
                         <Texto peso="700Bold" style={[estiloGlobal.subtitulo, estilos.titulo]}>Levantamento de preços</Texto>
                         <Texto style={[estilos.informacaoTexto, estilos.informacao]}>Informações sobre a variação de preços desse produto em todos os mercados nos quais ele foi cadastrado.</Texto>
-                        {!levantamentoCarregando && levantamento ?
-                            <>
-                                <LevantamentoPrecos dados={levantamento} />
-                                <Toast icone="clock" texto={`Data da última sugestão: ${Formatador.formatarDataHora(new Date(levantamento.dataUltimaSugestao))}`} style={{ marginTop: 16 }} estilo="normal" />
-                            </>
-                            :
+                        {levantamentoCarregando ?
                             <>
                                 <LevantamentoPrecosPlaceholder />
                                 <View style={{ marginTop: 16 }}>
                                     <CarregandoSkeleton width={"100%"} height={60} />
                                 </View>
+                            </>
+                            :
+                            levantamento &&
+                            <>
+                                <LevantamentoPrecos dados={levantamento} />
+                                <Toast icone="clock" texto={`Data da última sugestão: ${Formatador.formatarDataHora(new Date(levantamento.dataUltimaSugestao))}`} style={{ marginTop: 16 }} estilo="normal" />
                             </>
                         }
                     </View>

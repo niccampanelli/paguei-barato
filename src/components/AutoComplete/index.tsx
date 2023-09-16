@@ -58,7 +58,7 @@ export default function AutoComplete<TipoItem>({
         return (
             <View style={estiloGlobal.autocompleteListaItem}>
                 {aoSelecionarPadrao && valorInput.length > 0 ?
-                    <TouchableOpacity style={estiloGlobal.autocompleteListaItem} onPress={selecionarValorPadrao}>
+                    <TouchableOpacity onPress={selecionarValorPadrao}>
                         <Texto style={estiloGlobal.autocompleteListaItemTexto}>{valorInput}</Texto>
                     </TouchableOpacity>
                     :

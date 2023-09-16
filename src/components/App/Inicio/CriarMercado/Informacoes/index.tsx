@@ -9,7 +9,6 @@ import { useEstiloGlobal } from '../../../../../estiloGlobal';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { FluxoCriarMercadoParams } from '..';
 import Mercado from '../../../../../interfaces/models/Mercado';
-import UF from '../../../../../interfaces/models/UF';
 import ramoServices from '../../../../../services/ramoServices';
 import Ramo from '../../../../../interfaces/models/Ramo';
 import AutoComplete from '../../../../AutoComplete';
@@ -71,7 +70,6 @@ export default function EtapaInformacoes({ navigation, route }: InformacoesProps
 
     const proximo = (mercado: Mercado) => {
         if (!isValid || !cepPreenchido || carregando) return;
-        console.log(mercado);
         navigation.navigate("imagens", { mercado });
     }
 
