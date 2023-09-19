@@ -38,6 +38,8 @@ export const useEstilos = () => {
         mapaContainer: {
             width: "100%",
             height: alturaMapa,
+            position: "relative",
+            zIndex: 1,
         },
 
         mapa: {

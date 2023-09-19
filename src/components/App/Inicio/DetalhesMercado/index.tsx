@@ -135,10 +135,6 @@ export default function DetalhesMercado({ navigation, route }: DetalhesMercadoPr
 
     return (
         <View style={estilos.main}>
-            <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.voltar]} onPress={() => navigation.goBack()}>
-                <Feather name="arrow-left" style={estiloGlobal.tagPequenaNormalTexto} />
-                <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaNormalTexto}>Voltar</Texto>
-            </TouchableOpacity>
             <View style={estilos.mapaContainer}>
                 {mapaCarregando ?
                     <CarregandoOverlay />
@@ -165,6 +161,10 @@ export default function DetalhesMercado({ navigation, route }: DetalhesMercadoPr
                     </MapView>
                 }
             </View>
+            <TouchableOpacity style={[estiloGlobal.tagPequenaNormal, estilos.voltar]} onPress={() => navigation.goBack()}>
+                <Feather name="arrow-left" style={estiloGlobal.tagPequenaNormalTexto} />
+                <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaNormalTexto}>Voltar</Texto>
+            </TouchableOpacity>
             <ScrollView style={estilos.card}>
                 <View style={estilos.cabecalho}>
                     <View style={estilos.imagem}>
