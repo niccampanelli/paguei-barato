@@ -57,9 +57,10 @@ export default function Login({ navigation, route }: LoginProps) {
         } catch (error: any) {
             notificar({
                 estilo: "vermelho",
-                texto: JSON.stringify(error),
+                texto: error.mensagem,
                 icone: "x-octagon",
                 dispensavel: true,
+                autoDispensar: true,
             });
         } finally {
             setCarregando(false);

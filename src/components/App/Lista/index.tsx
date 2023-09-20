@@ -96,7 +96,7 @@ export default function Lista({ navigation, route }: ListaProps) {
                     texto: "Item removido da lista de compras.",
                     icone: "trash",
                     dispensavel: true,
-                    autoDispensar: false,
+                    autoDispensar: true,
                     possuiBotao: true,
                     labelBotao: "Desfazer",
                     aoPressionarBotao: () => {
@@ -251,6 +251,6 @@ export default function Lista({ navigation, route }: ListaProps) {
                 <Texto style={estilos.listaObservacao}>Arraste o item para a direita para marcá-lo como comprado.</Texto>
                 <Texto style={estilos.listaObservacao}>Arraste o item para a esquerda para removê-lo.</Texto>
             </View>
-        </View>
+        </View >
     );
 };

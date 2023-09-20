@@ -3,7 +3,7 @@ import { ContextLista } from "../../../interfaces/context/ContextLista";
 import ItemListaCompras from "../../../interfaces/models/ItemListaCompras";
 import Sugestao from "../../../interfaces/models/Sugestao";
 
-const ListaContext = createContext<ContextLista>({ itensLista: [], adicionarItemLista: () => { }, adicionarSugestaoLista: () => { }, removerItemLista: () => { }, riscarItemLista: () => { } });
+const ListaContext = createContext<ContextLista>({ itensLista: [], adicionarItemLista: () => { }, adicionarSugestaoLista: () => { }, removerItemLista: () => { }, riscarItemLista: () => { }, verificarExistenteLista: () => false, verificarSugestaoExistenteLista: () => false });
 
 export default function ListaProvider(props: any) {
 
@@ -34,8 +34,16 @@ export default function ListaProvider(props: any) {
         setItensLista((itensLista) => itensLista.map(i => i.sugestao.id === item.sugestao.id ? { ...i, riscado: !i.riscado } : i))
     };
 
+    const verificarExistenteLista = (item: ItemListaCompras) => {
+        return itensLista.some(i => i.sugestao.id === item.sugestao.id);
+    };
+
+    const verificarSugestaoExistenteLista = (sugestao: Sugestao) => {
+        return itensLista.some(i => i.sugestao.id === sugestao.id);
+    };
+
     return (
-        <ListaContext.Provider value={{ itensLista, adicionarItemLista, adicionarSugestaoLista, removerItemLista, riscarItemLista }}>
+        <ListaContext.Provider value={{ itensLista, adicionarItemLista, adicionarSugestaoLista, removerItemLista, riscarItemLista, verificarExistenteLista, verificarSugestaoExistenteLista }}>
             {props.children}
         </ListaContext.Provider>
     );

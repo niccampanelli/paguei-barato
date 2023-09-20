@@ -8,6 +8,7 @@ export const useEstilos = () => {
     const base = StyleSheet.create({
 
         card: {
+            position: "relative",
             display: "flex",
             flexDirection: "column",
             borderRadius: propriedadesTema.layout.raioBorda,
@@ -49,6 +50,17 @@ export const useEstilos = () => {
 
         botaoTexto: {
             fontSize: propriedadesTema.tamanhoTextos.texto
+        },
+
+        progresso: {
+            position: "absolute",
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            zIndex: -1,
+            opacity: 0.05,
+            borderRadius: propriedadesTema.layout.raioBorda,
         }
     });
 
@@ -72,6 +84,10 @@ export const useEstilos = () => {
 
         botaoTexto: {
             color: propriedadesTema.cores.destaque,
+        },
+
+        progresso: {
+            backgroundColor: propriedadesTema.cores.destaque,
         }
     });
 
@@ -95,6 +111,10 @@ export const useEstilos = () => {
 
         botaoTexto: {
             color: propriedadesTema.cores.secundariaEscuro,
+        },
+
+        progresso: {
+            backgroundColor: propriedadesTema.cores.secundariaEscuro,
         }
     });
 
@@ -118,6 +138,10 @@ export const useEstilos = () => {
 
         botaoTexto: {
             color: propriedadesTema.cores.textoEscuro,
+        },
+
+        progresso: {
+            backgroundColor: propriedadesTema.cores.textoEscuro,
         }
     });
 
@@ -141,6 +165,10 @@ export const useEstilos = () => {
 
         botaoTexto: {
             color: propriedadesTema.cores.vermelhoEscuro,
+        },
+
+        progresso: {
+            backgroundColor: propriedadesTema.cores.vermelhoEscuro,
         }
     });
 
