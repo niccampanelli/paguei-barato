@@ -24,6 +24,10 @@ export default function NotificacaoProvider(props: NotificacaoProviderProps) {
             });
         };
 
+        if (notificacao.autoDispensar && props.tempoDispensar) {
+            notificacao.tempoDispensar = props.tempoDispensar;
+        }
+
         const aoPressionar = notificacao.aoPressionarBotao;
         notificacao.aoPressionarBotao = (evento: GestureResponderEvent) => {
             removerNotificacao(notificacao);

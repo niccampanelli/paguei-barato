@@ -18,6 +18,7 @@ import { Feather } from "@expo/vector-icons";
 import Modal from "../../Modal";
 import RBSheet from "react-native-raw-bottom-sheet";
 import Botao from "../../Botao";
+import CarregandoSkeleton from "../../CarregandoSkeleton";
 
 type InicioProps = BottomTabScreenProps<NavegacaoAppRoutesParams, "inicio">;
 
@@ -32,6 +33,7 @@ export default function Inicio({ navigation, route }: InicioProps) {
 
     const [sugestoes, setSugestoes] = useState<Sugestao[]>([]);
     const [carregando, setCarregando] = useState<boolean>(false);
+    const [saudacao, setSaudacao] = useState<string>("");
 
     const obterSugestoes = async () => {
         setCarregando(true);
@@ -50,6 +52,10 @@ export default function Inicio({ navigation, route }: InicioProps) {
     useEffect(() => {
         obterSugestoes();
     }, []);
+
+    useEffect(() => {
+        setSaudacao(obterSaudacao(usuarioLogado?.nome?.split(" ")[0]) || "");
+    }, [usuarioLogado]);
 
     const irParaCriar = (item: "criarSugestao" | "criarMercado" | "criarProduto") => {
         modalRef?.current?.close();
@@ -86,9 +92,13 @@ export default function Inicio({ navigation, route }: InicioProps) {
                 <StatusBar style={temaAtivo === "claro" ? "dark" : "light"} backgroundColor={propriedadesTema.cores.fundoPrincipal} hidden={false} />
                 <View style={estilos.cabecalho}>
                     <Logo style={estilos.logo} />
-                    <Texto peso="800ExtraBold" style={estiloGlobal.subtitulo}>
-                        {obterSaudacao(usuarioLogado?.nome?.split(" ")[0])}
-                    </Texto>
+                    {saudacao ?
+                        <Texto peso="800ExtraBold" style={estiloGlobal.subtitulo}>
+                            {saudacao}
+                        </Texto>
+                        :
+                        <CarregandoSkeleton width="50%" height={26} />
+                    }
                 </View>
                 <View style={estilos.destaque}>
                     <View style={[estiloGlobal.tagPequenaSecundaria, estilos.destaqueBadge]}>

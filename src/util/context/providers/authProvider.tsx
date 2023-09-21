@@ -8,14 +8,14 @@ import authServices from "../../../services/authServices";
 const AuthContext = createContext<ContextAuth>({ usuarioLogado: undefined, cadastrarUsuario: async () => { }, fazerLogin: async () => { }, fazerLogout: async () => { } });
 
 export default function AuthProvider(props: any) {
-    
+
     const [usuarioLogado, setUsuarioLogado] = useState<Usuario>();
 
     const verificarUsuarioLogado = async () => {
         try {
             const token = AsyncStorage.getItem("bearerToken");
 
-            if(!token) {
+            if (!token) {
                 setUsuarioLogado(undefined);
                 return;
             }
@@ -37,15 +37,15 @@ export default function AuthProvider(props: any) {
             setUsuarioLogado(usuario);
 
         } catch (error) {
-            console.log(error);            
+            console.log(error);
         }
     };
 
     const cadastrarUsuario = async (usuario: Usuario) => {
         try {
-            
+
             usuario.numero = Number(usuario.numero);
-            
+
             await authServices.cadastrarUsuario(usuario);
             await fazerLogin(usuario.email, usuario.senha);
         } catch (error) {
@@ -54,27 +54,23 @@ export default function AuthProvider(props: any) {
     };
 
     const fazerLogin = async (email: string, senha: string) => {
-        try {
-            const response = await authServices.fazerLogin(email, senha);
+        const response = await authServices.fazerLogin(email, senha);
 
-            const usuario: Usuario = {
-                id: response.id,
-                nome: response.nome,
-                email: response.email,
-                senha: response.senha,
-                bairro: response.bairro,
-                cidade: response.cidade,
-                uf: response.uf,
-                cep: response.cep,
-                logradouro: response.logradouro,
-                numero: response.numero,
-                complemento: response.complemento,
-            }
-
-            setUsuarioLogado(usuario);
-        } catch (error) {
-            throw error;
+        const usuario: Usuario = {
+            id: response.id,
+            nome: response.nome,
+            email: response.email,
+            senha: response.senha,
+            bairro: response.bairro,
+            cidade: response.cidade,
+            uf: response.uf,
+            cep: response.cep,
+            logradouro: response.logradouro,
+            numero: response.numero,
+            complemento: response.complemento,
         }
+
+        setUsuarioLogado(usuario);
     };
 
     const fazerLogout = async () => {
@@ -82,7 +78,7 @@ export default function AuthProvider(props: any) {
             await authServices.fazerLogout();
             setUsuarioLogado(undefined);
             console.log("deslogou");
-            
+
         } catch (error) {
             throw error;
         }

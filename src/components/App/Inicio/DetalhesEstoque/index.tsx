@@ -24,10 +24,11 @@ export default function DetalhesEstoque({ navigation, route }: DetalhesEstoquePr
 
     const { estilos } = useEstilos();
     const { estiloGlobal } = useEstiloGlobal();
-    const { adicionarSugestaoLista } = useListaContext();
+    const { adicionarSugestaoLista, verificarSugestaoExistenteLista } = useListaContext();
 
     const [sugestoes, setSugestoes] = useState<Sugestao[]>([]);
     const [carregando, setCarregando] = useState<boolean>(false);
+    const [existenteLista, setExistenteLista] = useState<boolean>(false);
 
     const { item } = route.params;
 
@@ -58,6 +59,7 @@ export default function DetalhesEstoque({ navigation, route }: DetalhesEstoquePr
 
     useEffect(() => {
         obterSugestoes();
+        setExistenteLista(!!verificarSugestaoExistenteLista(item));
     }, [item]);
 
     return (
@@ -106,7 +108,7 @@ export default function DetalhesEstoque({ navigation, route }: DetalhesEstoquePr
                 </View>
             </ScrollView>
             <View style={estilos.botaoAdicionarView}>
-                <Botao titulo="Adicionar à lista" subtitulo={Formatador.formatarMoeda(item.preco || 0)} icone="shopping-bag" onPress={adicionarLista} />
+                <Botao disabled={existenteLista} titulo={existenteLista ? "O item já está na lista" : "Adicionar à lista"} subtitulo={Formatador.formatarMoeda(item.preco || 0)} icone="shopping-bag" onPress={adicionarLista} />
             </View>
         </View>
     );

@@ -3,6 +3,7 @@ import { ViewProps, TouchableOpacity, View } from "react-native";
 import NotificacaoToast from "../../interfaces/context/NotificacaoToast";
 import Texto from "../Texto";
 import { useEstilos, estiloNotificacao } from "./styles";
+import { MotiView } from "moti";
 
 type ToastProps = NotificacaoToast & ViewProps;
 
@@ -11,14 +12,34 @@ export default function Toast(props: ToastProps) {
     const { estilos } = useEstilos();
 
     return (
-        <View
+        <MotiView
             {...props}
             style={[
                 estilos.base.card,
                 estilos[props.estilo].card,
                 props.style,
                 props.notificacao ? estiloNotificacao.notificacao : {}
-            ]}>
+            ]}
+            from={{ opacity: 0, translateY: 100 }}
+            animate={{ opacity: 1, translateY: 0 }}
+            exit={{ opacity: 0, translateY: 100 }}
+            transition={{
+                type: 'timing',
+                duration: 100,
+            }}
+            key={props.id}
+        >
+            {props.notificacao && props.tempoDispensar &&
+                <MotiView
+                    style={[estilos.base.progresso, estilos[props.estilo].progresso]}
+                    from={{ right: 0 }}
+                    animate={{ right: 400 }}
+                    transition={{
+                        type: 'timing',
+                        duration: props.tempoDispensar,
+                    }}
+                />
+            }
             <View style={estilos.base.infos}>
                 <Feather
                     name={props.icone}
@@ -68,6 +89,6 @@ export default function Toast(props: ToastProps) {
                 :
                 null
             }
-        </View>
+        </MotiView>
     );
 }

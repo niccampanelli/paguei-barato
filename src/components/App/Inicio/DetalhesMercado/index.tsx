@@ -34,7 +34,7 @@ export default function DetalhesMercado({ navigation, route }: DetalhesMercadoPr
 
     const { estilos } = useEstilos();
     const { estiloGlobal } = useEstiloGlobal();
-    const { temaMapa } = useTemaContext();
+    const { temaMapa, propriedadesTema } = useTemaContext();
 
     const [sugestoes, setSugestoes] = useState<Sugestao[]>([]);
     const [sugestoesCarregando, setSugestoesCarregando] = useState<boolean>(false);
