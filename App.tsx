@@ -14,6 +14,7 @@ import { useFonts,
 	Nunito_900Black, 
 	Nunito_900Black_Italic
 } from '@expo-google-fonts/nunito';
+global.Buffer = require('buffer').Buffer;
 
 /**
  * # PagueiBarato

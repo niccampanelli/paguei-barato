@@ -10,7 +10,6 @@ import Botao from "../../../Botao";
 import { useEstilos } from "../styles";
 import { useEstiloGlobal } from "../../../../estiloGlobal";
 import { useCadastroContext } from "../../../../util/context/providers/cadastroProvider";
-import { useEffect, useState } from "react";
 
 type EtapaNomeProps = NativeStackScreenProps<FluxoCadastroParams, "etapaNome">;
 
@@ -34,7 +33,7 @@ export default function EtapaNome({ navigation, route }: EtapaNomeProps) {
                 <Texto peso="800ExtraBold" style={[estiloGlobal.subtitulo, estilos.titulo]}>Vamos nos conhecer melhor!</Texto>
                 <View style={estilos.form}>
                     <View style={estilos.grupoForm}>
-                        <Texto peso="700Bold" style={[estiloGlobal.label, estilos.label]}>Para começar, nos diga seu primeiro nome:</Texto>
+                        <Texto peso="700Bold" style={[estiloGlobal.label, estilos.label]}>Para começar, nos diga qual o seu nome?</Texto>
                         <Controller
                             name="nome"
                             control={control}
@@ -46,7 +45,7 @@ export default function EtapaNome({ navigation, route }: EtapaNomeProps) {
                                     textContentType="name"
                                     autoCapitalize="words"
                                     autoCorrect={false}
-                                    placeholder="Informe seu primeiro nome"
+                                    placeholder="Informe seu nome"
                                     value={value}
                                     onChangeText={onChange}
                                     erro={errors?.nome?.message}

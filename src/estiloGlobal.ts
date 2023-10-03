@@ -75,6 +75,19 @@ export const useEstiloGlobal = () => {
             pointerEvents: "none"
         },
 
+        inputOverlayDestacado: {
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: 10,
+            borderWidth: 1,
+            borderColor: propriedadesTema.cores.secundaria,
+            borderRadius: propriedadesTema.layout.raioBorda,
+            pointerEvents: "none"
+        },
+
         inputImagem: {
             display: "flex",
             alignItems: "center",

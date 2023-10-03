@@ -67,7 +67,7 @@ export default function Menu({ navigation, route }: MenuProps) {
                     style={estilos.usuario}
                     onPress={
                         usuarioLogado ?
-                            () => { }
+                            () => navigation.getParent()?.navigate("menuUsuario", { usuario: usuarioLogado })
                             :
                             () => {
                                 fazerLogout();
@@ -94,7 +94,7 @@ export default function Menu({ navigation, route }: MenuProps) {
             </View>
             <View style={estilos.opcoes}>
                 {usuarioLogado &&
-                    <TouchableOpacity style={estilos.opcao}>
+                    <TouchableOpacity onPress={() => navigation.getParent()?.navigate("menuUsuario", { usuario: usuarioLogado })} style={estilos.opcao}>
                         <Feather name="user" style={estilos.opcaoIcone} />
                         <Texto peso="700Bold" style={estilos.opcaoTexto}>Conta</Texto>
                     </TouchableOpacity>

@@ -1,49 +1,44 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import Produto from "../../../interfaces/models/Produto";
 import Usuario from "../../../interfaces/models/Usuario";
 import ContextAuth from "../../../interfaces/context/ContextAuth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import authServices from "../../../services/authServices";
 
-const AuthContext = createContext<ContextAuth>({ usuarioLogado: undefined, cadastrarUsuario: async () => { }, fazerLogin: async () => { }, fazerLogout: async () => { } });
+const AuthContext = createContext<ContextAuth>({ usuarioLogado: undefined, cadastrarUsuario: async () => { }, fazerLogin: async () => { }, fazerLogout: async () => { }, atualizarUsuarioLogado: async () => { }, verificarUsuarioLogado: async () => false });
 
 export default function AuthProvider(props: any) {
 
     const [usuarioLogado, setUsuarioLogado] = useState<Usuario>();
 
-    const verificarUsuarioLogado = async () => {
+    const verificarUsuarioLogado = async (): Promise<boolean> => {
         try {
-            const token = AsyncStorage.getItem("bearerToken");
+            const token = await AsyncStorage.getItem("bearerToken");
 
             if (!token) {
                 setUsuarioLogado(undefined);
-                return;
+                return false;
             }
 
-            const usuario: Usuario = {
-                id: 1,
-                nome: "Teste",
-                email: "teste@email.com",
-                senha: "123456",
-                bairro: "Centro",
-                cidade: "São Paulo",
-                uf: "SP",
-                cep: "12345678",
-                logradouro: "Rua Teste",
-                numero: 23,
-                complemento: "Casa 2",
-            }
+            const obj = token.split('.').map(part => Buffer.from(part.replace(/-/g, '+').replace(/_/g, '/'), 'base64').toString());
+            const data = JSON.parse(obj[1]);
+            const id = Number(await AsyncStorage.getItem("usuarioId"));
 
+            if (!id)
+                return false;
+
+            const response = await authServices.obterUsuario(id);
+            const usuario = response.data;
             setUsuarioLogado(usuario);
 
+            return true;
         } catch (error) {
             console.log(error);
+            return false;
         }
     };
 
     const cadastrarUsuario = async (usuario: Usuario) => {
         try {
-
             usuario.numero = Number(usuario.numero);
 
             await authServices.cadastrarUsuario(usuario);
@@ -77,11 +72,27 @@ export default function AuthProvider(props: any) {
         try {
             await authServices.fazerLogout();
             setUsuarioLogado(undefined);
-            console.log("deslogou");
 
         } catch (error) {
             throw error;
         }
+    };
+
+    const atualizarUsuarioLogado = async (usuario: Usuario) => {
+        if (!usuarioLogado)
+            return;
+
+        if (usuario) {
+            setUsuarioLogado(usuario);
+            return;
+        }
+
+        if (!usuarioLogado.id)
+            return;
+
+        const response = await authServices.obterUsuario(usuarioLogado.id);
+        const usuarioAtualizado = response.data;
+        setUsuarioLogado(usuarioAtualizado);
     };
 
     useEffect(() => {
@@ -93,7 +104,9 @@ export default function AuthProvider(props: any) {
             usuarioLogado,
             cadastrarUsuario,
             fazerLogin,
-            fazerLogout
+            fazerLogout,
+            atualizarUsuarioLogado,
+            verificarUsuarioLogado
         }}>
             {props.children}
         </AuthContext.Provider>
