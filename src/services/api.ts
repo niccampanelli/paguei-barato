@@ -85,7 +85,11 @@ export default class API {
         return API.instanciaViaCep;
     }
 
-    public static async definirTokenInstanciaAxios(token: string): Promise<void> {
+    public static definirTokenInstanciaAxios(token: string): void {
         API.instancia.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    }
+
+    public static removerTokenInstanciaAxios(): void {
+        delete API.instancia.defaults.headers.common['Authorization'];
     }
 }

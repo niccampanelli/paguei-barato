@@ -21,6 +21,7 @@ interface InputProps extends Omit<TextInputProps, "onChangeText"> {
     mascara?: keyof TiposMascara,
     desativado?: boolean,
     erro?: string,
+    destacado?: boolean,
     onChangeText?: ((valor: string, valorSemMascara?: string) => void)
     forwardRef?: React.MutableRefObject<any>,
 }
@@ -30,6 +31,7 @@ export default function Input({
     mascara,
     desativado,
     erro,
+    destacado,
     onChangeText,
     forwardRef,
     secureTextEntry,
@@ -46,6 +48,9 @@ export default function Input({
             <View style={estiloGlobal.input}>
                 {!!erro &&
                     <View style={estiloGlobal.inputOverlayErro} />
+                }
+                {destacado && !erro &&
+                    <View style={estiloGlobal.inputOverlayDestacado} />
                 }
                 <View style={desativado && { opacity: 0.3 }}>
                     {icone}

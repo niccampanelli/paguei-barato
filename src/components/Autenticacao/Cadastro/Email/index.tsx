@@ -10,7 +10,6 @@ import Botao from "../../../Botao";
 import { useEstilos } from "../styles";
 import { useEstiloGlobal } from "../../../../estiloGlobal";
 import { useCadastroContext } from "../../../../util/context/providers/cadastroProvider";
-import { useEffect, useState } from "react";
 
 type EtapaEmailProps = NativeStackScreenProps<FluxoCadastroParams, "etapaEmail">;
 
@@ -34,7 +33,7 @@ export default function EtapaEmail({ navigation, route }: EtapaEmailProps) {
                 <Texto peso="800ExtraBold" style={[estiloGlobal.subtitulo, estilos.titulo]}>Como podemos entrar em contato?</Texto>
                 <View style={estilos.form}>
                     <View style={estilos.grupoForm}>
-                        <Texto peso="700Bold" style={[estiloGlobal.label, estilos.label]}>Informe seu endereço de e-mail:</Texto>
+                        <Texto peso="700Bold" style={[estiloGlobal.label, estilos.label]}>Agora, informe seu endereço de e-mail:</Texto>
                         <Controller
                             name="email"
                             control={control}

@@ -3,6 +3,7 @@ import Erro from "../interfaces/Erro";
 import Usuario from "../interfaces/models/Usuario";
 import API from "./api";
 import RespostaLogin from "../interfaces/models/RespostaLogin";
+import { AxiosResponse } from "axios";
 
 const authServices = {
 
@@ -34,6 +35,7 @@ const authServices = {
 
             if (token) {
                 await AsyncStorage.setItem("bearerToken", token);
+                await AsyncStorage.setItem("usuarioId", response.data.id.toString());
                 API.definirTokenInstanciaAxios(token);
                 return response.data;
             }
@@ -59,11 +61,23 @@ const authServices = {
 
     async fazerLogout() {
         await AsyncStorage.removeItem("bearerToken");
+        await AsyncStorage.removeItem("usuarioId");
+        API.removerTokenInstanciaAxios();
     },
 
-    async obterUsuario(id: number): Promise<Usuario> {
+    async obterUsuario(id: number): Promise<AxiosResponse<Usuario>> {
         const api = await API.obterInstanciaAxios();
         return await api.get(`/usuario/${id}`);
+    },
+
+    async editarUsuario(id: number, modificacoes: Partial<Usuario>): Promise<AxiosResponse<Usuario>> {
+        const api = await API.obterInstanciaAxios();
+        return await api.patch(`/usuario/${id}`, modificacoes);
+    },
+
+    async excluirUsuario(id: number) {
+        const api = await API.obterInstanciaAxios();
+        return await api.delete(`/usuario/${id}`);
     }
 }
 

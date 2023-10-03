@@ -13,7 +13,7 @@ export const useEstilos = () => {
         },
 
         banner: {
-            flex: .2,
+            flex: .3,
             width: "100%",
         },
 
