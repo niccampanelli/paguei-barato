@@ -1,13 +1,33 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { ContextLista } from "../../../interfaces/context/ContextLista";
 import ItemListaCompras from "../../../interfaces/models/ItemListaCompras";
 import Sugestao from "../../../interfaces/models/Sugestao";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const ListaContext = createContext<ContextLista>({ itensLista: [], adicionarItemLista: () => { }, adicionarSugestaoLista: () => { }, removerItemLista: () => { }, riscarItemLista: () => { }, verificarExistenteLista: () => false, verificarSugestaoExistenteLista: () => false });
 
 export default function ListaProvider(props: any) {
 
     const [itensLista, setItensLista] = useState<ItemListaCompras[]>([]);
+
+    useEffect(() => {
+        const obterItensLista = async () => {
+            const itensJson = await AsyncStorage.getItem("itensLista");
+            const itens: ItemListaCompras[] = itensJson ? JSON.parse(itensJson) : [];
+
+            setItensLista(itens);
+        };
+
+        obterItensLista();
+
+        return () => {
+            AsyncStorage.setItem("itensLista", JSON.stringify(itensLista));
+        };
+    }, []);
+
+    useEffect(() => {
+        AsyncStorage.setItem("itensLista", JSON.stringify(itensLista));
+    }, [itensLista]);
 
     const adicionarItemLista = (item: ItemListaCompras) => {
         item.adicionadoEm = new Date();
