@@ -65,6 +65,23 @@ const mercadoServices = {
         return data;
     },
 
+    async pesquisarMercados(pesquisa: string): Promise<AxiosResponse<Mercado[]>> {
+        const api = await API.obterInstanciaAxios();
+
+        const data = await api.get<Mercado[]>("/mercado", {
+            params: {
+                search: pesquisa
+            }
+        });
+        const mercados = data.data;
+
+        for(let i = 0; i < mercados.length; i++) {
+            mercados[i] = await mercadoServices.buscarRelacoesMercado(mercados[i]);
+        };
+
+        return data;
+    },
+
     // async getSugestoes(id: number, idProduto: number) {
     //     const api = await API.obterInstanciaAxios();
 

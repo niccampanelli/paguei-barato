@@ -4,7 +4,6 @@ import { FlatList, Image, ListRenderItemInfo, ScrollView, TouchableOpacity, useW
 import RBSheet from "react-native-raw-bottom-sheet";
 import { useEstiloGlobal } from "../../../estiloGlobal";
 import Modal from "../../Modal";
-import { useTemaContext } from "../../../util/context/providers/temaProvider";
 import { useEstilos } from "./styles";
 import Texto from "../../Texto";
 import Input from "../../Input";
@@ -17,8 +16,12 @@ import CarregandoOverlay from "../../CarregandoOverlay";
 import Mercado from "../../../interfaces/models/Mercado";
 import mercadoServices from "../../../services/mercadoServices";
 import Formatador from "../../../util/Formatador";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import objetoUtils from "../../../util/objetoUtils";
 
 type BuscaProps = BottomTabScreenProps<NavegacaoAppRoutesParams, "buscar">;
+
+type TiposModal = "filtrar" | "ordenar" | "limpar";
 
 export default function Busca({ navigation, route }: BuscaProps) {
 
@@ -29,64 +32,22 @@ export default function Busca({ navigation, route }: BuscaProps) {
     const modalRef = useRef<RBSheet>(null);
 
     const dimensoesTela = useWindowDimensions();
-    const [alturaModal, setAlturaModal] = useState(0);
 
-    const [modalAtual, setModalAtual] = useState<"filtrar" | "ordenar">("filtrar");
-
+    const [modalAtual, setModalAtual] = useState<TiposModal>("filtrar");
     const [carregando, setCarregando] = useState<boolean>(false);
 
-    const [itens, setItens] = useState<Produto[] | Mercado[]>([]);
-    const [produtos, setProdutos] = useState<Produto[]>([]);
-    const [mercados, setMercados] = useState<Mercado[]>([]);
+    const [textoPesquisa, setTextoPesquisa] = useState<string>("");
+    const [pesquisa, setPesquisa] = useState<string>("");
+    const [pesquisaTimeout, setPesquisaTimeout] = useState<NodeJS.Timeout | null>(null);
+    const [itens, setItens] = useState<Array<Produto | Mercado>>([]);
+    const [itensRecentes, setItensRecentes] = useState<Array<Produto | Mercado>>([]);
 
-    const obterProdutos = async () => {
+    const efetuarPesquisa = async () => {
         setCarregando(true);
 
         try {
-            const resposta = await produtoServices.getProdutos();
-
-            setProdutos(resposta.data);
-        }
-        catch (erro: any) {
-            notificar({
-                estilo: "vermelho",
-                texto: erro.response?.data?.erro || "Erro ao obter produtos",
-                autoDispensar: true,
-                dispensavel: true,
-            });
-        }
-        finally {
-            setCarregando(false);
-        }
-    }
-
-    const obterMercados = async () => {
-        setCarregando(true);
-
-        try {
-            const resposta = await mercadoServices.getMercados();
-
-            setMercados(resposta.data);
-        }
-        catch (erro: any) {
-            notificar({
-                estilo: "vermelho",
-                texto: erro.response?.data?.erro || "Erro ao obter mercados",
-                autoDispensar: true,
-                dispensavel: true,
-            });
-        }
-        finally {
-            setCarregando(false);
-        }
-    }
-
-    const obterItens = async () => {
-        setCarregando(true);
-
-        try {
-            const { data: mercados } = await mercadoServices.getMercados();
-            const { data: produtos } = await produtoServices.getProdutos();
+            const { data: mercados } = await mercadoServices.pesquisarMercados(pesquisa);
+            const { data: produtos } = await produtoServices.pesquisarProdutos(pesquisa);
 
             setItens([...mercados, ...produtos]);
         }
@@ -105,9 +66,37 @@ export default function Busca({ navigation, route }: BuscaProps) {
     };
 
     useEffect(() => {
-        setAlturaModal(dimensoesTela.height * 0.65);
-        obterItens();
-    }, [dimensoesTela]);
+        if (pesquisa === "") {
+            setItens([]);
+            return;
+        }
+
+        if (pesquisaTimeout)
+            clearTimeout(pesquisaTimeout);
+
+        const timeout = setTimeout(() => {
+            efetuarPesquisa();
+        }, 200);
+
+        setPesquisaTimeout(timeout);
+
+        return () => clearTimeout(timeout);
+    }, [pesquisa.trim()]);
+
+    useEffect(() => {
+        const obterItensRecentes = async () => {
+            const itensRecentesJson = await AsyncStorage.getItem("itensBuscaRecentes");
+            const itensRecentes: any[] = itensRecentesJson ? JSON.parse(itensRecentesJson) : [];
+
+            setItensRecentes(itensRecentes);
+        };
+
+        obterItensRecentes();
+    }, []);
+
+    const itensOrdenadosFiltrados = [...itens].sort((a, b) => {
+        return a.id! - b.id!;
+    });
 
     const ModalFiltrar = () => {
 
@@ -223,97 +212,227 @@ export default function Busca({ navigation, route }: BuscaProps) {
         );
     };
 
-    const componentesModal = {
+    const ModalLimpar = () => {
+
+        return (
+            <View>
+                <Texto style={estiloGlobal.texto}>Deseja mesmo limpar a lista de buscas recentes?</Texto>
+            </View>
+        );
+    };
+
+    const componentesModal: { [key in TiposModal]: {
+        titulo: string,
+        componente: JSX.Element,
+        altura: number,
+        aoPressionarBotaoPrincipal: () => void
+    } } = {
         "filtrar": {
             titulo: "Filtrar resultados",
-            componente: <ModalFiltrar />
+            componente: <ModalFiltrar />,
+            altura: dimensoesTela.height * 0.65,
+            aoPressionarBotaoPrincipal: () => { }
         },
         "ordenar": {
             titulo: "Ordenar resultados",
-            componente: <ModalOrdenar />
+            componente: <ModalOrdenar />,
+            altura: dimensoesTela.height * 0.65,
+            aoPressionarBotaoPrincipal: () => { }
+        },
+        "limpar": {
+            titulo: "Limpar buscas recentes",
+            componente: <ModalLimpar />,
+            altura: 220,
+            aoPressionarBotaoPrincipal: () => {
+                setItensRecentes([]);
+                AsyncStorage.removeItem("itensBuscaRecentes");
+                modalRef.current?.close();
+                notificar({
+                    estilo: "normal",
+                    texto: "As buscas recentes foram removidas do histórico com sucesso.",
+                    icone: "check-circle",
+                    dispensavel: true,
+                    autoDispensar: true,
+                });
+            }
         }
     }
 
-    const abrirModal = (modal: "filtrar" | "ordenar") => {
+    const abrirModal = (modal: TiposModal) => {
         setModalAtual(modal);
         modalRef.current?.open();
     }
 
-    const ItemLista = ({ item }: ListRenderItemInfo<any>) => {
+    const ItemLista = ({ item }: ListRenderItemInfo<Produto | Mercado>) => {
+
+        const abrirItem = async () => {
+            var itensRecentesTemp = [...itensRecentes];
+            const itemNaLista = itensRecentes.findIndex(itemRecente => itemRecente.id === item.id);
+
+            if (itemNaLista !== -1) {
+                itensRecentesTemp.unshift(itensRecentesTemp.splice(itemNaLista, 1)[0]);
+            } else {
+                itensRecentesTemp.unshift(item);
+            }
+
+            setItensRecentes(itensRecentesTemp);
+            await AsyncStorage.setItem("itensBuscaRecentes", JSON.stringify(itensRecentesTemp));
+
+            if ("cep" in item) {
+                navigation.getParent()?.navigate("detalhesMercado", { item });
+            } else {
+                navigation.getParent()?.navigate("detalhesProduto", { item });
+            }
+        };
 
         return (
             <TouchableOpacity
                 style={estilos.listaItem}
-                onPress={
-                    () => navigation.getParent()?.navigate(
-                        item.cep ? "detalhesMercado" : "detalhesProduto",
-                        { item }
-                    )
-                }
+                onPress={abrirItem}
             >
-                <Image style={estilos.listaItemImagem} source={require("../../../../assets/favicon.png")} />
-                <Texto peso="700Bold" style={estilos.listaItemTexto} numberOfLines={1}>
-                    {item.cep ?
-                        item.nome
-                        :
-                        Formatador.formatarNomeProduto(item)
-                    }
-                </Texto>
+                <View style={estilos.listaItemImagemContainer}>
+                    <Image style={estilos.listaItemImagem} source={{ uri: "https://fortatacadista.vteximg.com.br/arquivos/ids/303375-800-800/7891150086845.jpg?v=637962759180930000" }} />
+                </View>
+                <View style={estilos.listaItemInfos}>
+                    <Texto peso="700Bold" style={estilos.listaItemTexto} numberOfLines={1}>
+                        {"cep" in item ?
+                            item.nome
+                            :
+                            Formatador.formatarNomeProduto(item)
+                        }
+                    </Texto>
+                    <Texto style={estilos.listaItemTipo} numberOfLines={1}>
+                        {"cep" in item ?
+                            "Mercado • " + item.logradouro + ", " + item.numero
+                            :
+                            "Produto • " + item.marca
+                        }
+                    </Texto>
+                </View>
             </TouchableOpacity >
         );
     };
 
+    const ListaVazia = () => {
+
+        return (
+            <View>
+                {!carregando &&
+                    <Texto style={estiloGlobal.texto}>
+                        {pesquisa === "" ?
+                            "Os produtos e mercados que você pesquisar serão mostrados aqui."
+                            :
+                            "Nenhum produto ou mercado foi encontrado com a pesquisa digitada. Verifique se a pesquisa está correta e tente novamente."
+                        }
+                    </Texto>
+                }
+            </View>
+        );
+    }
+
     return (
         <View style={estilos.container}>
-            {carregando &&
-                <CarregandoOverlay />
-            }
             <Modal
                 titulo={componentesModal[modalAtual].titulo}
                 refSheet={modalRef}
-                height={alturaModal}
+                height={componentesModal[modalAtual].altura}
+                possuiBotoes={modalAtual === "limpar"}
+                labelBotaoPrincipal="Limpar"
+                labelBotaoSecundario="Cancelar"
+                aoPressionarBotaoPrincipal={componentesModal[modalAtual].aoPressionarBotaoPrincipal}
+                aoPressionarBotaoSecundario={() => modalRef.current?.close()}
             >
                 {componentesModal[modalAtual].componente}
             </Modal>
-            <View>
+            <View style={estilos.cabecalho}>
                 <Texto peso="800ExtraBold" style={[estiloGlobal.titulo, { marginBottom: 16 }]}>Buscar</Texto>
-                <Input placeholder="Escreva aqui sua pesquisa..." icone={<Feather name="search" style={estiloGlobal.inputIcone} />} />
-                <ScrollView showsHorizontalScrollIndicator={false} horizontal style={estilos.listaFiltros}>
-                    <TouchableOpacity onPress={() => abrirModal("filtrar")} style={[estiloGlobal.tagPequenaDestaque, estilos.filtro]}>
-                        <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaDestaqueTexto}>Filtros</Texto>
-                        <Texto peso="800ExtraBold" style={estilos.filtroContador}>2</Texto>
-                    </TouchableOpacity>
-                    <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                        <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
-                    </View>
-                    <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                        <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
-                    </View>
-                    <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                        <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
-                    </View>
-                    <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                        <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
-                    </View>
-                    <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                        <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
-                    </View>
-                    <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                        <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
-                    </View>
-                    <View style={[estiloGlobal.tagPequenaSecundaria, estilos.filtro]}>
-                        <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>Opção</Texto>
-                    </View>
-                </ScrollView>
+                <Input
+                    placeholder="Escreva aqui sua pesquisa..."
+                    icone={<Feather name="search" style={estiloGlobal.inputIcone} />}
+                    value={textoPesquisa}
+                    onChangeText={t => {
+                        setTextoPesquisa(t);
+                        setPesquisa(t.trim());
+                    }}
+                />
             </View>
-            <View style={estilos.listaCabecalho}>
-                <Texto peso="700Bold" style={estiloGlobal.subtitulo}>{itens.length} {itens.length === 1 ? "Resultado" : "Resultados"}</Texto>
-                <TouchableOpacity onPress={() => abrirModal("ordenar")} style={estiloGlobal.tagPequenaNormal}>
-                    <Texto style={estiloGlobal.tagPequenaNormalTexto}>Ordenar</Texto>
-                    <Feather name="bar-chart" style={estiloGlobal.tagPequenaNormalTexto} />
-                </TouchableOpacity>
+            <View style={{ flex: 1 }}>
+                {carregando &&
+                    <CarregandoOverlay />
+                }
+                {/* {itensOrdenadosFiltrados.length > 0 && pesquisa !== "" &&
+                    <View style={estilos.filtros}>
+                        <TouchableOpacity onPress={() => abrirModal("filtrar")} style={estiloGlobal.tagPequenaDestaque}>
+                            <Texto peso="800ExtraBold" style={estiloGlobal.tagPequenaDestaqueTexto}>
+                                {quantidadeFiltros > 0 ? "Filtros" : "Filtrar"}
+                            </Texto>
+                            {quantidadeFiltros > 0 &&
+                                <Texto peso="800ExtraBold" style={estilos.filtroContador}>• {quantidadeFiltros}</Texto>
+                            }
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => { }} style={estiloGlobal.tagPequenaSecundaria}>
+                            <Texto style={estiloGlobal.tagPequenaSecundariaTexto}>
+                                Sem filtros
+                            </Texto>
+                        </TouchableOpacity>
+                        <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={estilos.listaFiltrosContainer}>
+                            {obterFiltrosSelecionados().map((filtro) => (
+                                <View key={filtro.nome} style={estiloGlobal.tagPequenaSecundaria}>
+                                    <Texto peso="700Bold" style={estiloGlobal.tagPequenaSecundariaTexto}>{filtro.nome} {filtro.valor}</Texto>
+                                </View>
+                            ))}
+                        </ScrollView>
+                    </View>
+                } */}
+                <View style={estilos.listaCabecalho}>
+                    {!carregando &&
+                        <Texto peso="700Bold" style={estiloGlobal.subtitulo}>
+                            {
+                                pesquisa !== "" ?
+                                    itensOrdenadosFiltrados.length > 0 ?
+                                        `${itensOrdenadosFiltrados.length} ${itensOrdenadosFiltrados.length === 1 ? "Resultado" : "Resultados"}`
+                                        :
+                                        "Nenhum resultado"
+                                    :
+                                    "Buscados recentemente"
+                            }
+                        </Texto>
+                    }
+                    {itensOrdenadosFiltrados.length > 0 && pesquisa !== "" ?
+                        <></>
+                        // <TouchableOpacity onPress={() => abrirModal("ordenar")} style={ordemSelecionado?.por === "id" ? estiloGlobal.tagPequenaNormal : estiloGlobal.tagPequenaSecundaria}>
+                        //     <Texto style={estiloGlobal.tagPequenaNormalTexto}>
+                        //         {ordemSelecionado?.por === "id" ? "Ordenar" : ordemSelecionado?.por}
+                        //     </Texto>
+                        //     <Feather
+                        //         name={ordemSelecionado?.por === "id" ? "bar-chart" : ordemSelecionado?.crescente ? "trending-up" : "trending-down"}
+                        //         style={ordemSelecionado?.por === "id" ? estiloGlobal.tagPequenaNormalTexto : estiloGlobal.tagPequenaSecundariaTexto}
+                        //     />
+                        // </TouchableOpacity>
+                        :
+                        itensRecentes.length > 0 &&
+                        <TouchableOpacity onPress={() => abrirModal("limpar")} style={estiloGlobal.tagPequenaNormal}>
+                            <Texto style={estiloGlobal.tagPequenaNormalTexto}>Limpar</Texto>
+                            <Feather name="x" style={estiloGlobal.tagPequenaNormalTexto} />
+                        </TouchableOpacity>
+                    }
+                </View>
+                <FlatList
+                    style={estilos.lista}
+                    contentContainerStyle={estilos.listaContainer}
+                    data={pesquisa !== "" ?
+                        itens.length !== 0 ?
+                            itensOrdenadosFiltrados
+                            :
+                            []
+                        :
+                        itensRecentes
+                    }
+                    ListEmptyComponent={ListaVazia}
+                    keyExtractor={(item, indice) => item.id + "" + indice}
+                    renderItem={ItemLista}
+                />
             </View>
-            <FlatList style={estilos.lista} data={itens} keyExtractor={(item, indice) => item.id + "" + indice} renderItem={ItemLista} />
         </View>
     );
 }

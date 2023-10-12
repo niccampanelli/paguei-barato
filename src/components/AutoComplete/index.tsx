@@ -4,7 +4,7 @@ import { View, TouchableOpacity, FlatList } from "react-native";
 import AutocompleteProps from "../../interfaces/components/AutocompleteProps";
 import Input from "../Input";
 import { useEstiloGlobal } from "../../estiloGlobal";
-import buscaObjeto from "../../util/buscaObjeto";
+import objetoUtils from "../../util/objetoUtils";
 import Texto from "../Texto";
 
 export default function AutoComplete<TipoItem>({
@@ -29,7 +29,7 @@ export default function AutoComplete<TipoItem>({
         let valores = [];
 
         if (texto !== "")
-            valores = buscaObjeto.corresponder(dados, texto, extrairChave);
+            valores = objetoUtils.corresponder(dados, texto, extrairChave);
 
         setCorrespondencias(valores);
     };

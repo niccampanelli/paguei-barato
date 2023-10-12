@@ -64,6 +64,23 @@ const produtoServices = {
         return data;
     },
 
+    async pesquisarProdutos(pesquisa: string): Promise<AxiosResponse<Produto[]>> {
+        const api = await API.obterInstanciaAxios();
+
+        const data = await api.get<Produto[]>("/produto", {
+            params: {
+                search: pesquisa
+            }
+        });
+        const produtos = data.data;
+
+        for(let i = 0; i < produtos.length; i++) {
+            produtos[i] = await this.buscarRelacoesProduto(produtos[i]);
+        };
+
+        return data;
+    },
+
     async obterLevantamento(id: number): Promise<AxiosResponse<LevantamentoProduto>> {
         const api = await API.obterInstanciaAxios();
 

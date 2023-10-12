@@ -10,16 +10,27 @@ export const useEstilos = () => {
         container: {
             flex: 1,
             paddingTop: Constants.statusBarHeight + propriedadesTema.layout.paddingVertical,
+        },
+
+        cabecalho: {
+            paddingHorizontal: propriedadesTema.layout.paddingHorizontal,
+            marginBottom: 16
+        },
+
+        filtros: {
+            flexGrow: 0,
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            columnGap: propriedadesTema.botoes.espacamento,
             paddingHorizontal: propriedadesTema.layout.paddingHorizontal
         },
 
-        listaFiltros: {
+        listaFiltrosContainer: {
             display: "flex",
-            paddingVertical: 16
-        },
-
-        filtro: {
-            marginRight: 10
+            flexDirection: "row",
+            alignItems: "center",
+            columnGap: propriedadesTema.botoes.espacamento,
         },
 
         filtroContador: {
@@ -31,11 +42,18 @@ export const useEstilos = () => {
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
-            marginBottom: 16
+            paddingVertical: 8,
+            paddingHorizontal: propriedadesTema.layout.paddingHorizontal
         },
 
         lista: {
-            flex: 1
+            flex: 1,
+            paddingHorizontal: propriedadesTema.layout.paddingHorizontal
+        },
+
+        listaContainer: {
+            flexGrow: 1,
+            paddingVertical: 8
         },
 
         listaItem: {
@@ -45,16 +63,35 @@ export const useEstilos = () => {
             paddingBottom: 16
         },
 
+        listaItemImagemContainer: {
+            backgroundColor: "#ffffff",
+            padding: 8,
+            borderRadius: 8,
+            marginRight: 8,
+            borderColor: propriedadesTema.cores.fundoSecundario,
+            borderWidth: 2,
+            borderStyle: "solid",
+        },
+
         listaItemImagem: {
-            marginRight: 20,
+            borderRadius: 8,
             height: 30,
             width: 30
         },
 
+        listaItemInfos: {
+            display: "flex",
+            flexDirection: "column",
+        },
+
         listaItemTexto: {
-            flex: 1,
             fontSize: propriedadesTema.tamanhoTextos.texto,
             color: propriedadesTema.cores.textoEscuro
+        },
+
+        listaItemTipo: {
+            fontSize: propriedadesTema.tamanhoTextos.texto,
+            color: propriedadesTema.cores.textoClaro
         },
 
         modalScrollview: {
