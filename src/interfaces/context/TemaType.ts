@@ -1,1 +1,0 @@
-export type TemaType = "claro" | "escuro";
