@@ -1,9 +1,13 @@
 import { Stack } from "expo-router";
 
-export default function LayoutMenu() {
+export default function LayoutMenus() {
 
     return (
-        <Stack>
+        <Stack
+            screenOptions={{
+                headerShown: false,
+            }}
+        >
             <Stack.Screen name="menu" />
             <Stack.Screen name="usuario" />
             <Stack.Screen name="sobre" />

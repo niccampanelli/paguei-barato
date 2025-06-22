@@ -1,14 +1,17 @@
 import { Stack } from 'expo-router';
-import 'react-native-reanimated';
 
 export default function LayoutProtegidas() {
 
     return (
-        <Stack>
+        <Stack
+            screenOptions={{
+                headerShown: false,
+            }}
+        >
             <Stack.Screen name="(abas)" />
-            <Stack.Screen name="estoque" />
-            <Stack.Screen name="mercado" />
-            <Stack.Screen name="produto" />
+            <Stack.Screen name="estoque/[id]" />
+            <Stack.Screen name="mercado/[id]" />
+            <Stack.Screen name="produto/[id]" />
         </Stack>
     );
 }
