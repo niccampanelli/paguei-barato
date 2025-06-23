@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Paguei Barato",
+    "name": "PagueiBarato",
     "description": "Aplicativo para encontrar os melhores preços e ofertas.",
     "slug": "paguei-barato",
     "version": "1.0.0",
@@ -27,6 +27,18 @@
     },
     "plugins": [
       "expo-router",
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "node_modules/@expo-google-fonts/nunito/Nunito_300Light.ttf",
+            "node_modules/@expo-google-fonts/nunito/Nunito_400Regular.ttf",
+            "node_modules/@expo-google-fonts/nunito/Nunito_700Bold.ttf",
+            "node_modules/@expo-google-fonts/nunito/Nunito_800ExtraBold.ttf",
+            "node_modules/@expo-google-fonts/nunito/Nunito_900Black.ttf"
+          ]
+        }
+      ],
       [
         "expo-splash-screen",
         {

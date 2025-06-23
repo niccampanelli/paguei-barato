@@ -1,3 +1,4 @@
+import Texto from "@/components/Texto";
 import { Link } from "expo-router";
 import { Text, View } from "react-native";
 
@@ -12,6 +13,9 @@ export default function Login() {
             <Link href="/(protegidas)/(abas)/inicio">
                 Ir para principal
             </Link>
+            <Texto>
+                Olá, este é o login!
+            </Texto>
         </View>
     )
 }
