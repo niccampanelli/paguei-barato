@@ -1,21 +1,39 @@
-export type TextoPesos = "300" | "400" | "700" | "800" | "900";
+import { TemaCores, TemaTextoPesos, TemaTextoTamanhos } from "@/types/contants/tema";
+import { TextProps } from "react-native";
 
-export const TextoPesoValor: Record<TextoPesos, string[]> = {
-    "300": ["_300Light", "-Light"],
-    "400": ["_400Regular", "-Regular"],
-    "700": ["_700Bold", "-Bold"],
-    "800": ["_800ExtraBold", "-ExtraBold"],
-    "900": ["_900Black", "-Black"],
+export const TextoPesoValor: Record<number, string[]> = {
+    300: ["_300Light", "-Light"],
+    400: ["_400Regular", "-Regular"],
+    700: ["_700Bold", "-Bold"],
+    800: ["_800ExtraBold", "-ExtraBold"],
+    900: ["_900Black", "-Black"],
 }
 
-export interface TextoProps {
+export type TextoPropsPesos = keyof TemaTextoPesos;
+
+export type TextoPropsTamanhos = keyof TemaTextoTamanhos;
+
+export type TextoPropsVariantes = TextoPropsPesos | TextoPropsTamanhos;
+
+export interface TextoProps extends TextProps {
     /**
-     * Texto a ser exibido
+     * Tipo de peso da fonte vindo do tema
+     * @default "texto"
      */
-    children: string;
+    peso?: TextoPropsPesos;
     /**
-     * Peso da fonte
-     * @default "800"
+     * Tipo da cor do texto vindo das cores de texto do tema
+     * @default "claro"
      */
-    peso?: TextoPesos;
+    cor?: keyof TemaCores["texto"];
+    /**
+     * Tipo do tamanho do texto vindo do tema
+     * @default "texto"
+     */
+    tamanho?: TextoPropsTamanhos;
+    /**
+     * Variante que combina tamanhos e pesos
+     * @default undefined
+     */
+    variante?: TextoPropsVariantes;
 }

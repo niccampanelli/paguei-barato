@@ -41,7 +41,6 @@ export const temaTextoPesos: TemaTextoPesos = {
 	subtitulo: 800,
 	link: 700,
 	texto: 400,
-	legenda: 400,
 }
 
 export const temaTexto: TemaTexto = {

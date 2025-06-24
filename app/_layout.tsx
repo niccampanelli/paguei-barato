@@ -1,3 +1,4 @@
+import Texto from '@/components/Texto';
 import {
 	Nunito_300Light,
 	Nunito_400Regular,
@@ -26,6 +27,11 @@ export default function LayoutGeral() {
 
 	return (
 		<ThemeProvider value={DefaultTheme}>
+			<Texto peso='titulo' tamanho='titulo'>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</Texto>
+			<Texto peso='subtitulo' tamanho='subtitulo'>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</Texto>
+			<Texto tamanho='legenda'>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</Texto>
+			<Texto variante='titulo' >AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</Texto>
+			<Texto variante='titulo' cor='claro'>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</Texto>
 			<Stack
 				screenOptions={{
 					headerShown: false,

@@ -31,7 +31,6 @@ export interface TemaTextoPesos {
     subtitulo: number;
     link: number;
     texto: number;
-    legenda: number;
 }
 
 export interface TemaTexto {
