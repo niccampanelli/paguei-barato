@@ -7,6 +7,9 @@ export default function LayoutAbasPrincipais() {
         <Tabs
             screenOptions={{
                 headerShown: false,
+                sceneStyle: {
+                    backgroundColor: "transparent",
+                },
             }}
         >
             <Tabs.Screen

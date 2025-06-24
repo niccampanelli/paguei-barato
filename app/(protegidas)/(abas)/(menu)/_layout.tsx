@@ -6,6 +6,9 @@ export default function LayoutMenus() {
         <Stack
             screenOptions={{
                 headerShown: false,
+                contentStyle: {
+                    backgroundColor: "transparent",
+                },
             }}
         >
             <Stack.Screen name="menu" />

@@ -6,6 +6,9 @@ export default function LayoutProtegidas() {
         <Stack
             screenOptions={{
                 headerShown: false,
+                contentStyle: {
+                    backgroundColor: "transparent",
+                },
             }}
         >
             <Stack.Screen name="(abas)" />
