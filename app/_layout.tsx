@@ -11,7 +11,7 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
-export default async function LayoutGeral() {
+export default function LayoutGeral() {
 
 	const [loaded] = useFonts({
 		Nunito_300Light,
