@@ -1,6 +1,9 @@
 import { Stack } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function LayoutDesprotegidas() {
+
+    const insets = useSafeAreaInsets();
 
     return (
         <Stack
@@ -8,6 +11,7 @@ export default function LayoutDesprotegidas() {
                 headerShown: false,
                 contentStyle: {
                     backgroundColor: "transparent",
+                    marginBottom: insets.bottom
                 },
             }}
         >

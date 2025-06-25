@@ -1,3 +1,4 @@
+import Providers from '@/components/Providers';
 import {
 	Nunito_300Light,
 	Nunito_400Regular,
@@ -5,13 +6,12 @@ import {
 	Nunito_800ExtraBold,
 	Nunito_900Black,
 } from '@expo-google-fonts/nunito';
-import { DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
-export default function LayoutGeral() {
+export default async function LayoutGeral() {
 
 	const [loaded] = useFonts({
 		Nunito_300Light,
@@ -25,7 +25,7 @@ export default function LayoutGeral() {
 		return null;
 
 	return (
-		<ThemeProvider value={DefaultTheme}>
+		<Providers>
 			<Stack
 				screenOptions={{
 					headerShown: false,
@@ -38,7 +38,7 @@ export default function LayoutGeral() {
 				<Stack.Screen name="(protegidas)" />
 				<Stack.Screen name="+not-found" />
 			</Stack>
-			<StatusBar style='auto' />
-		</ThemeProvider>
+			<StatusBar style='dark' />
+		</Providers>
 	);
 }
