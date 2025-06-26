@@ -5,21 +5,25 @@ export const temaClaroCores: TemaCores = {
 		normal: "#27fb6b",
 		claro: "#c4ffc2",
 		escuro: "#18c951",
+		contraste: "#313C56",
 	},
 	secundaria: {
 		normal: "#3772ff",
 		claro: "#8aaaff",
 		escuro: "#225ae0",
+		contraste: "#ffffff",
 	},
 	vermelho: {
 		normal: "#ff6a85",
 		claro: "#ff8ca1",
 		escuro: "#ed4c69",
+		contraste: "#ffffff",
 	},
 	texto: {
 		normal: "#313C56",
 		claro: "#808AA2",
 		escuro: "#000000",
+		contraste: "#ffffff",
 	},
 	fundo: {
 		principal: "#ffffff",

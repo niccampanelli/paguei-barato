@@ -1,48 +1,35 @@
+import Botao from "@/components/Botao";
 import CaixaScroll from "@/components/Caixa/CaixaScroll";
 import Logo from "@/components/Logo";
 import Texto from "@/components/Texto";
-import { Link } from "expo-router";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { tema } from "@/constants/tema";
+import { Image, StyleSheet, View } from "react-native";
 
 export default function Login() {
 
     return (
         <View style={estilos.container}>
             <Image
+                height={350}
                 style={{
-                    height: 200,
+                    height: 350,
                     width: "auto",
                 }}
                 source={require("../../assets/images/app/fundoAutenticacao.png")}
             />
-            <CaixaScroll tamanho="grande">
-                <Logo
-                    style={{
-                        width: 200,
-                        height: 20,
-                    }}
-                />
-                <Text>Login</Text>
-                <Link href="/(desprotegidas)/cadastro/passo1Email">
-                    Ir para Cadastro
-                </Link>
-                <Link href="/(protegidas)/(abas)/inicio">
-                    Ir para principal
-                </Link>
-                <Texto>
-                    Olá, este é o login!
+            <CaixaScroll
+                tamanho="grande"
+                contentContainerStyle={{
+                    rowGap: tema.layout.espacamentos.grande
+                }}
+            >
+                <Logo largura={200} />
+                <Texto variante="titulo">
+                    Que tal fazer login?
                 </Texto>
-                <Texto variante="subtitulo">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas temporibus, provident velit ipsa nulla quam iusto fugit assumenda, voluptatem quos qui illo consequuntur sapiente dolorum expedita molestiae commodi nisi sunt?</Texto>
-                <Texto variante="subtitulo">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas temporibus, provident velit ipsa nulla quam iusto fugit assumenda, voluptatem quos qui illo consequuntur sapiente dolorum expedita molestiae commodi nisi sunt?</Texto>
-                <Texto variante="subtitulo">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas temporibus, provident velit ipsa nulla quam iusto fugit assumenda, voluptatem quos qui illo consequuntur sapiente dolorum expedita molestiae commodi nisi sunt?</Texto>
-                <Texto variante="subtitulo">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas temporibus, provident velit ipsa nulla quam iusto fugit assumenda, voluptatem quos qui illo consequuntur sapiente dolorum expedita molestiae commodi nisi sunt?</Texto>
-                <Texto variante="subtitulo">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas temporibus, provident velit ipsa nulla quam iusto fugit assumenda, voluptatem quos qui illo consequuntur sapiente dolorum expedita molestiae commodi nisi sunt?</Texto>
-                <Texto variante="subtitulo">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas temporibus, provident velit ipsa nulla quam iusto fugit assumenda, voluptatem quos qui illo consequuntur sapiente dolorum expedita molestiae commodi nisi sunt?</Texto>
-                <Texto variante="subtitulo">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas temporibus, provident velit ipsa nulla quam iusto fugit assumenda, voluptatem quos qui illo consequuntur sapiente dolorum expedita molestiae commodi nisi sunt?</Texto>
-                <Texto variante="subtitulo">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas temporibus, provident velit ipsa nulla quam iusto fugit assumenda, voluptatem quos qui illo consequuntur sapiente dolorum expedita molestiae commodi nisi sunt?</Texto>
-                <Texto variante="subtitulo">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas temporibus, provident velit ipsa nulla quam iusto fugit assumenda, voluptatem quos qui illo consequuntur sapiente dolorum expedita molestiae commodi nisi sunt?</Texto>
-                <Texto variante="subtitulo">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas temporibus, provident velit ipsa nulla quam iusto fugit assumenda, voluptatem quos qui illo consequuntur sapiente dolorum expedita molestiae commodi nisi sunt?</Texto>
-                <Texto variante="subtitulo">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas temporibus, provident velit ipsa nulla quam iusto fugit assumenda, voluptatem quos qui illo consequuntur sapiente dolorum expedita molestiae commodi nisi sunt?</Texto>
+                <Botao>
+                    Fazer login
+                </Botao>
             </CaixaScroll>
         </View>
     )

@@ -2,6 +2,7 @@ export interface TemaCor {
     escuro: string;
     normal: string;
     claro: string;
+    contraste: string;
 }
 
 export interface TemaCorFundo {

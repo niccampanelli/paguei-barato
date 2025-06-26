@@ -4,15 +4,19 @@ import { ScrollView } from "react-native";
 
 export default function CaixaScroll({
     tamanho = "medio",
+    contentContainerStyle,
     ...resto
 }: CaixaScrollProps) {
 
     return (
         <ScrollView
-            contentContainerStyle={{
-                paddingHorizontal: tema.layout.paddings[tamanho].horizontal,
-                paddingVertical: tema.layout.paddings[tamanho].vertical,
-            }}
+            contentContainerStyle={[
+                {
+                    paddingHorizontal: tema.layout.paddings[tamanho].horizontal,
+                    paddingVertical: tema.layout.paddings[tamanho].vertical,
+                },
+                contentContainerStyle,
+            ]}
             {...resto}
         />
     );
