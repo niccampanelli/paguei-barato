@@ -13,5 +13,9 @@ export interface BotaoProps extends PressableProps {
      * Estilo adicional para o botão
      */
     style?: StyleProp<ViewStyle>;
+    /**
+     * Variante de cor do botão
+     * @default "destaque"
+     */
     variante?: BotaoPropsVariantes;
 }

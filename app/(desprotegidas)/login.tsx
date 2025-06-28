@@ -3,9 +3,12 @@ import CaixaScroll from "@/components/Caixa/CaixaScroll";
 import Logo from "@/components/Logo";
 import Texto from "@/components/Texto";
 import { tema } from "@/constants/tema";
+import { useRouter } from "expo-router";
 import { Image, StyleSheet, View } from "react-native";
 
 export default function Login() {
+
+    const router = useRouter();
 
     return (
         <View style={estilos.container}>
@@ -34,6 +37,7 @@ export default function Login() {
                     <Botao
                         variante="info"
                         style={{ flex: 1 }}
+                        onPress={() => router.push("/(desprotegidas)/cadastro/passo1Email")}
                     >
                         Cadastre-se
                     </Botao>
@@ -50,7 +54,7 @@ export default function Login() {
                 >
                     ou
                 </Texto>
-                <Botao variante="info">
+                <Botao variante="info" onPress={() => router.push("/(protegidas)/(abas)/inicio")}>
                     Continuar sem login
                 </Botao>
             </CaixaScroll>
