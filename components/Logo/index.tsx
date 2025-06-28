@@ -3,6 +3,7 @@ import { Image } from "react-native";
 
 export default function Logo({
     largura = 200,
+    style,
     ...resto
 }: LogoProps) {
 
@@ -11,12 +12,14 @@ export default function Logo({
             source={require("../../assets/images/app/logo.png")}
             resizeMode="contain"
             width={largura}
-            style={{
-                width: largura,
-                height: undefined,
-                aspectRatio: 463/63,
-                ...[resto.style]
-            }}
+            style={[
+                {
+                    width: largura,
+                    height: undefined,
+                    aspectRatio: 463 / 63,
+                },
+                style
+            ]}
             {...resto}
         />
     );

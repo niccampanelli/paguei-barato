@@ -23,15 +23,17 @@ export default function Texto({
 
     return (
         <Text
-            style={{
-                fontFamily: Platform.select({
-                    android: `Nunito${TextoPesoValor[fontWeight][0]}`,
-                    ios: `Nunito${TextoPesoValor[fontWeight][1]}`,
-                }),
-                fontSize: fontSize,
-                color: tema.cores.texto[cor],
-                ...[style]
-            }}
+            style={[
+                {
+                    fontFamily: Platform.select({
+                        android: `Nunito${TextoPesoValor[fontWeight][0]}`,
+                        ios: `Nunito${TextoPesoValor[fontWeight][1]}`,
+                    }),
+                    fontSize: fontSize,
+                    color: tema.cores.texto[cor],
+                },
+                style
+            ]}
             {...resto}
         />
     )

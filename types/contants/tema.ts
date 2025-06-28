@@ -15,6 +15,7 @@ export interface TemaCorFundo {
 export interface TemaCores {
     destaque: TemaCor;
     secundaria: TemaCor;
+    info: TemaCor;
     vermelho: TemaCor;
     fundo: TemaCorFundo;
     texto: TemaCor;
@@ -48,6 +49,8 @@ export interface TemaLayoutPaddings {
     grande: TemaLayoutPadding;
     medio: TemaLayoutPadding;
     pequeno: TemaLayoutPadding;
+    botaoPequeno: TemaLayoutPadding;
+    botaoGrande: TemaLayoutPadding;
 }
 
 export interface TemaLayoutEspacamentos {

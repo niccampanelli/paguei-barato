@@ -13,6 +13,12 @@ export const temaClaroCores: TemaCores = {
 		escuro: "#225ae0",
 		contraste: "#ffffff",
 	},
+	info: {
+		normal: "#f5f5f5",
+		claro: "#fafafa",
+		escuro: "#dfdfdf",
+		contraste: "#313C56",
+	},
 	vermelho: {
 		normal: "#ff6a85",
 		claro: "#ff8ca1",
@@ -35,9 +41,9 @@ export const temaClaroCores: TemaCores = {
 
 export const temaTextoTamanhos: TemaTextoTamanhos = {
 	titulo: 20,
-	subtitulo: 16,
-	texto: 12,
-	legenda: 10,
+	subtitulo: 18,
+	texto: 16,
+	legenda: 14,
 }
 
 export const temaTextoPesos: TemaTextoPesos = {
@@ -63,6 +69,14 @@ export const temaLayoutPaddings: TemaLayoutPaddings = {
 	},
 	pequeno: {
 		horizontal: 5,
+		vertical: 10,
+	},
+	botaoPequeno: {
+		horizontal: 10,
+		vertical: 5,
+	},
+	botaoGrande: {
+		horizontal: 15,
 		vertical: 10,
 	},
 }

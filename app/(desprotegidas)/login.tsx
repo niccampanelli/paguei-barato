@@ -23,12 +23,35 @@ export default function Login() {
                     rowGap: tema.layout.espacamentos.grande
                 }}
             >
-                <Logo largura={200} />
+                <Logo
+                    largura={200}
+                    style={{ marginBottom: tema.layout.espacamentos.grande }}
+                />
                 <Texto variante="titulo">
                     Que tal fazer login?
                 </Texto>
-                <Botao>
-                    Fazer login
+                <View style={estilos.acoesPrincipais}>
+                    <Botao
+                        variante="info"
+                        style={{ flex: 1 }}
+                    >
+                        Cadastre-se
+                    </Botao>
+                    <Botao
+                        variante="destaque"
+                        style={{ flex: 2 }}
+                    >
+                        Fazer login
+                    </Botao>
+                </View>
+                <Texto
+                    variante="legenda"
+                    style={{ textAlign: "center" }}
+                >
+                    ou
+                </Texto>
+                <Botao variante="info">
+                    Continuar sem login
                 </Botao>
             </CaixaScroll>
         </View>
@@ -38,5 +61,11 @@ export default function Login() {
 const estilos = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    acoesPrincipais: {
+        flex: 1,
+        flexDirection: "row",
+        alignItems: "center",
+        columnGap: tema.layout.espacamentos.grande,
     }
 });
