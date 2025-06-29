@@ -1,6 +1,6 @@
+import FormularioLogin from "@/components/app/(desprotegidas)/login/FormularioLogin";
 import Botao from "@/components/Botao";
 import CaixaScroll from "@/components/Caixa/CaixaScroll";
-import Campo from "@/components/Campo";
 import Logo from "@/components/Logo";
 import Texto from "@/components/Texto";
 import { tema } from "@/constants/tema";
@@ -39,29 +39,12 @@ export default function Login() {
                     <Texto variante="titulo">
                         Vamos começar a economizar?
                     </Texto>
-                    <Campo
-                        placeholder="Escreva o seu e-mail"
-                        iconeNome="at-sign"
+                    <FormularioLogin
+                        onSubmit={(data) => {
+                            console.log("Dados do formulário:", data);
+                            // Aqui você pode adicionar a lógica de autenticação
+                        }}
                     />
-                    <Campo
-                        placeholder="Insira a sua senha"
-                        iconeNome="lock"
-                    />
-                    <View style={estilos.acoesPrincipais}>
-                        <Botao
-                            variante="info"
-                            style={{ flex: 1 }}
-                            onPress={() => router.push("/(desprotegidas)/cadastro/passo1Email")}
-                        >
-                            Cadastre-se
-                        </Botao>
-                        <Botao
-                            variante="destaque"
-                            style={{ flex: 2 }}
-                        >
-                            Entrar com sua conta
-                        </Botao>
-                    </View>
                     <Texto
                         variante="legenda"
                         cor="claro"
@@ -82,10 +65,4 @@ const estilos = StyleSheet.create({
     container: {
         flex: 1,
     },
-    acoesPrincipais: {
-        flex: 1,
-        flexDirection: "row",
-        alignItems: "center",
-        columnGap: tema.layout.espacamentos.grande,
-    }
 });
