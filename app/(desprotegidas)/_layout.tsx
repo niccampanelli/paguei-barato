@@ -1,3 +1,4 @@
+import { tema } from '@/constants/tema';
 import { Stack } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -9,8 +10,9 @@ export default function LayoutDesprotegidas() {
         <Stack
             screenOptions={{
                 headerShown: false,
+                animation: "slide_from_bottom",
                 contentStyle: {
-                    backgroundColor: "transparent",
+                    backgroundColor: tema.cores.fundo.principal,
                     marginBottom: insets.bottom
                 },
             }}

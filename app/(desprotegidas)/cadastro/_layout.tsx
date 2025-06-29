@@ -48,7 +48,7 @@ export default function LayoutCadastro() {
                     headerShown: false,
                     animation: "slide_from_right",
                     contentStyle: {
-                        backgroundColor: "transparent",
+                        backgroundColor: tema.cores.fundo.principal,
                         marginBottom: insets.bottom
                     },
                 }}
