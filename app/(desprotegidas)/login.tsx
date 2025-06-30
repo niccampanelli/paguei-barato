@@ -11,6 +11,17 @@ export default function Login() {
 
     const router = useRouter();
 
+    function aoEntrar() {
+        console.log("Usuário logado");
+        // Aqui você pode adicionar a lógica de autenticação
+        router.push("/(protegidas)/(abas)/inicio");
+    }
+
+    function aoEntrarInvalido() {
+        console.error("Erro ao entrar");
+        // Aqui você pode adicionar a lógica de tratamento de erro
+    }
+
     return (
         <KeyboardAvoidingView
             style={{ flex: 1 }}
@@ -40,10 +51,8 @@ export default function Login() {
                         Vamos começar a economizar?
                     </Texto>
                     <FormularioLogin
-                        onSubmit={(data) => {
-                            console.log("Dados do formulário:", data);
-                            // Aqui você pode adicionar a lógica de autenticação
-                        }}
+                        aoSubmeter={aoEntrar}
+                        aoSubmeterInvalido={aoEntrarInvalido}
                     />
                     <Texto
                         variante="legenda"

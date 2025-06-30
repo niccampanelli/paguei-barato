@@ -6,6 +6,7 @@ import Texto from "../Texto";
 export default function Botao({
     children,
     variante = "destaque",
+    disabled,
     style,
     ...resto
 }: BotaoProps) {
@@ -16,7 +17,8 @@ export default function Botao({
                 {
                     backgroundColor: pressed
                         ? tema.cores[variante].escuro
-                        : tema.cores[variante].normal
+                        : tema.cores[variante].normal,
+                    opacity: disabled ? 0.25 : 1,
                 },
                 estilos.botao,
                 style,
@@ -24,6 +26,7 @@ export default function Botao({
             android_ripple={{
                 color: tema.cores[variante].claro,
             }}
+            disabled={disabled}
             {...resto}
         >
             <Texto

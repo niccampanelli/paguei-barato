@@ -9,13 +9,17 @@ export default function CampoControle<T extends FieldValues = FieldValues>({
 
     return (
         <Controller
-            render={({ field: { onChange, onBlur, value } }) => (
+            render={({
+                field: { onChange, onBlur, value },
+                fieldState: { error },
+            }) => (
                 <Campo
                     {...CampoProps}
                     onChangeText={onChange}
                     onBlur={onBlur}
                     value={value}
                     defaultValue={value}
+                    erro={error ? error.message : ""}
                 />
             )}
             {...resto}

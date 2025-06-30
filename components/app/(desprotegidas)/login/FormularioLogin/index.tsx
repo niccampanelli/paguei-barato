@@ -9,7 +9,8 @@ import { useForm } from "react-hook-form";
 import { StyleSheet, View } from "react-native";
 
 export default function FormularioLogin({
-    onSubmit
+    aoSubmeter,
+    aoSubmeterInvalido,
 }: FormularioLoginProps) {
 
     const router = useRouter();
@@ -17,13 +18,17 @@ export default function FormularioLogin({
     const {
         control,
         handleSubmit,
+        formState: {
+            isValid,
+            isDirty,
+        }
     } = useForm<LoginSchema>({
         defaultValues: {
             email: "",
             senha: ""
         },
-        mode: "onChange",
-        resolver: zodResolver(LoginSchema), // Resolver de validação pode ser adicionado aqui
+        mode: "onBlur",
+        resolver: zodResolver(LoginSchema),
         reValidateMode: "onChange",
     });
 
@@ -57,9 +62,8 @@ export default function FormularioLogin({
                 <Botao
                     variante="destaque"
                     style={{ flex: 2 }}
-                    onPress={handleSubmit(onSubmit, (errors) => {
-                        console.error("Erro ao submeter o formulário:", errors);
-                    })}
+                    disabled={!isValid || !isDirty}
+                    onPress={handleSubmit(aoSubmeter, aoSubmeterInvalido)}
                 >
                     Entrar com sua conta
                 </Botao>

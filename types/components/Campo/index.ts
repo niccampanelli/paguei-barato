@@ -31,4 +31,14 @@ export interface CampoProps extends TextInputProps {
      * @default true
      */
     mostrarLimpar?: boolean;
+    /**
+     * Texto de ajuda exibido abaixo do campo.
+     * @default ""
+     */
+    ajuda?: string;
+    /**
+     * Texto de erro exibido abaixo do campo.
+     * @default ""
+     */
+    erro?: string;
 }
