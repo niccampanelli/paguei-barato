@@ -26,4 +26,9 @@ export interface CampoProps extends TextInputProps {
      * @default "esquerda"
      */
     iconeLado?: "esquerda" | "direita";
+    /**
+     * Se o campo deve mostrar o ícone de limpar.
+     * @default true
+     */
+    mostrarLimpar?: boolean;
 }

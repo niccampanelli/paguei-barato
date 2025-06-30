@@ -1,26 +1,35 @@
 import { tema } from "@/constants/tema";
 import { CampoProps } from "@/types/components/Campo";
 import Feather from '@expo/vector-icons/Feather';
-import { StyleSheet, TextInput, View } from "react-native";
+import { useState } from "react";
+import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 
 export default function Campo({
     style,
     iconeCor = "secundaria",
     iconeNome,
     iconeLado = "esquerda",
+    mostrarLimpar = true,
     placeholderTextColor = tema.cores.texto.claro,
     selectionColor = tema.cores[iconeCor].claro,
+    secureTextEntry = false,
+    onChangeText,
     ...resto
 }: CampoProps) {
+
+    const [textoOculto, setTextoOculto] = useState(secureTextEntry || false);
+
+    function aoLimpar() {
+        if (onChangeText) {
+            onChangeText("");
+        }
+    }
 
     const Icone = (
         <Feather
             name={iconeNome}
             size={tema.texto.tamanhos.texto}
             color={tema.cores[iconeCor].normal}
-            style={{
-                fontWeight: 900
-            }}
         />
     );
 
@@ -38,8 +47,28 @@ export default function Campo({
                 ]}
                 placeholderTextColor={placeholderTextColor}
                 selectionColor={selectionColor}
+                secureTextEntry={textoOculto}
+                onChangeText={onChangeText}
                 {...resto}
             />
+            {mostrarLimpar &&
+                <TouchableOpacity onPress={aoLimpar}>
+                    <Feather
+                        name="x"
+                        size={tema.texto.tamanhos.texto}
+                        color={tema.cores.texto.claro}
+                    />
+                </TouchableOpacity>
+            }
+            {secureTextEntry &&
+                <TouchableOpacity onPress={() => setTextoOculto(!textoOculto)}>
+                    <Feather
+                        name={textoOculto ? "eye" : "eye-off"}
+                        size={tema.texto.tamanhos.texto}
+                        color={tema.cores.texto.claro}
+                    />
+                </TouchableOpacity>
+            }
             {iconeNome && iconeLado === "direita" && Icone}
         </View>
     );
