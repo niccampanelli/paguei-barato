@@ -10,16 +10,23 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 export default function LayoutCadastro() {
 
     const insets = useSafeAreaInsets();
+
     const [etapaAtual, setEtapaAtual] = useState(0);
 
-    const TOTAL_ETAPAS = 5; // Total de etapas do cadastro
+    const ETAPAS = new Map<string, number>([
+        ["passo1Email", 1],
+        ["passo2Nome", 2],
+        ["passo3Senha", 3],
+        ["passo4Endereco", 4],
+        ["passo5Final", 5],
+    ]);
 
     return (
         <View style={{
             flex: 1,
-            paddingTop: etapaAtual === TOTAL_ETAPAS - 1 ? insets.top : undefined,
+            paddingTop: etapaAtual === ETAPAS.size - 1 ? insets.top : undefined,
         }}>
-            {etapaAtual !== TOTAL_ETAPAS - 1 &&
+            {etapaAtual !== ETAPAS.size - 1 &&
                 <Image
                     height={350}
                     style={{
@@ -38,7 +45,7 @@ export default function LayoutCadastro() {
                     style={{ marginBottom: tema.layout.espacamentos.grande }}
                 />
                 <BarraEtapas
-                    totalEtapas={TOTAL_ETAPAS}
+                    totalEtapas={ETAPAS.size}
                     etapaAtual={etapaAtual}
                     variantes="destaque"
                 />
@@ -54,8 +61,8 @@ export default function LayoutCadastro() {
                 }}
                 screenListeners={{
                     state: (e) => {
-                        const index = e.data.state.index;
-                        setEtapaAtual(index);
+                        const key = e.data.state.key;
+                        setEtapaAtual(ETAPAS.get(key) ?? 1);
                     }
                 }}
             >
