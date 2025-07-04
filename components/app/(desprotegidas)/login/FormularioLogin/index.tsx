@@ -55,7 +55,7 @@ export default function FormularioLogin({
                 <Botao
                     variante="info"
                     style={{ flex: 1 }}
-                    onPress={() => router.push("/(desprotegidas)/cadastro/passo1Email")}
+                    onPress={() => router.push("/(desprotegidas)/cadastro/comeco")}
                 >
                     Cadastre-se
                 </Botao>

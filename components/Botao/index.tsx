@@ -6,6 +6,7 @@ import Texto from "../Texto";
 export default function Botao({
     children,
     variante = "destaque",
+    tamanho = "botaoGrande",
     disabled,
     style,
     ...resto
@@ -18,6 +19,8 @@ export default function Botao({
                     backgroundColor: pressed
                         ? tema.cores[variante].escuro
                         : tema.cores[variante].normal,
+                    paddingVertical: tema.layout.paddings[tamanho].vertical,
+                    paddingHorizontal: tema.layout.paddings[tamanho].horizontal,
                     opacity: disabled ? 0.25 : 1,
                 },
                 estilos.botao,
@@ -33,6 +36,9 @@ export default function Botao({
                 variante="subtitulo"
                 style={{
                     color: tema.cores[variante].contraste,
+                    fontSize: tamanho === "botaoGrande"
+                        ? tema.texto.tamanhos.subtitulo
+                        : tema.texto.tamanhos.legenda
                 }}
             >
                 {children}
@@ -44,7 +50,5 @@ export default function Botao({
 const estilos = StyleSheet.create({
     botao: {
         borderRadius: tema.layout.raioBorda,
-        paddingVertical: tema.layout.paddings.botaoGrande.vertical,
-        paddingHorizontal: tema.layout.paddings.botaoGrande.horizontal,
     },
 });

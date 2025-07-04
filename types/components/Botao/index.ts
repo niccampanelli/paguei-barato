@@ -1,7 +1,9 @@
-import { TemaCores } from "@/types/contants/tema";
+import { TemaCores, TemaLayoutPaddings } from "@/types/contants/tema";
 import { PressableProps, StyleProp, ViewStyle } from "react-native";
 
 type BotaoPropsVariantes = keyof Omit<TemaCores, "fundo" | "texto">;
+
+type BotaoPropsTamanhos = keyof Pick<TemaLayoutPaddings, "botaoGrande" | "botaoPequeno">;
 
 export interface BotaoProps extends PressableProps {
     /**
@@ -18,4 +20,9 @@ export interface BotaoProps extends PressableProps {
      * @default "destaque"
      */
     variante?: BotaoPropsVariantes;
+    /**
+     * Tamanho do botão
+     * @default "botaoGrande"
+     */
+    tamanho?: BotaoPropsTamanhos;
 }

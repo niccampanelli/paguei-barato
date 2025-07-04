@@ -31,7 +31,10 @@ export default function Campo({
         <Feather
             name={iconeNome}
             size={tema.texto.tamanhos.texto}
-            color={tema.cores[iconeCor].normal}
+            color={erro
+                ? tema.cores.vermelho.normal
+                : tema.cores[iconeCor].normal
+            }
         />
     );
 

@@ -4,7 +4,7 @@ import Texto from "@/components/Texto";
 import { tema } from "@/constants/tema";
 import { useRouter } from "expo-router";
 
-export default function Passo5Final() {
+export default function Fim() {
 
     const router = useRouter();
 

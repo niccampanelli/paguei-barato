@@ -14,11 +14,12 @@ export default function LayoutCadastro() {
     const [etapaAtual, setEtapaAtual] = useState(0);
 
     const ETAPAS = new Map<string, number>([
-        ["passo1Email", 1],
-        ["passo2Nome", 2],
-        ["passo3Senha", 3],
-        ["passo4Endereco", 4],
-        ["passo5Final", 5],
+        ["comeco", 1],
+        ["passo1Email", 2],
+        ["passo2Nome", 3],
+        ["passo3Senha", 4],
+        ["passo4Endereco", 5],
+        ["fim", 6],
     ]);
 
     return (
@@ -56,21 +57,21 @@ export default function LayoutCadastro() {
                     animation: "slide_from_right",
                     contentStyle: {
                         backgroundColor: tema.cores.fundo.principal,
-                        marginBottom: insets.bottom
                     },
                 }}
                 screenListeners={{
                     state: (e) => {
-                        const key = e.data.state.key;
-                        setEtapaAtual(ETAPAS.get(key) ?? 1);
+                        const key = e.data.state.routes.at(-1)?.name ?? "comeco";
+                        setEtapaAtual((ETAPAS.get(key) ?? 1) - 1);
                     }
                 }}
             >
+                <Stack.Screen name="comeco" />
                 <Stack.Screen name="passo1Email" />
                 <Stack.Screen name="passo2Nome" />
                 <Stack.Screen name="passo3Senha" />
                 <Stack.Screen name="passo4Endereco" />
-                <Stack.Screen name="passo5Final" />
+                <Stack.Screen name="fim" />
             </Stack>
         </View>
     )

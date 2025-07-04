@@ -20,7 +20,7 @@ export default function Passo4Endereco() {
             <Texto variante="subtitulo">
                 Não precisa ir muito longe!
             </Texto>
-            <Botao onPress={() => router.push("/(desprotegidas)/cadastro/passo5Final")}>
+            <Botao onPress={() => router.push("/(desprotegidas)/cadastro/fim")}>
                 Próxima etapa
             </Botao>
         </CaixaScroll>

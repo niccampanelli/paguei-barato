@@ -12,8 +12,8 @@ export default function Caixa({
         <View
             style={[
                 {
-                    paddingHorizontal: tema.layout.paddings[tamanho].horizontal,
-                    paddingVertical: tema.layout.paddings[tamanho].vertical,
+                    padding: tema.layout.paddings[tamanho].horizontal,
+                    paddingTop: tema.layout.paddings[tamanho].vertical,
                 },
                 style
             ]}

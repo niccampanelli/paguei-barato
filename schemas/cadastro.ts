@@ -6,7 +6,7 @@ export const Passo1EmailSchema = z.object({
         .email('E-mail inválido')
         .nonempty('Informe o e-mail'),
     emailConfirma: z
-        .email('E-mail inválido')
+        .email('E-mail de confirmação inválido')
         .nonempty('Confirme o e-mail'),
 }).refine((data) => data.email === data.emailConfirma, {
     path: ['emailConfirma'],

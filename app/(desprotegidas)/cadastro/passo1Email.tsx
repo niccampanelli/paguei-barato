@@ -4,17 +4,18 @@ import CaixaScroll from "@/components/Caixa/CaixaScroll";
 import CampoControle from "@/components/Campo/CampoControle";
 import Texto from "@/components/Texto";
 import { tema } from "@/constants/tema";
-import { useAppDispatch, useAppSelector } from "@/hooks/store";
+import { useAppDispatch } from "@/hooks/store";
 import { Passo1EmailSchema } from "@/schemas/cadastro";
-import { selectCadastro, setPasso1Email } from "@/store/slices/cadastro";
+import { setPasso1Email } from "@/store/slices/cadastro";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
-import { StyleSheet, View } from "react-native";
+import { KeyboardAvoidingView, StyleSheet } from "react-native";
 
 export default function Passo1Email() {
 
+    const router = useRouter();
     const dispatch = useAppDispatch();
-    const passoDados = useAppSelector(selectCadastro);
 
     const {
         control,
@@ -33,19 +34,23 @@ export default function Passo1Email() {
         reValidateMode: "onChange",
     });
 
-    function aoAvancar(dados: Passo1EmailSchema) {
-        dispatch(setPasso1Email(dados));
+    function aoVoltar() {
+        router.back();
     }
 
-    function teste() {
-        console.log(passoDados);
+    function aoAvancar(dados: Passo1EmailSchema) {
+        dispatch(setPasso1Email(dados));
+        router.navigate("/(desprotegidas)/cadastro/passo2Nome");
     }
 
     return (
-        <View style={estilos.container}>
+        <KeyboardAvoidingView
+            behavior="padding"
+            style={estilos.container}
+        >
             <Caixa
                 tamanho="grande"
-                style={{ paddingBottom: 0 }}
+                style={{ paddingTop: 0 }}
             >
                 <Texto variante="subtitulo">
                     Como podemos entrar em contato com você?
@@ -60,51 +65,59 @@ export default function Passo1Email() {
                     name="email"
                     control={control}
                     CampoProps={{
-                        placeholder: "Escreva o seu e-mail",
+                        placeholder: "Informe um e-mail",
                         iconeNome: "at-sign",
+                        autoComplete: "email",
+                        keyboardType: "email-address",
+                        textContentType: "emailAddress",
                     }}
                 />
                 <CampoControle
                     name="emailConfirma"
                     control={control}
                     CampoProps={{
-                        placeholder: "Escreva o seu e-mail",
-                        iconeNome: "at-sign",
+                        placeholder: "Escreva novamente o e-mail",
+                        iconeNome: "check",
+                        autoComplete: "email",
                     }}
                 />
             </CaixaScroll>
             <Caixa
                 tamanho="grande"
-                style={{ paddingTop: 0 }}
+                style={estilos.rodape}
             >
                 <Botao
+                    variante="info"
+                    onPress={aoVoltar}
+                >
+                    Voltar
+                </Botao>
+                <Botao
                     variante="destaque"
+                    disabled={!isDirty || !isValid}
                     onPress={handleSubmit(aoAvancar, console.error)}
+                    style={{ flex: 1 }}
                 >
                     Próxima etapa
                 </Botao>
-                <Botao
-                    variante="destaque"
-                    onPress={teste}
-                >
-                    teste
-                </Botao>
             </Caixa>
-        </View>
+        </KeyboardAvoidingView>
     )
 }
 
 const estilos = StyleSheet.create({
     container: {
         flex: 1,
-        rowGap: tema.layout.espacamentos.grande,
     },
     formulario: {
         flex: 1,
-        rowGap: tema.layout.espacamentos.grande,
     },
     conteudo: {
         rowGap: tema.layout.espacamentos.medio,
         paddingVertical: 0,
+    },
+    rodape: {
+        flexDirection: "row",
+        columnGap: tema.layout.espacamentos.medio,
     },
 });
