@@ -1,6 +1,7 @@
 import { TemaCores } from "@/types/contants/tema";
 import Feather from '@expo/vector-icons/Feather';
-import { StyleProp, TextInputProps, ViewProps } from "react-native";
+import { Ref, RefObject } from "react";
+import { StyleProp, TextInput, TextInputProps, ViewProps } from "react-native";
 
 type CampoPropsIconeCor = keyof Omit<TemaCores, "fundo" | "texto">;
 type CampoPropsIconeNome = keyof typeof Feather.glyphMap;
@@ -41,4 +42,11 @@ export interface CampoProps extends TextInputProps {
      * @default ""
      */
     erro?: string;
+    /**
+     * Próximo campo a ser preenchido. 
+     * Quando presente, muda o ``returnKeyType`` para ``next`` e foca o campo ao pressionar.
+     * @default undefined
+     */
+    proximo?: RefObject<TextInput | null>;
+    ref?: Ref<TextInput>;
 }

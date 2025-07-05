@@ -2,7 +2,7 @@ import { tema } from "@/constants/tema";
 import { CampoProps } from "@/types/components/Campo";
 import Feather from '@expo/vector-icons/Feather';
 import { useState } from "react";
-import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import { NativeSyntheticEvent, StyleSheet, TextInput, TextInputSubmitEditingEventData, TouchableOpacity, View } from "react-native";
 import Texto from "../Texto";
 
 export default function Campo({
@@ -13,10 +13,14 @@ export default function Campo({
     mostrarLimpar = true,
     ajuda = "",
     erro = "",
+    proximo,
+    ref,
+    returnKeyType,
     placeholderTextColor = tema.cores.texto.claro,
     selectionColor = tema.cores[iconeCor].claro,
     secureTextEntry = false,
     onChangeText,
+    onSubmitEditing,
     ...resto
 }: CampoProps) {
 
@@ -25,6 +29,16 @@ export default function Campo({
     function aoLimpar() {
         if (onChangeText)
             onChangeText("");
+    }
+    
+    function aoSubmeter(e: NativeSyntheticEvent<TextInputSubmitEditingEventData>) {
+        if (proximo && proximo.current) {
+            proximo.current.focus();
+            return;
+        }
+
+        if (onSubmitEditing)
+            onSubmitEditing(e)
     }
 
     const Icone = (
@@ -53,6 +67,9 @@ export default function Campo({
                     selectionColor={selectionColor}
                     secureTextEntry={textoOculto}
                     onChangeText={onChangeText}
+                    onSubmitEditing={aoSubmeter}
+                    returnKeyType={proximo ? "next" : returnKeyType}
+                    ref={ref}
                     {...resto}
                 />
                 {mostrarLimpar &&

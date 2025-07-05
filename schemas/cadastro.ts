@@ -1,4 +1,3 @@
-import { EnderecoUF } from '@/types/schemas';
 import * as z from 'zod/v4';
 
 export const Passo1EmailSchema = z.object({
@@ -27,11 +26,11 @@ export const Passo3SenhaSchema = z.object({
     senha: z
         .string()
         .nonempty('Crie uma senha')
-        .min(6, 'Sua senha deve ter ao menos 6 caracteres')
-        .regex(/[A-Z]/, 'Sua senha deve conter ao menos uma letra maiúscula')
-        .regex(/[a-z]/, 'Sua senha deve conter ao menos uma letra minúscula')
-        .regex(/\d/, 'Sua senha deve conter ao menos um dígito')
-        .regex(/[\W_]/, 'Sua senha deve conter ao menos um caractere especial'),
+        .min(6, 'Sua senha deve ter no mínimo 6 caracteres')
+        .regex(/[A-Z]/, 'Inclua ao menos uma letra maiúscula')
+        .regex(/[a-z]/, 'Inclua ao menos uma letra minúscula')
+        .regex(/\d/, 'Inclua ao menos um dígito')
+        .regex(/[\W_]/, 'Inclua ao menos um caractere especial'),
     senhaConfirma: z
         .string()
         .nonempty('Confirme a senha'),
@@ -45,27 +44,6 @@ export const Passo4EnderecoSchema = z.object({
     cep: z
         .string()
         .regex(/^\d{5}-?\d{3}$/, 'CEP inválido')
-        .optional(),
-    logradouro: z
-        .string()
-        .min(3, 'Informe o logradouro')
-        .optional(),
-    numero: z
-        .string()
-        .optional(),
-    complemento: z
-        .string()
-        .optional(),
-    bairro: z
-        .string()
-        .min(3, 'Informe o bairro')
-        .optional(),
-    cidade: z
-        .string()
-        .min(3, 'Informe a cidade')
-        .optional(),
-    estado: z
-        .custom<EnderecoUF>()
         .optional(),
 });
 

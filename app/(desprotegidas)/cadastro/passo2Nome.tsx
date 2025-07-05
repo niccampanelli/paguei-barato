@@ -9,13 +9,16 @@ import { Passo2NomeSchema } from "@/schemas/cadastro";
 import { setPasso2Nome } from "@/store/slices/cadastro";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "expo-router";
+import { useRef } from "react";
 import { useForm } from "react-hook-form";
-import { KeyboardAvoidingView, StyleSheet } from "react-native";
+import { KeyboardAvoidingView, StyleSheet, TextInput } from "react-native";
 
 export default function Passo2Nome() {
 
     const router = useRouter();
     const dispatch = useAppDispatch();
+
+    const sobrenomeCampoRef = useRef<TextInput>(null);
 
     const {
         control,
@@ -46,35 +49,42 @@ export default function Passo2Nome() {
     return (
         <KeyboardAvoidingView
             behavior="padding"
-            style={estilos.container}
+            style={{ flex: 1 }}
         >
             <Caixa
                 tamanho="grande"
-                style={{ paddingTop: 0 }}
+                style={estilos.titulo}
             >
                 <Texto variante="subtitulo">
-                    Qual é o seu nome?
+                    Como a gente pode te chamar?
+                </Texto>
+                <Texto variante="texto">
+                    Informe o seu nome para que possamos te identificar. Outros usuários não poderão ver o seu nome.
                 </Texto>
             </Caixa>
             <CaixaScroll
                 tamanho="grande"
-                style={estilos.formulario}
+                style={{ flex: 1 }}
                 contentContainerStyle={estilos.conteudo}
             >
                 <CampoControle
                     name="nome"
                     control={control}
                     CampoProps={{
-                        placeholder: "Informe o primeiro nome",
+                        proximo: sobrenomeCampoRef,
+                        placeholder: "Diga seu primeiro nome",
                         iconeNome: "user",
+                        autoComplete: "name-given",
                     }}
                 />
                 <CampoControle
                     name="sobrenome"
                     control={control}
                     CampoProps={{
+                        ref: sobrenomeCampoRef,
                         placeholder: "Informe algum sobrenome",
                         iconeNome: "user",
+                        autoComplete: "name-family",
                     }}
                 />
             </CaixaScroll>
@@ -102,11 +112,9 @@ export default function Passo2Nome() {
 }
 
 const estilos = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    formulario: {
-        flex: 1,
+    titulo: {
+        paddingTop: 0,
+        rowGap: tema.layout.espacamentos.medio,
     },
     conteudo: {
         rowGap: tema.layout.espacamentos.medio,
