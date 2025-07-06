@@ -1,3 +1,4 @@
+import BarraNavegacao from '@/components/BarraNavegacao';
 import Feather from '@expo/vector-icons/Feather';
 import { Tabs } from "expo-router";
 
@@ -11,6 +12,7 @@ export default function LayoutAbasPrincipais() {
                     backgroundColor: "transparent",
                 },
             }}
+            tabBar={(props) => <BarraNavegacao {...props} />}
         >
             <Tabs.Screen
                 name="inicio"

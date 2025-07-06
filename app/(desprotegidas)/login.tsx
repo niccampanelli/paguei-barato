@@ -1,6 +1,6 @@
-import FormularioLogin from "@/components/app/(desprotegidas)/login/FormularioLogin";
 import Botao from "@/components/Botao";
 import CaixaScroll from "@/components/Caixa/CaixaScroll";
+import FormularioLogin from "@/components/Formularios/FormularioLogin";
 import Logo from "@/components/Logo";
 import Texto from "@/components/Texto";
 import { tema } from "@/constants/tema";
