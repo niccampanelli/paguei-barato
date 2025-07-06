@@ -29,10 +29,13 @@ export default function Comeco() {
                     Juntos para fazer o dinheiro render!
                 </Texto>
                 <Texto variante="texto">
-                    Aqui nós fazemos as compras valerem mais. Com um cadastro rápido você pode fazer parte dessa comunidade que compartilha os melhores preços da região!
+                    Com menos de dois minutos, você pode se cadastrar e fazer parte dessa comunidade que sabe onde encontrar os produtos mais baratos.
                 </Texto>
                 <Texto variante="texto">
-                    Precisamos apenas de alguns dados essenciais para te identificar e manter tudo funcionando direitinho.
+                    Depois de se cadastrar você vai conseguir adicionar produtos e informar os preços que encontrar nos mercados e lojas da sua região.
+                </Texto>
+                <Texto variante="texto">
+                    Precisamos apenas de algumas informações para conseguirmos te identificar e manter tudo funcionando direitinho!
                 </Texto>
             </CaixaScroll>
             <Caixa

@@ -23,8 +23,17 @@ export default function Fim() {
                 tamanho="grande"
                 contentContainerStyle={estilos.conteudo}
             >
+                <Texto variante="titulo">
+                    Cadastro pronto!
+                </Texto>
                 <Texto variante="subtitulo">
                     Prazer em te conhecer, {dadosCadastro.passo2Nome.nome}!
+                </Texto>
+                <Texto variante="texto">
+                    Seu cadastro está concluído. Agora você vai poder cadastrar produtos e mercados, e informar os preços que você encontrar.
+                </Texto>
+                <Texto variante="texto">
+                    Se você precisar modificar alguma informação do seu cadastro, vá até as configurações da conta.
                 </Texto>
             </CaixaScroll>
             <Caixa tamanho="grande" style={{ flexDirection: "row" }}>
