@@ -4,8 +4,10 @@ import CaixaScroll from "@/components/Caixa/CaixaScroll";
 import Texto from "@/components/Texto";
 import { tema } from "@/constants/tema";
 import { useAppSelector } from "@/hooks/store";
+import autenticacaoService from "@/services/autenticacaoService";
 import { selectCadastro } from "@/store/slices/cadastro";
 import { useRouter } from "expo-router";
+import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 export default function Fim() {
@@ -13,9 +15,21 @@ export default function Fim() {
     const router = useRouter();
     const dadosCadastro = useAppSelector(selectCadastro);
 
+    const [carregando, setCarregando] = useState(false);
+
+    async function cadastrar() {
+        setCarregando(true);
+        const resposta = await autenticacaoService.cadastrar(dadosCadastro);
+        setCarregando(false);
+    }
+
     function aoAvancar() {
         router.push("/(protegidas)/(abas)/inicio");
     }
+
+    useEffect(() => {
+        cadastrar();
+    }, []);
 
     return (
         <View style={{ flex: 1 }}>
@@ -39,6 +53,7 @@ export default function Fim() {
             <Caixa tamanho="grande" style={{ flexDirection: "row" }}>
                 <Botao
                     variante="destaque"
+                    disabled={carregando}
                     onPress={aoAvancar}
                     style={{ flex: 1 }}
                 >

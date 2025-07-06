@@ -18,12 +18,6 @@ const initialState: CadastroState = {
     },
     passo4Endereco: {
         cep: undefined,
-        logradouro: undefined,
-        numero: undefined,
-        complemento: undefined,
-        bairro: undefined,
-        cidade: undefined,
-        estado: undefined,
     },
 };
 
