@@ -1,8 +1,11 @@
 import BarraNavegacao from '@/components/BarraNavegacao';
 import Feather from '@expo/vector-icons/Feather';
 import { Tabs } from "expo-router";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function LayoutAbasPrincipais() {
+
+    const insets = useSafeAreaInsets();
 
     return (
         <Tabs
@@ -10,6 +13,7 @@ export default function LayoutAbasPrincipais() {
                 headerShown: false,
                 sceneStyle: {
                     backgroundColor: "transparent",
+                    paddingTop: insets.top,
                 },
             }}
             tabBar={(props) => <BarraNavegacao {...props} />}
