@@ -56,6 +56,7 @@ export default function Fim() {
                     disabled={carregando}
                     onPress={aoAvancar}
                     style={{ flex: 1 }}
+                    iconeNome="arrow-right-circle"
                 >
                     Começar a economizar!
                 </Botao>

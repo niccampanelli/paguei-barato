@@ -95,6 +95,8 @@ export default function Passo2Nome() {
                 <Botao
                     variante="info"
                     onPress={aoVoltar}
+                    iconeNome="arrow-left"
+                    iconeLado="esquerda"
                 >
                     Voltar
                 </Botao>
@@ -103,6 +105,7 @@ export default function Passo2Nome() {
                     disabled={!isDirty || !isValid}
                     onPress={handleSubmit(aoAvancar, console.error)}
                     style={{ flex: 1 }}
+                    iconeNome="arrow-right"
                 >
                     Próxima etapa
                 </Botao>

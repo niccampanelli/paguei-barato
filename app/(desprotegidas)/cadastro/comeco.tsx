@@ -45,6 +45,8 @@ export default function Comeco() {
                 <Botao
                     variante="info"
                     onPress={aoVoltar}
+                    iconeNome="arrow-left"
+                    iconeLado="esquerda"
                 >
                     Voltar
                 </Botao>
@@ -52,6 +54,7 @@ export default function Comeco() {
                     variante="destaque"
                     onPress={aoAvancar}
                     style={{ flex: 1 }}
+                    iconeNome="arrow-right"
                 >
                     Iniciar cadastro
                 </Botao>

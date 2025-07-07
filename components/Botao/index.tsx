@@ -9,7 +9,7 @@ export default function Botao({
     variante = "destaque",
     tamanho = "botaoGrande",
     iconeNome,
-    iconeLado = "esquerda",
+    iconeLado = "direita",
     disabled,
     style,
     ...resto
@@ -71,6 +71,7 @@ const estilos = StyleSheet.create({
         borderRadius: tema.layout.raioBorda,
         flexDirection: "row",
         alignItems: "center",
+        justifyContent: "space-between",
         columnGap: tema.layout.espacamentos.medio,
     },
 });

@@ -75,6 +75,7 @@ export default function BarraNavegacao({
                         key={index}
                         variante={state.index === index ? "destaque" : "info"}
                         iconeNome={obterIcone(route.key, index)}
+                        iconeLado="esquerda"
                         onPress={() => aoPressionar(route, index)}
                     >
                         {obterTitulo(route.key, index)}

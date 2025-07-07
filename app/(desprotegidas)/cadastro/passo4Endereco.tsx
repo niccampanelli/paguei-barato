@@ -81,6 +81,8 @@ export default function Passo4Endereco() {
                 <Botao
                     variante="info"
                     onPress={aoVoltar}
+                    iconeNome="arrow-left"
+                    iconeLado="esquerda"
                 >
                     Voltar
                 </Botao>
@@ -89,6 +91,7 @@ export default function Passo4Endereco() {
                     disabled={!isValid}
                     onPress={handleSubmit(aoAvancar, console.error)}
                     style={{ flex: 1 }}
+                    iconeNome="arrow-right"
                 >
                     {isDirty
                         ? "Confirmar endereço"

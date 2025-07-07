@@ -97,6 +97,8 @@ export default function Passo3Senha() {
                 <Botao
                     variante="info"
                     onPress={aoVoltar}
+                    iconeNome="arrow-left"
+                    iconeLado="esquerda"
                 >
                     Voltar
                 </Botao>
@@ -105,6 +107,7 @@ export default function Passo3Senha() {
                     disabled={!isDirty || !isValid}
                     onPress={handleSubmit(aoAvancar, console.error)}
                     style={{ flex: 1 }}
+                    iconeNome="arrow-right"
                 >
                     Próxima etapa
                 </Botao>
