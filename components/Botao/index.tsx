@@ -1,5 +1,6 @@
 import { tema } from "@/constants/tema";
 import { BotaoProps } from "@/types/components/Botao";
+import Feather from "@expo/vector-icons/Feather";
 import { Pressable, StyleSheet } from "react-native";
 import Texto from "../Texto";
 
@@ -7,10 +8,24 @@ export default function Botao({
     children,
     variante = "destaque",
     tamanho = "botaoGrande",
+    iconeNome,
+    iconeLado = "esquerda",
     disabled,
     style,
     ...resto
 }: BotaoProps) {
+
+    const Icone = (
+        <Feather
+            name={iconeNome}
+            size={
+                tamanho === "botaoGrande"
+                    ? tema.texto.tamanhos.subtitulo
+                    : tema.texto.tamanhos.legenda
+            }
+            color={tema.cores[variante].contraste}
+        />
+    );
 
     return (
         <Pressable
@@ -32,17 +47,21 @@ export default function Botao({
             disabled={disabled}
             {...resto}
         >
-            <Texto
-                variante="subtitulo"
-                style={{
-                    color: tema.cores[variante].contraste,
-                    fontSize: tamanho === "botaoGrande"
-                        ? tema.texto.tamanhos.subtitulo
-                        : tema.texto.tamanhos.legenda
-                }}
-            >
-                {children}
-            </Texto>
+            {iconeNome && iconeLado === "esquerda" && Icone}
+            {children &&
+                <Texto
+                    variante="subtitulo"
+                    style={{
+                        color: tema.cores[variante].contraste,
+                        fontSize: tamanho === "botaoGrande"
+                            ? tema.texto.tamanhos.subtitulo
+                            : tema.texto.tamanhos.legenda
+                    }}
+                >
+                    {children}
+                </Texto>
+            }
+            {iconeNome && iconeLado === "direita" && Icone}
         </Pressable>
     );
 }
@@ -50,5 +69,8 @@ export default function Botao({
 const estilos = StyleSheet.create({
     botao: {
         borderRadius: tema.layout.raioBorda,
+        flexDirection: "row",
+        alignItems: "center",
+        columnGap: tema.layout.espacamentos.medio,
     },
 });

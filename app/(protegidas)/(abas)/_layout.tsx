@@ -18,28 +18,28 @@ export default function LayoutAbasPrincipais() {
                 name="inicio"
                 options={{
                     tabBarLabel: 'Início',
-                    tabBarIcon: () => <Feather size={20} name='home' />
+                    tabBarIcon: () => "home" as keyof typeof Feather.glyphMap
                 }}
             />
             <Tabs.Screen
                 name="busca"
                 options={{
                     tabBarLabel: 'Busca',
-                    tabBarIcon: () => <Feather size={20} name='search' />
+                    tabBarIcon: () => "search" as keyof typeof Feather.glyphMap
                 }}
             />
             <Tabs.Screen
                 name="lista"
                 options={{
                     tabBarLabel: 'Lista',
-                    tabBarIcon: () => <Feather size={20} name='shopping-bag' />
+                    tabBarIcon: () => "shopping-bag" as keyof typeof Feather.glyphMap
                 }}
             />
             <Tabs.Screen
                 name="(menu)"
                 options={{
                     tabBarLabel: 'Menu',
-                    tabBarIcon: () => <Feather size={20} name='menu' />
+                    tabBarIcon: () => "menu" as keyof typeof Feather.glyphMap
                 }}
             />
         </Tabs>
