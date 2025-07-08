@@ -36,6 +36,9 @@ export default function Botao({
                         : tema.cores[variante].normal,
                     paddingVertical: tema.layout.paddings[tamanho].vertical,
                     paddingHorizontal: tema.layout.paddings[tamanho].horizontal,
+                    columnGap: tamanho === "botaoGrande"
+                        ? tema.layout.espacamentos.medio
+                        : tema.layout.espacamentos.pequeno,
                     opacity: disabled ? 0.25 : 1,
                 },
                 estilos.botao,
@@ -72,6 +75,5 @@ const estilos = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
-        columnGap: tema.layout.espacamentos.medio,
     },
 });
