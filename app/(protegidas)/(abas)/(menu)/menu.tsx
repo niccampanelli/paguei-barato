@@ -29,6 +29,11 @@ export default function Menu() {
             aoPressionar: () => router.navigate("/sobre")
         },
         {
+            icone: "moon",
+            nome: "Tema escuro",
+            aoPressionar: () => router.navigate("/sobre")
+        },
+        {
             icone: "log-out",
             nome: "Sair",
             aoPressionar: () => router.navigate("/login")
