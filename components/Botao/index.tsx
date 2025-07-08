@@ -20,7 +20,7 @@ export default function Botao({
             name={iconeNome}
             size={
                 tamanho === "botaoGrande"
-                    ? tema.texto.tamanhos.subtitulo
+                    ? tema.texto.tamanhos.texto
                     : tema.texto.tamanhos.legenda
             }
             color={tema.cores[variante].contraste}
@@ -54,7 +54,7 @@ export default function Botao({
                     style={{
                         color: tema.cores[variante].contraste,
                         fontSize: tamanho === "botaoGrande"
-                            ? tema.texto.tamanhos.subtitulo
+                            ? tema.texto.tamanhos.texto
                             : tema.texto.tamanhos.legenda
                     }}
                 >

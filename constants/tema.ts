@@ -40,10 +40,10 @@ export const temaClaroCores: TemaCores = {
 }
 
 export const temaTextoTamanhos: TemaTextoTamanhos = {
-	titulo: 20,
-	subtitulo: 18,
+	titulo: 24,
+	subtitulo: 20,
 	texto: 16,
-	legenda: 14,
+	legenda: 12,
 }
 
 export const temaTextoPesos: TemaTextoPesos = {

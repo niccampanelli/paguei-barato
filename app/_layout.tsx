@@ -32,6 +32,7 @@ export default function LayoutGeral() {
 					contentStyle: {
 						backgroundColor: "transparent",
 					},
+					animation: "slide_from_right",
 				}}
 			>
 				<Stack.Screen name="(desprotegidas)" />

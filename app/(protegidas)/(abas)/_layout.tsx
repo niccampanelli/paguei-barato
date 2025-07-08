@@ -15,6 +15,7 @@ export default function LayoutAbasPrincipais() {
                     backgroundColor: "transparent",
                     paddingTop: insets.top,
                 },
+                animation: "shift",
             }}
             tabBar={(props) => <BarraNavegacao {...props} />}
         >

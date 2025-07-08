@@ -1,8 +1,102 @@
-import { View } from "react-native";
+import Caixa from "@/components/Caixa";
+import CaixaScroll from "@/components/Caixa/CaixaScroll";
+import Emblema from "@/components/Emblema";
+import Texto from "@/components/Texto";
+import { tema } from "@/constants/tema";
+import Feather from "@expo/vector-icons/Feather";
+import { useRouter } from "expo-router";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+
+interface ItemMenu {
+    icone: keyof typeof Feather.glyphMap;
+    nome: string;
+    aoPressionar: () => void;
+}
 
 export default function Menu() {
 
+    const router = useRouter();
+
+    const menus: ItemMenu[] = [
+        {
+            icone: "user",
+            nome: "Conta",
+            aoPressionar: () => router.navigate("/usuario")
+        },
+        {
+            icone: "info",
+            nome: "Sobre",
+            aoPressionar: () => router.navigate("/sobre")
+        },
+        {
+            icone: "log-out",
+            nome: "Sair",
+            aoPressionar: () => router.navigate("/login")
+        },
+    ];
+
     return (
-        <View></View>
+        <View>
+            <Caixa tamanho="grande">
+                <Texto variante="titulo">
+                    Menu
+                </Texto>
+            </Caixa>
+            <CaixaScroll
+                tamanho="grande"
+                contentContainerStyle={estilos.conteudo}
+            >
+                <View style={estilos.identificacao}>
+                    <Emblema>NC</Emblema>
+                    <View>
+                        <Texto variante="subtitulo">
+                            Nicholas Campanelli
+                        </Texto>
+                        <Texto variante="legenda">
+                            nicholascampanelli@outlook.com
+                        </Texto>
+                    </View>
+                </View>
+                <View style={estilos.lista}>
+                    {
+                        menus.map((menu, i) => (
+                            <TouchableOpacity
+                                key={i}
+                                style={estilos.item}
+                                onPress={menu.aoPressionar}
+                            >
+                                <Feather
+                                    name={menu.icone}
+                                    size={tema.texto.tamanhos.subtitulo}
+                                />
+                                <Texto variante="subtitulo">
+                                    {menu.nome}
+                                </Texto>
+                            </TouchableOpacity>
+                        ))
+                    }
+                </View>
+            </CaixaScroll>
+        </View>
     )
 }
+
+const estilos = StyleSheet.create({
+    conteudo: {
+        paddingTop: 0,
+        rowGap: tema.layout.espacamentos.grande,
+    },
+    identificacao: {
+        flexDirection: "row",
+        columnGap: tema.layout.espacamentos.medio,
+        alignItems: "center",
+    },
+    lista: {
+        rowGap: tema.layout.espacamentos.grande,
+    },
+    item: {
+        flexDirection: "row",
+        columnGap: tema.layout.espacamentos.medio,
+        alignItems: "center",
+    }
+});

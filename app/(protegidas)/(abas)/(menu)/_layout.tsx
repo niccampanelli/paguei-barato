@@ -9,6 +9,7 @@ export default function LayoutMenus() {
                 contentStyle: {
                     backgroundColor: "transparent",
                 },
+                animation: "slide_from_right",
             }}
         >
             <Stack.Screen name="menu" />
