@@ -3,9 +3,10 @@ import Caixa from "@/components/Caixa";
 import CaixaScroll from "@/components/Caixa/CaixaScroll";
 import Texto from "@/components/Texto";
 import { tema } from "@/constants/tema";
-import { useAppSelector } from "@/hooks/store";
+import { useAppDispatch, useAppSelector } from "@/hooks/store";
 import autenticacaoService from "@/services/autenticacaoService";
 import { selectCadastro } from "@/store/slices/cadastro";
+import { setUsuario } from "@/store/slices/usuario";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -13,6 +14,9 @@ import { StyleSheet, View } from "react-native";
 export default function Fim() {
 
     const router = useRouter();
+
+    const dispatch = useAppDispatch();
+
     const dadosCadastro = useAppSelector(selectCadastro);
 
     const [carregando, setCarregando] = useState(false);
@@ -21,6 +25,12 @@ export default function Fim() {
         setCarregando(true);
         const resposta = await autenticacaoService.cadastrar(dadosCadastro);
         setCarregando(false);
+        dispatch(setUsuario({
+            nome: dadosCadastro.passo2Nome.nome + " " + dadosCadastro.passo2Nome.sobrenome,
+            email: dadosCadastro.passo1Email.email,
+            logado: true,
+            cep: dadosCadastro.passo4Endereco.cep,
+        }))
     }
 
     function aoAvancar() {

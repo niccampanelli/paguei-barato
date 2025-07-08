@@ -3,9 +3,13 @@ import CaixaScroll from "@/components/Caixa/CaixaScroll";
 import Logo from "@/components/Logo";
 import Texto from "@/components/Texto";
 import { tema } from "@/constants/tema";
+import { useAppSelector } from "@/hooks/store";
+import { selectUsuario } from "@/store/slices/usuario";
 import { StyleSheet, View } from "react-native";
 
 export default function Inicio() {
+
+    const usuario = useAppSelector(selectUsuario);
 
     return (
         <View style={estilos.container}>
@@ -20,7 +24,7 @@ export default function Inicio() {
                 contentContainerStyle={estilos.conteudo}
             >
                 <Texto variante="subtitulo">
-                    Boa noite, Nicholas!
+                    Boa noite, {usuario.nome}!
                 </Texto>
             </CaixaScroll>
         </View>

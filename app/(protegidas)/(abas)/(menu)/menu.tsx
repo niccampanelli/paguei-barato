@@ -3,6 +3,8 @@ import CaixaScroll from "@/components/Caixa/CaixaScroll";
 import Emblema from "@/components/Emblema";
 import Texto from "@/components/Texto";
 import { tema } from "@/constants/tema";
+import { useAppSelector } from "@/hooks/store";
+import { selectUsuario } from "@/store/slices/usuario";
 import Feather from "@expo/vector-icons/Feather";
 import { useRouter } from "expo-router";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
@@ -16,6 +18,8 @@ interface ItemMenu {
 export default function Menu() {
 
     const router = useRouter();
+
+    const usuario = useAppSelector(selectUsuario);
 
     const menus: ItemMenu[] = [
         {
@@ -55,10 +59,10 @@ export default function Menu() {
                     <Emblema>NC</Emblema>
                     <View>
                         <Texto variante="subtitulo">
-                            Nicholas Campanelli
+                            {usuario.nome}
                         </Texto>
                         <Texto variante="legenda">
-                            nicholascampanelli@outlook.com
+                            {usuario.email}
                         </Texto>
                     </View>
                 </View>
