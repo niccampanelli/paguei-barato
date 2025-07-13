@@ -1,6 +1,6 @@
+import Avatar from "@/components/Avatar";
 import Caixa from "@/components/Caixa";
 import CaixaScroll from "@/components/Caixa/CaixaScroll";
-import Emblema from "@/components/Emblema";
 import Texto from "@/components/Texto";
 import { tema } from "@/constants/tema";
 import { useAppSelector } from "@/hooks/store";
@@ -56,7 +56,7 @@ export default function Menu() {
                 contentContainerStyle={estilos.conteudo}
             >
                 <View style={estilos.identificacao}>
-                    <Emblema>NC</Emblema>
+                    <Avatar>NC</Avatar>
                     <View>
                         <Texto variante="subtitulo">
                             {usuario.nome}

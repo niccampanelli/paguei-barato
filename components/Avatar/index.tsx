@@ -1,14 +1,14 @@
 import { tema } from "@/constants/tema";
-import { EmblemaProps } from "@/types/components/Emblema";
+import { AvatarProps } from "@/types/components/Avatar";
 import { StyleSheet, View } from "react-native";
 import Texto from "../Texto";
 
-export default function Emblema({
+export default function Avatar({
     variante = "destaque",
     tamanho = "botaoGrande",
     children,
     ...resto
-}: EmblemaProps) {
+}: AvatarProps) {
 
     return (
         <View>
