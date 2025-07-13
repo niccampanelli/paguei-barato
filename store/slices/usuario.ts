@@ -5,7 +5,7 @@ import { RootState } from "..";
 const initialState: UsuarioState = {
     nome: "Anônimo",
     sobrenome: "",
-    nomeCompleto: "",
+    nomeCompleto: "Anônimo",
     email: undefined,
     logado: false,
     cep: undefined,
@@ -17,7 +17,16 @@ const usuarioSlice = createSlice({
     initialState,
     reducers: {
         setUsuario: (_, action: PayloadAction<UsuarioState>) => {
-            return action.payload;
+            const { payload } = action;
+            const valor: UsuarioState = {
+                ...action.payload,
+                nome: payload.nome.trim(),
+                sobrenome: payload.sobrenome.trim(),
+                nomeCompleto: payload.nome.trim() + " " + payload.sobrenome.trim(),
+                email: payload.email?.trim(),
+                cep: payload.cep?.trim(),
+            }
+            return valor;
         },
     },
 });
