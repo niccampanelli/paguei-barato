@@ -4,8 +4,8 @@ import CaixaScroll from "@/components/Caixa/CaixaScroll";
 import Texto from "@/components/Texto";
 import { tema } from "@/constants/tema";
 import { obterIniciais } from "@/helpers/usuario";
-import { useAppSelector } from "@/hooks/store";
-import { selectUsuario } from "@/store/slices/usuario";
+import { useAppDispatch, useAppSelector } from "@/hooks/store";
+import { fazerLogout, selectUsuario } from "@/store/slices/usuario";
 import Feather from "@expo/vector-icons/Feather";
 import { useRouter } from "expo-router";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
@@ -19,8 +19,15 @@ interface ItemMenu {
 export default function Menu() {
 
     const router = useRouter();
+    
+    const dispatch = useAppDispatch();
 
     const usuario = useAppSelector(selectUsuario);
+
+    function sair() {
+        dispatch(fazerLogout());
+        router.navigate("/(desprotegidas)/login");
+    }
 
     const menus: ItemMenu[] = [
         {
@@ -41,7 +48,7 @@ export default function Menu() {
         {
             icone: "log-out",
             nome: "Sair",
-            aoPressionar: () => router.navigate("/login")
+            aoPressionar: sair
         },
     ];
 

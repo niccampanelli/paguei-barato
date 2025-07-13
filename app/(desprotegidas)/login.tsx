@@ -4,6 +4,9 @@ import FormularioLogin from "@/components/Formularios/FormularioLogin";
 import Logo from "@/components/Logo";
 import Texto from "@/components/Texto";
 import { tema } from "@/constants/tema";
+import { useAppDispatch } from "@/hooks/store";
+import { LoginSchema } from "@/schemas/login";
+import { fazerLogin } from "@/store/thunks/usuario";
 import { useRouter } from "expo-router";
 import { Image, KeyboardAvoidingView, StyleSheet, View } from "react-native";
 
@@ -11,9 +14,10 @@ export default function Login() {
 
     const router = useRouter();
 
-    function aoEntrar() {
-        console.log("Usuário logado");
-        // Aqui você pode adicionar a lógica de autenticação
+    const dispatch = useAppDispatch();
+
+    async function aoEntrar(dados: LoginSchema) {
+        await dispatch(fazerLogin(dados));
         router.push("/(protegidas)/(abas)/inicio");
     }
 
@@ -61,7 +65,11 @@ export default function Login() {
                     >
                         ou
                     </Texto>
-                    <Botao variante="info" onPress={() => router.push("/(protegidas)/(abas)/inicio")}>
+                    <Botao
+                        variante="info"
+                        iconeNome="arrow-right"
+                        onPress={() => router.push("/(protegidas)/(abas)/inicio")}
+                    >
                         Continuar sem conta
                     </Botao>
                 </CaixaScroll>

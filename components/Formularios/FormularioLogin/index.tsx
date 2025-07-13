@@ -5,8 +5,9 @@ import { LoginSchema } from "@/schemas/login";
 import { FormularioLoginProps } from "@/types/components/Formularios/FormularioLogin";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "expo-router";
+import { useRef } from "react";
 import { useForm } from "react-hook-form";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TextInput, View } from "react-native";
 
 export default function FormularioLogin({
     aoSubmeter,
@@ -15,10 +16,13 @@ export default function FormularioLogin({
 
     const router = useRouter();
 
+    const senhaCampoRef = useRef<TextInput>(null);
+
     const {
         control,
         handleSubmit,
         formState: {
+            isSubmitting,
             isValid,
             isDirty,
         }
@@ -38,6 +42,7 @@ export default function FormularioLogin({
                 name="email"
                 control={control}
                 CampoProps={{
+                    proximo: senhaCampoRef,
                     placeholder: "Escreva o seu e-mail",
                     iconeNome: "at-sign",
                 }}
@@ -46,6 +51,7 @@ export default function FormularioLogin({
                 name="senha"
                 control={control}
                 CampoProps={{
+                    ref: senhaCampoRef,
                     secureTextEntry: true,
                     placeholder: "Insira a sua senha",
                     iconeNome: "lock",
@@ -62,8 +68,9 @@ export default function FormularioLogin({
                 <Botao
                     variante="destaque"
                     style={{ flex: 2 }}
-                    disabled={!isValid || !isDirty}
+                    disabled={!isValid || !isDirty || isSubmitting}
                     onPress={handleSubmit(aoSubmeter, aoSubmeterInvalido)}
+                    iconeNome="log-in"
                 >
                     Entrar com sua conta
                 </Botao>
