@@ -2,6 +2,7 @@ import { CadastroSchema } from "@/schemas/cadastro";
 import CadastrarResponse from "@/types/services/autenticacao/CadastrarResponse";
 import LoginRequest from "@/types/services/autenticacao/LoginRequest";
 import LoginResponse from "@/types/services/autenticacao/LoginResponse";
+import RetificarRequest from "@/types/services/autenticacao/RetificarRequest";
 
 async function fazerLogin(dados: LoginRequest) {
     await new Promise(resolve => setTimeout(resolve, 4000));
@@ -19,7 +20,7 @@ async function cadastrar(dados: CadastroSchema) {
     return {} as CadastrarResponse;
 }
 
-async function retificar(dados: CadastroSchema) {
+async function retificar(dados: RetificarRequest) {
     await new Promise(resolve => setTimeout(resolve, 3000));
 }
 
