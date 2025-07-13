@@ -59,7 +59,7 @@ export default function Menu() {
                     <Avatar>NC</Avatar>
                     <View>
                         <Texto variante="subtitulo">
-                            {usuario.nome}
+                            {usuario.nomeCompleto}
                         </Texto>
                         <Texto variante="legenda">
                             {usuario.email}

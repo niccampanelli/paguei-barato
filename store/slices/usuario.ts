@@ -4,6 +4,8 @@ import { RootState } from "..";
 
 const initialState: UsuarioState = {
     nome: "Anônimo",
+    sobrenome: "",
+    nomeCompleto: "",
     email: undefined,
     logado: false,
     cep: undefined,
@@ -14,8 +16,8 @@ const usuarioSlice = createSlice({
     name: 'cadastro',
     initialState,
     reducers: {
-        setUsuario: (state, action: PayloadAction<UsuarioState>) => {
-            state = action.payload;
+        setUsuario: (_, action: PayloadAction<UsuarioState>) => {
+            return action.payload;
         },
     },
 });

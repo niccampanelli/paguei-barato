@@ -26,7 +26,9 @@ export default function Fim() {
         const resposta = await autenticacaoService.cadastrar(dadosCadastro);
         setCarregando(false);
         dispatch(setUsuario({
-            nome: dadosCadastro.passo2Nome.nome + " " + dadosCadastro.passo2Nome.sobrenome,
+            nome: dadosCadastro.passo2Nome.nome,
+            sobrenome: dadosCadastro.passo2Nome.sobrenome,
+            nomeCompleto: dadosCadastro.passo2Nome.nome + " " + dadosCadastro.passo2Nome.sobrenome,
             email: dadosCadastro.passo1Email.email,
             logado: true,
             cep: dadosCadastro.passo4Endereco.cep,
