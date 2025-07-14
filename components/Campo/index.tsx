@@ -14,6 +14,7 @@ export default function Campo({
     ajuda = "",
     erro = "",
     proximo,
+    editable = true,
     ref,
     returnKeyType,
     placeholderTextColor = tema.cores.texto.claro,
@@ -38,16 +39,19 @@ export default function Campo({
         }
 
         if (onSubmitEditing)
-            onSubmitEditing(e)
+            onSubmitEditing(e);
     }
 
     const Icone = (
         <Feather
             name={iconeNome}
             size={tema.texto.tamanhos.texto}
-            color={erro
-                ? tema.cores.vermelho.normal
-                : tema.cores[iconeCor].normal
+            color={
+                editable
+                    ? erro
+                        ? tema.cores.vermelho.normal
+                        : tema.cores[iconeCor].normal
+                    : tema.cores.info.escuro
             }
         />
     );
@@ -64,15 +68,16 @@ export default function Campo({
                 <TextInput
                     style={estilos.input}
                     placeholderTextColor={placeholderTextColor}
+                    editable={editable}
+                    ref={ref}
+                    returnKeyType={proximo ? "next" : returnKeyType}
                     selectionColor={selectionColor}
                     secureTextEntry={textoOculto}
                     onChangeText={onChangeText}
                     onSubmitEditing={aoSubmeter}
-                    returnKeyType={proximo ? "next" : returnKeyType}
-                    ref={ref}
                     {...resto}
                 />
-                {mostrarLimpar &&
+                {mostrarLimpar && editable &&
                     <TouchableOpacity onPress={aoLimpar}>
                         <Feather
                             name="x"
@@ -81,7 +86,7 @@ export default function Campo({
                         />
                     </TouchableOpacity>
                 }
-                {secureTextEntry &&
+                {secureTextEntry && editable &&
                     <TouchableOpacity onPress={() => setTextoOculto(!textoOculto)}>
                         <Feather
                             name={textoOculto ? "eye" : "eye-off"}

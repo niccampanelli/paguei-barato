@@ -1,23 +1,18 @@
 import Botao from "@/components/Botao";
 import Caixa from "@/components/Caixa";
 import CaixaScroll from "@/components/Caixa/CaixaScroll";
+import Campo from "@/components/Campo";
 import CampoControle from "@/components/Campo/CampoControle";
 import Texto from "@/components/Texto";
 import { tema } from "@/constants/tema";
 import { useAppDispatch, useAppSelector } from "@/hooks/store";
 import { UsuarioSchema } from "@/schemas/usuario";
 import { selectUsuario } from "@/store/slices/usuario";
-import Feather from "@expo/vector-icons/Feather";
+import { retificar } from "@/store/thunks/usuario";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "expo-router";
 import { useForm } from "react-hook-form";
 import { StyleSheet, View } from "react-native";
-
-interface ItemMenu {
-    icone: keyof typeof Feather.glyphMap;
-    nome: string;
-    aoPressionar: () => void;
-}
 
 export default function Usuario() {
 
@@ -30,6 +25,7 @@ export default function Usuario() {
     const {
         control,
         handleSubmit,
+        reset,
         formState: {
             isSubmitting,
             isValid,
@@ -47,7 +43,8 @@ export default function Usuario() {
     });
 
     async function aoSubmeter(dados: UsuarioSchema) {
-
+        await dispatch(retificar(dados));
+        reset(dados);
     }
 
     function aoSubmeterInvalido() {
@@ -96,6 +93,12 @@ export default function Usuario() {
                         iconeNome: "user",
                     }}
                 />
+                <Campo
+                    placeholder="Endereço de e-mail"
+                    iconeNome="at-sign"
+                    editable={false}
+                    value={usuario.email}
+                />
                 <CampoControle
                     name="cep"
                     control={control}
@@ -116,7 +119,11 @@ export default function Usuario() {
                     onPress={handleSubmit(aoSubmeter, aoSubmeterInvalido)}
                     iconeNome="save"
                 >
-                    Salvar edições
+                    {isDirty ?
+                        "Salvar edições"
+                        :
+                        "Nenhuma edição"
+                    }
                 </Botao>
             </Caixa>
         </View>
@@ -141,5 +148,6 @@ const estilos = StyleSheet.create({
     rodape: {
         alignSelf: "baseline",
         flexDirection: "row",
+        paddingBottom: 0,
     },
 });

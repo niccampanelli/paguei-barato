@@ -1,5 +1,6 @@
 import autenticacaoService from "@/services/autenticacaoService";
 import LoginRequest from "@/types/services/autenticacao/LoginRequest";
+import RetificarRequest from "@/types/services/autenticacao/RetificarRequest";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fazerLogin = createAsyncThunk(
@@ -12,4 +13,16 @@ export const fazerLogin = createAsyncThunk(
             rejectWithValue("erro");
         }
     },
-)
+);
+
+export const retificar = createAsyncThunk(
+    "usuario/retificar",
+    async (dados: RetificarRequest, { rejectWithValue }) => {
+        try {
+            await autenticacaoService.retificar(dados);
+        }
+        catch (error) {
+            rejectWithValue("erro");
+        }
+    },
+);

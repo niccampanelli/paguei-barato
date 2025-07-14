@@ -1,7 +1,7 @@
 import { UsuarioState } from "@/types/store/slices/usuario";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "..";
-import { fazerLogin } from "../thunks/usuario";
+import { fazerLogin, retificar } from "../thunks/usuario";
 
 const initialState: UsuarioState = {
     nome: "Anônimo",
@@ -29,7 +29,7 @@ const usuarioSlice = createSlice({
             }
             return valor;
         },
-        fazerLogout: (state, action: PayloadAction<void>) => {
+        fazerLogout: (_, action: PayloadAction<void>) => {
             return initialState;
         },
     },
@@ -38,11 +38,20 @@ const usuarioSlice = createSlice({
             const { payload } = action;
             state.nome = payload!.nome;
             state.sobrenome = payload!.sobrenome;
+            state.nomeCompleto = payload!.nome + " " + payload!.sobrenome;
             state.email = payload!.email;
             state.cep = payload!.cep;
             state.token = payload!.token;
-            state.nomeCompleto = payload!.nome + " " + payload!.sobrenome;
             state.logado = true;
+        });
+
+        builder.addCase(retificar.fulfilled, (state, action) => {
+            const { meta: { arg } } = action;
+            state.nome = arg.nome ?? state.nome;
+            state.sobrenome = arg.sobrenome ?? state.sobrenome;
+            state.nomeCompleto = state.nome + " " + state.sobrenome;
+            state.email = arg.email ?? state.email;
+            state.cep = arg.cep ?? state.cep;
         });
     },
 });
