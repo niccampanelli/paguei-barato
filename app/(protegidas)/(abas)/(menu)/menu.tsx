@@ -31,11 +31,6 @@ export default function Menu() {
 
     const menus: ItemMenu[] = [
         {
-            icone: "user",
-            nome: "Conta",
-            aoPressionar: () => router.navigate("/usuario")
-        },
-        {
             icone: "info",
             nome: "Sobre",
             aoPressionar: () => router.navigate("/sobre")
@@ -50,6 +45,15 @@ export default function Menu() {
             nome: "Sair",
             aoPressionar: sair
         },
+    ];
+
+    const menusLogado: ItemMenu[] = [
+        {
+            icone: "user",
+            nome: "Conta",
+            aoPressionar: () => router.navigate("/usuario")
+        },
+        ...menus
     ];
 
     return (
@@ -78,7 +82,7 @@ export default function Menu() {
                 </View>
                 <View style={estilos.lista}>
                     {
-                        menus.map((menu, i) => (
+                        (usuario.logado ? menusLogado : menus).map((menu, i) => (
                             <TouchableOpacity
                                 key={i}
                                 style={estilos.item}

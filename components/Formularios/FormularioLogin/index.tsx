@@ -6,7 +6,7 @@ import { FormularioLoginProps } from "@/types/components/Formularios/FormularioL
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "expo-router";
 import { useRef } from "react";
-import { useForm } from "react-hook-form";
+import { FieldErrors, useForm } from "react-hook-form";
 import { StyleSheet, TextInput, View } from "react-native";
 
 export default function FormularioLogin({
@@ -21,6 +21,7 @@ export default function FormularioLogin({
     const {
         control,
         handleSubmit,
+        reset,
         formState: {
             isSubmitting,
             isValid,
@@ -35,6 +36,16 @@ export default function FormularioLogin({
         resolver: zodResolver(LoginSchema),
         reValidateMode: "onChange",
     });
+
+    async function aoSubmeterFormulario(dados: LoginSchema) {
+        await aoSubmeter(dados);
+        reset({});
+    }
+
+    async function aoSubmeterFormularioInvalido(erros: FieldErrors<LoginSchema>) {
+        await aoSubmeterInvalido?.(erros);
+        reset({});
+    }
 
     return (
         <View style={estilos.container}>
@@ -69,7 +80,7 @@ export default function FormularioLogin({
                     variante="destaque"
                     style={{ flex: 2 }}
                     disabled={!isValid || !isDirty || isSubmitting}
-                    onPress={handleSubmit(aoSubmeter, aoSubmeterInvalido)}
+                    onPress={handleSubmit(aoSubmeterFormulario, aoSubmeterFormularioInvalido)}
                     iconeNome="log-in"
                 >
                     Entrar com sua conta
