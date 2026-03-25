@@ -10,7 +10,10 @@ export const UsuarioSchema = z.object({
         .nonempty('Informe um sobrenome'),
     cep: z
         .string()
-        .regex(/^\d{5}-?\d{3}$/, 'CEP inválido')
+        .refine(
+            (value) => value === '' || /^\d{5}-?\d{3}$/.test(value),
+            'CEP inválido'
+        )
         .optional(),
 });
 

@@ -10,10 +10,13 @@ import Feather from "@expo/vector-icons/Feather";
 import { useRouter } from "expo-router";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 
+type ItemMenuLogado = "logado" | "deslogado" | "ambos";
+
 interface ItemMenu {
     icone: keyof typeof Feather.glyphMap;
     nome: string;
     aoPressionar: () => void;
+    itemMenuLogado?: ItemMenuLogado;
 }
 
 export default function Menu() {
@@ -31,30 +34,47 @@ export default function Menu() {
 
     const menus: ItemMenu[] = [
         {
+            icone: "user",
+            nome: "Informações da sua conta",
+            aoPressionar: () => router.navigate("/usuario"),
+            itemMenuLogado: "logado"
+        },
+        {
             icone: "info",
-            nome: "Sobre",
-            aoPressionar: () => router.navigate("/sobre")
+            nome: "Sobre o aplicativo",
+            aoPressionar: () => router.navigate("/sobre"),
+            itemMenuLogado: "ambos"
         },
         {
             icone: "moon",
             nome: "Tema escuro",
-            aoPressionar: () => router.navigate("/sobre")
+            aoPressionar: () => router.navigate("/sobre"),
+            itemMenuLogado: "ambos"
         },
         {
             icone: "log-out",
             nome: "Sair",
-            aoPressionar: sair
+            aoPressionar: sair,
+            itemMenuLogado: "logado"
         },
-    ];
-
-    const menusLogado: ItemMenu[] = [
         {
-            icone: "user",
-            nome: "Conta",
-            aoPressionar: () => router.navigate("/usuario")
-        },
-        ...menus
+            icone: "log-in",
+            nome: "Entrar com sua conta",
+            aoPressionar: () => router.navigate("/(desprotegidas)/login"),
+            itemMenuLogado: "deslogado"
+        }
     ];
+    
+    function obterMenusFiltrados(logado: boolean) {
+        return menus.filter(menu => {
+            if (menu.itemMenuLogado === "ambos")
+                return true;
+            if (logado)
+                return menu.itemMenuLogado === "logado";
+            else
+                return menu.itemMenuLogado === "deslogado";
+        });
+    }
 
     return (
         <View>
@@ -82,7 +102,7 @@ export default function Menu() {
                 </View>
                 <View style={estilos.lista}>
                     {
-                        (usuario.logado ? menusLogado : menus).map((menu, i) => (
+                        obterMenusFiltrados(usuario.logado).map((menu, i) => (
                             <TouchableOpacity
                                 key={i}
                                 style={estilos.item}
@@ -92,9 +112,13 @@ export default function Menu() {
                                     name={menu.icone}
                                     size={tema.texto.tamanhos.subtitulo}
                                 />
-                                <Texto variante="subtitulo">
+                                <Texto variante="subtitulo" style={{ flex: 1 }}>
                                     {menu.nome}
                                 </Texto>
+                                <Feather
+                                    name="chevron-right"
+                                    size={tema.texto.tamanhos.subtitulo}
+                                />
                             </TouchableOpacity>
                         ))
                     }

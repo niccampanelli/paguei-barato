@@ -70,13 +70,16 @@ export default function Usuario() {
                     </Botao>
                 </View>
                 <Texto variante="titulo">
-                    Sua conta
+                    Informações da sua conta
                 </Texto>
             </Caixa>
             <CaixaScroll
                 tamanho="grande"
                 contentContainerStyle={estilos.conteudo}
             >
+                <Texto variante="subtitulo">
+                    Nome
+                </Texto>
                 <CampoControle
                     name="nome"
                     control={control}
@@ -85,6 +88,9 @@ export default function Usuario() {
                         iconeNome: "user",
                     }}
                 />
+                <Texto variante="subtitulo">
+                    Sobrenome
+                </Texto>
                 <CampoControle
                     name="sobrenome"
                     control={control}
@@ -93,12 +99,19 @@ export default function Usuario() {
                         iconeNome: "user",
                     }}
                 />
+                <Texto variante="subtitulo">
+                    Endereço de e-mail
+                </Texto>
                 <Campo
                     placeholder="Endereço de e-mail"
                     iconeNome="at-sign"
                     editable={false}
                     value={usuario.email}
+                    ajuda="Seu e-mail é a identificação única da sua conta e não pode ser editado"
                 />
+                <Texto variante="subtitulo">
+                    CEP
+                </Texto>
                 <CampoControle
                     name="cep"
                     control={control}
