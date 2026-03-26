@@ -1,5 +1,5 @@
 import { tema } from "@/constants/tema";
-import { CampoProps } from "@/types/components/Campo";
+import { CampoProps } from "@/types/components/shared/Campo";
 import Feather from '@expo/vector-icons/Feather';
 import { useState } from "react";
 import { NativeSyntheticEvent, StyleSheet, TextInput, TextInputSubmitEditingEventData, TouchableOpacity, View } from "react-native";

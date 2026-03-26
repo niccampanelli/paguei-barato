@@ -1,4 +1,4 @@
-import { LogoProps } from "@/types/components/Logo";
+import { LogoProps } from "@/types/components/shared/Logo";
 import { Image } from "react-native";
 
 export default function Logo({

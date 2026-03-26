@@ -1,5 +1,5 @@
 import { tema } from "@/constants/tema";
-import { CaixaScrollProps } from "@/types/components/Caixa/CaixaScroll";
+import { CaixaScrollProps } from "@/types/components/shared/Caixa/CaixaScroll";
 import { ScrollView } from "react-native";
 
 export default function CaixaScroll({

@@ -1,6 +1,6 @@
-import BarraEtapas from "@/components/BarraEtapas";
-import Caixa from "@/components/Caixa";
-import Logo from "@/components/Logo";
+import BarraEtapas from "@/components/shared/BarraEtapas";
+import Caixa from "@/components/shared/Caixa";
+import Logo from "@/components/shared/Logo";
 import { tema } from "@/constants/tema";
 import { Stack } from "expo-router";
 import { useState } from "react";

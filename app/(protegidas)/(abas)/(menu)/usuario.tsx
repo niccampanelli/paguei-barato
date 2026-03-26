@@ -1,9 +1,9 @@
-import Botao from "@/components/Botao";
-import Caixa from "@/components/Caixa";
-import CaixaScroll from "@/components/Caixa/CaixaScroll";
-import Campo from "@/components/Campo";
-import CampoControle from "@/components/Campo/CampoControle";
-import Texto from "@/components/Texto";
+import Botao from "@/components/shared/Botao";
+import Caixa from "@/components/shared/Caixa";
+import CaixaScroll from "@/components/shared/Caixa/CaixaScroll";
+import Campo from "@/components/shared/Campo";
+import CampoControle from "@/components/shared/Campo/CampoControle";
+import Texto from "@/components/shared/Texto";
 import { tema } from "@/constants/tema";
 import { useAppDispatch, useAppSelector } from "@/hooks/store";
 import { UsuarioSchema } from "@/schemas/usuario";

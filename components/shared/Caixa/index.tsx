@@ -1,5 +1,5 @@
 import { tema } from "@/constants/tema";
-import { CaixaProps } from "@/types/components/Caixa";
+import { CaixaProps } from "@/types/components/shared/Caixa";
 import { View } from "react-native";
 
 export default function Caixa({

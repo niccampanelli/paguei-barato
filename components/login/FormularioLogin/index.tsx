@@ -1,8 +1,8 @@
-import Botao from "@/components/Botao";
-import CampoControle from "@/components/Campo/CampoControle";
+import Botao from "@/components/shared/Botao";
+import CampoControle from "@/components/shared/Campo/CampoControle";
 import { tema } from "@/constants/tema";
 import { LoginSchema } from "@/schemas/login";
-import { FormularioLoginProps } from "@/types/components/Formularios/FormularioLogin";
+import { FormularioLoginProps } from "@/types/components/login/FormularioLogin";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "expo-router";
 import { useRef } from "react";

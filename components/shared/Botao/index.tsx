@@ -1,5 +1,5 @@
 import { tema } from "@/constants/tema";
-import { BotaoProps } from "@/types/components/Botao";
+import { BotaoProps } from "@/types/components/shared/Botao";
 import Feather from "@expo/vector-icons/Feather";
 import { Pressable, StyleSheet } from "react-native";
 import Texto from "../Texto";

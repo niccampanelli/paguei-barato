@@ -1,5 +1,5 @@
 import { tema } from "@/constants/tema";
-import { BarraEtapasProps } from "@/types/components/BarraEtapas";
+import { BarraEtapasProps } from "@/types/components/shared/BarraEtapas";
 import { StyleSheet, View } from "react-native";
 
 export default function BarraEtapas({

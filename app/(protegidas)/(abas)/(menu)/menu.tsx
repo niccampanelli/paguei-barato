@@ -1,7 +1,7 @@
-import Avatar from "@/components/Avatar";
-import Caixa from "@/components/Caixa";
-import CaixaScroll from "@/components/Caixa/CaixaScroll";
-import Texto from "@/components/Texto";
+import Avatar from "@/components/shared/Avatar";
+import Caixa from "@/components/shared/Caixa";
+import CaixaScroll from "@/components/shared/Caixa/CaixaScroll";
+import Texto from "@/components/shared/Texto";
 import { tema } from "@/constants/tema";
 import { obterIniciais } from "@/helpers/usuario";
 import { useAppDispatch, useAppSelector } from "@/hooks/store";

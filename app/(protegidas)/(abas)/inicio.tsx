@@ -1,7 +1,7 @@
-import Caixa from "@/components/Caixa";
-import CaixaScroll from "@/components/Caixa/CaixaScroll";
-import Logo from "@/components/Logo";
-import Texto from "@/components/Texto";
+import Caixa from "@/components/shared/Caixa";
+import CaixaScroll from "@/components/shared/Caixa/CaixaScroll";
+import Logo from "@/components/shared/Logo";
+import Texto from "@/components/shared/Texto";
 import { tema } from "@/constants/tema";
 import { useAppSelector } from "@/hooks/store";
 import { selectUsuario } from "@/store/slices/usuario";
