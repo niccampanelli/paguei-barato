@@ -1,4 +1,4 @@
-import Providers from '@/components/shared/Providers';
+import { Providers } from '@/components/shared';
 import {
 	Nunito_300Light,
 	Nunito_400Regular,

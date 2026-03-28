@@ -1,12 +1,8 @@
-import Botao from "@/components/shared/Botao";
-import Caixa from "@/components/shared/Caixa";
-import CaixaScroll from "@/components/shared/Caixa/CaixaScroll";
-import CampoControle from "@/components/shared/Campo/CampoControle";
-import Texto from "@/components/shared/Texto";
+import { Botao, Caixa, CaixaScroll, CampoControle, Texto } from "@/components/shared";
 import { tema } from "@/constants/tema";
 import { useAppDispatch } from "@/hooks/store";
 import { Passo4EnderecoSchema } from "@/schemas/cadastro";
-import { setPasso4Endereco } from "@/store/slices/cadastro";
+import { setPasso4Endereco } from "@/store/cadastro/cadastroSlice";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "expo-router";
 import { useForm } from "react-hook-form";

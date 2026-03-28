@@ -1,7 +1,4 @@
-import Botao from "@/components/shared/Botao";
-import Caixa from "@/components/shared/Caixa";
-import CaixaScroll from "@/components/shared/Caixa/CaixaScroll";
-import Texto from "@/components/shared/Texto";
+import { Botao, Caixa, CaixaScroll, Texto } from "@/components/shared";
 import { tema } from "@/constants/tema";
 import { useRouter } from "expo-router";
 import { StyleSheet, View } from "react-native";

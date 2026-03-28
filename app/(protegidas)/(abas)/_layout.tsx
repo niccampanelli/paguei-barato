@@ -1,4 +1,4 @@
-import BarraNavegacao from '@/components/shared/BarraNavegacao';
+import { BarraNavegacao } from '@/components/shared';
 import Feather from '@expo/vector-icons/Feather';
 import { Tabs } from "expo-router";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';

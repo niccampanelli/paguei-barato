@@ -1,13 +1,8 @@
-import Botao from "@/components/shared/Botao";
-import Caixa from "@/components/shared/Caixa";
-import CaixaScroll from "@/components/shared/Caixa/CaixaScroll";
-import Campo from "@/components/shared/Campo";
-import CampoControle from "@/components/shared/Campo/CampoControle";
-import Texto from "@/components/shared/Texto";
+import { Botao, Caixa, CaixaScroll, Campo, CampoControle, Texto } from "@/components/shared";
 import { tema } from "@/constants/tema";
 import { useAppDispatch, useAppSelector } from "@/hooks/store";
 import { UsuarioSchema } from "@/schemas/usuario";
-import { selectUsuario } from "@/store/slices/usuario";
+import { selectUsuario } from "@/store/usuario/usuarioSlice";
 import { retificar } from "@/store/usuario/usuarioThunks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "expo-router";

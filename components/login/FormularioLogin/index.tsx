@@ -1,5 +1,4 @@
-import Botao from "@/components/shared/Botao";
-import CampoControle from "@/components/shared/Campo/CampoControle";
+import { Botao, CampoControle } from "@/components/shared";
 import { tema } from "@/constants/tema";
 import { LoginSchema } from "@/schemas/login";
 import { FormularioLoginProps } from "@/types/components/login/FormularioLogin";

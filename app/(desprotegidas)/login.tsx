@@ -1,8 +1,5 @@
-import FormularioLogin from "@/components/login/FormularioLogin";
-import Botao from "@/components/shared/Botao";
-import CaixaScroll from "@/components/shared/Caixa/CaixaScroll";
-import Logo from "@/components/shared/Logo";
-import Texto from "@/components/shared/Texto";
+import { FormularioLogin } from "@/components/login";
+import { Botao, CaixaScroll, Logo, Texto } from "@/components/shared";
 import { tema } from "@/constants/tema";
 import { useAppDispatch } from "@/hooks/store";
 import { LoginSchema } from "@/schemas/login";

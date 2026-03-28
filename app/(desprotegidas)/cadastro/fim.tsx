@@ -1,12 +1,9 @@
-import Botao from "@/components/shared/Botao";
-import Caixa from "@/components/shared/Caixa";
-import CaixaScroll from "@/components/shared/Caixa/CaixaScroll";
-import Texto from "@/components/shared/Texto";
+import { Botao, Caixa, CaixaScroll, Texto } from "@/components/shared";
 import { tema } from "@/constants/tema";
 import { useAppDispatch, useAppSelector } from "@/hooks/store";
 import autenticacaoService from "@/services/autenticacaoService";
-import { selectCadastro } from "@/store/slices/cadastro";
-import { setUsuario } from "@/store/slices/usuario";
+import { selectCadastro } from "@/store/cadastro/cadastroSlice";
+import { setUsuario } from "@/store/usuario/usuarioSlice";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";

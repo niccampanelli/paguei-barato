@@ -1,11 +1,8 @@
-import Avatar from "@/components/shared/Avatar";
-import Caixa from "@/components/shared/Caixa";
-import CaixaScroll from "@/components/shared/Caixa/CaixaScroll";
-import Texto from "@/components/shared/Texto";
+import { Avatar, Caixa, CaixaScroll, Texto } from "@/components/shared";
 import { tema } from "@/constants/tema";
 import { obterIniciais } from "@/helpers/usuario";
 import { useAppDispatch, useAppSelector } from "@/hooks/store";
-import { fazerLogout, selectUsuario } from "@/store/slices/usuario";
+import { fazerLogout, selectUsuario } from "@/store/usuario/usuarioSlice";
 import Feather from "@expo/vector-icons/Feather";
 import { useRouter } from "expo-router";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
