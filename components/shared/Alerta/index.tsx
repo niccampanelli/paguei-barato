@@ -1,11 +1,17 @@
-import Caixa from "../Caixa";
+import { StyleSheet, View } from "react-native";
 import Texto from "../Texto";
 
 export default function Alerta() {
 
     return (
-        <Caixa>
+        <View style={estilos.alerta}>
             <Texto>Alerta</Texto>
-        </Caixa>
+        </View>
     )
 }
+
+const estilos = StyleSheet.create({
+    alerta: {
+        backgroundColor: "red",
+    }
+});
