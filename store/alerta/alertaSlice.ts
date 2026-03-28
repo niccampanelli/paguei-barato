@@ -3,7 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "..";
 
 const initialState: AlertaState = {
-    alertas: [],
+    alertas: [
+        {
+            id: 1,
+            iconeNome: "activity",
+            mensagem: "Esse é um teste de alerta",
+        }
+    ],
 };
 
 const alertaSlice = createSlice({

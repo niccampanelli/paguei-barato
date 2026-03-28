@@ -1,3 +1,5 @@
+import { useAppSelector } from "@/hooks/store";
+import { selectAlerta } from "@/store/alerta/alertaSlice";
 import { AlertaProviderProps } from "@/types/components/shared";
 import { StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -9,6 +11,7 @@ export default function AlertaProvider({
 }: AlertaProviderProps) {
 
     const insets = useSafeAreaInsets();
+    const { alertas } = useAppSelector(selectAlerta);
 
     return (
         <>
@@ -16,7 +19,9 @@ export default function AlertaProvider({
                 tamanho="grande"
                 style={[{ flex: 1, marginBottom: insets.bottom }, estilos.container]}
             >
-                <Alerta />
+                {alertas.map((alerta) => (
+                    <Alerta key={alerta.id} alerta={alerta} />
+                ))}
             </Caixa>
             {children}
         </>

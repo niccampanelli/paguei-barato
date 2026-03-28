@@ -1,3 +1,4 @@
+export { AlertaProps } from "./Alerta";
 export { AvatarProps } from "./Avatar";
 export { BarraEtapasProps } from "./BarraEtapas";
 export { BotaoProps } from "./Botao";
