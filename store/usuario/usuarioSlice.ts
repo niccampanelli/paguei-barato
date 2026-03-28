@@ -1,7 +1,7 @@
 import { UsuarioState } from "@/types/store/slices/usuario";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "..";
-import { fazerLogin, retificar } from "../thunks/usuario";
+import { fazerLogin, retificar } from "./usuarioThunks";
 
 const initialState: UsuarioState = {
     nome: "Anônimo",

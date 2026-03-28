@@ -8,7 +8,7 @@ import { tema } from "@/constants/tema";
 import { useAppDispatch, useAppSelector } from "@/hooks/store";
 import { UsuarioSchema } from "@/schemas/usuario";
 import { selectUsuario } from "@/store/slices/usuario";
-import { retificar } from "@/store/thunks/usuario";
+import { retificar } from "@/store/usuario/usuarioThunks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "expo-router";
 import { useForm } from "react-hook-form";

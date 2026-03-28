@@ -6,7 +6,7 @@ import Texto from "@/components/shared/Texto";
 import { tema } from "@/constants/tema";
 import { useAppDispatch } from "@/hooks/store";
 import { LoginSchema } from "@/schemas/login";
-import { fazerLogin } from "@/store/thunks/usuario";
+import { fazerLogin } from "@/store/usuario/usuarioThunks";
 import { useRouter } from "expo-router";
 import { Image, KeyboardAvoidingView, StyleSheet, View } from "react-native";
 
