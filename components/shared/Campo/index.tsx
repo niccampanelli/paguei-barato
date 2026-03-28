@@ -3,7 +3,7 @@ import { CampoProps } from "@/types/components/shared";
 import Feather from '@expo/vector-icons/Feather';
 import { useState } from "react";
 import { NativeSyntheticEvent, StyleSheet, TextInput, TextInputSubmitEditingEventData, TouchableOpacity, View } from "react-native";
-import { Texto } from "../";
+import Texto from "../Texto";
 
 export default function Campo({
     style,

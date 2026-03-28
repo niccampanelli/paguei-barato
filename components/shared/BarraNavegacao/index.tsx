@@ -3,7 +3,8 @@ import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { NavigationRoute, ParamListBase } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Botao, Caixa } from "../";
+import Botao from "../Botao";
+import Caixa from "../Caixa";
 
 export default function BarraNavegacao({
     state,

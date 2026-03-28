@@ -9,7 +9,7 @@ export default function Logo({
 
     return (
         <Image
-            source={require("../../assets/images/app/logo.png")}
+            source={require("../../../assets/images/app/logo.png")}
             resizeMode="contain"
             width={largura}
             style={[

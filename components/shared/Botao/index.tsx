@@ -2,7 +2,7 @@ import { tema } from "@/constants/tema";
 import { BotaoProps } from "@/types/components/shared";
 import Feather from "@expo/vector-icons/Feather";
 import { Pressable, StyleSheet } from "react-native";
-import { Texto } from "../";
+import Texto from "../Texto";
 
 export default function Botao({
     children,
