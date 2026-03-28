@@ -1,5 +1,5 @@
 import { tema } from "@/constants/tema";
-import { AvatarProps } from "@/types/components/shared/Avatar";
+import { AvatarProps } from "@/types/components/shared";
 import { StyleSheet, View } from "react-native";
 import Texto from "../Texto";
 

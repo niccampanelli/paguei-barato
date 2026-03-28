@@ -1,7 +1,7 @@
 import { Botao, CampoControle } from "@/components/shared";
 import { tema } from "@/constants/tema";
 import { LoginSchema } from "@/schemas/login";
-import { FormularioLoginProps } from "@/types/components/login/FormularioLogin";
+import { FormularioLoginProps } from "@/types/components/login";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "expo-router";
 import { useRef } from "react";

@@ -1,4 +1,4 @@
-import { CampoControleProps } from "@/types/components/shared/Campo/CampoControle";
+import { CampoControleProps } from "@/types/components/shared";
 import { Controller, FieldValues } from "react-hook-form";
 import Campo from "..";
 

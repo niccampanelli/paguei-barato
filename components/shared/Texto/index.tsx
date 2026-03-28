@@ -1,5 +1,5 @@
 import { tema } from "@/constants/tema";
-import { TextoPesoValor, TextoProps } from "@/types/components/shared/Texto";
+import { TextoPesoValor, TextoProps } from "@/types/components/shared";
 import { Platform, Text } from "react-native";
 
 export default function Texto({

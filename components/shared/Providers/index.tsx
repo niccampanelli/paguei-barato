@@ -1,5 +1,5 @@
 import { store } from '@/store';
-import { ProvidersProps } from '@/types/components/shared/Providers';
+import { ProvidersProps } from '@/types/components/shared';
 import { DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
