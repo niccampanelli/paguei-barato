@@ -6,8 +6,8 @@ const initialState: AlertaState = {
     alertas: [
         {
             id: 1,
-            iconeNome: "activity",
-            mensagem: "Esse é um teste de alerta",
+            iconeNome: "alert-triangle",
+            mensagem: "Este produto não está mais disponível",
         }
     ],
 };

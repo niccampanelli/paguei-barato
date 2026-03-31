@@ -1,3 +1,4 @@
+import { tema } from "@/constants/tema";
 import { useAppSelector } from "@/hooks/store";
 import { selectAlerta } from "@/store/alerta/alertaSlice";
 import { AlertaProviderProps } from "@/types/components/shared";
@@ -17,7 +18,7 @@ export default function AlertaProvider({
         <>
             <Caixa
                 tamanho="grande"
-                style={[{ flex: 1, marginBottom: insets.bottom }, estilos.container]}
+                style={[{ flex: 1, marginBottom: insets.bottom + tema.layout.paddings.grande.vertical }, estilos.container]}
             >
                 {alertas.map((alerta) => (
                     <Alerta key={alerta.id} alerta={alerta} />
@@ -38,5 +39,6 @@ const estilos = StyleSheet.create({
         zIndex: 9999,
         display: "flex",
         flexDirection: "column-reverse",
+        pointerEvents: "box-none",
     }
 });
