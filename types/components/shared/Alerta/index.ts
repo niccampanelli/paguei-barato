@@ -1,13 +1,17 @@
+import { TemaCores } from "@/types/contants/tema";
 import Feather from "@expo/vector-icons/Feather";
 
-type AlertaIconeNome = keyof typeof Feather.glyphMap;
+type AlertaPropsAlertaIconeNome = keyof typeof Feather.glyphMap;
 
-interface Alerta {
+type AlertaPropsVariante = keyof Omit<TemaCores, "fundo" | "texto">;
+
+interface AlertaPropsAlerta {
     id: number;
-    iconeNome: AlertaIconeNome;
+    iconeNome: AlertaPropsAlertaIconeNome;
     mensagem: string;
+    variante?: AlertaPropsVariante;
 }
 
 export interface AlertaProps {
-    alerta: Alerta;
+    alerta: AlertaPropsAlerta;
 }

@@ -16,7 +16,7 @@ export const temaClaroCores: TemaCores = {
 	info: {
 		normal: "#f5f5f5",
 		claro: "#fafafa",
-		escuro: "#dfdfdf",
+		escuro: "#808AA2",
 		contraste: "#313C56",
 	},
 	vermelho: {

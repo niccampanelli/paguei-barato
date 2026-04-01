@@ -3,6 +3,7 @@ import { Botao, CaixaScroll, Logo, Texto } from "@/components/shared";
 import { tema } from "@/constants/tema";
 import { useAppDispatch } from "@/hooks/store";
 import { LoginSchema } from "@/schemas/login";
+import { criarAlerta } from "@/store/alerta/alertaThunks";
 import { fazerLogin } from "@/store/usuario/usuarioThunks";
 import { useRouter } from "expo-router";
 import { Image, KeyboardAvoidingView, StyleSheet, View } from "react-native";
@@ -22,6 +23,14 @@ export default function Login() {
         console.error("Erro ao entrar");
         // Aqui você pode adicionar a lógica de tratamento de erro
     }
+
+
+        const add = () => {
+            dispatch(criarAlerta({
+                iconeNome: "check-circle",
+                mensagem: "Produto criado com sucesso!"
+            }));
+        };
 
     return (
         <KeyboardAvoidingView
@@ -62,6 +71,12 @@ export default function Login() {
                     >
                         ou
                     </Texto>
+                                    <Botao
+                                        onPress={add}
+                                        style={{ pointerEvents: "auto" }}
+                                    >
+                                        add
+                                    </Botao>
                     <Botao
                         variante="info"
                         iconeNome="arrow-right"

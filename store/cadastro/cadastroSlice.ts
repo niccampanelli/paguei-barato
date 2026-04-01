@@ -1,4 +1,3 @@
-import { Passo1EmailSchema, Passo2NomeSchema, Passo3SenhaSchema, Passo4EnderecoSchema } from "@/schemas/cadastro";
 import { CadastroState } from "@/types/store/slices/cadastro";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "..";
@@ -25,16 +24,16 @@ const cadastroSlice = createSlice({
     name: 'cadastro',
     initialState,
     reducers: {
-        setPasso1Email: (state, action: PayloadAction<Passo1EmailSchema>) => {
+        setPasso1Email: (state, action: PayloadAction<CadastroState['passo1Email']>) => {
             state.passo1Email = action.payload;
         },
-        setPasso2Nome: (state, action: PayloadAction<Passo2NomeSchema>) => {
+        setPasso2Nome: (state, action: PayloadAction<CadastroState['passo2Nome']>) => {
             state.passo2Nome = action.payload;
         },
-        setPasso3Senha: (state, action: PayloadAction<Passo3SenhaSchema>) => {
+        setPasso3Senha: (state, action: PayloadAction<CadastroState['passo3Senha']>) => {
             state.passo3Senha = action.payload;
         },
-        setPasso4Endereco: (state, action: PayloadAction<Passo4EnderecoSchema>) => {
+        setPasso4Endereco: (state, action: PayloadAction<CadastroState['passo4Endereco']>) => {
             state.passo4Endereco = action.payload;
         },
     },

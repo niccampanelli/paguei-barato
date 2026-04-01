@@ -1,13 +1,13 @@
 import { AlertaState } from "@/types/store/slices/alerta";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "..";
 
 const initialState: AlertaState = {
     alertas: [
         {
             id: 1,
-            iconeNome: "alert-triangle",
-            mensagem: "Este produto não está mais disponível",
+            iconeNome: "check-circle",
+            mensagem: "Produto criado com sucesso!",
         }
     ],
 };
@@ -16,10 +16,10 @@ const alertaSlice = createSlice({
     name: 'alerta',
     initialState,
     reducers: {
-        adicionarAlerta: (state, action) => {
+        adicionarAlerta: (state, action: PayloadAction<AlertaState['alertas'][0]>) => {
             state.alertas.push(action.payload);
         },
-        removerAlerta: (state, action) => {
+        removerAlerta: (state, action: PayloadAction<AlertaState['alertas'][0]['id']>) => {
             state.alertas = state.alertas.filter(alerta => alerta.id !== action.payload);
         },
     },

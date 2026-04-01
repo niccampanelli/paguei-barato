@@ -9,7 +9,7 @@ export const fazerLogin = createAsyncThunk(
         try {
             return await autenticacaoService.fazerLogin(dados);
         }
-        catch (error) {
+        catch {
             rejectWithValue("erro");
         }
     },
@@ -21,7 +21,7 @@ export const retificar = createAsyncThunk(
         try {
             await autenticacaoService.retificar(dados);
         }
-        catch (error) {
+        catch {
             rejectWithValue("erro");
         }
     },

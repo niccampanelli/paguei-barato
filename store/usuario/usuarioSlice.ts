@@ -29,7 +29,7 @@ const usuarioSlice = createSlice({
             }
             return valor;
         },
-        fazerLogout: (_, action: PayloadAction<void>) => {
+        fazerLogout: () => {
             return initialState;
         },
     },
