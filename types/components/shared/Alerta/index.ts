@@ -10,6 +10,8 @@ interface AlertaPropsAlerta {
     iconeNome: AlertaPropsAlertaIconeNome;
     mensagem: string;
     variante?: AlertaPropsVariante;
+    textoAcao?: string;
+    acaoId?: string;
 }
 
 export interface AlertaProps {

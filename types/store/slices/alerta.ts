@@ -10,6 +10,8 @@ interface Alerta {
     mensagem: string;
     iconeNome: AlertaIconeNome;
     variante?: AlertaVariante;
+    textoAcao?: string;
+    acaoId?: string;
 }
 
 export interface AlertaState {

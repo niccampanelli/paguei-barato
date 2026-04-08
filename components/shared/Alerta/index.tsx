@@ -1,7 +1,8 @@
 import { tema } from "@/constants/tema";
+import { useAlertaAcoesContext } from "@/context/alerta/alertaAcoesContext";
 import { AlertaProps } from "@/types/components/shared";
 import Feather from "@expo/vector-icons/Feather";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import Texto from "../Texto";
 
 export default function Alerta({
@@ -9,9 +10,18 @@ export default function Alerta({
         id,
         mensagem,
         iconeNome,
-        variante = "destaque"
+        variante = "destaque",
+        textoAcao,
+        acaoId,
     },
 }: AlertaProps) {
+
+    const { executar } = useAlertaAcoesContext();
+
+    function aoPressionar() {
+        if (acaoId)
+            executar(acaoId);
+    }
 
     return (
         <View style={estilos.alerta}>
@@ -20,12 +30,16 @@ export default function Alerta({
                 size={tema.texto.tamanhos.texto}
                 color={tema.cores[variante].escuro}
             />
-            <Texto
-                style={{ flex: 1 }}
-                cor="claro"
-            >
+            <Texto style={{ flex: 1 }}>
                 {mensagem}
             </Texto>
+            {textoAcao &&
+                <TouchableOpacity onPress={aoPressionar}>
+                    <Texto variante="link">
+                        {textoAcao}
+                    </Texto>
+                </TouchableOpacity>
+            }
         </View>
     )
 }

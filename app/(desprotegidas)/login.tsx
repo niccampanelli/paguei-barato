@@ -1,17 +1,20 @@
 import { FormularioLogin } from "@/components/login";
 import { Botao, CaixaScroll, Logo, Texto } from "@/components/shared";
 import { tema } from "@/constants/tema";
+import { useAlertaAcoesContext } from "@/context/alerta/alertaAcoesContext";
 import { useAppDispatch } from "@/hooks/store";
 import { LoginSchema } from "@/schemas/login";
 import { criarAlerta } from "@/store/alerta/alertaThunks";
 import { fazerLogin } from "@/store/usuario/usuarioThunks";
 import { useRouter } from "expo-router";
+import { useEffect } from "react";
 import { Image, KeyboardAvoidingView, StyleSheet, View } from "react-native";
 
 export default function Login() {
 
     const router = useRouter();
 
+    const { registrar, remover } = useAlertaAcoesContext();
     const dispatch = useAppDispatch();
 
     async function aoEntrar(dados: LoginSchema) {
@@ -25,12 +28,25 @@ export default function Login() {
     }
 
 
-        const add = () => {
-            dispatch(criarAlerta({
-                iconeNome: "check-circle",
-                mensagem: "Produto criado com sucesso!"
-            }));
-        };
+    const add = () => {
+        dispatch(criarAlerta({
+            iconeNome: "check-circle",
+            mensagem: "Produto criado com sucesso!",
+            textoAcao: "Ver produto",
+            acaoId: "acaoExemplo",
+        }));
+    };
+
+    useEffect(() => {
+        registrar("acaoExemplo", () => {
+            router.push("/(protegidas)/(abas)/inicio");
+            
+        });
+
+        return () => {
+            remover("acaoExemplo");
+        }
+    }, []);
 
     return (
         <KeyboardAvoidingView
