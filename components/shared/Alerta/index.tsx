@@ -16,11 +16,11 @@ export default function Alerta({
     },
 }: AlertaProps) {
 
-    const { executar } = useAlertaAcoesContext();
+    const { executarAlertaAcao } = useAlertaAcoesContext();
 
     function aoPressionar() {
         if (acaoId)
-            executar(acaoId);
+            executarAlertaAcao(acaoId);
     }
 
     return (
@@ -50,7 +50,7 @@ const estilos = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         columnGap: tema.layout.espacamentos.medio,
-        backgroundColor: tema.cores.fundo.secundario,
+        backgroundColor: tema.cores.fundo.terciario,
         borderRadius: tema.layout.raioBorda,
         paddingVertical: tema.layout.paddings.botaoGrande.vertical,
         paddingHorizontal: tema.layout.paddings.botaoGrande.horizontal,

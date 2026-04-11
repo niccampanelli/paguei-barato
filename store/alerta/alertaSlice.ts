@@ -3,13 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "..";
 
 const initialState: AlertaState = {
-    alertas: [
-        {
-            id: 1,
-            iconeNome: "check-circle",
-            mensagem: "Produto criado com sucesso!",
-        }
-    ],
+    alertas: [],
 };
 
 const alertaSlice = createSlice({

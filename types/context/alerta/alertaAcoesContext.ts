@@ -1,7 +1,7 @@
 export type AlertaAcao = () => unknown | Promise<unknown>;
 
 export interface IAlertaAcoesContext {
-    registrar: (id: string, callback: AlertaAcao) => void,
-    remover: (id: string) => void,
-    executar: (id: string) => void,
+    registrarAlertaAcao: (id: string, callback: AlertaAcao) => void,
+    removerAlertaAcao: (id: string) => void,
+    executarAlertaAcao: (id: string) => void,
 }

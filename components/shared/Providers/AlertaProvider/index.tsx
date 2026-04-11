@@ -19,20 +19,20 @@ export default function AlertaProvider({
     const insets = useSafeAreaInsets();
     const { alertas } = useAppSelector(selectAlerta);
 
-    function registrar(id: string, callback: AlertaAcao) {
+    function registrarAlertaAcao(id: string, callback: AlertaAcao) {
         alertaAcoesRef.current.set(id, callback);
     }
 
-    function remover(id: string) {
+    function removerAlertaAcao(id: string) {
         alertaAcoesRef.current.delete(id);
     }
 
-    function executar(id: string) {
+    function executarAlertaAcao(id: string) {
         alertaAcoesRef.current.get(id)?.();
     }
 
     return (
-        <AlertaAcoesContext.Provider value={{ registrar, remover, executar }}>
+        <AlertaAcoesContext.Provider value={{ registrarAlertaAcao, removerAlertaAcao, executarAlertaAcao }}>
             <Caixa
                 tamanho="grande"
                 style={[{ flex: 1, marginBottom: insets.bottom + tema.layout.paddings.grande.vertical }, estilos.container]}
@@ -55,7 +55,7 @@ const estilos = StyleSheet.create({
         bottom: 0,
         zIndex: 9999,
         display: "flex",
-        flexDirection: "column",
+        flexDirection: "column-reverse",
         pointerEvents: "box-none",
         rowGap: tema.layout.espacamentos.medio,
     }

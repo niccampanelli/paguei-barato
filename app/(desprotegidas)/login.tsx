@@ -1,20 +1,17 @@
 import { FormularioLogin } from "@/components/login";
 import { Botao, CaixaScroll, Logo, Texto } from "@/components/shared";
 import { tema } from "@/constants/tema";
-import { useAlertaAcoesContext } from "@/context/alerta/alertaAcoesContext";
 import { useAppDispatch } from "@/hooks/store";
 import { LoginSchema } from "@/schemas/login";
 import { criarAlerta } from "@/store/alerta/alertaThunks";
 import { fazerLogin } from "@/store/usuario/usuarioThunks";
 import { useRouter } from "expo-router";
-import { useEffect } from "react";
 import { Image, KeyboardAvoidingView, StyleSheet, View } from "react-native";
 
 export default function Login() {
 
     const router = useRouter();
 
-    const { registrar, remover } = useAlertaAcoesContext();
     const dispatch = useAppDispatch();
 
     async function aoEntrar(dados: LoginSchema) {
@@ -23,30 +20,12 @@ export default function Login() {
     }
 
     function aoEntrarInvalido() {
-        console.error("Erro ao entrar");
-        // Aqui você pode adicionar a lógica de tratamento de erro
-    }
-
-
-    const add = () => {
         dispatch(criarAlerta({
-            iconeNome: "check-circle",
-            mensagem: "Produto criado com sucesso!",
-            textoAcao: "Ver produto",
-            acaoId: "acaoExemplo",
+            iconeNome: "x-circle",
+            variante: "vermelho",
+            mensagem: "Informações de login inválidas",
         }));
-    };
-
-    useEffect(() => {
-        registrar("acaoExemplo", () => {
-            router.push("/(protegidas)/(abas)/inicio");
-            
-        });
-
-        return () => {
-            remover("acaoExemplo");
-        }
-    }, []);
+    }
 
     return (
         <KeyboardAvoidingView
@@ -87,12 +66,6 @@ export default function Login() {
                     >
                         ou
                     </Texto>
-                                    <Botao
-                                        onPress={add}
-                                        style={{ pointerEvents: "auto" }}
-                                    >
-                                        add
-                                    </Botao>
                     <Botao
                         variante="info"
                         iconeNome="arrow-right"
