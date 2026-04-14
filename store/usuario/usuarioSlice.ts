@@ -36,6 +36,7 @@ const usuarioSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(fazerLogin.fulfilled, (state, action) => {
             const { payload } = action;
+            state.id = payload!.id;
             state.nome = payload!.nome;
             state.sobrenome = payload!.sobrenome;
             state.nomeCompleto = payload!.nome + " " + payload!.sobrenome;

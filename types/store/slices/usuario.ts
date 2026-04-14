@@ -1,4 +1,5 @@
 export interface UsuarioState {
+    id?: string;
     nome: string;
     sobrenome: string;
     nomeCompleto: string;

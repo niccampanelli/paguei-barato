@@ -23,13 +23,15 @@ export default function Fim() {
         const resposta = await autenticacaoService.cadastrar(dadosCadastro);
         setCarregando(false);
         dispatch(setUsuario({
-            nome: dadosCadastro.passo2Nome.nome,
-            sobrenome: dadosCadastro.passo2Nome.sobrenome,
-            nomeCompleto: dadosCadastro.passo2Nome.nome + " " + dadosCadastro.passo2Nome.sobrenome,
-            email: dadosCadastro.passo1Email.email,
+            id: resposta.id,
+            nome: resposta.nome,
+            sobrenome: resposta.sobrenome,
+            nomeCompleto: resposta.nome + " " + resposta.sobrenome,
+            email: resposta.email,
             logado: true,
-            cep: dadosCadastro.passo4Endereco.cep,
-        }))
+            cep: resposta.cep,
+            token: resposta.token,
+        }));
     }
 
     function aoAvancar() {
