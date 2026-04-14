@@ -55,6 +55,9 @@ export default function FormularioLogin({
                     proximo: senhaCampoRef,
                     placeholder: "Escreva o seu e-mail",
                     iconeNome: "at-sign",
+                    keyboardType: "email-address",
+                    inputMode: "email",
+                    autoCapitalize: "none",
                 }}
             />
             <CampoControle
@@ -65,6 +68,7 @@ export default function FormularioLogin({
                     secureTextEntry: true,
                     placeholder: "Insira a sua senha",
                     iconeNome: "lock",
+                    autoCapitalize: "none",
                 }}
             />
             <View style={estilos.acoesPrincipais}>

@@ -17,6 +17,7 @@ export default function Login() {
     async function aoEntrar(dados: LoginSchema) {
         try {
             await dispatch(fazerLogin(dados)).unwrap();
+            router.push("/(protegidas)/(abas)/inicio");
         }
         catch (erro: any) {
             dispatch(criarAlerta({
