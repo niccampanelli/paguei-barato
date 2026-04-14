@@ -5,7 +5,6 @@ import LoginResponse from "@/types/services/autenticacao/LoginResponse";
 import RetificarRequest from "@/types/services/autenticacao/RetificarRequest";
 
 async function fazerLogin(dados: LoginRequest) {
-    await new Promise(resolve => setTimeout(resolve, 4000));
     return {
         nome: "Lorem",
         sobrenome: "Ipsum",

@@ -15,8 +15,16 @@ export default function Login() {
     const dispatch = useAppDispatch();
 
     async function aoEntrar(dados: LoginSchema) {
-        await dispatch(fazerLogin(dados));
-        router.push("/(protegidas)/(abas)/inicio");
+        try {
+            await dispatch(fazerLogin(dados)).unwrap();
+        }
+        catch (erro: any) {
+            dispatch(criarAlerta({
+                iconeNome: "x-circle",
+                variante: "vermelho",
+                mensagem: erro,
+            }));
+        }
     }
 
     function aoEntrarInvalido() {

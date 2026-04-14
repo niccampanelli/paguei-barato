@@ -9,8 +9,8 @@ export const fazerLogin = createAsyncThunk(
         try {
             return await autenticacaoService.fazerLogin(dados);
         }
-        catch {
-            rejectWithValue("erro");
+        catch (erro: any) {
+            return rejectWithValue(erro);
         }
     },
 );
