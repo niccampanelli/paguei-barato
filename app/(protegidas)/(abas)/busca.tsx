@@ -1,8 +1,23 @@
+import { ItemBusca } from "@/components/busca";
 import { Botao, Caixa, CaixaScroll, Campo, Texto } from "@/components/shared";
 import { tema } from "@/constants/tema";
+import buscaService from "@/services/buscaService";
+import { BuscaItemResponse } from "@/types/services/busca/BuscaResponse";
+import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 export default function Busca() {
+
+    const [termosBusca, setTermosBusca] = useState("");
+    const [resultados, setResultados] = useState<BuscaItemResponse[]>([]);
+    const [totalResultados, setTotalResultados] = useState(0);
+
+    useEffect(() => {
+        buscaService.buscar(termosBusca).then((resposta) => {
+            setResultados(resposta.itens);
+            setTotalResultados(resposta.total);
+        });
+    }, []);
 
     return (
         <View>
@@ -20,7 +35,7 @@ export default function Busca() {
                 />
                 <View style={estilos.subtitulo}>
                     <Texto variante="subtitulo">
-                        Resultados
+                        {totalResultados} - Resultados
                     </Texto>
                     <Botao
                         variante="info"
@@ -34,6 +49,13 @@ export default function Busca() {
             <CaixaScroll
                 tamanho="grande"
             >
+                {resultados.map((item) => (
+                    <ItemBusca
+                        key={item.id}
+                        titulo={item.nome}
+                        subtitulo={"marca" in item ? item.marca : item.categoria}
+                    />
+                ))}
             </CaixaScroll>
         </View>
     )
