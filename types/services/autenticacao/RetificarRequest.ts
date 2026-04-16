@@ -1,4 +1,4 @@
-export default interface RetificarRequest {
+export interface RetificarRequest {
     nome?: string;
     sobrenome?: string;
     email?: string;

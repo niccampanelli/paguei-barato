@@ -1,7 +1,7 @@
-import { IAlertaAcoesContext } from "@/types/context/alerta/alertaAcoesContext";
+import { AlertaAcoesContextType } from "@/types/context/alerta/alertaAcoesContext";
 import { createContext, useContext } from "react";
 
-export const AlertaAcoesContext = createContext<IAlertaAcoesContext>({
+export const AlertaAcoesContext = createContext<AlertaAcoesContextType>({
     registrarAlertaAcao: () => { },
     removerAlertaAcao: () => { },
     executarAlertaAcao: () => { }

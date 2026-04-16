@@ -2,7 +2,7 @@ import { FormularioLogin } from "@/components/login";
 import { Botao, CaixaScroll, Logo, Texto } from "@/components/shared";
 import { tema } from "@/constants/tema";
 import { useAppDispatch } from "@/hooks/store";
-import { LoginSchema } from "@/schemas/login";
+import { LoginSchemaType } from "@/schemas/login";
 import { criarAlerta } from "@/store/alerta/alertaThunks";
 import { fazerLogin } from "@/store/usuario/usuarioThunks";
 import { useRouter } from "expo-router";
@@ -14,7 +14,7 @@ export default function Login() {
 
     const dispatch = useAppDispatch();
 
-    async function aoEntrar(dados: LoginSchema) {
+    async function aoEntrar(dados: LoginSchemaType) {
         try {
             await dispatch(fazerLogin(dados)).unwrap();
             router.push("/(protegidas)/(abas)/inicio");

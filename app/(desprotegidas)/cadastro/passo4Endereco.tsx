@@ -1,7 +1,7 @@
 import { Botao, Caixa, CaixaScroll, CampoControle, Texto } from "@/components/shared";
 import { tema } from "@/constants/tema";
 import { useAppDispatch } from "@/hooks/store";
-import { Passo4EnderecoSchema } from "@/schemas/cadastro";
+import { Passo4EnderecoSchema, Passo4EnderecoSchemaType } from "@/schemas/cadastro";
 import { setPasso4Endereco } from "@/store/cadastro/cadastroSlice";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "expo-router";
@@ -20,7 +20,7 @@ export default function Passo4Endereco() {
             isValid,
             isDirty,
         }
-    } = useForm<Passo4EnderecoSchema>({
+    } = useForm<Passo4EnderecoSchemaType>({
         defaultValues: {
             cep: undefined,
         },
@@ -33,7 +33,7 @@ export default function Passo4Endereco() {
         router.back();
     }
 
-    function aoAvancar(dados: Passo4EnderecoSchema) {
+    function aoAvancar(dados: Passo4EnderecoSchemaType) {
         dispatch(setPasso4Endereco(dados));
         router.navigate("/(desprotegidas)/cadastro/fim");
     }

@@ -8,4 +8,4 @@ export const LoginSchema = z.object({
         .nonempty('Informe a senha')
 });
 
-export type LoginSchema = z.infer<typeof LoginSchema>;
+export type LoginSchemaType = z.infer<typeof LoginSchema>;

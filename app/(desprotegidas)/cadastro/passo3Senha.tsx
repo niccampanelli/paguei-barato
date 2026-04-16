@@ -1,7 +1,7 @@
 import { Botao, Caixa, CaixaScroll, CampoControle, Texto } from "@/components/shared";
 import { tema } from "@/constants/tema";
 import { useAppDispatch } from "@/hooks/store";
-import { Passo3SenhaSchema } from "@/schemas/cadastro";
+import { Passo3SenhaSchema, Passo3SenhaSchemaType } from "@/schemas/cadastro";
 import { setPasso3Senha } from "@/store/cadastro/cadastroSlice";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "expo-router";
@@ -23,7 +23,7 @@ export default function Passo3Senha() {
             isValid,
             isDirty,
         }
-    } = useForm<Passo3SenhaSchema>({
+    } = useForm<Passo3SenhaSchemaType>({
         defaultValues: {
             senha: "",
             senhaConfirma: "",
@@ -37,7 +37,7 @@ export default function Passo3Senha() {
         router.back();
     }
 
-    function aoAvancar(dados: Passo3SenhaSchema) {
+    function aoAvancar(dados: Passo3SenhaSchemaType) {
         dispatch(setPasso3Senha(dados));
         router.navigate("/(desprotegidas)/cadastro/passo4Endereco");
     }

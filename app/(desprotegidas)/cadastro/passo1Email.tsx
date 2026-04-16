@@ -1,7 +1,7 @@
 import { Botao, Caixa, CaixaScroll, CampoControle, Texto } from "@/components/shared";
 import { tema } from "@/constants/tema";
 import { useAppDispatch } from "@/hooks/store";
-import { Passo1EmailSchema } from "@/schemas/cadastro";
+import { Passo1EmailSchema, Passo1EmailSchemaType } from "@/schemas/cadastro";
 import { setPasso1Email } from "@/store/cadastro/cadastroSlice";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "expo-router";
@@ -23,7 +23,7 @@ export default function Passo1Email() {
             isValid,
             isDirty,
         }
-    } = useForm<Passo1EmailSchema>({
+    } = useForm<Passo1EmailSchemaType>({
         defaultValues: {
             email: "",
             emailConfirma: "",
@@ -37,7 +37,7 @@ export default function Passo1Email() {
         router.back();
     }
 
-    function aoAvancar(dados: Passo1EmailSchema) {
+    function aoAvancar(dados: Passo1EmailSchemaType) {
         dispatch(setPasso1Email(dados));
         router.navigate("/(desprotegidas)/cadastro/passo2Nome");
     }

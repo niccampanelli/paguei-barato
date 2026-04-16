@@ -1,7 +1,7 @@
 import { Botao, Caixa, CaixaScroll, CampoControle, Texto } from "@/components/shared";
 import { tema } from "@/constants/tema";
 import { useAppDispatch } from "@/hooks/store";
-import { Passo2NomeSchema } from "@/schemas/cadastro";
+import { Passo2NomeSchema, Passo2NomeSchemaType } from "@/schemas/cadastro";
 import { setPasso2Nome } from "@/store/cadastro/cadastroSlice";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "expo-router";
@@ -23,7 +23,7 @@ export default function Passo2Nome() {
             isValid,
             isDirty,
         }
-    } = useForm<Passo2NomeSchema>({
+    } = useForm<Passo2NomeSchemaType>({
         defaultValues: {
             nome: "",
             sobrenome: "",
@@ -37,7 +37,7 @@ export default function Passo2Nome() {
         router.back();
     }
 
-    function aoAvancar(dados: Passo2NomeSchema) {
+    function aoAvancar(dados: Passo2NomeSchemaType) {
         dispatch(setPasso2Nome(dados));
         router.navigate("/(desprotegidas)/cadastro/passo3Senha");
     }

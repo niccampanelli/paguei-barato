@@ -1,4 +1,4 @@
-export default interface CadastrarResponse {
+export interface CadastrarResponse {
     id: string;
     nome: string;
     sobrenome: string;

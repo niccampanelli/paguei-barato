@@ -54,9 +54,9 @@ export const CadastroSchema = z.object({
     passo4Endereco: Passo4EnderecoSchema,
 });
 
-export type Passo1EmailSchema = z.infer<typeof Passo1EmailSchema>;
-export type Passo2NomeSchema = z.infer<typeof Passo2NomeSchema>;
-export type Passo3SenhaSchema = z.infer<typeof Passo3SenhaSchema>;
-export type Passo4EnderecoSchema = z.infer<typeof Passo4EnderecoSchema>;
+export type Passo1EmailSchemaType = z.infer<typeof Passo1EmailSchema>;
+export type Passo2NomeSchemaType = z.infer<typeof Passo2NomeSchema>;
+export type Passo3SenhaSchemaType = z.infer<typeof Passo3SenhaSchema>;
+export type Passo4EnderecoSchemaType = z.infer<typeof Passo4EnderecoSchema>;
 
-export type CadastroSchema = z.infer<typeof CadastroSchema>;
+export type CadastroSchemaType = z.infer<typeof CadastroSchema>;

@@ -3,18 +3,10 @@ import { tema } from "@/constants/tema";
 import { obterIniciais } from "@/helpers/usuario";
 import { useAppDispatch, useAppSelector } from "@/hooks/store";
 import { fazerLogout, selectUsuario } from "@/store/usuario/usuarioSlice";
+import { ItemMenu } from "@/types/app/protegidas/abas/menu/menu";
 import Feather from "@expo/vector-icons/Feather";
 import { useRouter } from "expo-router";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-
-type ItemMenuLogado = "logado" | "deslogado" | "ambos";
-
-interface ItemMenu {
-    icone: keyof typeof Feather.glyphMap;
-    nome: string;
-    aoPressionar: () => void;
-    itemMenuLogado?: ItemMenuLogado;
-}
 
 export default function Menu() {
 

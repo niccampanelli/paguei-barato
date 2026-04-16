@@ -1,5 +1,5 @@
 import { tema } from "@/constants/tema";
-import { AlertaAcoesContext } from "@/context/alerta/alertaAcoesContext";
+import { AlertaAcoesContextType } from "@/context/alerta/alertaAcoesContext";
 import { useAppSelector } from "@/hooks/store";
 import { selectAlerta } from "@/store/alerta/alertaSlice";
 import { AlertaProviderProps } from "@/types/components/shared";
@@ -32,7 +32,7 @@ export default function AlertaProvider({
     }
 
     return (
-        <AlertaAcoesContext.Provider value={{ registrarAlertaAcao, removerAlertaAcao, executarAlertaAcao }}>
+        <AlertaAcoesContextType.Provider value={{ registrarAlertaAcao, removerAlertaAcao, executarAlertaAcao }}>
             <Caixa
                 tamanho="grande"
                 style={[{ flex: 1, marginBottom: insets.bottom + tema.layout.paddings.grande.vertical }, estilos.container]}
@@ -42,7 +42,7 @@ export default function AlertaProvider({
                 ))}
             </Caixa>
             {children}
-        </AlertaAcoesContext.Provider>
+        </AlertaAcoesContextType.Provider>
     );
 }
 

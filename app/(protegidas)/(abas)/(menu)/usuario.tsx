@@ -1,7 +1,7 @@
 import { Botao, Caixa, CaixaScroll, Campo, CampoControle, Texto } from "@/components/shared";
 import { tema } from "@/constants/tema";
 import { useAppDispatch, useAppSelector } from "@/hooks/store";
-import { UsuarioSchema } from "@/schemas/usuario";
+import { UsuarioSchema, UsuarioSchemaType } from "@/schemas/usuario";
 import { selectUsuario } from "@/store/usuario/usuarioSlice";
 import { retificar } from "@/store/usuario/usuarioThunks";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -26,7 +26,7 @@ export default function Usuario() {
             isValid,
             isDirty,
         }
-    } = useForm<UsuarioSchema>({
+    } = useForm<UsuarioSchemaType>({
         defaultValues: {
             nome: usuario.nome,
             sobrenome: usuario.sobrenome,
@@ -37,7 +37,7 @@ export default function Usuario() {
         reValidateMode: "onChange",
     });
 
-    async function aoSubmeter(dados: UsuarioSchema) {
+    async function aoSubmeter(dados: UsuarioSchemaType) {
         await dispatch(retificar(dados));
         reset(dados);
     }

@@ -17,4 +17,4 @@ export const UsuarioSchema = z.object({
         .optional(),
 });
 
-export type UsuarioSchema = z.infer<typeof UsuarioSchema>;
+export type UsuarioSchemaType = z.infer<typeof UsuarioSchema>;

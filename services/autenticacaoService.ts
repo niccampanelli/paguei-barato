@@ -1,8 +1,4 @@
-import { CadastroSchema } from "@/schemas/cadastro";
-import CadastrarResponse from "@/types/services/autenticacao/CadastrarResponse";
-import LoginRequest from "@/types/services/autenticacao/LoginRequest";
-import LoginResponse from "@/types/services/autenticacao/LoginResponse";
-import RetificarRequest from "@/types/services/autenticacao/RetificarRequest";
+import { CadastrarRequest, CadastrarResponse, LoginRequest, LoginResponse, RetificarRequest } from "@/types/services/autenticacao";
 
 async function fazerLogin(dados: LoginRequest): Promise<LoginResponse> {
     return {
@@ -15,14 +11,14 @@ async function fazerLogin(dados: LoginRequest): Promise<LoginResponse> {
     };
 }
 
-async function cadastrar(dados: CadastroSchema): Promise<CadastrarResponse> {
+async function cadastrar(dados: CadastrarRequest): Promise<CadastrarResponse> {
     await new Promise(resolve => setTimeout(resolve, 10000));
     return {
         id: "a432b1c4-5678-90ab-cdef-1234567890ab",
-        nome: dados.passo2Nome.nome,
-        sobrenome: dados.passo2Nome.sobrenome,
-        email: dados.passo1Email.email,
-        cep: dados.passo4Endereco.cep,
+        nome: dados.nome,
+        sobrenome: dados.sobrenome,
+        email: dados.email,
+        cep: dados.cep,
         token: "U98H873y2aIJJI20qwrm1s4mL894",
     };
 }
