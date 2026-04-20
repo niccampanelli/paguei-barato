@@ -2,30 +2,38 @@ import { BuscaResponse } from "@/types/services/busca/BuscaResponse";
 
 async function buscar(termos: string): Promise<BuscaResponse> {
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    return {
-        itens: [
+    const itens = [
             {
                 id: 1,
-                nome: "Produto 1",
-                marca: "Marca A",
+                nome: "Molho de Tomate Tradicional Sachê 300g",
+                marca: "Predilecta",
+                imagemUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkAeMjQdfqzZazkxvAy24ax3xBrqTeMC45tQ&s"
             },
             {
                 id: 2,
-                nome: "Loja 1",
-                categoria: "Categoria X",
+                nome: "Mini Extra Artur Alvim",
+                categoria: "Minimercado",
+                imagemUrl: "https://static.ifood-static.com.br/image/upload/t_low/logosgde/1357da3a-258a-4132-9243-d6226fd1021c/202510021307_25AA.png"
             },
             {
                 id: 3,
-                nome: "Produto 2",
-                marca: "Marca B",
+                nome: "Sabão em Pó 800g",
+                marca: "Brilhante",
+                imagemUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1XfaipTqKs0fHdU4L4X2WtL1Aud_77MTOJQ&s"
             },
             {
                 id: 4,
-                nome: "Loja 2",
-                categoria: "Categoria Y",
+                nome: "Abacate 1kg",
+                marca: "Oba",
+                imagemUrl: "https://images.tcdn.com.br/img/img_prod/450860/muda_de_abacate_avocado_fuerte_enxertada_1394_1_20190611093630.jpg"
             }
-        ],
-        total: 25,
+        ];
+
+    return {
+        itens: itens.filter((item) =>
+            item.nome.toLowerCase().includes(termos.toLowerCase())
+        ),
+        total: itens.length,
     };
 }
 

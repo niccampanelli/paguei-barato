@@ -1,9 +1,10 @@
 import { ItemBusca } from "@/components/busca";
 import { Botao, Caixa, CaixaScroll, Campo, Texto } from "@/components/shared";
 import { tema } from "@/constants/tema";
+import useDebounce from "@/hooks/useDebounce";
 import buscaService from "@/services/buscaService";
 import { BuscaItemResponse } from "@/types/services/busca/BuscaResponse";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 export default function Busca() {
@@ -12,12 +13,14 @@ export default function Busca() {
     const [resultados, setResultados] = useState<BuscaItemResponse[]>([]);
     const [totalResultados, setTotalResultados] = useState(0);
 
-    useEffect(() => {
+    useDebounce(() =>
         buscaService.buscar(termosBusca).then((resposta) => {
             setResultados(resposta.itens);
             setTotalResultados(resposta.total);
-        });
-    }, []);
+        }),
+        1000,
+        [termosBusca]
+    );
 
     return (
         <View>
@@ -32,6 +35,8 @@ export default function Busca() {
                     placeholder="Busque produtos e mercados..."
                     iconeNome="search"
                     iconeLado="direita"
+                    value={termosBusca}
+                    onChangeText={setTermosBusca}
                 />
                 <View style={estilos.subtitulo}>
                     <Texto variante="subtitulo">
@@ -48,12 +53,14 @@ export default function Busca() {
             </Caixa>
             <CaixaScroll
                 tamanho="grande"
+                contentContainerStyle={estilos.lista}
             >
                 {resultados.map((item) => (
                     <ItemBusca
                         key={item.id}
                         titulo={item.nome}
                         subtitulo={"marca" in item ? item.marca : item.categoria}
+                        imagemUrl={item.imagemUrl}
                     />
                 ))}
             </CaixaScroll>
@@ -68,5 +75,9 @@ const estilos = StyleSheet.create({
     subtitulo: {
         flexDirection: "row",
         justifyContent: "space-between",
-    }
+    },
+    lista: {
+        paddingTop: 0,
+        rowGap: tema.layout.espacamentos.grande,
+    },
 });

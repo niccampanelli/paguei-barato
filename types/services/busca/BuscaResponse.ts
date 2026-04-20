@@ -1,16 +1,18 @@
 export interface BuscaProdutoResponse {
-    id: number;
-    nome: string;
     marca: string;
 }
 
 export interface BuscaLojaResponse {
-    id: number;
-    nome: string;
     categoria: string;
 }
 
-export type BuscaItemResponse = BuscaProdutoResponse | BuscaLojaResponse;
+export interface BuscaComumResponse {
+    id: number;
+    nome: string;
+    imagemUrl: string;
+}
+
+export type BuscaItemResponse = (BuscaProdutoResponse | BuscaLojaResponse) & BuscaComumResponse;
 
 export interface BuscaResponse {
     itens: BuscaItemResponse[];
