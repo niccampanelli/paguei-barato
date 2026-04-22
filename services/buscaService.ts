@@ -1,11 +1,11 @@
 import { BuscaResponse } from "@/types/services/busca/BuscaResponse";
 
 async function buscar(termos: string): Promise<BuscaResponse> {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 0));
     const itens = [
             {
                 id: 1,
-                nome: "Molho de Tomate Tradicional Sachê 300g",
+                nome: "Molho de Tomate Sabor Tradicional Embalagem Sachê 300g",
                 marca: "Predilecta",
                 imagemUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkAeMjQdfqzZazkxvAy24ax3xBrqTeMC45tQ&s"
             },
@@ -26,14 +26,16 @@ async function buscar(termos: string): Promise<BuscaResponse> {
                 nome: "Abacate 1kg",
                 marca: "Oba",
                 imagemUrl: "https://images.tcdn.com.br/img/img_prod/450860/muda_de_abacate_avocado_fuerte_enxertada_1394_1_20190611093630.jpg"
-            }
+            },
         ];
 
+    const itensFiltrados = itens.filter((item) =>
+        item.nome.toLowerCase().includes(termos.toLowerCase())
+    );
+
     return {
-        itens: itens.filter((item) =>
-            item.nome.toLowerCase().includes(termos.toLowerCase())
-        ),
-        total: itens.length,
+        itens: itensFiltrados,
+        total: itensFiltrados.length,
     };
 }
 

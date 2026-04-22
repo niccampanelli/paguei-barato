@@ -19,8 +19,13 @@ export default function ItemBusca({
                 contentFit="contain"
                 style={estilos.imagem}
             />
-            <View>
-                <Texto variante="subtitulo">
+            <View style={estilos.conteudo}>
+                <Texto
+                    variante="link"
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                    style={estilos.titulo}
+                >
                     {titulo}
                 </Texto>
                 <Texto variante="legenda">
@@ -35,6 +40,13 @@ const estilos = StyleSheet.create({
     item: {
         flexDirection: "row",
         columnGap: tema.layout.espacamentos.medio,
+    },
+    conteudo: {
+        flex: 1,
+        minWidth: 0,
+    },
+    titulo: {
+        flexShrink: 1,
     },
     imagem: {
         width: tema.texto.tamanhos.subtitulo * 2,

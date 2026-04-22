@@ -13,12 +13,27 @@ export default function Busca() {
     const [resultados, setResultados] = useState<BuscaItemResponse[]>([]);
     const [totalResultados, setTotalResultados] = useState(0);
 
-    useDebounce(() =>
+    function obterTextoResultados() {
+        if (!termosBusca.trim())
+            return "Buscas recentes";
+        if (totalResultados === 0)
+            return "Nenhum resultado encontrado";
+        return `${totalResultados} ${totalResultados === 1 ? "resultado" : "resultados"}`;
+    }
+
+    useDebounce(() => {
+        if (!termosBusca.trim()) {
+            setResultados([]);
+            setTotalResultados(0);
+            return;
+        }
+
         buscaService.buscar(termosBusca).then((resposta) => {
             setResultados(resposta.itens);
             setTotalResultados(resposta.total);
-        }),
-        1000,
+        })
+    },
+        750,
         [termosBusca]
     );
 
@@ -39,8 +54,8 @@ export default function Busca() {
                     onChangeText={setTermosBusca}
                 />
                 <View style={estilos.subtitulo}>
-                    <Texto variante="subtitulo">
-                        {totalResultados} - Resultados
+                    <Texto variante="texto">
+                        {obterTextoResultados()}
                     </Texto>
                     <Botao
                         variante="info"
@@ -75,6 +90,7 @@ const estilos = StyleSheet.create({
     subtitulo: {
         flexDirection: "row",
         justifyContent: "space-between",
+        alignItems: "center",
     },
     lista: {
         paddingTop: 0,
