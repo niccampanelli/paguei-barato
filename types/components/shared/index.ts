@@ -7,6 +7,7 @@ export { CaixaScrollProps } from "./Caixa/CaixaScroll";
 export { CampoProps } from "./Campo";
 export { CampoControleProps } from "./Campo/CampoControle";
 export { LogoProps } from "./Logo";
+export { PilulaProps } from "./Pilula";
 export { ProvidersProps } from "./Providers";
 export { AlertaProviderProps } from "./Providers/AlertaProvider";
 export { TextoPesoValor, TextoProps, TextoPropsPesos, TextoPropsTamanhos, TextoPropsVariantes } from "./Texto";

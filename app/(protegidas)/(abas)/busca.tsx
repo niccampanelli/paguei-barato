@@ -1,5 +1,5 @@
 import { ItemBusca } from "@/components/busca";
-import { Botao, Caixa, CaixaScroll, Campo, Texto } from "@/components/shared";
+import { Botao, Caixa, CaixaScroll, Campo, Pilula, Texto } from "@/components/shared";
 import { tema } from "@/constants/tema";
 import useDebounce from "@/hooks/useDebounce";
 import buscaService from "@/services/buscaService";
@@ -12,6 +12,8 @@ export default function Busca() {
     const [termosBusca, setTermosBusca] = useState("");
     const [resultados, setResultados] = useState<BuscaItemResponse[]>([]);
     const [totalResultados, setTotalResultados] = useState(0);
+
+    const [selecionado, setSelecionado] = useState(false);
 
     function obterTextoResultados() {
         if (!termosBusca.trim())
@@ -66,6 +68,13 @@ export default function Busca() {
                     </Botao>
                 </View>
             </Caixa>
+            <View>
+                <Pilula
+                    titulo="Teste"
+                    selecionada={selecionado}
+                    onPress={() => setSelecionado(!selecionado)}
+                />
+            </View>
             <CaixaScroll
                 tamanho="grande"
                 contentContainerStyle={estilos.lista}

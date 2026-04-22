@@ -7,6 +7,7 @@ export { default as CaixaScroll } from "./Caixa/CaixaScroll";
 export { default as Campo } from "./Campo";
 export { default as CampoControle } from "./Campo/CampoControle";
 export { default as Logo } from "./Logo";
+export { default as Pilula } from "./Pilula";
 export { default as Providers } from "./Providers";
 export { default as Texto } from "./Texto";
 
