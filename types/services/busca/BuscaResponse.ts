@@ -14,7 +14,13 @@ export interface BuscaComumResponse {
 
 export type BuscaItemResponse = (BuscaProdutoResponse | BuscaLojaResponse) & BuscaComumResponse;
 
+export interface BuscaFiltroResponse {
+    tipo: string;
+    opcoes: string[];
+}
+
 export interface BuscaResponse {
     itens: BuscaItemResponse[];
     total: number;
+    filtros: BuscaFiltroResponse[];
 }
