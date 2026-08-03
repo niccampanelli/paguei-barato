@@ -89,5 +89,5 @@ eas build --platform ios     # Build iOS
 ## Documentação Relacionada
 - [Diagrama de Telas](docs/telas.drawio.svg)
 - [Expo Docs](https://docs.expo.dev/)
-- [Redux Toolkit](https://redux-toolkit.js.org/)</content>
-<parameter name="filePath">/mnt/Midia/Desktop/Projetos/paguei-barato/AGENTS.md
+- [Redux Toolkit](https://redux-toolkit.js.org/)
+- [AGENTS.md](/mnt/Midia/Desktop/Projetos/paguei-barato/AGENTS.md)
