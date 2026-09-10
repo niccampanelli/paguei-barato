@@ -8,10 +8,14 @@ export default function ItemBusca({
     titulo,
     subtitulo,
     imagemUrl,
+    aoPressionar,
 }: ItemBuscaProps) {
 
     return (
-        <TouchableOpacity style={estilos.item}>
+        <TouchableOpacity
+            style={estilos.item}
+            onPress={aoPressionar}
+        >
             <Image
                 source={{
                     uri: imagemUrl,

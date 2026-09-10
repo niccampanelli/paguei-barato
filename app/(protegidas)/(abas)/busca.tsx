@@ -5,10 +5,13 @@ import useDebounce from "@/hooks/useDebounce";
 import buscaService from "@/services/buscaService";
 import { BuscaFiltrosSelecionados } from "@/types/app/protegidas/abas/busca";
 import { BuscaFiltroResponse, BuscaItemResponse } from "@/types/services/busca/BuscaResponse";
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 export default function Busca() {
+
+    const router = useRouter();
 
     const [termosBusca, setTermosBusca] = useState("");
     const [resultados, setResultados] = useState<BuscaItemResponse[]>([]);
@@ -120,6 +123,7 @@ export default function Busca() {
                         titulo={item.nome}
                         subtitulo={"marca" in item ? item.marca : item.categoria}
                         imagemUrl={item.imagemUrl}
+                        aoPressionar={() => router.push(`/(protegidas)/produto/${0}`)}
                     />
                 ))}
             </CaixaScroll>
