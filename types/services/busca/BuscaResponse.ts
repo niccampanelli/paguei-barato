@@ -1,8 +1,10 @@
 export interface BuscaProdutoResponse {
+    tipo: "produto";
     marca: string;
 }
 
 export interface BuscaLojaResponse {
+    tipo: "loja";
     categoria: string;
 }
 

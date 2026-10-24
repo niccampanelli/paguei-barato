@@ -121,9 +121,13 @@ export default function Busca() {
                     <ItemBusca
                         key={item.id}
                         titulo={item.nome}
-                        subtitulo={"marca" in item ? item.marca : item.categoria}
+                        subtitulo={item.tipo === "produto" ? item.marca : item.categoria}
                         imagemUrl={item.imagemUrl}
-                        aoPressionar={() => router.push(`/(protegidas)/produto/${0}`)}
+                        aoPressionar={() => router.push(
+                            item.tipo === "produto"
+                                ? `/(protegidas)/produto/${item.id}`
+                                : `/(protegidas)/mercado/${item.id}`
+                        )}
                     />
                 ))}
             </CaixaScroll>
