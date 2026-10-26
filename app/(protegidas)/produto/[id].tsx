@@ -26,14 +26,14 @@ export default function Produto() {
         }
     }, []);
 
-    const Detalhe = function () {
+    function Detalhe({ titulo, valor }: { titulo: string; valor: string }) {
         return (
             <View style={estilos.detalhe}>
                 <Texto peso="link">
-                    Marca:
+                    {titulo}:
                 </Texto>
                 <Texto>
-                    Predilecta
+                    {valor}
                 </Texto>
             </View>
         );
@@ -70,11 +70,13 @@ export default function Produto() {
                     </Texto>
                     <View style={estilos.detalhes}>
                         <Texto variante="subtitulo">Detalhes do produto</Texto>
-                        <Detalhe />
-                        <Detalhe />
-                        <Detalhe />
-                        <Detalhe />
-                        <Detalhe />
+                        {Object.entries(produto?.atributos ?? {}).map(([titulo, valor]) => (
+                            <Detalhe
+                                key={titulo}
+                                titulo={titulo}
+                                valor={valor}
+                            />
+                        ))}
                     </View>
                 </View>
             </CaixaScroll>
