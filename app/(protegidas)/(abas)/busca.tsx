@@ -138,7 +138,7 @@ export default function Busca() {
                         subtitulo={item.tipo}
                         imagemUrl={item.imagemUrl}
                         aoPressionar={() => router.push(
-                            item.tipo === "produto"
+                            item.tipo === "Produto"
                                 ? `/(protegidas)/produto/${item.itemId}`
                                 : `/(protegidas)/mercado/${item.itemId}`
                         )}

@@ -6,10 +6,12 @@ import { Image } from "expo-image";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function Produto() {
 
     const router = useRouter();
+    const insets = useSafeAreaInsets();
     const { id } = useLocalSearchParams();
 
     const [produto, setProduto] = useState<ProdutoDetalhesResponse | null>(null);
@@ -39,6 +41,9 @@ export default function Produto() {
         );
     }
 
+    if (!produto)
+        return null;
+
     return (
         <View style={{ flex: 1 }}>
             <Botao
@@ -46,7 +51,10 @@ export default function Produto() {
                 tamanho="botaoPequeno"
                 iconeLado="esquerda"
                 iconeNome="arrow-left"
-                style={{ marginRight: "auto" }}
+                style={[estilos.botao, {
+                    top: insets.top + tema.layout.paddings.grande.vertical,
+                    left: tema.layout.paddings.grande.horizontal
+                }]}
                 onPress={() => router.back()}
             >
                 Voltar
@@ -60,23 +68,30 @@ export default function Produto() {
                     style={estilos.imagem}
                 />
                 <View style={estilos.conteudo}>
-                    <View>
-                        <Pilula
-                            titulo="Molhos e condimentos"
-                        />
+                    <View style={estilos.categorias}>
+                        {produto.categorias.map((categoria) => (
+                            <Pilula
+                                key={categoria.id}
+                                titulo={categoria.nome}
+                            />
+                        ))}
                     </View>
                     <Texto variante="titulo">
-                        {produto?.nome}
+                        {produto.nome}
                     </Texto>
                     <View style={estilos.detalhes}>
                         <Texto variante="subtitulo">Detalhes do produto</Texto>
-                        {Object.entries(produto?.atributos ?? {}).map(([titulo, valor]) => (
+                        {Object.entries(produto.atributos ?? {}).map(([titulo, valor]) => (
                             <Detalhe
                                 key={titulo}
                                 titulo={titulo}
                                 valor={valor}
                             />
                         ))}
+                        <Detalhe
+                            titulo="Marca"
+                            valor={produto.marca.nome}
+                        />
                     </View>
                 </View>
             </CaixaScroll>
@@ -85,15 +100,23 @@ export default function Produto() {
 }
 
 const estilos = StyleSheet.create({
+    botao: {
+        position: "absolute",
+        zIndex: 1,
+    },
     imagem: {
         width: "100%",
         height: 200,
-        backgroundColor: "#ff0000",
     },
     conteudo: {
         display: "flex",
         flexDirection: "column",
         gap: tema.layout.espacamentos.medio,
+    },
+    categorias: {
+        display: "flex",
+        flexDirection: "row",
+        gap: tema.layout.espacamentos.pequeno,
     },
     detalhes: {
         display: "flex",
