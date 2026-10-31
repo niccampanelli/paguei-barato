@@ -4,7 +4,8 @@ import { tema } from "@/constants/tema";
 import useDebounce from "@/hooks/useDebounce";
 import buscaService from "@/services/buscaService";
 import { BuscaFiltrosSelecionados } from "@/types/app/protegidas/abas/busca";
-import { BuscaFiltroResponse, BuscaItemResponse } from "@/types/services/busca/BuscaResponse";
+import { BuscaParametros } from "@/types/services/busca/BuscaRequest";
+import { BuscaFacetaResponse, BuscaItemResponse } from "@/types/services/busca/BuscaResponse";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -15,7 +16,7 @@ export default function Busca() {
 
     const [termosBusca, setTermosBusca] = useState("");
     const [resultados, setResultados] = useState<BuscaItemResponse[]>([]);
-    const [filtrosDisponiveis, setFiltrosDisponiveis] = useState<BuscaFiltroResponse[]>([]);
+    const [filtrosDisponiveis, setFiltrosDisponiveis] = useState<BuscaFacetaResponse[]>([]);
     const [filtrosSelecionados, setFiltrosSelecionados] = useState<BuscaFiltrosSelecionados>({});
     const [totalResultados, setTotalResultados] = useState(0);
 
@@ -49,6 +50,21 @@ export default function Busca() {
         });
     }
 
+    function obterParametrosBusca(): BuscaParametros {
+        return {
+            termo: termosBusca.trim() || undefined,
+            tipo: filtrosSelecionados.Tipo?.[0],
+            categoria: filtrosSelecionados.Categoria?.[0],
+            ramo: filtrosSelecionados.Ramo?.[0],
+            cidade: filtrosSelecionados.Cidade?.[0],
+            estado: filtrosSelecionados.Estado?.[0],
+            bairro: filtrosSelecionados.Bairro?.[0],
+            marca: filtrosSelecionados.Marca?.[0],
+            pagina: 1,
+            tamanhoPagina: 20,
+        };
+    }
+
     useDebounce(() => {
         if (!termosBusca.trim()) {
             setResultados([]);
@@ -58,10 +74,10 @@ export default function Busca() {
             return;
         }
 
-        buscaService.buscar(termosBusca, filtrosSelecionados).then((resposta) => {
+        buscaService.buscar(obterParametrosBusca()).then((resposta) => {
             setResultados(resposta.itens);
-            setTotalResultados(resposta.total);
-            setFiltrosDisponiveis(resposta.filtros);
+            setTotalResultados(resposta.totalItens);
+            setFiltrosDisponiveis(resposta.facetas);
         })
     },
         750,
@@ -103,14 +119,12 @@ export default function Busca() {
                 horizontal
             >
                 {filtrosDisponiveis.map((filtro) =>
-                    filtro.opcoes.map((opcao) => (
-                        <Pilula
-                            key={opcao}
-                            titulo={opcao}
-                            selecionada={filtrosSelecionados[filtro.tipo]?.includes(opcao) ?? false}
-                            onPress={() => adicionarFiltro(filtro.tipo, opcao)}
-                        />
-                    ))
+                    <Pilula
+                        key={`${filtro.faceta}-${filtro.valor}`}
+                        titulo={filtro.valor}
+                        selecionada={filtrosSelecionados[filtro.faceta]?.includes(filtro.valor) ?? false}
+                        onPress={() => adicionarFiltro(filtro.faceta, filtro.valor)}
+                    />
                 )}
             </CaixaScroll>
             <CaixaScroll
@@ -119,14 +133,14 @@ export default function Busca() {
             >
                 {resultados.map((item) => (
                     <ItemBusca
-                        key={item.id}
+                        key={item.itemId}
                         titulo={item.nome}
-                        subtitulo={item.tipo === "produto" ? item.marca : item.categoria}
+                        subtitulo={item.tipo}
                         imagemUrl={item.imagemUrl}
                         aoPressionar={() => router.push(
                             item.tipo === "produto"
-                                ? `/(protegidas)/produto/${item.id}`
-                                : `/(protegidas)/mercado/${item.id}`
+                                ? `/(protegidas)/produto/${item.itemId}`
+                                : `/(protegidas)/mercado/${item.itemId}`
                         )}
                     />
                 ))}
