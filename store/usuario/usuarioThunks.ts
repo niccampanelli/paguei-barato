@@ -4,7 +4,6 @@ import { limparSessao, obterRefreshToken, obterUsuario, salvarSessao } from "@/s
 import { LoginRequest } from "@/types/services/autenticacao/LoginRequest";
 import { RetificarRequest } from "@/types/services/autenticacao/RetificarRequest";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { fazerLogout } from "./usuarioSlice";
 
 function mensagemErro(erro: unknown): string {
     return erro instanceof Error ? erro.message : "Não foi possível autenticar. Tente novamente.";
@@ -80,7 +79,7 @@ export const renovarSessao = createAsyncThunk(
 
 export const sairDaConta = createAsyncThunk(
     "usuario/sair",
-    async (_, { dispatch }) => {
+    async () => {
         const refreshToken = await obterRefreshToken();
         try {
             if (refreshToken)
@@ -90,7 +89,6 @@ export const sairDaConta = createAsyncThunk(
         } finally {
             definirAccessToken(null);
             await limparSessao();
-            dispatch(fazerLogout());
         }
     },
 );
