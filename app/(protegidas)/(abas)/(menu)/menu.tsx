@@ -1,9 +1,9 @@
 import { Avatar, Caixa, CaixaScroll, Texto } from "@/components/shared";
-import { useAuthContext } from "@/context/auth/authContext";
 import { tema } from "@/constants/tema";
 import { obterIniciais } from "@/helpers/usuario";
-import { useAppSelector } from "@/hooks/store";
+import { useAppDispatch, useAppSelector } from "@/hooks/store";
 import { selectUsuario } from "@/store/usuario/usuarioSlice";
+import { sairDaConta as sairDaContaThunk } from "@/store/usuario/usuarioThunks";
 import { ItemMenu } from "@/types/app/protegidas/abas/menu/menu";
 import Feather from "@expo/vector-icons/Feather";
 import { useRouter } from "expo-router";
@@ -14,10 +14,10 @@ export default function Menu() {
     const router = useRouter();
     
     const usuario = useAppSelector(selectUsuario);
-    const { sair } = useAuthContext();
+    const dispatch = useAppDispatch();
 
     async function sairDaConta() {
-        await sair();
+        await dispatch(sairDaContaThunk());
         router.replace("/(desprotegidas)/login");
     }
 

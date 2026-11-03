@@ -7,4 +7,5 @@ export interface UsuarioState {
     logado: boolean;
     cep?: string;
     token?: string;
+    status: "carregando" | "autenticado" | "nao_autenticado";
 }

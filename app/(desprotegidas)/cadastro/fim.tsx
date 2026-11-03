@@ -1,9 +1,9 @@
 import { Botao, Caixa, CaixaScroll, Texto } from "@/components/shared";
 import { tema } from "@/constants/tema";
 import { useAppDispatch, useAppSelector } from "@/hooks/store";
-import { useAuthContext } from "@/context/auth/authContext";
 import { selectCadastro } from "@/store/cadastro/cadastroSlice";
 import { criarAlerta } from "@/store/alerta/alertaThunks";
+import { cadastrarUsuario } from "@/store/usuario/usuarioThunks";
 import { useRouter } from "expo-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -13,7 +13,6 @@ export default function Fim() {
     const router = useRouter();
 
     const dadosCadastro = useAppSelector(selectCadastro);
-    const { cadastrar: cadastrarUsuario } = useAuthContext();
     const dispatch = useAppDispatch();
 
     const [carregando, setCarregando] = useState(false);
@@ -29,26 +28,26 @@ export default function Fim() {
         setFalhaCadastro(false);
 
         try {
-            await cadastrarUsuario({
+            await dispatch(cadastrarUsuario({
                 nome: dadosCadastro.passo2Nome.nome,
                 sobrenome: dadosCadastro.passo2Nome.sobrenome,
                 email: dadosCadastro.passo1Email.email,
                 senha: dadosCadastro.passo3Senha.senha,
                 cep: dadosCadastro.passo4Endereco.cep,
-            });
+            })).unwrap();
         } catch (erro) {
             setFalhaCadastro(true);
             dispatch(criarAlerta({
                 iconeNome: "x-circle",
                 variante: "vermelho",
-                mensagem: erro instanceof Error
-                    ? erro.message
+                mensagem: typeof erro === "string"
+                    ? erro
                     : "Não foi possível concluir o cadastro. Tente novamente.",
             }));
         } finally {
             setCarregando(false);
         }
-    }, [cadastrarUsuario, dadosCadastro, dispatch]);
+    }, [dadosCadastro, dispatch]);
 
     useEffect(() => {
         if (cadastroIniciado.current)

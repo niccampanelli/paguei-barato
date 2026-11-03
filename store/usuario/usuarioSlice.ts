@@ -1,7 +1,7 @@
 import { UsuarioState } from "@/types/store/slices/usuario";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "..";
-import { fazerLogin, retificar } from "./usuarioThunks";
+import { cadastrarUsuario, fazerLogin, renovarSessao, restaurarSessao, retificar, sairDaConta } from "./usuarioThunks";
 
 const initialState: UsuarioState = {
     nome: "Anônimo",
@@ -11,40 +11,51 @@ const initialState: UsuarioState = {
     logado: false,
     cep: undefined,
     token: undefined,
+    status: "carregando",
 };
 
 const usuarioSlice = createSlice({
     name: 'cadastro',
     initialState,
     reducers: {
-        setUsuario: (_, action: PayloadAction<UsuarioState>) => {
-            const { payload } = action;
-            const valor: UsuarioState = {
-                ...action.payload,
-                nome: payload.nome.trim(),
-                sobrenome: payload.sobrenome.trim(),
-                nomeCompleto: payload.nome.trim() + " " + payload.sobrenome.trim(),
-                email: payload.email?.trim(),
-                cep: payload.cep?.trim(),
-            }
-            return valor;
-        },
-        fazerLogout: () => {
-            return initialState;
+        fazerLogout: (state) => {
+            Object.assign(state, { ...initialState, status: "nao_autenticado" });
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(fazerLogin.fulfilled, (state, action) => {
-            const { payload } = action;
-            state.id = payload!.id;
-            state.nome = payload!.nome;
-            state.sobrenome = payload!.sobrenome;
-            state.nomeCompleto = payload!.nome + " " + payload!.sobrenome;
-            state.email = payload!.email;
-            state.cep = payload!.cep;
-            state.token = payload!.token;
+        const aplicarResposta = (state: UsuarioState, resposta: { id: string; nome: string; sobrenome?: string; email: string; cep?: string; token: string }) => {
+            state.id = resposta.id;
+            state.nome = resposta.nome;
+            state.sobrenome = resposta.sobrenome ?? "";
+            state.nomeCompleto = [resposta.nome, resposta.sobrenome].filter(Boolean).join(" ");
+            state.email = resposta.email;
+            state.cep = resposta.cep;
+            state.token = resposta.token;
             state.logado = true;
+            state.status = "autenticado";
+        };
+
+        builder.addCase(fazerLogin.fulfilled, (state, action) => aplicarResposta(state, action.payload));
+        builder.addCase(cadastrarUsuario.fulfilled, (state, action) => aplicarResposta(state, action.payload));
+        builder.addCase(restaurarSessao.pending, (state) => { state.status = "carregando"; });
+        builder.addCase(restaurarSessao.fulfilled, (state, action) => {
+            if (action.payload)
+                aplicarResposta(state, action.payload);
+            else {
+                Object.assign(state, { ...initialState, status: "nao_autenticado" });
+            }
         });
+        builder.addCase(restaurarSessao.rejected, (state) => {
+            Object.assign(state, { ...initialState, status: "nao_autenticado" });
+        });
+        builder.addCase(renovarSessao.fulfilled, (state, action) => {
+            if (action.payload)
+                aplicarResposta(state, action.payload);
+        });
+        builder.addCase(renovarSessao.rejected, (state) => {
+            Object.assign(state, { ...initialState, status: "nao_autenticado" });
+        });
+        builder.addCase(sairDaConta.fulfilled, () => ({ ...initialState, status: "nao_autenticado" }));
 
         builder.addCase(retificar.fulfilled, (state, action) => {
             const { meta: { arg } } = action;
@@ -58,7 +69,6 @@ const usuarioSlice = createSlice({
 });
 
 export const {
-    setUsuario,
     fazerLogout,
 } = usuarioSlice.actions;
 

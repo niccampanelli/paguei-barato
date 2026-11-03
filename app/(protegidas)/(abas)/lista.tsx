@@ -1,12 +1,13 @@
 import { Botao, Caixa, Texto } from "@/components/shared";
-import { useAuthContext } from "@/context/auth/authContext";
+import { useAppSelector } from "@/hooks/store";
+import { selectUsuario } from "@/store/usuario/usuarioSlice";
 import { definirIntencaoDeAutenticacao } from "@/services/authIntent";
 import { useRouter } from "expo-router";
 import { View } from "react-native";
 
 export default function Lista() {
     const router = useRouter();
-    const { status } = useAuthContext();
+    const { status } = useAppSelector(selectUsuario);
 
     if (status !== "autenticado") {
         return (

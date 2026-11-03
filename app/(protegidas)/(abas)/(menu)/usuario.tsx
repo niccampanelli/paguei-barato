@@ -1,5 +1,4 @@
 import { Botao, Caixa, CaixaScroll, Campo, CampoControle, Texto } from "@/components/shared";
-import { useAuthContext } from "@/context/auth/authContext";
 import { definirIntencaoDeAutenticacao } from "@/services/authIntent";
 import { tema } from "@/constants/tema";
 import { useAppDispatch, useAppSelector } from "@/hooks/store";
@@ -16,11 +15,10 @@ import { StyleSheet, View } from "react-native";
 export default function Usuario() {
 
     const router = useRouter();
-    const { status } = useAuthContext();
-
     const dispatch = useAppDispatch();
 
     const usuario = useAppSelector(selectUsuario);
+    const { status } = usuario;
 
     const {
         control,

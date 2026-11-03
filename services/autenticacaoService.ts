@@ -26,7 +26,7 @@ interface UsuarioResponse {
     cep?: string;
 }
 
-export async function fazerLogin(dados: LoginRequest): Promise<LoginResponse> {
+async function fazerLogin(dados: LoginRequest): Promise<LoginResponse> {
     const request: UsuarioAutenticarRequest = {
         email: dados.email,
         senha: dados.senha,
@@ -36,7 +36,7 @@ export async function fazerLogin(dados: LoginRequest): Promise<LoginResponse> {
     return resposta.data;
 }
 
-export async function cadastrar(dados: CadastrarRequest): Promise<CadastrarResponse> {
+async function cadastrar(dados: CadastrarRequest): Promise<CadastrarResponse> {
     const request: UsuarioCadastrarRequest = {
         nome: [dados.nome, dados.sobrenome].filter(Boolean).join(" "),
         email: dados.email,
@@ -56,18 +56,18 @@ export async function cadastrar(dados: CadastrarRequest): Promise<CadastrarRespo
     }));
 }
 
-export async function revalidarToken(refreshToken: string): Promise<RevalidarTokenResponse> {
+async function revalidarToken(refreshToken: string): Promise<RevalidarTokenResponse> {
     const resposta = await api.post<RevalidarTokenResponse>("/api/Usuario/revalidar-token", {
         refreshToken,
     });
     return resposta.data;
 }
 
-export async function revogarToken(refreshToken: string): Promise<void> {
+async function revogarToken(refreshToken: string): Promise<void> {
     await api.post("/api/Usuario/revogar-token", { refreshToken });
 }
 
-export async function retificar(dados: RetificarRequest): Promise<void> {
+async function retificar(dados: RetificarRequest): Promise<void> {
     throw new Error("A API ainda nao expoe o endpoint de atualizacao de usuario.");
 }
 

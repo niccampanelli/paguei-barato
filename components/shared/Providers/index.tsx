@@ -4,7 +4,7 @@ import { DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 import AlertaProvider from './AlertaProvider';
-import AuthProvider from './AuthProvider';
+import AuthInitializer from './AuthInitializer';
 
 export default function Providers({
     children
@@ -14,11 +14,10 @@ export default function Providers({
         <SafeAreaProvider>
             <Provider store={store}>
                 <ThemeProvider value={DefaultTheme}>
-                    <AuthProvider>
-                        <AlertaProvider>
-                            {children}
-                        </AlertaProvider>
-                    </AuthProvider>
+                    <>
+                        <AuthInitializer />
+                        <AlertaProvider>{children}</AlertaProvider>
+                    </>
                 </ThemeProvider>
             </Provider>
         </SafeAreaProvider>
