@@ -2,9 +2,10 @@ import { FormularioLogin } from "@/components/login";
 import { Botao, CaixaScroll, Logo, Texto } from "@/components/shared";
 import { tema } from "@/constants/tema";
 import { useAppDispatch } from "@/hooks/store";
+import { useAuthContext } from "@/context/auth/authContext";
+import { consumirIntencaoDeAutenticacao } from "@/services/authIntent";
 import { LoginSchemaType } from "@/schemas/login";
 import { criarAlerta } from "@/store/alerta/alertaThunks";
-import { fazerLogin } from "@/store/usuario/usuarioThunks";
 import { useRouter } from "expo-router";
 import { Image, KeyboardAvoidingView, StyleSheet, View } from "react-native";
 
@@ -13,11 +14,12 @@ export default function Login() {
     const router = useRouter();
 
     const dispatch = useAppDispatch();
+    const { entrar } = useAuthContext();
 
     async function aoEntrar(dados: LoginSchemaType) {
         try {
-            await dispatch(fazerLogin(dados)).unwrap();
-            router.push("/(protegidas)/(abas)/inicio");
+            await entrar(dados.email, dados.senha);
+            router.push(consumirIntencaoDeAutenticacao() ?? "/(protegidas)/(abas)/inicio");
         }
         catch (erro: any) {
             dispatch(criarAlerta({

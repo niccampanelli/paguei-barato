@@ -1,6 +1,6 @@
 import autenticacaoService from "@/services/autenticacaoService";
-import LoginRequest from "@/types/services/autenticacao/LoginRequest";
-import RetificarRequest from "@/types/services/autenticacao/RetificarRequest";
+import { LoginRequest } from "@/types/services/autenticacao/LoginRequest";
+import { RetificarRequest } from "@/types/services/autenticacao/RetificarRequest";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const fazerLogin = createAsyncThunk(
@@ -21,8 +21,12 @@ export const retificar = createAsyncThunk(
         try {
             await autenticacaoService.retificar(dados);
         }
-        catch {
-            rejectWithValue("erro");
+        catch (erro) {
+            return rejectWithValue(
+                erro instanceof Error
+                    ? erro.message
+                    : "Não foi possível atualizar os dados do usuário.",
+            );
         }
     },
 );

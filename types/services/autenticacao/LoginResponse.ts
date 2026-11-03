@@ -1,8 +1,3 @@
-export interface LoginResponse {
-    id: string;
-    nome: string;
-    sobrenome: string;
-    email: string;
-    cep?: string;
-    token: string;
-}
+import { AuthResponse } from "./AuthSession";
+
+export type LoginResponse = AuthResponse;

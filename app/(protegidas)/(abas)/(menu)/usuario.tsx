@@ -1,17 +1,22 @@
 import { Botao, Caixa, CaixaScroll, Campo, CampoControle, Texto } from "@/components/shared";
+import { useAuthContext } from "@/context/auth/authContext";
+import { definirIntencaoDeAutenticacao } from "@/services/authIntent";
 import { tema } from "@/constants/tema";
 import { useAppDispatch, useAppSelector } from "@/hooks/store";
 import { UsuarioSchema, UsuarioSchemaType } from "@/schemas/usuario";
 import { selectUsuario } from "@/store/usuario/usuarioSlice";
 import { retificar } from "@/store/usuario/usuarioThunks";
+import { criarAlerta } from "@/store/alerta/alertaThunks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "expo-router";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { StyleSheet, View } from "react-native";
 
 export default function Usuario() {
 
     const router = useRouter();
+    const { status } = useAuthContext();
 
     const dispatch = useAppDispatch();
 
@@ -37,9 +42,29 @@ export default function Usuario() {
         reValidateMode: "onChange",
     });
 
+    useEffect(() => {
+        if (status === "nao_autenticado") {
+            definirIntencaoDeAutenticacao("/(protegidas)/(abas)/(menu)/usuario");
+            router.replace("/(desprotegidas)/login");
+        }
+    }, [router, status]);
+
+    if (status !== "autenticado")
+        return null;
+
     async function aoSubmeter(dados: UsuarioSchemaType) {
-        await dispatch(retificar(dados));
-        reset(dados);
+        try {
+            await dispatch(retificar(dados)).unwrap();
+            reset(dados);
+        } catch (erro) {
+            dispatch(criarAlerta({
+                iconeNome: "x-circle",
+                variante: "vermelho",
+                mensagem: typeof erro === "string"
+                    ? erro
+                    : "Não foi possível atualizar seus dados. Tente novamente.",
+            }));
+        }
     }
 
     function aoSubmeterInvalido() {

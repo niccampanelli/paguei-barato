@@ -1,8 +1,9 @@
 import { Avatar, Caixa, CaixaScroll, Texto } from "@/components/shared";
+import { useAuthContext } from "@/context/auth/authContext";
 import { tema } from "@/constants/tema";
 import { obterIniciais } from "@/helpers/usuario";
-import { useAppDispatch, useAppSelector } from "@/hooks/store";
-import { fazerLogout, selectUsuario } from "@/store/usuario/usuarioSlice";
+import { useAppSelector } from "@/hooks/store";
+import { selectUsuario } from "@/store/usuario/usuarioSlice";
 import { ItemMenu } from "@/types/app/protegidas/abas/menu/menu";
 import Feather from "@expo/vector-icons/Feather";
 import { useRouter } from "expo-router";
@@ -12,13 +13,12 @@ export default function Menu() {
 
     const router = useRouter();
     
-    const dispatch = useAppDispatch();
-
     const usuario = useAppSelector(selectUsuario);
+    const { sair } = useAuthContext();
 
-    function sair() {
-        dispatch(fazerLogout());
-        router.navigate("/(desprotegidas)/login");
+    async function sairDaConta() {
+        await sair();
+        router.replace("/(desprotegidas)/login");
     }
 
     const menus: ItemMenu[] = [
@@ -43,7 +43,7 @@ export default function Menu() {
         {
             icone: "log-out",
             nome: "Sair",
-            aoPressionar: sair,
+            aoPressionar: sairDaConta,
             itemMenuLogado: "logado"
         },
         {

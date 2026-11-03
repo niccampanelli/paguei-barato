@@ -1,46 +1,62 @@
 import { Botao, Caixa, CaixaScroll, Texto } from "@/components/shared";
 import { tema } from "@/constants/tema";
 import { useAppDispatch, useAppSelector } from "@/hooks/store";
-import autenticacaoService from "@/services/autenticacaoService";
+import { useAuthContext } from "@/context/auth/authContext";
 import { selectCadastro } from "@/store/cadastro/cadastroSlice";
-import { setUsuario } from "@/store/usuario/usuarioSlice";
+import { criarAlerta } from "@/store/alerta/alertaThunks";
 import { useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 export default function Fim() {
 
     const router = useRouter();
 
+    const dadosCadastro = useAppSelector(selectCadastro);
+    const { cadastrar: cadastrarUsuario } = useAuthContext();
     const dispatch = useAppDispatch();
 
-    const dadosCadastro = useAppSelector(selectCadastro);
-
     const [carregando, setCarregando] = useState(false);
-
-    async function cadastrar() {
-        setCarregando(true);
-        const resposta = await autenticacaoService.cadastrar(dadosCadastro);
-        setCarregando(false);
-        dispatch(setUsuario({
-            id: resposta.id,
-            nome: resposta.nome,
-            sobrenome: resposta.sobrenome,
-            nomeCompleto: resposta.nome + " " + resposta.sobrenome,
-            email: resposta.email,
-            logado: true,
-            cep: resposta.cep,
-            token: resposta.token,
-        }));
-    }
+    const [falhaCadastro, setFalhaCadastro] = useState(false);
+    const cadastroIniciado = useRef(false);
 
     function aoAvancar() {
         router.push("/(protegidas)/(abas)/inicio");
     }
 
+    const realizarCadastro = useCallback(async () => {
+        setCarregando(true);
+        setFalhaCadastro(false);
+
+        try {
+            await cadastrarUsuario({
+                nome: dadosCadastro.passo2Nome.nome,
+                sobrenome: dadosCadastro.passo2Nome.sobrenome,
+                email: dadosCadastro.passo1Email.email,
+                senha: dadosCadastro.passo3Senha.senha,
+                cep: dadosCadastro.passo4Endereco.cep,
+            });
+        } catch (erro) {
+            setFalhaCadastro(true);
+            dispatch(criarAlerta({
+                iconeNome: "x-circle",
+                variante: "vermelho",
+                mensagem: erro instanceof Error
+                    ? erro.message
+                    : "Não foi possível concluir o cadastro. Tente novamente.",
+            }));
+        } finally {
+            setCarregando(false);
+        }
+    }, [cadastrarUsuario, dadosCadastro, dispatch]);
+
     useEffect(() => {
-        cadastrar();
-    }, []);
+        if (cadastroIniciado.current)
+            return;
+
+        cadastroIniciado.current = true;
+        realizarCadastro();
+    }, [realizarCadastro]);
 
     return (
         <View style={{ flex: 1 }}>
@@ -60,16 +76,21 @@ export default function Fim() {
                 <Texto variante="texto">
                     Se você precisar modificar alguma informação do seu cadastro, vá até as configurações da conta.
                 </Texto>
+                {falhaCadastro &&
+                    <Texto variante="texto">
+                        Não foi possível concluir seu cadastro. Tente novamente.
+                    </Texto>
+                }
             </CaixaScroll>
             <Caixa tamanho="grande" style={{ flexDirection: "row" }}>
                 <Botao
                     variante="destaque"
                     disabled={carregando}
-                    onPress={aoAvancar}
+                    onPress={falhaCadastro ? realizarCadastro : aoAvancar}
                     style={{ flex: 1 }}
-                    iconeNome="arrow-right-circle"
+                    iconeNome={falhaCadastro ? "refresh-cw" : "arrow-right-circle"}
                 >
-                    Começar a economizar!
+                    {falhaCadastro ? "Tentar novamente" : "Começar a economizar!"}
                 </Botao>
             </Caixa>
         </View>

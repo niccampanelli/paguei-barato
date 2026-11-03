@@ -1,6 +1,6 @@
 import { Botao, CampoControle } from "@/components/shared";
 import { tema } from "@/constants/tema";
-import { LoginSchema } from "@/schemas/login";
+import { LoginSchema, LoginSchemaType } from "@/schemas/login";
 import { FormularioLoginProps } from "@/types/components/login";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "expo-router";
@@ -26,7 +26,7 @@ export default function FormularioLogin({
             isValid,
             isDirty,
         }
-    } = useForm<LoginSchema>({
+    } = useForm<LoginSchemaType>({
         defaultValues: {
             email: "",
             senha: ""
@@ -36,12 +36,12 @@ export default function FormularioLogin({
         reValidateMode: "onChange",
     });
 
-    async function aoSubmeterFormulario(dados: LoginSchema) {
+    async function aoSubmeterFormulario(dados: LoginSchemaType) {
         await aoSubmeter(dados);
         reset({});
     }
 
-    async function aoSubmeterFormularioInvalido(erros: FieldErrors<LoginSchema>) {
+    async function aoSubmeterFormularioInvalido(erros: FieldErrors<LoginSchemaType>) {
         await aoSubmeterInvalido?.(erros);
         reset({});
     }

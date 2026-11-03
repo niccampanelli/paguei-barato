@@ -3,4 +3,4 @@ export { CadastrarResponse } from "./CadastrarResponse";
 export { LoginRequest } from "./LoginRequest";
 export { LoginResponse } from "./LoginResponse";
 export { RetificarRequest } from "./RetificarRequest";
-
+export { AuthResponse, AuthStatus, AuthTokens, AuthUser } from "./AuthSession";
