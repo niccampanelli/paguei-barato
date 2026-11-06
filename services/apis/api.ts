@@ -12,6 +12,9 @@ const api = axios.create({
 let refreshPromise: Promise<string | null> | null = null;
 
 api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+    if (!config.requiresAuth)
+        return config;
+
     const token = obterAccessToken();
     if (token)
         config.headers.Authorization = `Bearer ${token}`;
@@ -22,13 +25,12 @@ api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 api.interceptors.response.use(
     (response) => response,
     async (error: AxiosError) => {
-        const request = error.config as (InternalAxiosRequestConfig & { _retry?: boolean }) | undefined;
+        const request = error.config as
+            | (InternalAxiosRequestConfig & { _retry?: boolean })
+            | undefined;
         const status = error.response?.status;
-        const isAuthRequest = request?.url?.includes("/api/Usuario/autenticar")
-            || request?.url?.includes("/api/Usuario/revalidar-token")
-            || request?.url?.includes("/api/Usuario/revogar-token");
 
-        if (status !== 401 || !request || request._retry || isAuthRequest)
+        if (status !== 401 || !request || !request.requiresAuth || request._retry)
             return Promise.reject(error);
 
         request._retry = true;

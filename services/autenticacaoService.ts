@@ -64,7 +64,11 @@ async function revalidarToken(refreshToken: string): Promise<RevalidarTokenRespo
 }
 
 async function revogarToken(refreshToken: string): Promise<void> {
-    await api.post("/api/Usuario/revogar-token", { refreshToken });
+    await api.post(
+        "/api/Usuario/revogar-token",
+        { refreshToken },
+        { requiresAuth: true },
+    );
 }
 
 async function retificar(dados: RetificarRequest): Promise<void> {
