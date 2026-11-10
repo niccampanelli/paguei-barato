@@ -3,7 +3,10 @@ import { definirAccessToken } from "@/services/authSession";
 import { limparSessao, obterRefreshToken, obterUsuario, salvarSessao } from "@/services/authStorage";
 import { LoginRequest } from "@/types/services/autenticacao/LoginRequest";
 import { RetificarRequest } from "@/types/services/autenticacao/RetificarRequest";
+import { AuthResponse } from "@/types/services/autenticacao/AuthSession";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+
+let restauracaoEmAndamento: Promise<AuthResponse | null> | null = null;
 
 function mensagemErro(erro: unknown): string {
     return erro instanceof Error ? erro.message : "Não foi possível autenticar. Tente novamente.";
@@ -41,6 +44,16 @@ export const restaurarSessao = createAsyncThunk(
     "usuario/restaurarSessao",
     async (_, { rejectWithValue }) => {
         try {
+            restauracaoEmAndamento ??= restaurarSessaoInternamente();
+            return await restauracaoEmAndamento;
+        } catch (erro) {
+            return rejectWithValue(mensagemErro(erro));
+        }
+    },
+);
+
+async function restaurarSessaoInternamente(): Promise<AuthResponse | null> {
+        try {
             const refreshToken = await obterRefreshToken();
             const usuario = await obterUsuario();
             if (!refreshToken || !usuario)
@@ -52,10 +65,11 @@ export const restaurarSessao = createAsyncThunk(
             return { ...usuario, ...tokens };
         } catch (erro) {
             await limparSessao();
-            return rejectWithValue(mensagemErro(erro));
+            throw erro;
+        } finally {
+            restauracaoEmAndamento = null;
         }
-    },
-);
+}
 
 export const renovarSessao = createAsyncThunk(
     "usuario/renovarSessao",

@@ -1,6 +1,7 @@
 let accessToken: string | null = null;
 let refreshAccessTokenHandler: (() => Promise<string | null>) | null = null;
 let clearSessionHandler: (() => Promise<void>) | null = null;
+let refreshPromise: Promise<string | null> | null = null;
 
 export function obterAccessToken(): string | null {
     return accessToken;
@@ -22,7 +23,11 @@ export async function renovarAccessToken(): Promise<string | null> {
     if (!refreshAccessTokenHandler)
         return null;
 
-    return refreshAccessTokenHandler();
+    refreshPromise ??= refreshAccessTokenHandler().finally(() => {
+        refreshPromise = null;
+    });
+
+    return refreshPromise;
 }
 
 export async function encerrarSessao(): Promise<void> {

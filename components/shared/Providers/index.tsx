@@ -5,6 +5,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 import AlertaProvider from './AlertaProvider';
 import AuthInitializer from './AuthInitializer';
+import AuthRouteGuard from './AuthRouteGuard';
 
 export default function Providers({
     children
@@ -16,7 +17,9 @@ export default function Providers({
                 <ThemeProvider value={DefaultTheme}>
                     <>
                         <AuthInitializer />
-                        <AlertaProvider>{children}</AlertaProvider>
+                        <AuthRouteGuard>
+                            <AlertaProvider>{children}</AlertaProvider>
+                        </AuthRouteGuard>
                     </>
                 </ThemeProvider>
             </Provider>

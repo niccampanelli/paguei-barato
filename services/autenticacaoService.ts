@@ -57,9 +57,11 @@ async function cadastrar(dados: CadastrarRequest): Promise<CadastrarResponse> {
 }
 
 async function revalidarToken(refreshToken: string): Promise<RevalidarTokenResponse> {
-    const resposta = await api.post<RevalidarTokenResponse>("/api/Usuario/revalidar-token", {
-        refreshToken,
-    });
+    const resposta = await api.post<RevalidarTokenResponse>(
+        "/api/Usuario/revalidar-token",
+        { refreshToken },
+        { requiresAuth: false },
+    );
     return resposta.data;
 }
 

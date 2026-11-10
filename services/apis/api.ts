@@ -9,8 +9,6 @@ const api = axios.create({
     baseURL: process.env.EXPO_PUBLIC_API_URL,
 });
 
-let refreshPromise: Promise<string | null> | null = null;
-
 api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
     if (!config.requiresAuth)
         return config;
@@ -34,11 +32,7 @@ api.interceptors.response.use(
             return Promise.reject(error);
 
         request._retry = true;
-        refreshPromise ??= renovarAccessToken().finally(() => {
-            refreshPromise = null;
-        });
-
-        const token = await refreshPromise;
+        const token = await renovarAccessToken();
         if (!token) {
             await encerrarSessao();
             return Promise.reject(error);
