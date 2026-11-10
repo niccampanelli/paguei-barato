@@ -107,11 +107,12 @@ const estilos = StyleSheet.create({
     imagem: {
         width: "100%",
         height: 200,
+        marginBottom: tema.layout.espacamentos.medio,
     },
     conteudo: {
         display: "flex",
         flexDirection: "column",
-        gap: tema.layout.espacamentos.medio,
+        gap: tema.layout.espacamentos.grande,
     },
     categorias: {
         display: "flex",
