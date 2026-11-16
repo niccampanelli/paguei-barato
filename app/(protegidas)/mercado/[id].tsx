@@ -6,10 +6,14 @@ import { Image } from "expo-image";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function Mercado() {
+
     const router = useRouter();
+    const insets = useSafeAreaInsets();
     const { id } = useLocalSearchParams();
+
     const [loja, setLoja] = useState<LojaDetalhesResponse | null>(null);
 
     useEffect(() => {
@@ -28,7 +32,10 @@ export default function Mercado() {
                 tamanho="botaoPequeno"
                 iconeLado="esquerda"
                 iconeNome="arrow-left"
-                style={estilos.botaoVoltar}
+                style={[estilos.botaoVoltar, {
+                    top: insets.top + tema.layout.paddings.grande.vertical,
+                    left: tema.layout.paddings.grande.horizontal
+                }]}
                 onPress={() => router.back()}
             >
                 Voltar
@@ -73,6 +80,7 @@ const estilos = StyleSheet.create({
     },
     botaoVoltar: {
         marginRight: "auto",
+        zIndex: 1,
     },
     imagem: {
         width: "100%",

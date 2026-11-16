@@ -45,17 +45,17 @@ export default function Produto() {
         return null;
 
     return (
-        <View style={{ flex: 1 }}>
+        <View style={estilos.container}>
             <Botao
                 variante="info"
                 tamanho="botaoPequeno"
                 iconeLado="esquerda"
                 iconeNome="arrow-left"
-                style={[estilos.botao, {
+                style={[estilos.botaoVoltar, {
                     top: insets.top + tema.layout.paddings.grande.vertical,
                     left: tema.layout.paddings.grande.horizontal
                 }]}
-                onPress={() => router.back()}
+                onPress={() => {router.back(); console.log("Voltar");}}
             >
                 Voltar
             </Botao>
@@ -103,8 +103,11 @@ export default function Produto() {
 }
 
 const estilos = StyleSheet.create({
-    botao: {
-        position: "absolute",
+    container: {
+        flex: 1,
+    },
+    botaoVoltar: {
+        marginRight: "auto",
         zIndex: 1,
     },
     imagem: {
