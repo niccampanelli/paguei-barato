@@ -1,4 +1,5 @@
 import { Caixa, CaixaScroll, Logo, Texto } from "@/components/shared";
+import BotaoExpansivel from "@/components/shared/BotaoExpansivel";
 import { tema } from "@/constants/tema";
 import { useAppSelector } from "@/hooks/store";
 import { selectUsuario } from "@/store/usuario/usuarioSlice";
@@ -16,6 +17,26 @@ export default function Inicio() {
             >
                 <Logo />
             </Caixa>
+            <BotaoExpansivel
+                iconeNome="plus"
+                style={estilos.botaoCriar}
+                acoes={[
+                    {
+                        iconeNome: "truck",
+                        children: "Loja"
+                    },
+                    {
+                        iconeNome: "shopping-bag",
+                        children: "Produto"
+                    },
+                    {
+                        iconeNome: "edit",
+                        children: "Relato"
+                    },
+                ]}
+            >
+                Criar
+            </BotaoExpansivel>
             <CaixaScroll
                 tamanho="grande"
                 contentContainerStyle={estilos.conteudo}
@@ -32,6 +53,12 @@ const estilos = StyleSheet.create({
     container: {
         flex: 1,
         rowGap: tema.layout.espacamentos.grande,
+    },
+    botaoCriar: {
+        position: "absolute",
+        bottom: 0,
+        right: tema.layout.espacamentos.grande,
+        zIndex: 1,
     },
     conteudo: {
         flex: 1,

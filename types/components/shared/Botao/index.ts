@@ -14,7 +14,7 @@ export interface BotaoProps extends PressableProps {
      * Texto do botão
      * @default ""
      */
-    children: ReactNode;
+    children?: ReactNode;
     /**
      * Estilo adicional para o botão
      */

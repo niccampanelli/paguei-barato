@@ -55,7 +55,7 @@ export default function Produto() {
                     top: insets.top + tema.layout.paddings.grande.vertical,
                     left: tema.layout.paddings.grande.horizontal
                 }]}
-                onPress={() => {router.back(); console.log("Voltar");}}
+                onPress={() => router.back()}
             >
                 Voltar
             </Botao>
