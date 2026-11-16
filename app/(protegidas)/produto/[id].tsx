@@ -93,6 +93,9 @@ export default function Produto() {
                             valor={produto.marca.nome}
                         />
                     </View>
+                    <Texto variante="legenda">
+                        {`Criado em ${produto.criadoEm.toLocaleDateString()} às ${produto.criadoEm.toLocaleTimeString()}`}
+                    </Texto>
                 </View>
             </CaixaScroll>
         </View>

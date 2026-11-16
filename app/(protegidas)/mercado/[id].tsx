@@ -50,6 +50,9 @@ export default function Mercado() {
                         <Texto variante="subtitulo">Detalhes da loja</Texto>
                         <Texto>{obterEndereco(loja)}</Texto>
                     </View>
+                    <Texto variante="legenda">
+                        {`Criado em ${loja?.criadoEm.toLocaleDateString()} às ${loja?.criadoEm.toLocaleTimeString()}`}
+                    </Texto>
                 </View>
             </CaixaScroll>
         </View>

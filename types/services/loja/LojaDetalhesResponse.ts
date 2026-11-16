@@ -15,5 +15,5 @@ export interface LojaDetalhesResponse {
     estado: string;
     cep: string;
     imagemUrl: string;
-    criadoEm: string;
+    criadoEm: Date;
 }

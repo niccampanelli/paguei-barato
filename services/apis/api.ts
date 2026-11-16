@@ -4,6 +4,7 @@ import {
     obterAccessToken,
     renovarAccessToken,
 } from "../authSession";
+import converterDatas from "../../helpers/conversaoData";
 
 const api = axios.create({
     baseURL: process.env.EXPO_PUBLIC_API_URL,
@@ -21,7 +22,10 @@ api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 });
 
 api.interceptors.response.use(
-    (response) => response,
+    (response) => {
+        response.data = converterDatas(response.data);
+        return response;
+    },
     async (error: AxiosError) => {
         const request = error.config as
             | (InternalAxiosRequestConfig & { _retry?: boolean })
