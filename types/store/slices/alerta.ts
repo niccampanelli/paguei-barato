@@ -1,7 +1,7 @@
 import { TemaCores } from "@/types/contants/tema";
-import Feather from "@expo/vector-icons/Feather";
+import { LucideIconName } from "@react-native-vector-icons/lucide";
 
-type AlertaIconeNome = keyof typeof Feather.glyphMap;
+type AlertaIconeNome = LucideIconName;
 
 type AlertaVariante = keyof Omit<TemaCores, "fundo" | "texto">;
 

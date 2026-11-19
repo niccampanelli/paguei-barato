@@ -1,6 +1,6 @@
-import Feather from "@expo/vector-icons/Feather";
+import { LucideIconName } from "@react-native-vector-icons/lucide";
 
-type ItemMenuIcone = keyof typeof Feather.glyphMap;
+type ItemMenuIcone = LucideIconName;
 
 type ItemMenuLogado = "logado" | "deslogado" | "ambos";
 

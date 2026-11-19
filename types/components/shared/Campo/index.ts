@@ -1,10 +1,10 @@
 import { TemaCores } from "@/types/contants/tema";
-import Feather from '@expo/vector-icons/Feather';
+import { LucideIconName } from "@react-native-vector-icons/lucide";
 import { Ref, RefObject } from "react";
 import { StyleProp, TextInput, TextInputProps, ViewProps } from "react-native";
 
 type CampoPropsIconeCor = keyof Omit<TemaCores, "fundo" | "texto">;
-type CampoPropsIconeNome = keyof typeof Feather.glyphMap;
+type CampoPropsIconeNome = LucideIconName;
 
 export interface CampoProps extends TextInputProps {
     /**

@@ -22,15 +22,15 @@ export default function Inicio() {
                 style={estilos.botaoCriar}
                 acoes={[
                     {
-                        iconeNome: "truck",
+                        iconeNome: "store",
                         children: "Loja"
                     },
                     {
-                        iconeNome: "shopping-bag",
+                        iconeNome: "milk",
                         children: "Produto"
                     },
                     {
-                        iconeNome: "edit",
+                        iconeNome: "megaphone",
                         children: "Relato"
                     },
                 ]}

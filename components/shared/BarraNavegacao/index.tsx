@@ -1,4 +1,4 @@
-import Feather from "@expo/vector-icons/Feather";
+import { LucideIconName } from "@react-native-vector-icons/lucide";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { NavigationRoute, ParamListBase } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
@@ -33,7 +33,7 @@ export default function BarraNavegacao({
         }
     }
 
-    function obterIcone(key: string, index: number): keyof typeof Feather.glyphMap {
+    function obterIcone(key: string, index: number): LucideIconName {
         const opcoes = descriptors[key].options;
 
         if (opcoes.tabBarIcon) {
@@ -41,7 +41,7 @@ export default function BarraNavegacao({
                 color: opcoes.tabBarActiveTintColor ?? "black",
                 focused: state.index === index,
                 size: 20
-            }) as keyof typeof Feather.glyphMap;
+            }) as LucideIconName;
         }
 
         return "alert-octagon";

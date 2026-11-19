@@ -1,6 +1,6 @@
 import { tema } from "@/constants/tema";
 import { BotaoProps } from "@/types/components/shared";
-import Feather from "@expo/vector-icons/Feather";
+import { Lucide } from "@react-native-vector-icons/lucide";
 import { Pressable, StyleSheet } from "react-native";
 import Texto from "../Texto";
 
@@ -16,8 +16,8 @@ export default function Botao({
 }: BotaoProps) {
 
     const Icone = (
-        <Feather
-            name={iconeNome}
+        <Lucide
+            name={iconeNome ?? "circle-help"}
             size={
                 tamanho === "botaoGrande"
                     ? tema.texto.tamanhos.texto

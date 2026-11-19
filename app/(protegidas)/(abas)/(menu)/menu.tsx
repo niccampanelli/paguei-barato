@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks/store";
 import { selectUsuario } from "@/store/usuario/usuarioSlice";
 import { sairDaConta as sairDaContaThunk } from "@/store/usuario/usuarioThunks";
 import { ItemMenu } from "@/types/app/protegidas/abas/menu/menu";
-import Feather from "@expo/vector-icons/Feather";
+import { Lucide } from "@react-native-vector-icons/lucide";
 import { useRouter } from "expo-router";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 
@@ -97,14 +97,14 @@ export default function Menu() {
                                 style={estilos.item}
                                 onPress={menu.aoPressionar}
                             >
-                                <Feather
+                                <Lucide
                                     name={menu.icone}
                                     size={tema.texto.tamanhos.subtitulo}
                                 />
                                 <Texto variante="subtitulo" style={{ flex: 1 }}>
                                     {menu.nome}
                                 </Texto>
-                                <Feather
+                                <Lucide
                                     name="chevron-right"
                                     size={tema.texto.tamanhos.subtitulo}
                                 />

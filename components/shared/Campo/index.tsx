@@ -1,6 +1,6 @@
 import { tema } from "@/constants/tema";
 import { CampoProps } from "@/types/components/shared";
-import Feather from '@expo/vector-icons/Feather';
+import { Lucide } from "@react-native-vector-icons/lucide";
 import { useState } from "react";
 import { NativeSyntheticEvent, StyleSheet, TextInput, TextInputSubmitEditingEventData, TouchableOpacity, View } from "react-native";
 import Texto from "../Texto";
@@ -43,8 +43,8 @@ export default function Campo({
     }
 
     const Icone = (
-        <Feather
-            name={iconeNome}
+        <Lucide
+            name={iconeNome ?? "circle-help"}
             size={tema.texto.tamanhos.texto}
             color={
                 editable
@@ -79,7 +79,7 @@ export default function Campo({
                 />
                 {mostrarLimpar && editable &&
                     <TouchableOpacity onPress={aoLimpar}>
-                        <Feather
+                        <Lucide
                             name="x"
                             size={tema.texto.tamanhos.texto}
                             color={tema.cores.texto.claro}
@@ -88,7 +88,7 @@ export default function Campo({
                 }
                 {secureTextEntry && editable &&
                     <TouchableOpacity onPress={() => setTextoOculto(!textoOculto)}>
-                        <Feather
+                        <Lucide
                             name={textoOculto ? "eye" : "eye-off"}
                             size={tema.texto.tamanhos.texto}
                             color={tema.cores.texto.claro}

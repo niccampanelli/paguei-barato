@@ -1,5 +1,5 @@
 import { BarraNavegacao } from '@/components/shared';
-import Feather from '@expo/vector-icons/Feather';
+import { LucideIconName } from "@react-native-vector-icons/lucide";
 import { Tabs } from "expo-router";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -23,28 +23,28 @@ export default function LayoutAbasPrincipais() {
                 name="inicio"
                 options={{
                     tabBarLabel: 'Início',
-                    tabBarIcon: () => "home" as keyof typeof Feather.glyphMap
+                    tabBarIcon: () => "home" as LucideIconName
                 }}
             />
             <Tabs.Screen
                 name="busca"
                 options={{
                     tabBarLabel: 'Busca',
-                    tabBarIcon: () => "search" as keyof typeof Feather.glyphMap
+                    tabBarIcon: () => "search" as LucideIconName
                 }}
             />
             <Tabs.Screen
                 name="lista"
                 options={{
                     tabBarLabel: 'Lista',
-                    tabBarIcon: () => "shopping-bag" as keyof typeof Feather.glyphMap
+                    tabBarIcon: () => "layout-list" as LucideIconName
                 }}
             />
             <Tabs.Screen
                 name="(menu)"
                 options={{
                     tabBarLabel: 'Menu',
-                    tabBarIcon: () => "menu" as keyof typeof Feather.glyphMap
+                    tabBarIcon: () => "menu" as LucideIconName
                 }}
             />
         </Tabs>

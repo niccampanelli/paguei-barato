@@ -1,7 +1,7 @@
 import { tema } from "@/constants/tema";
 import { useAlertaAcoesContext } from "@/context/alerta/alertaAcoesContext";
 import { AlertaProps } from "@/types/components/shared";
-import Feather from "@expo/vector-icons/Feather";
+import { Lucide } from "@react-native-vector-icons/lucide";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import Texto from "../Texto";
 
@@ -25,7 +25,7 @@ export default function Alerta({
 
     return (
         <View style={estilos.alerta}>
-            <Feather
+            <Lucide
                 name={iconeNome}
                 size={tema.texto.tamanhos.texto}
                 color={tema.cores[variante].escuro}

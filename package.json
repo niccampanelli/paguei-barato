@@ -11,8 +11,8 @@
   },
   "dependencies": {
     "@expo-google-fonts/nunito": "^0.4.1",
-    "@expo/vector-icons": "^14.1.0",
     "@hookform/resolvers": "^5.1.1",
+    "@react-native-vector-icons/lucide": "^14.0.0",
     "@react-navigation/bottom-tabs": "^7.3.10",
     "@react-navigation/native": "^7.1.6",
     "@reduxjs/toolkit": "^2.8.2",

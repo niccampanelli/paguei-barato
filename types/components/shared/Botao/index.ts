@@ -1,5 +1,5 @@
 import { TemaCores, TemaLayoutPaddings } from "@/types/contants/tema";
-import Feather from "@expo/vector-icons/Feather";
+import { LucideIconName } from "@react-native-vector-icons/lucide";
 import { ReactNode } from "react";
 import { PressableProps, StyleProp, ViewStyle } from "react-native";
 
@@ -7,7 +7,7 @@ type BotaoPropsVariantes = keyof Omit<TemaCores, "fundo" | "texto">;
 
 type BotaoPropsTamanhos = keyof Pick<TemaLayoutPaddings, "botaoGrande" | "botaoPequeno">;
 
-type BotaoPropsIconeNome = keyof typeof Feather.glyphMap;
+type BotaoPropsIconeNome = LucideIconName;
 
 export interface BotaoProps extends PressableProps {
     /**
